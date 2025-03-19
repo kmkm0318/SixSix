@@ -201,6 +201,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1009,7 +1022,43 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UpscaledDice_Pink_0: -4314872556885813932
+      UpscaledDice_Pink_1: 7023949327649049969
+      UpscaledDice_Pink_10: -3969889519279730610
+      UpscaledDice_Pink_11: 6536420570845703310
+      UpscaledDice_Pink_12: -1745989773014228348
+      UpscaledDice_Pink_13: 8954783315100336643
+      UpscaledDice_Pink_14: 2944067721196728808
+      UpscaledDice_Pink_15: 1261834539540677587
+      UpscaledDice_Pink_16: -3976850382899336243
+      UpscaledDice_Pink_17: -6737166642604836156
+      UpscaledDice_Pink_18: -2528006447603716237
+      UpscaledDice_Pink_19: -5762078479221394809
+      UpscaledDice_Pink_2: 6982583029822758956
+      UpscaledDice_Pink_20: -1409560649868799963
+      UpscaledDice_Pink_21: -189611540699555349
+      UpscaledDice_Pink_22: 4407719893987470313
+      UpscaledDice_Pink_23: 3889789100717405326
+      UpscaledDice_Pink_24: 5634624033611474990
+      UpscaledDice_Pink_25: -5994375656677552586
+      UpscaledDice_Pink_26: 5349027416708802592
+      UpscaledDice_Pink_27: 7753677056773960675
+      UpscaledDice_Pink_28: 881284248587228930
+      UpscaledDice_Pink_29: -960855906665383020
+      UpscaledDice_Pink_3: -2962491985531971848
+      UpscaledDice_Pink_30: 2010523028633888155
+      UpscaledDice_Pink_31: -5158419535810291590
+      UpscaledDice_Pink_32: -834378360628056459
+      UpscaledDice_Pink_33: 7861431511948375512
+      UpscaledDice_Pink_34: 4004078411853088019
+      UpscaledDice_Pink_35: -19182397038402557
+      UpscaledDice_Pink_4: -993737210083468006
+      UpscaledDice_Pink_5: -6647868936092574374
+      UpscaledDice_Pink_6: -6541652201351126997
+      UpscaledDice_Pink_7: -2653608022564361443
+      UpscaledDice_Pink_8: 4865973568323550542
+      UpscaledDice_Pink_9: -4329305031818982151
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

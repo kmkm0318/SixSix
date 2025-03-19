@@ -8,7 +8,10 @@ public class Dice : MonoBehaviour
     private int faceIndex;
     private int faceIndexMax;
 
-    public void Init(int maxValue)
+    private Playboard playboard;
+    public Playboard Playboard => playboard;
+
+    public void Init(int maxValue, Playboard playboard)
     {
         faces = new DiceFace[maxValue];
         for (int i = 0; i < faces.Length; i++)
@@ -19,5 +22,21 @@ public class Dice : MonoBehaviour
 
         faceIndex = 0;
         faceIndexMax = maxValue - 1;
+
+        this.playboard = playboard;
+
+        SetFace(faceIndex);
+    }
+
+    public void SetFace(int faceIndex)
+    {
+        diceVisual.SetSprite(faces[faceIndex].FaceSpriteSO.sprite);
+    }
+
+    public void ChangeFace(int value = 1)
+    {
+        faceIndex += value;
+        faceIndex %= faceIndexMax;
+        SetFace(faceIndex);
     }
 }

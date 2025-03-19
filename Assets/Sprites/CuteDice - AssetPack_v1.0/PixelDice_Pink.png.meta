@@ -201,6 +201,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1009,7 +1022,43 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PixelDice_Pink_0: 1398926289758041833
+      PixelDice_Pink_1: 4174431629707660144
+      PixelDice_Pink_10: 5864823491690634633
+      PixelDice_Pink_11: -3605162092137461484
+      PixelDice_Pink_12: -3259361945147131444
+      PixelDice_Pink_13: -5247533655945893184
+      PixelDice_Pink_14: -4564598952078510448
+      PixelDice_Pink_15: -2865421548647508257
+      PixelDice_Pink_16: 7836492832483559965
+      PixelDice_Pink_17: 4884573374141965626
+      PixelDice_Pink_18: 2095094657327844546
+      PixelDice_Pink_19: -8778638888409782605
+      PixelDice_Pink_2: 2094105871309346724
+      PixelDice_Pink_20: -9066618777194195557
+      PixelDice_Pink_21: -3594100839257987511
+      PixelDice_Pink_22: -8972353928394838529
+      PixelDice_Pink_23: 18377019733619831
+      PixelDice_Pink_24: 7971888887753137504
+      PixelDice_Pink_25: 7181106944737287326
+      PixelDice_Pink_26: 4686522316358446600
+      PixelDice_Pink_27: 924445578120800420
+      PixelDice_Pink_28: -2430204235944693427
+      PixelDice_Pink_29: -6141765927733870892
+      PixelDice_Pink_3: -5489877425407132028
+      PixelDice_Pink_30: -4584470460653197553
+      PixelDice_Pink_31: 2639472151900493140
+      PixelDice_Pink_32: -5016551125678375505
+      PixelDice_Pink_33: 2026323103778854778
+      PixelDice_Pink_34: 1266733614182799073
+      PixelDice_Pink_35: 8129195679791185375
+      PixelDice_Pink_4: -5141151715755740544
+      PixelDice_Pink_5: -8398382167258612246
+      PixelDice_Pink_6: -4274674961727738268
+      PixelDice_Pink_7: -3487894257283163340
+      PixelDice_Pink_8: 1140410707158950983
+      PixelDice_Pink_9: 5933042323977414156
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

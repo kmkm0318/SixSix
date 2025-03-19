@@ -28,15 +28,29 @@ public class RollUI : MonoBehaviour
     {
         rollButton.OnPointerDownEvent += OnRollButtonDown;
         rollButton.OnPointerUpEvent += OnRollButtonUp;
+
+        RollManager.Instance.OnRollPowerChangedEvent += OnRollPowerChanged;
+
+        rollPowerSlider.gameObject.SetActive(false);
     }
 
     private void OnRollButtonDown()
     {
         OnRollButtonDownEvent?.Invoke();
+
+        rollPowerSlider.gameObject.SetActive(true);
     }
 
     private void OnRollButtonUp()
     {
         OnRollButtonUpEvent?.Invoke();
+
+        rollPowerSlider.gameObject.SetActive(false);
+    }
+
+    private void OnRollPowerChanged(float rollPower)
+    {
+        float rollPowerNormalized = (rollPower - RollManager.Instance.RollPowerMin) / (RollManager.Instance.RollPowerMax - RollManager.Instance.RollPowerMin);
+        rollPowerSlider.value = rollPowerNormalized;
     }
 }

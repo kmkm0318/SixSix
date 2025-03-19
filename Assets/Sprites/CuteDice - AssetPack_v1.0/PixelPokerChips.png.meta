@@ -138,6 +138,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -484,7 +497,22 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PixelPokerChips_0: 5020893389549638722
+      PixelPokerChips_1: 1139398298143400193
+      PixelPokerChips_10: -4998250624673145782
+      PixelPokerChips_11: 849479620987467266
+      PixelPokerChips_12: 4612173572495444555
+      PixelPokerChips_13: 6527146294487271724
+      PixelPokerChips_14: -7348000628422483610
+      PixelPokerChips_2: 4480857245691151251
+      PixelPokerChips_3: -2142792985897087583
+      PixelPokerChips_4: 5119006257018846521
+      PixelPokerChips_5: -5627227470770903176
+      PixelPokerChips_6: 5040106894248171352
+      PixelPokerChips_7: -6009118068038584962
+      PixelPokerChips_8: 3198757155333300356
+      PixelPokerChips_9: 1107671747455778829
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

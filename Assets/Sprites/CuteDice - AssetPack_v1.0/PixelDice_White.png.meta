@@ -156,7 +156,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 28
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -201,6 +201,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -208,10 +221,10 @@ TextureImporter:
       name: PixelDice_White_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 141
-        width: 26
-        height: 26
+        x: 2
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,10 +243,10 @@ TextureImporter:
       name: PixelDice_White_1
       rect:
         serializedVersion: 2
-        x: 29
-        y: 141
-        width: 26
-        height: 26
+        x: 30
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,10 +265,10 @@ TextureImporter:
       name: PixelDice_White_2
       rect:
         serializedVersion: 2
-        x: 57
-        y: 141
-        width: 26
-        height: 26
+        x: 58
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +287,10 @@ TextureImporter:
       name: PixelDice_White_3
       rect:
         serializedVersion: 2
-        x: 85
-        y: 141
-        width: 26
-        height: 26
+        x: 86
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,10 +309,10 @@ TextureImporter:
       name: PixelDice_White_4
       rect:
         serializedVersion: 2
-        x: 113
-        y: 141
-        width: 26
-        height: 26
+        x: 114
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,10 +331,10 @@ TextureImporter:
       name: PixelDice_White_5
       rect:
         serializedVersion: 2
-        x: 141
-        y: 141
-        width: 26
-        height: 26
+        x: 142
+        y: 142
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -340,10 +353,10 @@ TextureImporter:
       name: PixelDice_White_6
       rect:
         serializedVersion: 2
-        x: 1
-        y: 113
-        width: 26
-        height: 26
+        x: 2
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -362,10 +375,10 @@ TextureImporter:
       name: PixelDice_White_7
       rect:
         serializedVersion: 2
-        x: 29
-        y: 113
-        width: 26
-        height: 26
+        x: 30
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -384,10 +397,10 @@ TextureImporter:
       name: PixelDice_White_8
       rect:
         serializedVersion: 2
-        x: 57
-        y: 113
-        width: 26
-        height: 26
+        x: 58
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -406,10 +419,10 @@ TextureImporter:
       name: PixelDice_White_9
       rect:
         serializedVersion: 2
-        x: 85
-        y: 113
-        width: 26
-        height: 26
+        x: 86
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -428,10 +441,10 @@ TextureImporter:
       name: PixelDice_White_10
       rect:
         serializedVersion: 2
-        x: 113
-        y: 113
-        width: 26
-        height: 26
+        x: 114
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -450,10 +463,10 @@ TextureImporter:
       name: PixelDice_White_11
       rect:
         serializedVersion: 2
-        x: 141
-        y: 113
-        width: 26
-        height: 26
+        x: 142
+        y: 114
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -472,10 +485,10 @@ TextureImporter:
       name: PixelDice_White_12
       rect:
         serializedVersion: 2
-        x: 1
-        y: 85
-        width: 26
-        height: 26
+        x: 2
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -494,10 +507,10 @@ TextureImporter:
       name: PixelDice_White_13
       rect:
         serializedVersion: 2
-        x: 29
-        y: 85
-        width: 26
-        height: 26
+        x: 30
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -516,10 +529,10 @@ TextureImporter:
       name: PixelDice_White_14
       rect:
         serializedVersion: 2
-        x: 57
-        y: 85
-        width: 26
-        height: 26
+        x: 58
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -538,10 +551,10 @@ TextureImporter:
       name: PixelDice_White_15
       rect:
         serializedVersion: 2
-        x: 85
-        y: 85
-        width: 26
-        height: 26
+        x: 86
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -560,10 +573,10 @@ TextureImporter:
       name: PixelDice_White_16
       rect:
         serializedVersion: 2
-        x: 113
-        y: 85
-        width: 26
-        height: 26
+        x: 114
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -582,10 +595,10 @@ TextureImporter:
       name: PixelDice_White_17
       rect:
         serializedVersion: 2
-        x: 141
-        y: 85
-        width: 26
-        height: 26
+        x: 142
+        y: 86
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -604,10 +617,10 @@ TextureImporter:
       name: PixelDice_White_18
       rect:
         serializedVersion: 2
-        x: 1
-        y: 57
-        width: 26
-        height: 26
+        x: 2
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -626,10 +639,10 @@ TextureImporter:
       name: PixelDice_White_19
       rect:
         serializedVersion: 2
-        x: 29
-        y: 57
-        width: 26
-        height: 26
+        x: 30
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -648,10 +661,10 @@ TextureImporter:
       name: PixelDice_White_20
       rect:
         serializedVersion: 2
-        x: 57
-        y: 57
-        width: 26
-        height: 26
+        x: 58
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -670,10 +683,10 @@ TextureImporter:
       name: PixelDice_White_21
       rect:
         serializedVersion: 2
-        x: 85
-        y: 57
-        width: 26
-        height: 26
+        x: 86
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -692,10 +705,10 @@ TextureImporter:
       name: PixelDice_White_22
       rect:
         serializedVersion: 2
-        x: 113
-        y: 57
-        width: 26
-        height: 26
+        x: 114
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -714,10 +727,10 @@ TextureImporter:
       name: PixelDice_White_23
       rect:
         serializedVersion: 2
-        x: 141
-        y: 57
-        width: 26
-        height: 26
+        x: 142
+        y: 58
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -736,10 +749,10 @@ TextureImporter:
       name: PixelDice_White_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 28
-        height: 29
+        x: 2
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -758,10 +771,10 @@ TextureImporter:
       name: PixelDice_White_25
       rect:
         serializedVersion: 2
-        x: 1
-        y: 28
-        width: 26
-        height: 26
+        x: 30
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -780,10 +793,10 @@ TextureImporter:
       name: PixelDice_White_26
       rect:
         serializedVersion: 2
-        x: 28
-        y: 0
-        width: 28
-        height: 29
+        x: 58
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -802,10 +815,10 @@ TextureImporter:
       name: PixelDice_White_27
       rect:
         serializedVersion: 2
-        x: 29
-        y: 28
-        width: 26
-        height: 26
+        x: 86
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -824,10 +837,10 @@ TextureImporter:
       name: PixelDice_White_28
       rect:
         serializedVersion: 2
-        x: 56
-        y: 0
-        width: 28
-        height: 28
+        x: 114
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -846,10 +859,10 @@ TextureImporter:
       name: PixelDice_White_29
       rect:
         serializedVersion: 2
-        x: 57
-        y: 28
-        width: 26
-        height: 26
+        x: 142
+        y: 30
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -868,10 +881,10 @@ TextureImporter:
       name: PixelDice_White_30
       rect:
         serializedVersion: 2
-        x: 84
-        y: 0
-        width: 28
-        height: 29
+        x: 2
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -890,10 +903,10 @@ TextureImporter:
       name: PixelDice_White_31
       rect:
         serializedVersion: 2
-        x: 85
-        y: 28
-        width: 26
-        height: 26
+        x: 30
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -912,10 +925,10 @@ TextureImporter:
       name: PixelDice_White_32
       rect:
         serializedVersion: 2
-        x: 112
-        y: 0
-        width: 28
-        height: 29
+        x: 58
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -934,10 +947,10 @@ TextureImporter:
       name: PixelDice_White_33
       rect:
         serializedVersion: 2
-        x: 113
-        y: 28
-        width: 26
-        height: 26
+        x: 86
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -956,10 +969,10 @@ TextureImporter:
       name: PixelDice_White_34
       rect:
         serializedVersion: 2
-        x: 139
-        y: 0
-        width: 29
-        height: 29
+        x: 114
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -978,10 +991,10 @@ TextureImporter:
       name: PixelDice_White_35
       rect:
         serializedVersion: 2
-        x: 141
-        y: 28
-        width: 26
-        height: 26
+        x: 142
+        y: 2
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1000,7 +1013,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 001ac4a2dd0728c478c8d7b579cb38e1
     internalID: 0
     vertices: []
     indices: 
