@@ -1,8 +1,18 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class DiceMovement : MonoBehaviour
 {
     [SerializeField] private Dice dice;
+    [SerializeField] private float stopThreshold = 0.1f;
+    [SerializeField] private float stopAngularThreshold = 5f;
+    [SerializeField] private float stopTime = 0.5f;
+
+    public event Action OnRollStarted;
+    public event Action OnRollCompleted;
+    public event Action OnDiceCollided;
+
     private Rigidbody2D rb;
 
     private void Awake()
@@ -12,12 +22,13 @@ public class DiceMovement : MonoBehaviour
 
     private void Start()
     {
-        RollManager.Instance.OnRollDiceEvent += OnRollDice;
+        RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
     }
 
-    private void OnRollDice(float rollDiceForce)
+    private void OnRollPowerApplied(float rollDiceForce)
     {
         RollDice(dice.Playboard.ForcePosition, rollDiceForce);
+        StartCoroutine(CheckRollComplete());
     }
 
     public void RollDice(Vector2 forceOrigin, float force)
@@ -26,10 +37,31 @@ public class DiceMovement : MonoBehaviour
         forceDirection = forceDirection.normalized;
         rb.AddForce(forceDirection * force, ForceMode2D.Impulse);
         rb.AddTorque(forceDirection.x * force, ForceMode2D.Impulse);
+
+        OnRollStarted?.Invoke();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator CheckRollComplete()
     {
-        dice.ChangeFace();
+        float elapsedTime = 0f;
+        while (elapsedTime < stopTime)
+        {
+            if (rb.linearVelocity.magnitude < stopThreshold && Mathf.Abs(rb.angularVelocity) < stopAngularThreshold)
+            {
+                elapsedTime += Time.deltaTime;
+            }
+            else
+            {
+                elapsedTime = 0f;
+            }
+
+            yield return null;
+        }
+        OnRollCompleted?.Invoke();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        OnDiceCollided?.Invoke();
     }
 }

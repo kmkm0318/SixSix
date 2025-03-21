@@ -2,48 +2,34 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RollUI : MonoBehaviour
+public class RollUI : Singleton<RollUI>
 {
-    public static RollUI Instance { get; private set; }
-
-    [SerializeField] private RollButton rollButton;
     [SerializeField] private Slider rollPowerSlider;
+    [SerializeField] private RollButton rollButton;
 
-    public event Action OnRollButtonDownEvent;
-    public event Action OnRollButtonUpEvent;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public event Action OnRollButtonPressed;
+    public event Action OnRollButtonReleased;
 
     private void Start()
     {
-        rollButton.OnPointerDownEvent += OnRollButtonDown;
-        rollButton.OnPointerUpEvent += OnRollButtonUp;
+        rollButton.OnButtonPressed += OnButtonPressed;
+        rollButton.OnButtonReleased += OnButtonReleased;
 
-        RollManager.Instance.OnRollPowerChangedEvent += OnRollPowerChanged;
+        RollManager.Instance.OnRollPowerChanged += OnRollPowerChanged;
 
         rollPowerSlider.gameObject.SetActive(false);
     }
 
-    private void OnRollButtonDown()
+    private void OnButtonPressed()
     {
-        OnRollButtonDownEvent?.Invoke();
+        OnRollButtonPressed?.Invoke();
 
         rollPowerSlider.gameObject.SetActive(true);
     }
 
-    private void OnRollButtonUp()
+    private void OnButtonReleased()
     {
-        OnRollButtonUpEvent?.Invoke();
+        OnRollButtonReleased?.Invoke();
 
         rollPowerSlider.gameObject.SetActive(false);
     }

@@ -4,16 +4,30 @@ using UnityEngine.EventSystems;
 
 public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public event Action OnPointerDownEvent;
-    public event Action OnPointerUpEvent;
+    public event Action OnButtonPressed;
+    public event Action OnButtonReleased;
+
+    private bool isActive = true;
+
+    private void Start()
+    {
+        RollManager.Instance.OnRollStarted += () => isActive = false;
+        RollManager.Instance.OnRollCompleted += () => isActive = true;
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnPointerDownEvent?.Invoke();
+        if (isActive)
+        {
+            OnButtonPressed?.Invoke();
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        OnPointerUpEvent?.Invoke();
+        if (isActive)
+        {
+            OnButtonReleased?.Invoke();
+        }
     }
 }

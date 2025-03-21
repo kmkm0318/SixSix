@@ -18,6 +18,8 @@ public class TestDiceGenerator : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
             var dice = Instantiate(dicePrefab, playboard.DiceGeneratePosition, Quaternion.identity);
             dice.Init(6, playboard);
+
+            PlayerDiceManager.Instance.AddPlayDice(dice);
         }
     }
 }

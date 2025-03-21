@@ -2,48 +2,43 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class RollManager : MonoBehaviour
+public class RollManager : Singleton<RollManager>
 {
-    public static RollManager Instance { get; private set; }
-
     [SerializeField] private float rollPowerMax = 10f;
     public float RollPowerMax => rollPowerMax;
     [SerializeField] private float rollPowerMin = 1f;
     public float RollPowerMin => rollPowerMin;
 
-    public event Action<float> OnRollPowerChangedEvent;
-    public event Action<float> OnRollDiceEvent;
+    public event Action<float> OnRollPowerChanged;
+    public event Action<float> OnRollPowerApplied;
+    public event Action OnRollStarted;
+    public event Action OnRollCompleted;
+
+    public bool IsRolling { get; private set; } = false;
 
     private float rollPower;
     private float powerChangeSpeed;
     private Coroutine ChangingRollPowerCoroutine;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        base.Awake();
 
         powerChangeSpeed = rollPowerMax - rollPowerMin;
     }
 
     private void Start()
     {
-        RollUI.Instance.OnRollButtonDownEvent += OnRollButtonDown;
-        RollUI.Instance.OnRollButtonUpEvent += OnRollButtonUp;
+        RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
+        RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
     }
 
-    private void OnRollButtonDown()
+    private void OnRollButtonPressed()
     {
         ChangingRollPowerCoroutine = StartCoroutine(ChangingRollPower());
     }
 
-    private void OnRollButtonUp()
+    private void OnRollButtonReleased()
     {
         if (ChangingRollPowerCoroutine != null)
         {
@@ -61,7 +56,7 @@ public class RollManager : MonoBehaviour
             while (rollPower < rollPowerMax)
             {
                 rollPower = Mathf.Clamp(rollPower + powerChangeSpeed * Time.deltaTime, 0f, rollPowerMax);
-                OnRollPowerChangedEvent?.Invoke(rollPower);
+                OnRollPowerChanged?.Invoke(rollPower);
                 yield return null;
             }
             rollPower = rollPowerMax;
@@ -69,7 +64,7 @@ public class RollManager : MonoBehaviour
             while (rollPower > rollPowerMin)
             {
                 rollPower = Mathf.Clamp(rollPower - powerChangeSpeed * Time.deltaTime, 0f, rollPowerMax);
-                OnRollPowerChangedEvent?.Invoke(rollPower);
+                OnRollPowerChanged?.Invoke(rollPower);
                 yield return null;
             }
             rollPower = rollPowerMin;
@@ -78,6 +73,18 @@ public class RollManager : MonoBehaviour
 
     private void RollDice()
     {
-        OnRollDiceEvent?.Invoke(rollPower);
+        Debug.Log("Roll Dice");
+        OnRollPowerApplied?.Invoke(rollPower);
+        OnRollStarted?.Invoke();
+        StartCoroutine(WaitForAllDiceToStop());
+    }
+
+    private IEnumerator WaitForAllDiceToStop()
+    {
+        yield return null;
+        yield return new WaitUntil(() => PlayerDiceManager.Instance.AreAllDiceStopped());
+        OnRollCompleted?.Invoke();
+
+        Debug.Log("All Dice Stopped");
     }
 }

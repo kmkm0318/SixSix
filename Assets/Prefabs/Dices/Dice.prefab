@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceVisual: {fileID: 3902973006503054660}
+  diceMovement: {fileID: 6386283979626169909}
 --- !u!114 &6386283979626169909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,3 +236,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dice: {fileID: 3085649920975083101}
+  stopThreshold: 0.1
+  stopAngularThreshold: 5
+  stopTime: 0.5

@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class DataContainer : MonoBehaviour
+public class DataContainer : Singleton<DataContainer>
 {
-    public static DataContainer Instance { get; private set; }
+    [SerializeField] private DiceFaceSpriteListSO defaultDiceList;
+    public DiceFaceSpriteListSO DefaultDiceList => defaultDiceList;
+    [SerializeField] private HandCategoryListSO handCategoryListSO;
+    public HandCategoryListSO HandCategoryListSO => handCategoryListSO;
+    [SerializeField] private HandCategoryListSO numberHandCategoryListSO;
+    public HandCategoryListSO NumberHandCategoryListSO => numberHandCategoryListSO;
+    [SerializeField] private HandCategoryListSO standardHandCategoryListSO;
+    public HandCategoryListSO StandardHandCategoryListSO => standardHandCategoryListSO;
+    [SerializeField] private HandCategoryListSO specialHandCategoryListSO;
+    public HandCategoryListSO SpecialHandCategoryListSO => specialHandCategoryListSO;
 
-    [SerializeField] private DiceFaceSpriteSO[] defaultFaces;
-    public DiceFaceSpriteSO[] DefaultFaces => defaultFaces;
-
-    private void Awake()
+    public HandCategorySO GetHandCategorySO(HandCategory handCategory)
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        return handCategoryListSO.handCategoryList.Find(x => x.handCategory == handCategory);
     }
 }
