@@ -11,6 +11,9 @@ public class DataContainer : Singleton<DataContainer>
     [SerializeField] private HandCategoryListSO specialHandCategoryListSO;
     public HandCategoryListSO SpecialHandCategoryListSO => specialHandCategoryListSO;
 
+    [SerializeField] private LayerMask playergroundLayerMask;
+    public LayerMask PlayergroundLayerMask => playergroundLayerMask;
+
     public HandCategorySO GetHandCategorySO(HandCategory handCategory)
     {
         return handCategoryListSO.handCategoryList.Find(x => x.handCategory == handCategory);

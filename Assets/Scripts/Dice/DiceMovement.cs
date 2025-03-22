@@ -63,6 +63,9 @@ public class DiceMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnDiceCollided?.Invoke();
+        if (((1 << (collision.gameObject.layer)) & DataContainer.Instance.PlayergroundLayerMask) != 0)
+        {
+            OnDiceCollided?.Invoke();
+        }
     }
 }
