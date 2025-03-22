@@ -6,8 +6,6 @@ public class DataContainer : Singleton<DataContainer>
     public DiceFaceSpriteListSO DefaultDiceList => defaultDiceList;
     [SerializeField] private HandCategoryListSO handCategoryListSO;
     public HandCategoryListSO HandCategoryListSO => handCategoryListSO;
-    [SerializeField] private HandCategoryListSO numberHandCategoryListSO;
-    public HandCategoryListSO NumberHandCategoryListSO => numberHandCategoryListSO;
     [SerializeField] private HandCategoryListSO standardHandCategoryListSO;
     public HandCategoryListSO StandardHandCategoryListSO => standardHandCategoryListSO;
     [SerializeField] private HandCategoryListSO specialHandCategoryListSO;

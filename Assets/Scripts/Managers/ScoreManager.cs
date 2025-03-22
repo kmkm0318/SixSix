@@ -19,11 +19,6 @@ public class ScoreManager : Singleton<ScoreManager>
         var playDiceValues = PlayerDiceManager.Instance.GetPlayDiceValues();
         UpdateHandCategoryScoreDictionary(playDiceValues);
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
-
-        foreach (var pair in handCategoryScoreDictionary)
-        {
-            UnityEngine.Debug.Log($"{pair.Key}: {pair.Value.baseScore} * {pair.Value.multiplier}");
-        }
     }
 
     private void UpdateHandCategoryScoreDictionary(List<int> diceValues)
@@ -33,13 +28,13 @@ public class ScoreManager : Singleton<ScoreManager>
         ResetHandCategoryScore();
         var countMap = GetCountMap(diceValues);
 
-        UpdateNumberCategoryScore(countMap);
-        UpdateFourOfAKindCategoryScore(diceValues, countMap);
-        UpdateFullHouseCategoryScore(diceValues, countMap);
-        UpdateDoubleThreeOfAKindCategoryScore(diceValues, countMap);
-        UpdateStraightCategoryScore(countMap);
-        UpdateYachtCategoryScore(countMap);
-        UpdateSixSixCategoryScore(countMap);
+        UpdateChoiceScore(countMap);
+        UpdateFourOfAKindScore(diceValues, countMap);
+        UpdateFullHouseScore(diceValues, countMap);
+        UpdateDoubleThreeOfAKindScore(diceValues, countMap);
+        UpdateStraightScore(countMap);
+        UpdateYachtScore(countMap);
+        UpdateSixSixScore(countMap);
     }
 
     private Dictionary<int, int> GetCountMap(List<int> diceValues)
@@ -68,29 +63,12 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateNumberCategoryScore(Dictionary<int, int> countMap)
+    private void UpdateChoiceScore(Dictionary<int, int> countMap)
     {
-        var numberCategoryList = DataContainer.Instance.NumberHandCategoryListSO.handCategoryList;
-        for (int i = 0; i < numberCategoryList.Count; i++)
-        {
-            HandCategory handCategory = numberCategoryList[i].handCategory;
-            ScorePair scorePair = numberCategoryList[i].scorePair;
-
-            int numCount = countMap.GetValueOrDefault(i + 1, 0);
-            if (numCount == 0)
-            {
-                scorePair = new ScorePair(0, 0);
-            }
-            else
-            {
-                scorePair.baseScore = (i + 1) * numCount;
-            }
-
-            handCategoryScoreDictionary[handCategory] = scorePair;
-        }
+        handCategoryScoreDictionary[HandCategory.Choice] = new(countMap.Sum(x => x.Key * x.Value), DataContainer.Instance.GetHandCategorySO(HandCategory.Choice).scorePair.multiplier);
     }
 
-    private void UpdateFourOfAKindCategoryScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateFourOfAKindScore(List<int> diceValues, Dictionary<int, int> countMap)
     {
         if (countMap.Any(x => x.Value >= 4))
         {
@@ -98,7 +76,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateFullHouseCategoryScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateFullHouseScore(List<int> diceValues, Dictionary<int, int> countMap)
     {
         var hasThreeOrMore = countMap.Any(x => x.Value >= 3);
         var hasAnotherTwoOrMore = countMap.Count(x => x.Value >= 2) >= 2;
@@ -108,7 +86,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateDoubleThreeOfAKindCategoryScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateDoubleThreeOfAKindScore(List<int> diceValues, Dictionary<int, int> countMap)
     {
         var threeOrMoreCount = countMap.Count(x => x.Value >= 3);
         if (threeOrMoreCount >= 2)
@@ -117,7 +95,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateStraightCategoryScore(Dictionary<int, int> countMap)
+    private void UpdateStraightScore(Dictionary<int, int> countMap)
     {
         int straightCount = 0;
         int maxStraightCount = 0;
@@ -138,17 +116,19 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             handCategoryScoreDictionary[HandCategory.SmallStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.SmallStraight).scorePair;
         }
-        else if (maxStraightCount >= 5)
+
+        if (maxStraightCount >= 5)
         {
             handCategoryScoreDictionary[HandCategory.LargeStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.LargeStraight).scorePair;
         }
-        else if (maxStraightCount >= 6)
+
+        if (maxStraightCount >= 6)
         {
             handCategoryScoreDictionary[HandCategory.FullStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.FullStraight).scorePair;
         }
     }
 
-    private void UpdateYachtCategoryScore(Dictionary<int, int> countMap)
+    private void UpdateYachtScore(Dictionary<int, int> countMap)
     {
         if (countMap.Any(x => x.Value >= 5))
         {
@@ -156,14 +136,14 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateSixSixCategoryScore(Dictionary<int, int> countMap)
+    private void UpdateSixSixScore(Dictionary<int, int> countMap)
     {
         var maxPair = countMap.OrderByDescending(x => x.Value).FirstOrDefault();
         if (maxPair.Value >= 6)
         {
             ScorePair scorePair = DataContainer.Instance.GetHandCategorySO(HandCategory.SixSix).scorePair;
             scorePair.baseScore = maxPair.Key * 111;
-            handCategoryScoreDictionary[HandCategory.Sixes] = scorePair;
+            handCategoryScoreDictionary[HandCategory.SixSix] = scorePair;
         }
     }
 }

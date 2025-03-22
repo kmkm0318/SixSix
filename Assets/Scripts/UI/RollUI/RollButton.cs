@@ -8,6 +8,7 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public event Action OnButtonReleased;
 
     private bool isActive = true;
+    private bool isPressed = false;
 
     private void Start()
     {
@@ -20,14 +21,19 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (isActive)
         {
             OnButtonPressed?.Invoke();
+            isPressed = true;
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!isPressed) return;
+        isPressed = false;
+
         if (isActive)
         {
             OnButtonReleased?.Invoke();
         }
+
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: FullHouse
   m_EditorClassIdentifier: 
-  handCategory: 7
-  handCategoryName: Full House
+  handCategory: 2
+  handCategoryName: FullHouse
   scorePair:
     baseScore: 0
-    multiplier: 0
+    multiplier: 5

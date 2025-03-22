@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: FourOfAKind
   m_EditorClassIdentifier: 
-  handCategory: 6
-  handCategoryName: Four Of A Kind
+  handCategory: 1
+  handCategoryName: FourOfAKind
   scorePair:
     baseScore: 0
-    multiplier: 0
+    multiplier: 4

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: SixSix
   m_EditorClassIdentifier: 
-  handCategory: 13
+  handCategory: 8
   handCategoryName: SixSix
   scorePair:
     baseScore: 0
-    multiplier: 0
+    multiplier: 60

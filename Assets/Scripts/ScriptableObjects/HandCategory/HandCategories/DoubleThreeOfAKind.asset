@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: DoubleThreeOfAKind
   m_EditorClassIdentifier: 
-  handCategory: 11
-  handCategoryName: Double Three Of A Kind
+  handCategory: 6
+  handCategoryName: Double ThreeOfAKind
   scorePair:
     baseScore: 0
-    multiplier: 20
+    multiplier: 33

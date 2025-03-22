@@ -13,12 +13,7 @@ MonoBehaviour:
   m_Name: HandCategoryList
   m_EditorClassIdentifier: 
   handCategoryList:
-  - {fileID: 11400000, guid: 32e1267bd8734dc42a152d35cba7304e, type: 2}
-  - {fileID: 11400000, guid: 2d774a2cd7e5105479cd419caa9f53f5, type: 2}
-  - {fileID: 11400000, guid: a56b20329aaf5504191ee691a4929148, type: 2}
-  - {fileID: 11400000, guid: 9098d68c994dc064f8801177cdf3385f, type: 2}
-  - {fileID: 11400000, guid: c764463646a734f4aacad85debe9bc82, type: 2}
-  - {fileID: 11400000, guid: ed83e42344327d94ab6b734c41d73f14, type: 2}
+  - {fileID: 11400000, guid: bf73f0db5fc5a894a9515a6832a88ea4, type: 2}
   - {fileID: 11400000, guid: 61f7c92f6e1cda543a168d33a9fb205f, type: 2}
   - {fileID: 11400000, guid: f46828785cd775840a2e0b69ff4257b8, type: 2}
   - {fileID: 11400000, guid: 0d1b74a568caf3d46a84dd9ede3a29ac, type: 2}

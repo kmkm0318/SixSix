@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: Yacht
   m_EditorClassIdentifier: 
-  handCategory: 10
+  handCategory: 5
   handCategoryName: Yacht
   scorePair:
     baseScore: 50

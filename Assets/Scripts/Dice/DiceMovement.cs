@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DiceMovement : MonoBehaviour
 {
-    [SerializeField] private Dice dice;
     [SerializeField] private float stopThreshold = 0.1f;
     [SerializeField] private float stopAngularThreshold = 5f;
     [SerializeField] private float stopTime = 0.5f;
@@ -14,20 +13,22 @@ public class DiceMovement : MonoBehaviour
     public event Action OnDiceCollided;
 
     private Rigidbody2D rb;
+    private Playboard playboard;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void Init(Playboard playboard)
     {
+        this.playboard = playboard;
         RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
     }
 
     private void OnRollPowerApplied(float rollDiceForce)
     {
-        RollDice(dice.Playboard.ForcePosition, rollDiceForce);
+        RollDice(playboard.ForcePosition, rollDiceForce);
         StartCoroutine(CheckRollComplete());
     }
 

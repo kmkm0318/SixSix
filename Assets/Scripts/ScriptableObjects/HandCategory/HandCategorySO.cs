@@ -11,8 +11,7 @@ public class HandCategorySO : ScriptableObject
 
 public enum HandCategory
 {
-    Ones, Twos, Threes, Fours, Fives, Sixes,
-    FourOfAKind, FullHouse, SmallStraight, LargeStraight, Yacht,
+    Choice, FourOfAKind, FullHouse, SmallStraight, LargeStraight, Yacht,
     DoubleThreeOfAKind, FullStraight, SixSix,
 }
 

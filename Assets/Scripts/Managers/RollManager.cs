@@ -73,7 +73,6 @@ public class RollManager : Singleton<RollManager>
 
     private void RollDice()
     {
-        Debug.Log("Roll Dice");
         OnRollPowerApplied?.Invoke(rollPower);
         OnRollStarted?.Invoke();
         StartCoroutine(WaitForAllDiceToStop());
@@ -84,7 +83,5 @@ public class RollManager : Singleton<RollManager>
         yield return null;
         yield return new WaitUntil(() => PlayerDiceManager.Instance.AreAllDiceStopped());
         OnRollCompleted?.Invoke();
-
-        Debug.Log("All Dice Stopped");
     }
 }

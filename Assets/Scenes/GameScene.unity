@@ -284,7 +284,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDiceList: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   handCategoryListSO: {fileID: 11400000, guid: 32b7c6e513868eb40acbc0dc9e8b76cc, type: 2}
-  numberHandCategoryListSO: {fileID: 11400000, guid: da4fb271c1e69f7408f568ffd19fbd46, type: 2}
   standardHandCategoryListSO: {fileID: 11400000, guid: e074b4bdc04a1704e882423d9602cbd3, type: 2}
   specialHandCategoryListSO: {fileID: 11400000, guid: 287a05ba5411dd2438d87227c394d9aa, type: 2}
 --- !u!1 &91302100
@@ -742,6 +741,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &632455684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 632455685}
+  - component: {fileID: 632455686}
+  m_Layer: 0
+  m_Name: PlayerClickManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &632455685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632455684}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1355104405}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &632455686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632455684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f0c807f3e75dd47bc71e4196252ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &647653022
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +907,8 @@ GameObject:
   - component: {fileID: 740668454}
   - component: {fileID: 740668455}
   - component: {fileID: 740668456}
+  - component: {fileID: 740668458}
+  - component: {fileID: 740668457}
   m_Layer: 5
   m_Name: HandCategoryScoreUI
   m_TagString: Untagged
@@ -888,7 +933,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 480, y: 600}
+  m_SizeDelta: {x: 480, y: 510}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &740668455
 MonoBehaviour:
@@ -911,8 +956,8 @@ MonoBehaviour:
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -929,6 +974,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handCategoryScoreSingleUIPrefab: {fileID: 8785618159642160901, guid: bb0c8a64bef3a15439e2aea7010b31fa, type: 3}
+--- !u!114 &740668457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740668453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.90462893, g: 1, b: 0.8349056, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &740668458
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740668453}
+  m_CullTransparentMesh: 1
 --- !u!1 &871615255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1306,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1704276016}
+  - {fileID: 632455685}
   - {fileID: 1418376941}
   - {fileID: 1195217958}
   - {fileID: 141699234}
@@ -2010,7 +2094,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1355104405}
   - {fileID: 270852939}
+  - {fileID: 1962916838}
   - {fileID: 1471330186}
   - {fileID: 871615259}
   - {fileID: 968371602}
-  - {fileID: 1962916838}

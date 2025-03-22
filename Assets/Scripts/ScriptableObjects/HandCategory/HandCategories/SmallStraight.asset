@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df9176876fe8443a65aa57ae6ccc9a, type: 3}
   m_Name: SmallStraight
   m_EditorClassIdentifier: 
-  handCategory: 8
-  handCategoryName: Small Straight
+  handCategory: 3
+  handCategoryName: SmallStraight
   scorePair:
-    baseScore: 0
-    multiplier: 0
+    baseScore: 15
+    multiplier: 4

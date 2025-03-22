@@ -1,12 +1,26 @@
+using System;
 using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
     [SerializeField] private DiceVisual diceVisual;
     [SerializeField] private DiceMovement diceMovement;
+    [SerializeField] private DiceInteraction diceInteraction;
+    public DiceInteraction DiceInteraction => diceInteraction;
 
-    public Playboard Playboard { get; private set; }
-    public bool IsKeeped { get; private set; } = false;
+    public event Action<bool> OnIsKeepedChanged;
+
+    private bool isKeeped = false;
+    public bool IsKeeped
+    {
+        get => isKeeped;
+        private set
+        {
+            if (isKeeped == value) return;
+            isKeeped = value;
+            OnIsKeepedChanged?.Invoke(isKeeped);
+        }
+    }
     public bool IsRolling { get; private set; } = false;
 
     private DiceFace[] faces;
@@ -19,6 +33,16 @@ public class Dice : MonoBehaviour
         diceMovement.OnRollStarted += () => IsRolling = true;
         diceMovement.OnRollCompleted += () => IsRolling = false;
         diceMovement.OnDiceCollided += OnDiceCollided;
+
+        diceInteraction.OnMouseClicked += () => IsKeeped = !IsKeeped;
+    }
+
+    private void OnDiceCollided()
+    {
+        if (!IsKeeped)
+        {
+            ChangeFace(1);
+        }
     }
 
     public void Init(int maxValue, Playboard playboard)
@@ -35,9 +59,10 @@ public class Dice : MonoBehaviour
         faceIndex = 0;
         faceIndexMax = maxValue - 1;
 
-        Playboard = playboard;
-
         SetFace(faceIndex);
+
+        diceMovement.Init(playboard);
+        diceVisual.Init(this);
     }
 
     public void SetFace(int faceIndex)
@@ -50,13 +75,5 @@ public class Dice : MonoBehaviour
         faceIndex += value;
         faceIndex %= faceIndexMax;
         SetFace(faceIndex);
-    }
-
-    private void OnDiceCollided()
-    {
-        if (!IsKeeped)
-        {
-            ChangeFace(1);
-        }
     }
 }
