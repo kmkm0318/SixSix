@@ -513,6 +513,9 @@ MonoBehaviour:
   handCategoryListSO: {fileID: 11400000, guid: 32b7c6e513868eb40acbc0dc9e8b76cc, type: 2}
   standardHandCategoryListSO: {fileID: 11400000, guid: e074b4bdc04a1704e882423d9602cbd3, type: 2}
   specialHandCategoryListSO: {fileID: 11400000, guid: 287a05ba5411dd2438d87227c394d9aa, type: 2}
+  playergroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &91302100
 GameObject:
   m_ObjectHideFlags: 0
