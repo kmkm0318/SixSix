@@ -23,11 +23,11 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
             handCategoryScoreSingleUIDict.Add(handCategorySO.handCategory, handCategoryScoreSingleUI);
         }
 
-        foreach (var specialHandCategorySO in DataContainer.Instance.SpecialHandCategoryListSO.handCategoryList)
-        {
-            handCategoryScoreSingleUIDict.TryGetValue(specialHandCategorySO.handCategory, out var handCategoryScoreSingleUI);
-            handCategoryScoreSingleUI.gameObject.SetActive(false);
-        }
+        // foreach (var specialHandCategorySO in DataContainer.Instance.SpecialHandCategoryListSO.handCategoryList)
+        // {
+        //     handCategoryScoreSingleUIDict.TryGetValue(specialHandCategorySO.handCategory, out var handCategoryScoreSingleUI);
+        //     handCategoryScoreSingleUI.gameObject.SetActive(false);
+        // }
     }
 
     private void OnHandCategoryScoreUpdated(Dictionary<HandCategory, ScorePair> dictionary)
