@@ -7,7 +7,9 @@ public class AlwaysOnTop : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = target.position + new Vector3(0, offset, 0);
-        transform.rotation = Quaternion.identity;
+        if (target != null)
+        {
+            transform.SetPositionAndRotation(target.position + new Vector3(0, offset, 0), Quaternion.identity);
+        }
     }
 }

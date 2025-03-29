@@ -18,22 +18,15 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isActive)
-        {
-            OnButtonPressed?.Invoke();
-            isPressed = true;
-        }
+        if (!isActive || isPressed || eventData.button != PointerEventData.InputButton.Left) return;
+        isPressed = true;
+        OnButtonPressed?.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!isPressed) return;
+        if (!isActive || !isPressed || eventData.button != PointerEventData.InputButton.Left) return;
         isPressed = false;
-
-        if (isActive)
-        {
-            OnButtonReleased?.Invoke();
-        }
-
+        OnButtonReleased?.Invoke();
     }
 }
