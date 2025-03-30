@@ -7,7 +7,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
     public event Action OnMouseExited;
     public event Action OnMouseClicked;
 
-    private bool isInteractable = true;
+    private bool isInteractable = false;
     public bool IsInteractable
     {
         get => isInteractable;
@@ -21,6 +21,34 @@ public class DiceInteraction : MonoBehaviour, IClickable
         }
     }
     private bool isMouseOver = false;
+
+    private void Start()
+    {
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
+        RollManager.Instance.OnRollStarted += OnRollStarted;
+        RollManager.Instance.OnRollCompleted += OnRollCompleted;
+    }
+
+    private void OnPlayStarted(int obj)
+    {
+        IsInteractable = false;
+    }
+
+    private void OnPlayEnded(int obj)
+    {
+        IsInteractable = false;
+    }
+
+    private void OnRollStarted()
+    {
+        IsInteractable = false;
+    }
+
+    private void OnRollCompleted()
+    {
+        IsInteractable = true;
+    }
 
     void OnMouseEnter()
     {

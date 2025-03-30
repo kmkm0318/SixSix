@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RollManager : Singleton<RollManager>
 {
+    [SerializeField] private int rollMax = 3;
     [SerializeField] private float rollPowerMax = 10f;
     public float RollPowerMax => rollPowerMax;
     [SerializeField] private float rollPowerMin = 1f;
@@ -16,19 +17,15 @@ public class RollManager : Singleton<RollManager>
 
     public bool IsRolling { get; private set; } = false;
 
+    private int rollRemain = 0;
     private float rollPower;
     private float powerChangeSpeed;
     private Coroutine ChangingRollPowerCoroutine;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        powerChangeSpeed = rollPowerMax - rollPowerMin;
-    }
-
     private void Start()
     {
+        powerChangeSpeed = rollPowerMax - rollPowerMin;
+
         RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
     }

@@ -10,7 +10,7 @@ public class Dice : MonoBehaviour
 
     public event Action<bool> OnIsKeepedChanged;
 
-    private bool isKeeped = false;
+    private bool isKeeped = true;
     public bool IsKeeped
     {
         get => isKeeped;
@@ -35,6 +35,10 @@ public class Dice : MonoBehaviour
         diceMovement.OnDiceCollided += OnDiceCollided;
 
         diceInteraction.OnMouseClicked += () => IsKeeped = !IsKeeped;
+
+        PlayManager.Instance.OnPlayStarted += (_) => { IsKeeped = false; };
+        PlayManager.Instance.OnPlayEnded += (_) => { IsKeeped = true; };
+        RollManager.Instance.OnRollCompleted += () => { IsKeeped = false; };
     }
 
     private void OnDiceCollided()
@@ -48,12 +52,11 @@ public class Dice : MonoBehaviour
     public void Init(int maxValue, Playboard playboard)
     {
         faces = new DiceFace[maxValue];
-        var defaultDiceFaceList = DataContainer.Instance.DefaultDiceList.diceFaceList;
 
         for (int i = 0; i < faces.Length; i++)
         {
             faces[i] = new();
-            faces[i].Init(i + 1, defaultDiceFaceList[i]);
+            faces[i].Init(i + 1, DataContainer.Instance.DefaultDiceList.diceFaceList[i]);
         }
 
         faceIndex = 0;
