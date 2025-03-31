@@ -9,8 +9,9 @@ public class GameManager : Singleton<GameManager>
         None,
         Loading,
         Round,
+        RoundClear,
+        RoundFail,
         Shop,
-        GameOver,
         GameClear,
     }
 
@@ -20,6 +21,7 @@ public class GameManager : Singleton<GameManager>
     private GameState currentGameState = GameState.None;
     public GameState CurrentGameState => currentGameState;
 
+    #region StartGame
     private void Start()
     {
         StartCoroutine(StartGame());
@@ -32,12 +34,14 @@ public class GameManager : Singleton<GameManager>
 
         ChangeGameState(GameState.Loading);
     }
+    #endregion
 
     #region RegisterEvents
     private void RegisterEvents()
     {
         PlayerDiceManager.Instance.OnFirstDiceGenerated += OnFirstDiceGenerated;
-        RoundManager.Instance.OnRoundStarted += OnRoundEnded;
+        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+        RoundManager.Instance.OnRoundFailed += OnRoundFailed;
     }
 
     private void OnFirstDiceGenerated()
@@ -45,16 +49,21 @@ public class GameManager : Singleton<GameManager>
         ChangeGameState(GameState.Round);
     }
 
-    private void OnRoundEnded(int round)
+    private void OnRoundCleared(int currentRound)
     {
-        if (round == RoundManager.Instance.ClearRound)
+        if (currentRound == RoundManager.Instance.ClearRound)
         {
             ChangeGameState(GameState.GameClear);
         }
         else
         {
-            ChangeGameState(GameState.Shop);
+            ChangeGameState(GameState.RoundClear);
         }
+    }
+
+    private void OnRoundFailed(int currentRound)
+    {
+        ChangeGameState(GameState.RoundFail);
     }
     #endregion
 
@@ -117,6 +126,7 @@ public class GameManager : Singleton<GameManager>
         yield return WaitForStateTaskComplete(currentGameState);
 
         currentGameState = state;
+        UnityEngine.Debug.Log($"Game State Changed: {currentGameState}");
         OnGameStateChanged?.Invoke(currentGameState);
     }
     #endregion

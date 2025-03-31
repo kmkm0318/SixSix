@@ -7,18 +7,22 @@ public class RoundManager : Singleton<RoundManager>
     public int ClearRound => clearRound;
 
     public event Action<int> OnRoundStarted;
-    public event Action<int> OnRoundEnded;
-    public event Action<int> OnTargetScoreUpdated;
+    public event Action<int> OnRoundCleared;
+    public event Action<int> OnRoundFailed;
 
     private int currentRound = 0;
     public int CurrentRound => currentRound;
 
-    private int targetScore;
-    public int TargetScore => targetScore;
-
     void Start()
     {
+        RegisterEvents();
+    }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        ScoreManager.Instance.OnCurrentScoreUpdated += OnCurrentScoreUpdated;
     }
 
     private void OnGameStateChanged(GameManager.GameState state)
@@ -29,35 +33,35 @@ public class RoundManager : Singleton<RoundManager>
         }
     }
 
+    private void OnCurrentScoreUpdated(int score)
+    {
+        if (score <= 0) return;
+
+        if (score >= ScoreManager.Instance.TargetRoundScore)
+        {
+            ClearCurrentRound();
+        }
+        else if (PlayManager.Instance.PlayRemain == 0)
+        {
+            FailCurrentRound();
+        }
+    }
+    #endregion
+
     private void StartNextRound()
     {
         currentRound++;
-        UpdateTargetScore();
+        Debug.Log($"Round {currentRound} started.");
         OnRoundStarted?.Invoke(CurrentRound);
     }
 
-    private void EndCurrentRound()
+    private void ClearCurrentRound()
     {
-        OnRoundEnded?.Invoke(CurrentRound);
+        OnRoundCleared?.Invoke(CurrentRound);
     }
 
-    private void UpdateTargetScore()
+    private void FailCurrentRound()
     {
-        int baseScore = (int)(100 * Mathf.Pow(3, currentRound / 5));
-        float multiplier = 1f + currentRound % 5 * 0.5f;
-        int score = (int)(baseScore * multiplier);
-
-        int digits = (int)Mathf.Floor(Mathf.Log10(score)) + 1;
-        if (digits > 2)
-        {
-            int divisor = (int)Mathf.Pow(10, digits - 2);
-            targetScore = score / divisor * divisor;
-        }
-        else
-        {
-            targetScore = score;
-        }
-
-        OnTargetScoreUpdated?.Invoke(TargetScore);
+        OnRoundFailed?.Invoke(CurrentRound);
     }
 }

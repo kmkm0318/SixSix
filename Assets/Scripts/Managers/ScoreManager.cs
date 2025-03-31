@@ -1,15 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
     public event Action<Dictionary<HandCategory, ScorePair>> OnHandCategoryScoreUpdated;
     private Dictionary<HandCategory, ScorePair> handCategoryScoreDictionary = new();
 
+    public event Action<int> OnCurrentScoreUpdated;
+    public event Action<int> OnTargetScoreUpdated;
+
+    private int currentRoundScore;
+    public int CurrentRoundScore => currentRoundScore;
+
+    private int targetRoundScore;
+    public int TargetRoundScore => targetRoundScore;
+
     private void Start()
     {
+        RegisterEvents();
+    }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
+        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
+    }
+
+    private void OnRoundStarted(int currentRound)
+    {
+        UpdateCurrentRoundScore(0);
+        UpdateTargetRoundScore(currentRound);
     }
 
     private void OnRollCompleted()
@@ -18,7 +41,9 @@ public class ScoreManager : Singleton<ScoreManager>
         UpdateHandCategoryScoreDictionary(playDiceValues);
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
     }
+    #endregion
 
+    #region CalculateHandCategoryScore
     private void UpdateHandCategoryScoreDictionary(List<int> diceValues)
     {
         if (diceValues == null || diceValues.Count == 0) return;
@@ -144,4 +169,38 @@ public class ScoreManager : Singleton<ScoreManager>
             handCategoryScoreDictionary[HandCategory.SixSix] = scorePair;
         }
     }
+    #endregion
+
+    #region UpdateScore
+    private void UpdateCurrentRoundScore(int score)
+    {
+        currentRoundScore = score;
+        OnCurrentScoreUpdated?.Invoke(currentRoundScore);
+    }
+
+    private void UpdateTargetRoundScore(int currentRound)
+    {
+        int roundIdx = currentRound - 1;
+        if (roundIdx < 0) return;
+
+        int baseScore = (int)(100 * Mathf.Pow(3, roundIdx / 5));
+        float multiplier = 1f + roundIdx % 5 * 0.5f;
+        int score = (int)(baseScore * multiplier);
+
+        int digits = (int)Mathf.Floor(Mathf.Log10(score)) + 1;
+        if (digits > 2)
+        {
+            int divisor = (int)Mathf.Pow(10, digits - 2);
+            targetRoundScore = score / divisor * divisor;
+        }
+        else
+        {
+            targetRoundScore = score;
+        }
+
+        Debug.Log($"Target Round Score: {targetRoundScore}");
+
+        OnTargetScoreUpdated?.Invoke(TargetRoundScore);
+    }
+    #endregion
 }

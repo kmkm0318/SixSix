@@ -21,7 +21,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     private void Start()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-        GameManager.Instance.RegisterStateCheckTask(GameManager.GameState.Loading, LoadingCheckTask);
+        // GameManager.Instance.RegisterStateCheckTask(GameManager.GameState.Loading, LoadingCheckTask);
     }
 
     private void OnGameStateChanged(GameManager.GameState state)
@@ -29,7 +29,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         if (state == GameManager.GameState.Loading)
         {
             isLoadingTaskComplete = false;
-            StartCoroutine(FirstDiceGenerate());
+            AnimationSequenceManager.Instance.AddAnimation(FirstDiceGenerate());
         }
     }
 

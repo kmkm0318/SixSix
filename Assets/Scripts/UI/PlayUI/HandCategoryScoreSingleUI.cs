@@ -13,9 +13,8 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
     [SerializeField] private Color focusedColor;
     [SerializeField] private Color unfocusedColor;
 
-    public event Action<HandCategorySO> OnButtonPressed;
+    public event Action<ScorePair> OnButtonPressed;
 
-    private HandCategorySO handCategorySO;
     private ScorePair scorePair;
     private bool isActive = true;
     private bool IsActive
@@ -35,16 +34,15 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
 
     public void Init(HandCategorySO handCategorySO)
     {
-        this.handCategorySO = handCategorySO;
-
         nameText.text = handCategorySO.handCategoryName;
-        baseScoreText.text = "0";
-        multiplierText.text = "0";
+
+        UpdateScore(new(0, 0));
 
         OnUnfocused();
+
         button.onClick.AddListener(() =>
         {
-            OnButtonPressed?.Invoke(handCategorySO);
+            HandCategoryScoreUI.Instance.SelectHandCategory(scorePair);
         });
     }
 

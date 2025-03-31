@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     [SerializeField] private RectTransform layoutPanel;
     [SerializeField] private float scrollDuration;
     [SerializeField] private Vector2 targetScrollAnchoredPosition;
+
+    public event Action<ScorePair> OnHandCategorySelected;
 
     private Dictionary<HandCategory, HandCategoryScoreSingleUI> handCategoryScoreSingleUIDict = new();
 
@@ -50,5 +53,10 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     private void ScrollLayoutPanel()
     {
         layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
+    }
+
+    public void SelectHandCategory(ScorePair scorePair)
+    {
+        OnHandCategorySelected?.Invoke(scorePair);
     }
 }
