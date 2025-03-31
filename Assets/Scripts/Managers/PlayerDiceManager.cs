@@ -16,32 +16,17 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public List<Dice> PlayDiceList => playDiceList;
     private List<Dice> availityDiceList = new();
     public List<Dice> AvailityDiceList => availityDiceList;
-    private bool isLoadingTaskComplete = false;
 
     private void Start()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-        // GameManager.Instance.RegisterStateCheckTask(GameManager.GameState.Loading, LoadingCheckTask);
     }
 
     private void OnGameStateChanged(GameManager.GameState state)
     {
         if (state == GameManager.GameState.Loading)
         {
-            isLoadingTaskComplete = false;
-            AnimationSequenceManager.Instance.AddAnimation(FirstDiceGenerate());
-        }
-    }
-
-    private bool LoadingCheckTask()
-    {
-        if (GameManager.Instance.CurrentGameState == GameManager.GameState.Loading)
-        {
-            return isLoadingTaskComplete;
-        }
-        else
-        {
-            return true;
+            SequenceManager.Instance.AddCoroutine(FirstDiceGenerate());
         }
     }
 
@@ -55,7 +40,6 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
             Instance.AddPlayDice(dice);
         }
-        isLoadingTaskComplete = true;
 
         OnFirstDiceGenerated?.Invoke();
     }

@@ -22,7 +22,7 @@ public class RoundManager : Singleton<RoundManager>
     private void RegisterEvents()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-        ScoreManager.Instance.OnCurrentScoreUpdated += OnCurrentScoreUpdated;
+        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
     }
 
     private void OnGameStateChanged(GameManager.GameState state)
@@ -33,7 +33,7 @@ public class RoundManager : Singleton<RoundManager>
         }
     }
 
-    private void OnCurrentScoreUpdated(int score)
+    private void OnCurrentRoundScoreUpdated(int score)
     {
         if (score <= 0) return;
 

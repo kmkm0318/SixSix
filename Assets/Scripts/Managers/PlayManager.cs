@@ -7,7 +7,6 @@ public class PlayManager : Singleton<PlayManager>
 
     public event Action<int> OnPlayStarted;
     public event Action<int> OnPlayEnded;
-    public event Action OnHandPlayed;
 
     private int playRemain = 0;
     public int PlayRemain => playRemain;
@@ -20,39 +19,25 @@ public class PlayManager : Singleton<PlayManager>
     private void RegisterEvents()
     {
         RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
-        RoundManager.Instance.OnRoundFailed += OnRoundFailed;
+        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
     }
 
     private void OnRoundStarted(int currentRound)
     {
-        InitPlay();
-    }
-
-    private void OnRoundCleared(int currentRound)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnRoundFailed(int currentRound)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void InitPlay()
-    {
         playRemain = playMax;
-        StartNextPlay();
-    }
-
-    private void StartNextPlay()
-    {
         OnPlayStarted?.Invoke(playRemain);
     }
 
-    private void EndCurrentPlay()
+    private void OnCurrentRoundScoreUpdated(int score)
     {
+        if (score <= 0) return;
         playRemain--;
+
         OnPlayEnded?.Invoke(playRemain);
+
+        if (playRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
+        {
+            OnPlayStarted?.Invoke(playRemain);
+        }
     }
 }

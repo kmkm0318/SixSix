@@ -8,8 +8,9 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<Dictionary<HandCategory, ScorePair>> OnHandCategoryScoreUpdated;
     private Dictionary<HandCategory, ScorePair> handCategoryScoreDictionary = new();
 
-    public event Action<int> OnCurrentScoreUpdated;
-    public event Action<int> OnTargetScoreUpdated;
+    public event Action<int> OnCurrentRoundScoreUpdated;
+    public event Action<int> OnTargetRoundScoreUpdated;
+    public event Action<int> OnPlayScoreUpdated;
 
     private int currentRoundScore;
     public int CurrentRoundScore => currentRoundScore;
@@ -27,12 +28,18 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         RoundManager.Instance.OnRoundStarted += OnRoundStarted;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
+        HandCategoryScoreUI.Instance.OnHandCategorySelected += OnHandCategorySelected;
     }
 
     private void OnRoundStarted(int currentRound)
     {
         UpdateCurrentRoundScore(0);
         UpdateTargetRoundScore(currentRound);
+    }
+
+    private void OnHandCategorySelected(ScorePair pair)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnRollCompleted()
@@ -175,7 +182,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private void UpdateCurrentRoundScore(int score)
     {
         currentRoundScore = score;
-        OnCurrentScoreUpdated?.Invoke(currentRoundScore);
+        OnCurrentRoundScoreUpdated?.Invoke(currentRoundScore);
     }
 
     private void UpdateTargetRoundScore(int currentRound)
@@ -187,7 +194,7 @@ public class ScoreManager : Singleton<ScoreManager>
         float multiplier = 1f + roundIdx % 5 * 0.5f;
         int score = (int)(baseScore * multiplier);
 
-        int digits = (int)Mathf.Floor(Mathf.Log10(score)) + 1;
+        int digits = score.ToString().Length;
         if (digits > 2)
         {
             int divisor = (int)Mathf.Pow(10, digits - 2);
@@ -200,7 +207,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         Debug.Log($"Target Round Score: {targetRoundScore}");
 
-        OnTargetScoreUpdated?.Invoke(TargetRoundScore);
+        OnTargetRoundScoreUpdated?.Invoke(TargetRoundScore);
     }
     #endregion
 }
