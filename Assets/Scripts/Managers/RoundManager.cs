@@ -9,9 +9,19 @@ public class RoundManager : Singleton<RoundManager>
     public event Action<int> OnRoundStarted;
     public event Action<int> OnRoundCleared;
     public event Action<int> OnRoundFailed;
+    public event Action<int> CurrentRoundUpdated;
 
     private int currentRound = 0;
-    public int CurrentRound => currentRound;
+    public int CurrentRound
+    {
+        get => currentRound;
+        private set
+        {
+            if (currentRound == value) return;
+            currentRound = value;
+            CurrentRoundUpdated?.Invoke(currentRound);
+        }
+    }
 
     void Start()
     {
@@ -22,26 +32,24 @@ public class RoundManager : Singleton<RoundManager>
     private void RegisterEvents()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
+        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
     }
 
-    private void OnGameStateChanged(GameManager.GameState state)
+    private void OnGameStateChanged(GameState state)
     {
-        if (state == GameManager.GameState.Round)
+        if (state == GameState.Round)
         {
             StartNextRound();
         }
     }
 
-    private void OnCurrentRoundScoreUpdated(int score)
+    private void OnPlayEnded(int playRemain)
     {
-        if (score <= 0) return;
-
-        if (score >= ScoreManager.Instance.TargetRoundScore)
+        if (ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore)
         {
             ClearCurrentRound();
         }
-        else if (PlayManager.Instance.PlayRemain == 0)
+        else if (playRemain == 0)
         {
             FailCurrentRound();
         }
@@ -50,14 +58,18 @@ public class RoundManager : Singleton<RoundManager>
 
     private void StartNextRound()
     {
-        currentRound++;
-        Debug.Log($"Round {currentRound} started.");
+        CurrentRound++;
         OnRoundStarted?.Invoke(CurrentRound);
     }
 
     private void ClearCurrentRound()
     {
         OnRoundCleared?.Invoke(CurrentRound);
+
+        if (CurrentRound < clearRound)
+        {
+            StartNextRound();
+        }
     }
 
     private void FailCurrentRound()

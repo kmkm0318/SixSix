@@ -8,15 +8,86 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<Dictionary<HandCategory, ScorePair>> OnHandCategoryScoreUpdated;
     private Dictionary<HandCategory, ScorePair> handCategoryScoreDictionary = new();
 
-    public event Action<int> OnCurrentRoundScoreUpdated;
     public event Action<int> OnTargetRoundScoreUpdated;
-    public event Action<int> OnPlayScoreUpdated;
+    public event Action<int> OnCurrentRoundScoreUpdated;
+    public event Action<int> TargetRoundScoreUpdated;
+    public event Action<int> CurrentRoundScoreUpdated;
+    public event Action<int> PlayScoreUpdated;
+    public event Action<ScorePair> ScorePairUpdated;
+    public event Action<int> BaseScoreUpdated;
+    public event Action<int> MultiplierUpdated;
 
-    private int currentRoundScore;
-    public int CurrentRoundScore => currentRoundScore;
+    private int targetRoundScore = 0;
+    public int TargetRoundScore
+    {
+        get => targetRoundScore;
+        private set
+        {
+            if (targetRoundScore == value) return;
+            targetRoundScore = value;
+            TargetRoundScoreUpdated?.Invoke(targetRoundScore);
+        }
+    }
 
-    private int targetRoundScore;
-    public int TargetRoundScore => targetRoundScore;
+    private int currentRoundScore = 0;
+    public int CurrentRoundScore
+    {
+        get => currentRoundScore;
+        private set
+        {
+            if (currentRoundScore == value) return;
+            currentRoundScore = value;
+            CurrentRoundScoreUpdated?.Invoke(currentRoundScore);
+        }
+    }
+
+    private int playScore = 0;
+    public int PlayScore
+    {
+        get => playScore;
+        private set
+        {
+            if (playScore == value) return;
+            playScore = value;
+            PlayScoreUpdated?.Invoke(playScore);
+        }
+    }
+
+    private ScorePair scorePair = new(0, 0);
+    public ScorePair ScorePair
+    {
+        get => scorePair;
+        private set
+        {
+            if (scorePair.Equals(value)) return;
+            scorePair = value;
+            ScorePairUpdated?.Invoke(scorePair);
+        }
+    }
+
+    private int baseScore = 0;
+    public int BaseScore
+    {
+        get => baseScore;
+        private set
+        {
+            if (baseScore == value) return;
+            baseScore = value;
+            BaseScoreUpdated?.Invoke(baseScore);
+        }
+    }
+
+    private int multiplier = 0;
+    public int Multiplier
+    {
+        get => multiplier;
+        private set
+        {
+            if (multiplier == value) return;
+            multiplier = value;
+            MultiplierUpdated?.Invoke(multiplier);
+        }
+    }
 
     private void Start()
     {
@@ -27,19 +98,19 @@ public class ScoreManager : Singleton<ScoreManager>
     private void RegisterEvents()
     {
         RoundManager.Instance.OnRoundStarted += OnRoundStarted;
+        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
         HandCategoryScoreUI.Instance.OnHandCategorySelected += OnHandCategorySelected;
     }
 
     private void OnRoundStarted(int currentRound)
     {
-        UpdateCurrentRoundScore(0);
         UpdateTargetRoundScore(currentRound);
     }
 
-    private void OnHandCategorySelected(ScorePair pair)
+    private void OnRoundCleared(int currentRound)
     {
-        throw new NotImplementedException();
+        UpdateCurrentRoundScore(0);
     }
 
     private void OnRollCompleted()
@@ -47,6 +118,22 @@ public class ScoreManager : Singleton<ScoreManager>
         var playDiceValues = PlayerDiceManager.Instance.GetPlayDiceValues();
         UpdateHandCategoryScoreDictionary(playDiceValues);
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
+    }
+
+    private void OnHandCategorySelected(ScorePair pair)
+    {
+        ScorePair = pair;
+        PlayScore = ScorePair.baseScore * ScorePair.multiplier;
+        ScorePair = new();
+
+        if (CheckAddOverFlow(CurrentRoundScore, PlayScore))
+        {
+            UpdateCurrentRoundScore(int.MaxValue);
+        }
+        else
+        {
+            UpdateCurrentRoundScore(CurrentRoundScore + PlayScore);
+        }
     }
     #endregion
 
@@ -181,8 +268,10 @@ public class ScoreManager : Singleton<ScoreManager>
     #region UpdateScore
     private void UpdateCurrentRoundScore(int score)
     {
-        currentRoundScore = score;
-        OnCurrentRoundScoreUpdated?.Invoke(currentRoundScore);
+        CurrentRoundScore = score;
+        PlayScore = 0;
+
+        OnCurrentRoundScoreUpdated?.Invoke(CurrentRoundScore);
     }
 
     private void UpdateTargetRoundScore(int currentRound)
@@ -198,16 +287,48 @@ public class ScoreManager : Singleton<ScoreManager>
         if (digits > 2)
         {
             int divisor = (int)Mathf.Pow(10, digits - 2);
-            targetRoundScore = score / divisor * divisor;
+            TargetRoundScore = score / divisor * divisor;
         }
         else
         {
-            targetRoundScore = score;
+            TargetRoundScore = score;
         }
 
-        Debug.Log($"Target Round Score: {targetRoundScore}");
-
         OnTargetRoundScoreUpdated?.Invoke(TargetRoundScore);
+    }
+    #endregion
+
+    #region CheckOverflow
+    private bool CheckAddOverFlow(int value, int addValue)
+    {
+        try
+        {
+            checked
+            {
+                int result = value + addValue;
+                return result < 0 || result > int.MaxValue;
+            }
+        }
+        catch (OverflowException)
+        {
+            return true;
+        }
+    }
+
+    private bool CheckMultiplyOverFlow(int value, int multiplyValue)
+    {
+        try
+        {
+            checked
+            {
+                int result = value * multiplyValue;
+                return result < 0 || result > int.MaxValue;
+            }
+        }
+        catch (OverflowException)
+        {
+            return true;
+        }
     }
     #endregion
 }

@@ -22,9 +22,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
     }
 
-    private void OnGameStateChanged(GameManager.GameState state)
+    private void OnGameStateChanged(GameState state)
     {
-        if (state == GameManager.GameState.Loading)
+        if (state == GameState.Loading)
         {
             SequenceManager.Instance.AddCoroutine(FirstDiceGenerate());
         }

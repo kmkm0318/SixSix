@@ -19,8 +19,6 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     {
         Init();
         ScoreManager.Instance.OnHandCategoryScoreUpdated += OnHandCategoryScoreUpdated;
-
-        Invoke(nameof(ScrollLayoutPanel), 1f);
     }
 
     private void Init()

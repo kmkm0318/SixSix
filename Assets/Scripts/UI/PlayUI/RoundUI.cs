@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class RoundUI : MonoBehaviour
 {
@@ -29,35 +30,74 @@ public class RoundUI : MonoBehaviour
 
     private void RegisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        ScoreManager.Instance.OnTargetRoundScoreUpdated += OnTargetRoundScoreUpdated;
-        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
+        RoundManager.Instance.CurrentRoundUpdated += CurrentRoundUpdated;
+        ScoreManager.Instance.TargetRoundScoreUpdated += TargetRoundScoreUpdated;
+        ScoreManager.Instance.CurrentRoundScoreUpdated += CurrentRoundScoreUpdated;
+        ScoreManager.Instance.PlayScoreUpdated += PlayScoreUpdated;
+        ScoreManager.Instance.ScorePairUpdated += ScorePairUpdated;
+        ScoreManager.Instance.BaseScoreUpdated += BaseScoreUpdated;
+        ScoreManager.Instance.MultiplierUpdated += MultiplierUpdated;
     }
 
-    private void OnRoundStarted(int score)
+    private void CurrentRoundUpdated(int currnetRound)
     {
-        currentRoundText.text = score.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
-        if (currentRoundText.TryGetComponent(out RectTransform rectTransform))
+        string newText = currnetRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
+
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText, UIAnimationType.Shake));
+    }
+
+    private void TargetRoundScoreUpdated(int score)
+    {
+        string newText = score.ToString();
+
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText, UIAnimationType.Shake));
+    }
+
+    private void CurrentRoundScoreUpdated(int score)
+    {
+        string newText = score.ToString();
+
+        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText, UIAnimationType.Shake));
+        if (score == 0)
         {
-            UIAnimationManager.Instance.AddAnimation(rectTransform, UIAnimationManager.AnimationType.Shake);
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 
-    private void OnTargetRoundScoreUpdated(int score)
+    private void PlayScoreUpdated(int score)
     {
-        targetRoundScoreText.text = score.ToString();
-        if (targetRoundScoreText.TryGetComponent(out RectTransform rectTransform))
+        string newText = score.ToString();
+
+        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText, UIAnimationType.Shake));
+        if (score == 0)
         {
-            UIAnimationManager.Instance.AddAnimation(rectTransform, UIAnimationManager.AnimationType.Shake);
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 
-    private void OnCurrentRoundScoreUpdated(int score)
+    private void ScorePairUpdated(ScorePair pair)
     {
-        currentRoundScoreText.text = score.ToString();
-        if (currentRoundScoreText.TryGetComponent(out RectTransform rectTransform))
-        {
-            UIAnimationManager.Instance.AddAnimation(rectTransform, UIAnimationManager.AnimationType.Shake);
-        }
+        string baseScore = pair.baseScore.ToString();
+        string multiplier = pair.multiplier.ToString();
+
+        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(multiplierText, multiplier, UIAnimationType.Shake));
+        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(baseScoreText, baseScore, UIAnimationType.Shake));
+        SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void BaseScoreUpdated(int score)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void MultiplierUpdated(int score)
+    {
+        throw new NotImplementedException();
+    }
+
+    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText, UIAnimationType animationType = UIAnimationType.None)
+    {
+        textComponent.text = newText;
+        yield return UIAnimationManager.Instance.PlayAnimation(textComponent, animationType);
     }
 }

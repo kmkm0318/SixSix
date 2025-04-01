@@ -1,19 +1,19 @@
 using System;
 using System.Collections;
 
+public enum GameState
+{
+    None,
+    Loading,
+    Round,
+    RoundClear,
+    RoundFail,
+    Shop,
+    GameClear,
+}
+
 public class GameManager : Singleton<GameManager>
 {
-    public enum GameState
-    {
-        None,
-        Loading,
-        Round,
-        RoundClear,
-        RoundFail,
-        Shop,
-        GameClear,
-    }
-
     public event Action<GameState> OnGameStateChanged;
 
     private GameState currentGameState = GameState.None;
@@ -24,8 +24,6 @@ public class GameManager : Singleton<GameManager>
         {
             if (currentGameState == value) return;
             currentGameState = value;
-
-            UnityEngine.Debug.Log($"Game State Changed: {currentGameState}");
             OnGameStateChanged?.Invoke(currentGameState);
         }
     }
