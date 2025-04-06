@@ -17,6 +17,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<int> BaseScoreUpdated;
     public event Action<int> MultiplierUpdated;
     public event Action<ScorePair, Transform> OnScoreApplied;
+    public event Action OnDiceScoreApplied;
 
     private int targetRoundScore = 0;
     public int TargetRoundScore
@@ -109,7 +110,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void OnRollCompleted()
     {
-        var playDiceValues = PlayerDiceManager.Instance.GetPlayDiceValues();
+        var playDiceValues = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
         UpdateHandCategoryScoreDictionary(playDiceValues);
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
     }
@@ -288,7 +289,7 @@ public class ScoreManager : Singleton<ScoreManager>
         int roundIdx = currentRound - 1;
         if (roundIdx < 0) return;
 
-        int baseScore = (int)(500 * Mathf.Pow(5, roundIdx / 5));
+        int baseScore = (int)(100 * Mathf.Pow(6, roundIdx / 5));
         float multiplier = 1f + roundIdx % 5 * 0.5f;
         int score = (int)(baseScore * multiplier);
 

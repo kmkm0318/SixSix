@@ -785,6 +785,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0705f894ca7eec34a9a465a157a72e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bonusTargetScoreList:
+  - type: 0
+    score: 63
+  - type: 1
+    score: 84
+  - type: 2
+    score: 105
 --- !u!1 &270852938
 GameObject:
   m_ObjectHideFlags: 0
@@ -4722,7 +4729,7 @@ MonoBehaviour:
   playDicePrefab: {fileID: 8564118157946286683, guid: 8b116fc676d4a504ba40a0b757b9e1e0, type: 3}
   availityDicePrefab: {fileID: -2639352970907438714, guid: 5553ae48f57cf21418eb9dc67d83e145, type: 3}
   playboard: {fileID: 1471330191}
-  firstdiceCount: 5
+  firstdiceCount: 6
   diceGenerateDelay: 0.25
 --- !u!1 &1461702461
 GameObject:

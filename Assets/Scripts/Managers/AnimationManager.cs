@@ -50,7 +50,9 @@ public class AnimationManager : Singleton<AnimationManager>
 
     private IEnumerator PlayShakeAnimation(Transform transform)
     {
-        var currentTween = transform.DOShakeRotation(0.5f, new Vector3(0, 0, 30), 25, 90, true, ShakeRandomnessMode.Harmonic);
+        var currentTween =
+        transform
+        .DOShakeRotation(0.5f, new Vector3(0, 0, 30), 25, 90, true, ShakeRandomnessMode.Harmonic);
         yield return currentTween.WaitForCompletion();
     }
 

@@ -69,13 +69,14 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         return orderedList;
     }
 
-    public List<int> GetPlayDiceValues()
+    public List<int> GetOrderedPlayDiceValues()
     {
         List<int> playDiceValues = new();
         foreach (Dice dice in playDiceList)
         {
             playDiceValues.Add(dice.FaceIndex + 1);
         }
+        playDiceValues.Sort();
         return playDiceValues;
     }
 }

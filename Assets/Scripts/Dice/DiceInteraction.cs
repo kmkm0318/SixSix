@@ -13,8 +13,13 @@ public class DiceInteraction : MonoBehaviour, IClickable
         get => isInteractable;
         set
         {
+            if (isInteractable == value) return;
             isInteractable = value;
-            if (!value && isMouseOver)
+            if (value && isMouseOver)
+            {
+                OnMouseEntered?.Invoke();
+            }
+            else if (!value && isMouseOver)
             {
                 OnMouseExited?.Invoke();
             }
@@ -52,17 +57,19 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
     void OnMouseEnter()
     {
+        isMouseOver = true;
+
         if (!IsInteractable) return;
 
-        isMouseOver = true;
         OnMouseEntered?.Invoke();
     }
 
     void OnMouseExit()
     {
+        isMouseOver = false;
+
         if (!IsInteractable) return;
 
-        isMouseOver = false;
         OnMouseExited?.Invoke();
     }
 

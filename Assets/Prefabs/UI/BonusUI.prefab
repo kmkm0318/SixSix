@@ -217,7 +217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -248,8 +248,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -534,8 +534,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -1094,8 +1094,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -1382,8 +1382,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2015,7 +2015,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -2046,8 +2046,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2262,6 +2262,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0deeb31ba23e2f344b0d6ba73f1effa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceCountTextList:
+  - {fileID: 3070927207906762068}
+  - {fileID: 6441016019161527691}
+  - {fileID: 2576199101787420599}
+  - {fileID: 3165093824105543638}
+  - {fileID: 8513076805212995053}
+  - {fileID: 8041804517241324573}
+  bonusTargetTextList:
+  - type: 0
+    text: {fileID: 6287046083972061228}
+  - type: 1
+    text: {fileID: 4547027655856958543}
+  - type: 2
+    text: {fileID: 890316882675090820}
 --- !u!1 &6425234716850374314
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +3007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
   m_sharedMaterial: {fileID: -181520498555500930, guid: 4220027f1e9c083428bb33d8f6b82be8, type: 2}
@@ -3024,8 +3038,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 16
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

@@ -34,20 +34,26 @@ public class PlayManager : Singleton<PlayManager>
 
     private void OnTargetRoundScoreUpdated(int score)
     {
-        PlayRemain = playMax;
-        OnPlayStarted?.Invoke(PlayRemain);
+        SequenceManager.Instance.ExecuteLater(() =>
+        {
+            PlayRemain = playMax;
+            OnPlayStarted?.Invoke(PlayRemain);
+        });
     }
 
     private void OnCurrentRoundScoreUpdated(int score)
     {
-        if (score <= 0) return;
-        PlayRemain--;
-
-        OnPlayEnded?.Invoke(PlayRemain);
-
-        if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
+        SequenceManager.Instance.ExecuteLater(() =>
         {
-            OnPlayStarted?.Invoke(PlayRemain);
-        }
+            if (score <= 0) return;
+            PlayRemain--;
+
+            OnPlayEnded?.Invoke(PlayRemain);
+
+            if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
+            {
+                OnPlayStarted?.Invoke(PlayRemain);
+            }
+        });
     }
 }

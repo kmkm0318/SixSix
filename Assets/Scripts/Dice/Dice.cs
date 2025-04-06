@@ -58,7 +58,7 @@ public class Dice : MonoBehaviour
         }
 
         faceIndex = 0;
-        faceIndexMax = maxValue - 1;
+        faceIndexMax = maxValue;
 
         SetFace(faceIndex);
 

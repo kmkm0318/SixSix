@@ -21,13 +21,7 @@ public class RoundClearManager : Singleton<RoundClearManager>
         if (state == GameState.RoundClear)
         {
             OnRoundClearStarted?.Invoke();
-            StartCoroutine(DelayOneFrame());
+            SequenceManager.Instance.ExecuteLater(() => OnRoundClearEnded?.Invoke());
         }
-    }
-
-    private IEnumerator DelayOneFrame()
-    {
-        yield return null;
-        OnRoundClearEnded?.Invoke();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,23 @@ public class SequenceManager : Singleton<SequenceManager>
         {
             StartCoroutine(PlaySequentialCoroutines());
         }
+    }
+
+    public void ExecuteLater(Action action)
+    {
+        if (action == null)
+        {
+            Debug.LogWarning("Action is null. Cannot add to the queue.");
+            return;
+        }
+
+        StartCoroutine(ExecuteOneFrameLater(action));
+    }
+
+    private IEnumerator ExecuteOneFrameLater(Action action)
+    {
+        yield return null;
+        action?.Invoke();
     }
 
     public void ApplyParallelCoroutine()
