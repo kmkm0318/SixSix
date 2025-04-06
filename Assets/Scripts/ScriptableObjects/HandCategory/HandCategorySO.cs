@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(fileName = "HandCategorySO", menuName = "Scriptable Objects/HandCategorySO")]
 public class HandCategorySO : ScriptableObject

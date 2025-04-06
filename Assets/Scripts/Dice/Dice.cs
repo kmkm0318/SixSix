@@ -37,26 +37,24 @@ public class Dice : MonoBehaviour
         diceInteraction.OnMouseClicked += () => IsKeeped = !IsKeeped;
 
         PlayManager.Instance.OnPlayStarted += (_) => { IsKeeped = false; };
-        PlayManager.Instance.OnPlayEnded += (_) => { IsKeeped = true; };
-        RollManager.Instance.OnRollCompleted += () => { IsKeeped = false; };
     }
 
     private void OnDiceCollided()
     {
-        if (!IsKeeped)
+        if (IsRolling && !IsKeeped)
         {
             ChangeFace(1);
         }
     }
 
-    public void Init(int maxValue, Playboard playboard)
+    public void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
         faces = new DiceFace[maxValue];
 
         for (int i = 0; i < faces.Length; i++)
         {
             faces[i] = new();
-            faces[i].Init(i + 1, DataContainer.Instance.DefaultDiceList.diceFaceList[i]);
+            faces[i].Init(i + 1, diceFaceSpriteListSO.diceFaceList[i]);
         }
 
         faceIndex = 0;

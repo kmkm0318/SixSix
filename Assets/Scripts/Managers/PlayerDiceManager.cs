@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class PlayerDiceManager : Singleton<PlayerDiceManager>
 {
-    [SerializeField] private Dice dicePrefab;
+    [SerializeField] private PlayDice playDicePrefab;
+    [SerializeField] private AvailityDice availityDicePrefab;
     [SerializeField] private Playboard playboard;
     [SerializeField] private int firstdiceCount = 5;
     [SerializeField] private float diceGenerateDelay = 0.25f;
 
     public event Action OnFirstDiceGenerated;
 
-    private List<Dice> playDiceList = new();
-    public List<Dice> PlayDiceList => playDiceList;
-    private List<Dice> availityDiceList = new();
-    public List<Dice> AvailityDiceList => availityDiceList;
+    private List<PlayDice> playDiceList = new();
+    public List<PlayDice> PlayDiceList => playDiceList;
+    private List<AvailityDice> availityDiceList = new();
+    public List<AvailityDice> AvailityDiceList => availityDiceList;
 
     private void Start()
     {
@@ -35,21 +36,23 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         for (int i = 0; i < firstdiceCount; i++)
         {
             yield return new WaitForSeconds(diceGenerateDelay);
-            var dice = Instantiate(dicePrefab, playboard.DiceGeneratePosition, Quaternion.identity);
-            dice.Init(6, playboard);
+            var dice = Instantiate(playDicePrefab, playboard.DiceGeneratePosition, Quaternion.identity);
+            dice.Init(6, DataContainer.Instance.DefaultDiceList, playboard);
 
             Instance.AddPlayDice(dice);
         }
 
+        yield return new WaitUntil(() => AreAllDiceStopped());
+
         OnFirstDiceGenerated?.Invoke();
     }
 
-    private void AddPlayDice(Dice playDice)
+    private void AddPlayDice(PlayDice playDice)
     {
         playDiceList.Add(playDice);
     }
 
-    private void AddAvailityDice(Dice availityDice)
+    private void AddAvailityDice(AvailityDice availityDice)
     {
         availityDiceList.Add(availityDice);
     }
@@ -57,6 +60,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public bool AreAllDiceStopped()
     {
         return playDiceList.TrueForAll(dice => !dice.IsRolling) && availityDiceList.TrueForAll(dice => !dice.IsRolling);
+    }
+
+    public List<PlayDice> GetOrderedPlayDiceList()
+    {
+        List<PlayDice> orderedList = new(playDiceList);
+        orderedList.Sort((a, b) => a.FaceIndex.CompareTo(b.FaceIndex));
+        return orderedList;
     }
 
     public List<int> GetPlayDiceValues()

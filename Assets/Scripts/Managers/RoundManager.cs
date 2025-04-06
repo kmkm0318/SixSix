@@ -65,11 +65,6 @@ public class RoundManager : Singleton<RoundManager>
     private void ClearCurrentRound()
     {
         OnRoundCleared?.Invoke(CurrentRound);
-
-        if (CurrentRound < clearRound)
-        {
-            StartNextRound();
-        }
     }
 
     private void FailCurrentRound()

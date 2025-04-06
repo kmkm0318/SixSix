@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class RoundUI : MonoBehaviour
 {
@@ -43,61 +42,55 @@ public class RoundUI : MonoBehaviour
     {
         string newText = currnetRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText, UIAnimationType.Shake));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText, AnimationType.Shake), true);
     }
 
     private void TargetRoundScoreUpdated(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText, UIAnimationType.Shake));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText, AnimationType.Shake), true);
     }
 
     private void CurrentRoundScoreUpdated(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText, UIAnimationType.Shake));
-        if (score == 0)
-        {
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText, AnimationType.Shake), true);
     }
 
     private void PlayScoreUpdated(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText, UIAnimationType.Shake));
-        if (score == 0)
-        {
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText, AnimationType.Shake), true);
     }
 
     private void ScorePairUpdated(ScorePair pair)
     {
-        string baseScore = pair.baseScore.ToString();
-        string multiplier = pair.multiplier.ToString();
+        BaseScoreUpdated(pair.baseScore);
+        MultiplierUpdated(pair.multiplier);
 
-        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(multiplierText, multiplier, UIAnimationType.Shake));
-        SequenceManager.Instance.AddParallelCoroutine(UpdateTextAndPlayAnimation(baseScoreText, baseScore, UIAnimationType.Shake));
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void BaseScoreUpdated(int score)
     {
-        throw new NotImplementedException();
+        string newText = score.ToString();
+
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(baseScoreText, newText, AnimationType.Shake), true);
     }
 
     private void MultiplierUpdated(int score)
     {
-        throw new NotImplementedException();
+        string newText = score.ToString();
+
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(multiplierText, newText, AnimationType.Shake), true);
     }
 
-    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText, UIAnimationType animationType = UIAnimationType.None)
+    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText, AnimationType animationType = AnimationType.None)
     {
         textComponent.text = newText;
-        yield return UIAnimationManager.Instance.PlayAnimation(textComponent, animationType);
+        yield return AnimationManager.Instance.PlayAnimation(textComponent, animationType);
     }
 }

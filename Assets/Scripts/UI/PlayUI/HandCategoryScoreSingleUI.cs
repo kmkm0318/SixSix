@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,6 +43,8 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
 
         button.onClick.AddListener(() =>
         {
+            if (scorePair.baseScore == 0 && scorePair.multiplier == 0) return;
+
             HandCategoryScoreUI.Instance.SelectHandCategory(scorePair);
         });
     }

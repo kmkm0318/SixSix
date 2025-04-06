@@ -14,11 +14,19 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     public event Action<ScorePair> OnHandCategorySelected;
 
     private Dictionary<HandCategory, HandCategoryScoreSingleUI> handCategoryScoreSingleUIDict = new();
+    private bool isActive = false;
 
     private void Start()
     {
         Init();
+
         ScoreManager.Instance.OnHandCategoryScoreUpdated += OnHandCategoryScoreUpdated;
+
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+
+        RollManager.Instance.OnRollCompleted += () => isActive = true;
+        RollManager.Instance.OnRollStarted += () => isActive = false;
     }
 
     private void Init()
@@ -43,6 +51,16 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         }
     }
 
+    private void OnPlayStarted(int playRemain)
+    {
+        ResetHandCategoryScoreUI();
+    }
+
+    private void OnRoundCleared(int round)
+    {
+        ResetHandCategoryScoreUI();
+    }
+
     public void RebuildLayout()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutPanel);
@@ -55,6 +73,18 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
 
     public void SelectHandCategory(ScorePair scorePair)
     {
+        if (!isActive) return;
+        isActive = false;
+
         OnHandCategorySelected?.Invoke(scorePair);
+    }
+
+    private void ResetHandCategoryScoreUI()
+    {
+        foreach (var pair in handCategoryScoreSingleUIDict)
+        {
+            pair.Value.UpdateScore(new());
+        }
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 }

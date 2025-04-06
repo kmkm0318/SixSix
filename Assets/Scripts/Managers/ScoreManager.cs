@@ -16,6 +16,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<ScorePair> ScorePairUpdated;
     public event Action<int> BaseScoreUpdated;
     public event Action<int> MultiplierUpdated;
+    public event Action<ScorePair, Transform> OnScoreApplied;
 
     private int targetRoundScore = 0;
     public int TargetRoundScore
@@ -59,33 +60,25 @@ public class ScoreManager : Singleton<ScoreManager>
         get => scorePair;
         private set
         {
-            if (scorePair.Equals(value)) return;
+            if (scorePair.baseScore == value.baseScore && scorePair.multiplier == value.multiplier) return;
+
+            bool baseScoreChanged = scorePair.baseScore != value.baseScore;
+            bool multiplierChanged = scorePair.multiplier != value.multiplier;
+
             scorePair = value;
-            ScorePairUpdated?.Invoke(scorePair);
-        }
-    }
 
-    private int baseScore = 0;
-    public int BaseScore
-    {
-        get => baseScore;
-        private set
-        {
-            if (baseScore == value) return;
-            baseScore = value;
-            BaseScoreUpdated?.Invoke(baseScore);
-        }
-    }
-
-    private int multiplier = 0;
-    public int Multiplier
-    {
-        get => multiplier;
-        private set
-        {
-            if (multiplier == value) return;
-            multiplier = value;
-            MultiplierUpdated?.Invoke(multiplier);
+            if (baseScoreChanged && multiplierChanged)
+            {
+                ScorePairUpdated?.Invoke(scorePair);
+            }
+            else if (baseScoreChanged)
+            {
+                BaseScoreUpdated?.Invoke(scorePair.baseScore);
+            }
+            else if (multiplierChanged)
+            {
+                MultiplierUpdated?.Invoke(scorePair.multiplier);
+            }
         }
     }
 
@@ -110,7 +103,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void OnRoundCleared(int currentRound)
     {
-        UpdateCurrentRoundScore(0);
+        CurrentRoundScore = 0;
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void OnRollCompleted()
@@ -123,8 +117,21 @@ public class ScoreManager : Singleton<ScoreManager>
     private void OnHandCategorySelected(ScorePair pair)
     {
         ScorePair = pair;
-        PlayScore = ScorePair.baseScore * ScorePair.multiplier;
+        SequenceManager.Instance.ApplyParallelCoroutine();
+
+        ApplyPlayDiceScore();
+
+        if (CheckMultiplyOverFlow(scorePair.baseScore, scorePair.multiplier))
+        {
+            PlayScore = int.MaxValue;
+        }
+        else
+        {
+            PlayScore = ScorePair.baseScore * ScorePair.multiplier;
+        }
+
         ScorePair = new();
+        SequenceManager.Instance.ApplyParallelCoroutine();
 
         if (CheckAddOverFlow(CurrentRoundScore, PlayScore))
         {
@@ -145,10 +152,10 @@ public class ScoreManager : Singleton<ScoreManager>
         ResetHandCategoryScore();
         var countMap = GetCountMap(diceValues);
 
-        UpdateChoiceScore(countMap);
-        UpdateFourOfAKindScore(diceValues, countMap);
-        UpdateFullHouseScore(diceValues, countMap);
-        UpdateDoubleThreeOfAKindScore(diceValues, countMap);
+        UpdateChoiceScore();
+        UpdateFourOfAKindScore(countMap);
+        UpdateFullHouseScore(countMap);
+        UpdateDoubleThreeOfAKindScore(countMap);
         UpdateStraightScore(countMap);
         UpdateYachtScore(countMap);
         UpdateSixSixScore(countMap);
@@ -180,35 +187,35 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void UpdateChoiceScore(Dictionary<int, int> countMap)
+    private void UpdateChoiceScore()
     {
-        handCategoryScoreDictionary[HandCategory.Choice] = new(countMap.Sum(x => x.Key * x.Value), DataContainer.Instance.GetHandCategorySO(HandCategory.Choice).scorePair.multiplier);
+        handCategoryScoreDictionary[HandCategory.Choice] = DataContainer.Instance.GetHandCategorySO(HandCategory.Choice).scorePair;
     }
 
-    private void UpdateFourOfAKindScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateFourOfAKindScore(Dictionary<int, int> countMap)
     {
         if (countMap.Any(x => x.Value >= 4))
         {
-            handCategoryScoreDictionary[HandCategory.FourOfAKind] = new(diceValues.Sum(), DataContainer.Instance.GetHandCategorySO(HandCategory.FourOfAKind).scorePair.multiplier);
+            handCategoryScoreDictionary[HandCategory.FourOfAKind] = DataContainer.Instance.GetHandCategorySO(HandCategory.FourOfAKind).scorePair;
         }
     }
 
-    private void UpdateFullHouseScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateFullHouseScore(Dictionary<int, int> countMap)
     {
         var hasThreeOrMore = countMap.Any(x => x.Value >= 3);
         var hasAnotherTwoOrMore = countMap.Count(x => x.Value >= 2) >= 2;
         if (hasThreeOrMore && hasAnotherTwoOrMore)
         {
-            handCategoryScoreDictionary[HandCategory.FullHouse] = new(diceValues.Sum(), DataContainer.Instance.GetHandCategorySO(HandCategory.FullHouse).scorePair.multiplier);
+            handCategoryScoreDictionary[HandCategory.FullHouse] = DataContainer.Instance.GetHandCategorySO(HandCategory.FullHouse).scorePair;
         }
     }
 
-    private void UpdateDoubleThreeOfAKindScore(List<int> diceValues, Dictionary<int, int> countMap)
+    private void UpdateDoubleThreeOfAKindScore(Dictionary<int, int> countMap)
     {
         var threeOrMoreCount = countMap.Count(x => x.Value >= 3);
         if (threeOrMoreCount >= 2)
         {
-            handCategoryScoreDictionary[HandCategory.DoubleThreeOfAKind] = new(diceValues.Sum() * 2, DataContainer.Instance.GetHandCategorySO(HandCategory.DoubleThreeOfAKind).scorePair.multiplier);
+            handCategoryScoreDictionary[HandCategory.DoubleThreeOfAKind] = DataContainer.Instance.GetHandCategorySO(HandCategory.DoubleThreeOfAKind).scorePair;
         }
     }
 
@@ -259,7 +266,8 @@ public class ScoreManager : Singleton<ScoreManager>
         if (maxPair.Value >= 6)
         {
             ScorePair scorePair = DataContainer.Instance.GetHandCategorySO(HandCategory.SixSix).scorePair;
-            scorePair.baseScore = maxPair.Key * 111;
+            scorePair.baseScore *= maxPair.Key;
+            scorePair.multiplier *= maxPair.Key;
             handCategoryScoreDictionary[HandCategory.SixSix] = scorePair;
         }
     }
@@ -270,6 +278,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         CurrentRoundScore = score;
         PlayScore = 0;
+        SequenceManager.Instance.ApplyParallelCoroutine();
 
         OnCurrentRoundScoreUpdated?.Invoke(CurrentRoundScore);
     }
@@ -279,7 +288,7 @@ public class ScoreManager : Singleton<ScoreManager>
         int roundIdx = currentRound - 1;
         if (roundIdx < 0) return;
 
-        int baseScore = (int)(100 * Mathf.Pow(3, roundIdx / 5));
+        int baseScore = (int)(500 * Mathf.Pow(5, roundIdx / 5));
         float multiplier = 1f + roundIdx % 5 * 0.5f;
         int score = (int)(baseScore * multiplier);
 
@@ -293,8 +302,102 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             TargetRoundScore = score;
         }
+        SequenceManager.Instance.ApplyParallelCoroutine();
 
         OnTargetRoundScoreUpdated?.Invoke(TargetRoundScore);
+    }
+    #endregion
+
+    #region ApplyDiceScore
+    private void ApplyPlayDiceScore()
+    {
+        var playDiceList = PlayerDiceManager.Instance.GetOrderedPlayDiceList();
+
+        foreach (var playDice in playDiceList)
+        {
+            var scorePiarDiceIndex = playDice.GetScorePairDiceIndexList();
+            foreach (var scorePairDiceIndex in scorePiarDiceIndex)
+            {
+                if (scorePairDiceIndex.Item1.baseScore == 0 && scorePairDiceIndex.Item1.multiplier == 0) continue;
+
+                Dice targetDice;
+                if (scorePairDiceIndex.Item2 == -1)
+                {
+                    targetDice = playDice;
+                }
+                else
+                {
+                    targetDice = playDiceList[scorePairDiceIndex.Item2];
+                }
+                ApplyDiceAnimation(targetDice);
+                ApplyScorePairIndex(scorePairDiceIndex.Item1);
+                ApplyUIAnimation(scorePairDiceIndex.Item1, targetDice.transform);
+                SequenceManager.Instance.ApplyParallelCoroutine();
+            }
+        }
+    }
+
+    private void ApplyDiceAnimation(Dice dice)
+    {
+        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(dice, AnimationType.Shake), true);
+    }
+
+    private void ApplyUIAnimation(ScorePair pair, Transform targetTarnsform)
+    {
+        if (pair.baseScore != 0 || pair.multiplier != 0)
+        {
+            OnScoreApplied?.Invoke(pair, targetTarnsform);
+        }
+    }
+
+    private void ApplyScorePairIndex(ScorePair pair)
+    {
+        bool isBaseScoreZero = pair.baseScore == 0;
+        bool isMultiplierZero = pair.multiplier == 0;
+
+        if (isBaseScoreZero && isMultiplierZero) return;
+
+        if (!isBaseScoreZero)
+        {
+            ApplyBaseScore(pair.baseScore);
+        }
+
+        if (!isMultiplierZero)
+        {
+            ApplyMultiplier(pair.multiplier);
+        }
+    }
+
+    private void ApplyBaseScore(int value)
+    {
+        ScorePair tmp = scorePair;
+
+        if (CheckAddOverFlow(tmp.baseScore, value))
+        {
+            tmp.baseScore = int.MaxValue;
+        }
+        else
+        {
+            tmp.baseScore += value;
+        }
+
+        ScorePair = tmp;
+    }
+
+    private void ApplyMultiplier(int value)
+    {
+        ScorePair tmp = scorePair;
+
+        if (CheckMultiplyOverFlow(tmp.multiplier, value))
+        {
+            tmp.multiplier = int.MaxValue;
+        }
+        else
+        {
+            tmp.multiplier *= value;
+        }
+
+        ScorePair = tmp;
     }
     #endregion
 

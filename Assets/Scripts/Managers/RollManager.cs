@@ -14,10 +14,21 @@ public class RollManager : Singleton<RollManager>
     public event Action<float> OnRollPowerApplied;
     public event Action OnRollStarted;
     public event Action OnRollCompleted;
+    public event Action<int> RollRemainChanged;
 
     public bool IsRolling { get; private set; } = false;
 
     private int rollRemain = 0;
+    public int RollRemain
+    {
+        get => rollRemain;
+        private set
+        {
+            if (rollRemain == value) return;
+            rollRemain = value;
+            RollRemainChanged?.Invoke(rollRemain);
+        }
+    }
     private float rollPower;
     private float powerChangeSpeed;
     private Coroutine ChangingRollPowerCoroutine;
@@ -26,8 +37,15 @@ public class RollManager : Singleton<RollManager>
     {
         powerChangeSpeed = rollPowerMax - rollPowerMin;
 
+
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
         RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
+    }
+
+    private void OnPlayStarted(int playRemain)
+    {
+        RollRemain = rollMax;
     }
 
     private void OnRollButtonPressed()
@@ -72,6 +90,8 @@ public class RollManager : Singleton<RollManager>
     {
         OnRollPowerApplied?.Invoke(rollPower);
         OnRollStarted?.Invoke();
+        RollRemain--;
+
         StartCoroutine(WaitForAllDiceToStop());
     }
 

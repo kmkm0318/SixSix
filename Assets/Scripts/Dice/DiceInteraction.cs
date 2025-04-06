@@ -47,12 +47,12 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
     private void OnRollCompleted()
     {
-        IsInteractable = true;
+        IsInteractable = RollManager.Instance.RollRemain > 0;
     }
 
     void OnMouseEnter()
     {
-        if (!isInteractable) return;
+        if (!IsInteractable) return;
 
         isMouseOver = true;
         OnMouseEntered?.Invoke();
@@ -60,7 +60,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
     void OnMouseExit()
     {
-        if (!isInteractable) return;
+        if (!IsInteractable) return;
 
         isMouseOver = false;
         OnMouseExited?.Invoke();
@@ -68,7 +68,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
     public void OnClick()
     {
-        if (!isInteractable) return;
+        if (!IsInteractable) return;
 
         OnMouseClicked?.Invoke();
     }

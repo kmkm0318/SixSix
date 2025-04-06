@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public enum GameState
 {
@@ -49,6 +50,12 @@ public class GameManager : Singleton<GameManager>
         PlayerDiceManager.Instance.OnFirstDiceGenerated += OnFirstDiceGenerated;
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RoundManager.Instance.OnRoundFailed += OnRoundFailed;
+        RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;
+    }
+
+    private void OnRoundClearEnded()
+    {
+        CurrentGameState = GameState.Round;
     }
 
     private void OnFirstDiceGenerated()

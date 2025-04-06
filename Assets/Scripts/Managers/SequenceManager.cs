@@ -10,29 +10,17 @@ public class SequenceManager : Singleton<SequenceManager>
     private bool isPlaying = false;
     public bool IsPlaying => isPlaying;
 
-    #region AddCoroutine(IEnumerator coroutine)
-    // public void AddCoroutine(IEnumerator coroutine)
-    // {
-    //     if (coroutine == null)
-    //     {
-    //         Debug.LogWarning("Coroutine is null. Cannot add to the queue.");
-    //         return;
-    //     }
-
-    //     sequentialCoroutineQueue.Enqueue(coroutine);
-
-    //     if (!isPlaying)
-    //     {
-    //         StartCoroutine(PlaySequentialCoroutines());
-    //     }
-    // }
-    #endregion
-
-    public void AddCoroutine(params IEnumerator[] coroutines)
+    public void AddCoroutine(IEnumerator coroutine, bool isParallel = false)
     {
-        if (coroutines == null || coroutines.Length == 0)
+        if (coroutine == null)
         {
-            Debug.LogWarning("No coroutines to add to the queue.");
+            Debug.LogWarning("Coroutine is null. Cannot add to the queue.");
+            return;
+        }
+
+        if (isParallel)
+        {
+            parallelCoroutineList.Add(coroutine);
             return;
         }
 
@@ -41,14 +29,7 @@ public class SequenceManager : Singleton<SequenceManager>
             ApplyParallelCoroutine();
         }
 
-        if (coroutines.Length == 1)
-        {
-            sequentialCoroutineQueue.Enqueue(coroutines[0]);
-        }
-        else
-        {
-            sequentialCoroutineQueue.Enqueue(PlayParallelCoroutines(coroutines));
-        }
+        sequentialCoroutineQueue.Enqueue(coroutine);
 
         if (!isPlaying)
         {
@@ -56,16 +37,17 @@ public class SequenceManager : Singleton<SequenceManager>
         }
     }
 
-    public void AddParallelCoroutine(IEnumerator coroutine)
-    {
-        parallelCoroutineList.Add(coroutine);
-    }
-
     public void ApplyParallelCoroutine()
     {
+        if (parallelCoroutineList.Count == 0)
+        {
+            Debug.LogWarning("No parallel coroutines to apply.");
+            return;
+        }
+
         var parallelCoroutineArray = parallelCoroutineList.ToArray();
         parallelCoroutineList.Clear();
-        AddCoroutine(parallelCoroutineArray);
+        AddCoroutine(PlayParallelCoroutines(parallelCoroutineArray));
     }
 
     private IEnumerator PlaySequentialCoroutines()
