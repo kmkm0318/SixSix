@@ -12,7 +12,15 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        PlayManager.Instance.OnPlayStarted += (_) => isActive = true;
+        RegisterEvents();
+    }
+
+    private void RegisterEvents()
+    {
+        PlayManager.Instance.OnPlayStarted += (_) => SequenceManager.Instance.AddCoroutine(() =>
+        {
+            isActive = true;
+        });
         RollManager.Instance.OnRollStarted += () => isActive = false;
         RollManager.Instance.OnRollCompleted += () => isActive = RollManager.Instance.RollRemain > 0;
         PlayManager.Instance.OnPlayEnded += (_) => isActive = false;

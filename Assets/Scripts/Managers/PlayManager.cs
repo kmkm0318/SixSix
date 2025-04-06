@@ -7,7 +7,7 @@ public class PlayManager : Singleton<PlayManager>
 
     public event Action<int> OnPlayStarted;
     public event Action<int> OnPlayEnded;
-    public event Action<int> PlayRemainChanged;
+    public event Action<int> OnPlayRemainChanged;
 
     private int playRemain = 0;
     public int PlayRemain
@@ -17,7 +17,7 @@ public class PlayManager : Singleton<PlayManager>
         {
             if (playRemain == value) return;
             playRemain = value;
-            PlayRemainChanged?.Invoke(playRemain);
+            OnPlayRemainChanged?.Invoke(playRemain);
         }
     }
 
@@ -34,26 +34,20 @@ public class PlayManager : Singleton<PlayManager>
 
     private void OnTargetRoundScoreUpdated(int score)
     {
-        SequenceManager.Instance.ExecuteLater(() =>
-        {
-            PlayRemain = playMax;
-            OnPlayStarted?.Invoke(PlayRemain);
-        });
+        PlayRemain = playMax;
+        OnPlayStarted?.Invoke(PlayRemain);
     }
 
     private void OnCurrentRoundScoreUpdated(int score)
     {
-        SequenceManager.Instance.ExecuteLater(() =>
+        if (score <= 0) return;
+        PlayRemain--;
+
+        OnPlayEnded?.Invoke(PlayRemain);
+
+        if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
         {
-            if (score <= 0) return;
-            PlayRemain--;
-
-            OnPlayEnded?.Invoke(PlayRemain);
-
-            if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
-            {
-                OnPlayStarted?.Invoke(PlayRemain);
-            }
-        });
+            OnPlayStarted?.Invoke(PlayRemain);
+        }
     }
 }

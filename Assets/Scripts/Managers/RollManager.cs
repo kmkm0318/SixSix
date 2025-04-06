@@ -14,7 +14,7 @@ public class RollManager : Singleton<RollManager>
     public event Action<float> OnRollPowerApplied;
     public event Action OnRollStarted;
     public event Action OnRollCompleted;
-    public event Action<int> RollRemainChanged;
+    public event Action<int> OnRollRemainChanged;
 
     public bool IsRolling { get; private set; } = false;
 
@@ -26,7 +26,7 @@ public class RollManager : Singleton<RollManager>
         {
             if (rollRemain == value) return;
             rollRemain = value;
-            RollRemainChanged?.Invoke(rollRemain);
+            OnRollRemainChanged?.Invoke(rollRemain);
         }
     }
     private float rollPower;

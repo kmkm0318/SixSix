@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -17,8 +18,14 @@ public class StateUI : MonoBehaviour
 
     private void RegisterEvents()
     {
-        PlayManager.Instance.PlayRemainChanged += OnPlayRemainChanged;
-        RollManager.Instance.RollRemainChanged += OnRollRemainChanged;
+        MoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
+        PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
+        RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
+    }
+
+    private void OnMoneyChanged(int money)
+    {
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, money.ToString()));
     }
 
     private void OnPlayRemainChanged(int playRemain)

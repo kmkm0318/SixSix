@@ -21,7 +21,7 @@ public class RoundClearManager : Singleton<RoundClearManager>
         if (state == GameState.RoundClear)
         {
             OnRoundClearStarted?.Invoke();
-            SequenceManager.Instance.ExecuteLater(() => OnRoundClearEnded?.Invoke());
+            SequenceManager.Instance.ExecuteLater(() => OnRoundClearEnded?.Invoke()); ;
         }
     }
 }

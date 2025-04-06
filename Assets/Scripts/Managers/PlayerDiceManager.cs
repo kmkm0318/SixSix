@@ -27,7 +27,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         if (state == GameState.Loading)
         {
-            SequenceManager.Instance.AddCoroutine(FirstDiceGenerate());
+            StartCoroutine(FirstDiceGenerate());
         }
     }
 

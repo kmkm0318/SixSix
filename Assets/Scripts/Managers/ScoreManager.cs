@@ -10,14 +10,15 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public event Action<int> OnTargetRoundScoreUpdated;
     public event Action<int> OnCurrentRoundScoreUpdated;
-    public event Action<int> TargetRoundScoreUpdated;
-    public event Action<int> CurrentRoundScoreUpdated;
-    public event Action<int> PlayScoreUpdated;
-    public event Action<ScorePair> ScorePairUpdated;
-    public event Action<int> BaseScoreUpdated;
-    public event Action<int> MultiplierUpdated;
     public event Action<ScorePair, Transform> OnScoreApplied;
     public event Action OnDiceScoreApplied;
+    public event Action<int> OnTargetRoundScoreChanged;
+    public event Action<int> OnCurrentRoundScoreChanged;
+    public event Action<int> OnPlayScoreChanged;
+    public event Action<ScorePair> OnScorePairChanged;
+    public event Action<int> OnBaseScoreChanged;
+    public event Action<int> OnMultiplierChanged;
+
 
     private int targetRoundScore = 0;
     public int TargetRoundScore
@@ -27,7 +28,7 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             if (targetRoundScore == value) return;
             targetRoundScore = value;
-            TargetRoundScoreUpdated?.Invoke(targetRoundScore);
+            OnTargetRoundScoreChanged?.Invoke(targetRoundScore);
         }
     }
 
@@ -39,7 +40,7 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             if (currentRoundScore == value) return;
             currentRoundScore = value;
-            CurrentRoundScoreUpdated?.Invoke(currentRoundScore);
+            OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
 
@@ -51,7 +52,7 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             if (playScore == value) return;
             playScore = value;
-            PlayScoreUpdated?.Invoke(playScore);
+            OnPlayScoreChanged?.Invoke(playScore);
         }
     }
 
@@ -70,15 +71,15 @@ public class ScoreManager : Singleton<ScoreManager>
 
             if (baseScoreChanged && multiplierChanged)
             {
-                ScorePairUpdated?.Invoke(scorePair);
+                OnScorePairChanged?.Invoke(scorePair);
             }
             else if (baseScoreChanged)
             {
-                BaseScoreUpdated?.Invoke(scorePair.baseScore);
+                OnBaseScoreChanged?.Invoke(scorePair.baseScore);
             }
             else if (multiplierChanged)
             {
-                MultiplierUpdated?.Invoke(scorePair.multiplier);
+                OnMultiplierChanged?.Invoke(scorePair.multiplier);
             }
         }
     }

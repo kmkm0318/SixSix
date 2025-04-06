@@ -9,7 +9,7 @@ public class RoundManager : Singleton<RoundManager>
     public event Action<int> OnRoundStarted;
     public event Action<int> OnRoundCleared;
     public event Action<int> OnRoundFailed;
-    public event Action<int> CurrentRoundUpdated;
+    public event Action<int> OnCurrentRoundUpdated;
 
     private int currentRound = 0;
     public int CurrentRound
@@ -19,7 +19,7 @@ public class RoundManager : Singleton<RoundManager>
         {
             if (currentRound == value) return;
             currentRound = value;
-            CurrentRoundUpdated?.Invoke(currentRound);
+            OnCurrentRoundUpdated?.Invoke(currentRound);
         }
     }
 

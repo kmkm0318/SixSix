@@ -29,59 +29,59 @@ public class RoundUI : MonoBehaviour
 
     private void RegisterEvents()
     {
-        RoundManager.Instance.CurrentRoundUpdated += CurrentRoundUpdated;
-        ScoreManager.Instance.TargetRoundScoreUpdated += TargetRoundScoreUpdated;
-        ScoreManager.Instance.CurrentRoundScoreUpdated += CurrentRoundScoreUpdated;
-        ScoreManager.Instance.PlayScoreUpdated += PlayScoreUpdated;
-        ScoreManager.Instance.ScorePairUpdated += ScorePairUpdated;
-        ScoreManager.Instance.BaseScoreUpdated += BaseScoreUpdated;
-        ScoreManager.Instance.MultiplierUpdated += MultiplierUpdated;
+        RoundManager.Instance.OnCurrentRoundUpdated += OnCurrentRoundUpdated;
+        ScoreManager.Instance.OnTargetRoundScoreChanged += OnTargetRoundScoreChanged;
+        ScoreManager.Instance.OnCurrentRoundScoreChanged += OnCurrentRoundScoreChanged;
+        ScoreManager.Instance.OnPlayScoreChanged += OnPlayScoreChanged;
+        ScoreManager.Instance.OnScorePairChanged += OnScorePairChanged;
+        ScoreManager.Instance.OnBaseScoreChanged += OnBaseScoreChanged;
+        ScoreManager.Instance.OnMultiplierChanged += OnMultiplierChanged;
     }
 
-    private void CurrentRoundUpdated(int currnetRound)
+    private void OnCurrentRoundUpdated(int currnetRound)
     {
         string newText = currnetRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText, AnimationType.Shake), true);
     }
 
-    private void TargetRoundScoreUpdated(int score)
+    private void OnTargetRoundScoreChanged(int score)
     {
         string newText = score.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText, AnimationType.Shake), true);
     }
 
-    private void CurrentRoundScoreUpdated(int score)
+    private void OnCurrentRoundScoreChanged(int score)
     {
         string newText = score.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText, AnimationType.Shake), true);
     }
 
-    private void PlayScoreUpdated(int score)
+    private void OnPlayScoreChanged(int score)
     {
         string newText = score.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText, AnimationType.Shake), true);
     }
 
-    private void ScorePairUpdated(ScorePair pair)
+    private void OnScorePairChanged(ScorePair pair)
     {
-        BaseScoreUpdated(pair.baseScore);
-        MultiplierUpdated(pair.multiplier);
+        OnBaseScoreChanged(pair.baseScore);
+        OnMultiplierChanged(pair.multiplier);
 
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void BaseScoreUpdated(int score)
+    private void OnBaseScoreChanged(int score)
     {
         string newText = score.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(baseScoreText, newText, AnimationType.Shake), true);
     }
 
-    private void MultiplierUpdated(int score)
+    private void OnMultiplierChanged(int score)
     {
         string newText = score.ToString();
 

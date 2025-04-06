@@ -38,6 +38,23 @@ public class SequenceManager : Singleton<SequenceManager>
         }
     }
 
+    public void AddCoroutine(Action action, bool isParallel = false)
+    {
+        if (action == null)
+        {
+            Debug.LogWarning("Action is null. Cannot execute.");
+            return;
+        }
+
+        AddCoroutine(ExecuteAction(action), isParallel);
+    }
+
+    private IEnumerator ExecuteAction(Action action)
+    {
+        action.Invoke();
+        yield return null;
+    }
+
     public void ExecuteLater(Action action)
     {
         if (action == null)
