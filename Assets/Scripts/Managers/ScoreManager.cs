@@ -10,7 +10,6 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public event Action<int> OnTargetRoundScoreUpdated;
     public event Action<int> OnCurrentRoundScoreUpdated;
-    public event Action<ScorePair, Transform> OnScoreApplied;
     public event Action OnDiceScoreApplied;
     public event Action<int> OnTargetRoundScoreChanged;
     public event Action<int> OnCurrentRoundScoreChanged;
@@ -18,6 +17,8 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<ScorePair> OnScorePairChanged;
     public event Action<int> OnBaseScoreChanged;
     public event Action<int> OnMultiplierChanged;
+    public event Action<ScorePair, Transform> OnScorePairApplied;
+    public event Action<PlayDice> OnPlayDiceApplied;
 
 
     private int targetRoundScore = 0;
@@ -116,12 +117,15 @@ public class ScoreManager : Singleton<ScoreManager>
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
     }
 
-    private void OnHandCategorySelected(ScorePair pair)
+    private void OnHandCategorySelected(HandCategorySO handCategorySO)
     {
+        var pair = handCategoryScoreDictionary[handCategorySO.handCategory];
+
         ScorePair = pair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
-        ApplyPlayDiceScore();
+        PlayerDiceManager.Instance.ApplyPlayDices();
+        PlayerDiceManager.Instance.ApplyAvailityDiceOnHandCategoryApplied(handCategorySO);
 
         if (CheckMultiplyOverFlow(scorePair.baseScore, scorePair.multiplier))
         {
@@ -310,49 +314,20 @@ public class ScoreManager : Singleton<ScoreManager>
     }
     #endregion
 
-    #region ApplyDiceScore
-    private void ApplyPlayDiceScore()
+    #region ApplyDiceEffect
+    public void ApplyScorePairAndPlayDiceAnimation(Dice dice, ScorePair pair)
     {
-        var playDiceList = PlayerDiceManager.Instance.GetOrderedPlayDiceList();
+        if (pair.baseScore == 0 && pair.multiplier == 0) return;
 
-        foreach (var playDice in playDiceList)
-        {
-            var scorePiarDiceIndex = playDice.GetScorePairDiceIndexList();
-            foreach (var scorePairDiceIndex in scorePiarDiceIndex)
-            {
-                if (scorePairDiceIndex.Item1.baseScore == 0 && scorePairDiceIndex.Item1.multiplier == 0) continue;
+        ApplyScorePairEffect(pair);
 
-                Dice targetDice;
-                if (scorePairDiceIndex.Item2 == -1)
-                {
-                    targetDice = playDice;
-                }
-                else
-                {
-                    targetDice = playDiceList[scorePairDiceIndex.Item2];
-                }
-                ApplyDiceAnimation(targetDice);
-                ApplyScorePairIndex(scorePairDiceIndex.Item1);
-                ApplyUIAnimation(scorePairDiceIndex.Item1, targetDice.transform);
-                SequenceManager.Instance.ApplyParallelCoroutine();
-            }
-        }
-    }
-
-    private void ApplyDiceAnimation(Dice dice)
-    {
         SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(dice, AnimationType.Shake), true);
+        OnScorePairApplied(pair, dice.transform);
+
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void ApplyUIAnimation(ScorePair pair, Transform targetTarnsform)
-    {
-        if (pair.baseScore != 0 || pair.multiplier != 0)
-        {
-            OnScoreApplied?.Invoke(pair, targetTarnsform);
-        }
-    }
-
-    private void ApplyScorePairIndex(ScorePair pair)
+    private void ApplyScorePairEffect(ScorePair pair)
     {
         bool isBaseScoreZero = pair.baseScore == 0;
         bool isMultiplierZero = pair.multiplier == 0;

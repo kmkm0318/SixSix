@@ -25,17 +25,18 @@ public class StateUI : MonoBehaviour
 
     private void OnMoneyChanged(int money)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, money.ToString()));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()));
     }
 
     private void OnPlayRemainChanged(int playRemain)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playRemainText, playRemain.ToString()));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playRemainText, playRemain.ToString()), true);
     }
 
     private void OnRollRemainChanged(int rollRemain)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(rollRemainText, rollRemain.ToString()));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(rollRemainText, rollRemain.ToString()), true);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private IEnumerator UpdateTextAndPlayAnimation(TMP_Text targetText, string targetString)

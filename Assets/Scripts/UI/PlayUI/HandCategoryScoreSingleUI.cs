@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,9 +12,9 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
     [SerializeField] private Color focusedColor;
     [SerializeField] private Color unfocusedColor;
 
-    public event Action<ScorePair> OnButtonPressed;
-
     private ScorePair scorePair;
+    private HandCategorySO handCategorySO;
+
     private bool isActive = true;
     private bool IsActive
     {
@@ -35,6 +33,8 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
 
     public void Init(HandCategorySO handCategorySO)
     {
+        this.handCategorySO = handCategorySO;
+
         nameText.text = handCategorySO.handCategoryName;
 
         UpdateScore(new(0, 0));
@@ -45,7 +45,7 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
         {
             if (scorePair.baseScore == 0 && scorePair.multiplier == 0) return;
 
-            HandCategoryScoreUI.Instance.SelectHandCategory(scorePair);
+            HandCategoryScoreUI.Instance.SelectHandCategory(handCategorySO);
         });
     }
 

@@ -11,7 +11,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     [SerializeField] private float scrollDuration;
     [SerializeField] private Vector2 targetScrollAnchoredPosition;
 
-    public event Action<ScorePair> OnHandCategorySelected;
+    public event Action<HandCategorySO> OnHandCategorySelected;
 
     private Dictionary<HandCategory, HandCategoryScoreSingleUI> handCategoryScoreSingleUIDict = new();
     private bool isActive = false;
@@ -71,12 +71,12 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
     }
 
-    public void SelectHandCategory(ScorePair scorePair)
+    public void SelectHandCategory(HandCategorySO handCategorySO)
     {
         if (!isActive) return;
         isActive = false;
 
-        OnHandCategorySelected?.Invoke(scorePair);
+        OnHandCategorySelected?.Invoke(handCategorySO);
     }
 
     private void ResetHandCategoryScoreUI()

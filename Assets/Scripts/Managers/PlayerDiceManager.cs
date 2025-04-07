@@ -7,7 +7,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 {
     [SerializeField] private PlayDice playDicePrefab;
     [SerializeField] private AvailityDice availityDicePrefab;
-    [SerializeField] private Playboard playboard;
+    [SerializeField] private Playboard playDicePlayboard;
+    [SerializeField] private Playboard availityDicePlayboard;
     [SerializeField] private int firstdiceCount = 5;
     [SerializeField] private float diceGenerateDelay = 0.25f;
 
@@ -36,10 +37,18 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         for (int i = 0; i < firstdiceCount; i++)
         {
             yield return new WaitForSeconds(diceGenerateDelay);
-            var dice = Instantiate(playDicePrefab, playboard.DiceGeneratePosition, Quaternion.identity);
-            dice.Init(6, DataContainer.Instance.DefaultDiceList, playboard);
+            var playDice = Instantiate(playDicePrefab, playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
 
-            Instance.AddPlayDice(dice);
+            AddPlayDice(playDice);
+        }
+
+        if (DataContainer.Instance.AvailityDiceListSO.availityDiceSOList.Count > 0)
+        {
+            var availityDiceSO = DataContainer.Instance.AvailityDiceListSO.availityDiceSOList[0];
+            var availityDice = Instantiate(availityDicePrefab, availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            availityDice.Init(availityDiceSO, availityDicePlayboard);
+            AddAvailityDice(availityDice);
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());
@@ -79,4 +88,44 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         playDiceValues.Sort();
         return playDiceValues;
     }
+
+    #region ApplyDice
+    public void ApplyPlayDices()
+    {
+        var playDiceList = Instance.GetOrderedPlayDiceList();
+
+        foreach (var playDice in playDiceList)
+        {
+            var scorePiarList = playDice.GetScorePairList();
+            foreach (var scorePair in scorePiarList)
+            {
+                if (scorePair.baseScore == 0 && scorePair.multiplier == 0) continue;
+
+                ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(playDice, scorePair);
+
+                ApplyAvailityDiceOnPlayDiceApplied(playDice);
+            }
+        }
+    }
+
+    private void ApplyAvailityDiceOnPlayDiceApplied(PlayDice playDice)
+    {
+        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggeredByPlayDice(playDice));
+
+        foreach (var availityDice in triggeredAvailityDiceList)
+        {
+            availityDice.ApplyEffect();
+        }
+    }
+
+    public void ApplyAvailityDiceOnHandCategoryApplied(HandCategorySO handCategorySO)
+    {
+        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggeredByHandCategory(handCategorySO));
+
+        foreach (var availityDice in triggeredAvailityDiceList)
+        {
+            availityDice.ApplyEffect();
+        }
+    }
+    #endregion
 }

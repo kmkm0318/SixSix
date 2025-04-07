@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class ScoreApplyUI : MonoBehaviour
+public class ScoreApplyUI : Singleton<ScoreApplyUI>
 {
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Color baseScoreColor;
@@ -11,32 +12,32 @@ public class ScoreApplyUI : MonoBehaviour
 
     private void Start()
     {
-        RegisterEvents();
         Hide();
+        RegisterEvents();
     }
 
     private void RegisterEvents()
     {
-        ScoreManager.Instance.OnScoreApplied += OnScoreApplied;
+        ScoreManager.Instance.OnScorePairApplied += OnScorePairApplied;
     }
 
-    private void OnScoreApplied(ScorePair pair, Transform targetTrasform)
+    public void OnScorePairApplied(ScorePair pair, Transform targetTrasform)
     {
-        SequenceManager.Instance.AddCoroutine(ShowTextAnimation(pair, targetTrasform), true);
+        SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTrasform), true);
         SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(this, AnimationType.Shake), true);
     }
 
-    private IEnumerator ShowTextAnimation(ScorePair pair, Transform targetTransform)
+    private IEnumerator ShowScorePairTextAnimation(ScorePair pair, Transform targetTransform)
     {
         Show();
 
-        SetupUI(pair, targetTransform);
+        SetupScorePairUI(pair, targetTransform);
         yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(scoreText, AnimationType.Text));
 
         Hide();
     }
 
-    private void SetupUI(ScorePair pair, Transform transform)
+    private void SetupScorePairUI(ScorePair pair, Transform transform)
     {
         if (transform == null) return;
 
