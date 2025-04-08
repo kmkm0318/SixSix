@@ -21,23 +21,23 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         ScoreManager.Instance.OnScorePairApplied += OnScorePairApplied;
     }
 
-    public void OnScorePairApplied(ScorePair pair, Transform targetTrasform)
+    public void OnScorePairApplied(ScorePair pair, Transform targetTrasform, bool isAvilityDice)
     {
-        SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTrasform), true);
+        SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTrasform, isAvilityDice), true);
         SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(this, AnimationType.Shake), true);
     }
 
-    private IEnumerator ShowScorePairTextAnimation(ScorePair pair, Transform targetTransform)
+    private IEnumerator ShowScorePairTextAnimation(ScorePair pair, Transform targetTransform, bool isAvilityDice)
     {
         Show();
 
-        SetupScorePairUI(pair, targetTransform);
+        SetupScorePairUI(pair, targetTransform, isAvilityDice);
         yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(scoreText, AnimationType.Text));
 
         Hide();
     }
 
-    private void SetupScorePairUI(ScorePair pair, Transform transform)
+    private void SetupScorePairUI(ScorePair pair, Transform transform, bool isAvilityDice)
     {
         if (transform == null) return;
 
@@ -57,7 +57,14 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
             scoreText.text = "x" + pair.multiplier.ToString();
         }
 
-        this.transform.position = transform.position + offset;
+        if (isAvilityDice)
+        {
+            this.transform.position = transform.position - offset / 2f;
+        }
+        else
+        {
+            this.transform.position = transform.position + offset;
+        }
     }
 
     private void Show()

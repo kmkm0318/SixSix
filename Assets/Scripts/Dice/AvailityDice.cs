@@ -31,17 +31,19 @@ public class AvailityDice : Dice
         ScorePair scorePair = new(availityDiceSO.scorePairAmount.baseScore, availityDiceSO.scorePairAmount.multiplier);
         scorePair.baseScore = CalculateEffectValue(scorePair.baseScore);
         scorePair.multiplier = CalculateEffectValue(scorePair.multiplier);
-        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair);
+        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, true);
     }
 
     public bool IsTriggeredByPlayDice(PlayDice playDice)
     {
+        if (availityDiceSO.availityTriggerType == AvailityTriggerType.OnHandCategoryApplied) return false;
         return availityDiceSO.targetPlayDiceValueList.Contains(playDice.FaceIndex + 1);
     }
 
     public bool IsTriggeredByHandCategory(HandCategorySO handCategorySO)
     {
-        return availityDiceSO.targetHandCategorySO == handCategorySO;
+        if (availityDiceSO.availityTriggerType == AvailityTriggerType.OnPlayDiceApplied) return false;
+        return availityDiceSO.targetHandCategorySO == null || availityDiceSO.targetHandCategorySO == handCategorySO;
     }
 
     private int CalculateEffectValue(int value)

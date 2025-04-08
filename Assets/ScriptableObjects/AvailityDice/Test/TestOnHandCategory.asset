@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: TestScoreDice
+  m_Name: TestOnHandCategory
   m_EditorClassIdentifier: 
   diceName: TestScoreDice
-  maxFaceValue: 6
+  maxFaceValue: 3
   diceFaceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   diceDescription: 
-  availityTriggerType: 0
-  targetPlayDiceValueList: 020000000400000006000000
-  targetHandCategorySO: {fileID: 0}
+  availityTriggerType: 1
+  targetPlayDiceValueList: 
+  targetHandCategorySO: {fileID: 11400000, guid: bf73f0db5fc5a894a9515a6832a88ea4, type: 2}
   availityEffectType: 0
-  availityDiceValueCalculationType: 0
+  availityDiceValueCalculationType: 1
   scorePairAmount:
-    baseScore: 5
+    baseScore: 2
     multiplier: 0
   moneyAmount: 0

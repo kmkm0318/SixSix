@@ -21,7 +21,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     private void Start()
     {
+        RegisterEvents();
+    }
+
+    private void RegisterEvents()
+    {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -37,23 +43,43 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         for (int i = 0; i < firstdiceCount; i++)
         {
             yield return new WaitForSeconds(diceGenerateDelay);
+
             var playDice = Instantiate(playDicePrefab, playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
             playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
 
             AddPlayDice(playDice);
         }
 
-        if (DataContainer.Instance.AvailityDiceListSO.availityDiceSOList.Count > 0)
+        foreach (var availityDiceSO in DataContainer.Instance.AvailityDiceListSO.availityDiceSOList)
         {
-            var availityDiceSO = DataContainer.Instance.AvailityDiceListSO.availityDiceSOList[0];
+            yield return new WaitForSeconds(diceGenerateDelay);
+
             var availityDice = Instantiate(availityDicePrefab, availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
             availityDice.Init(availityDiceSO, availityDicePlayboard);
+
             AddAvailityDice(availityDice);
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());
 
         OnFirstDiceGenerated?.Invoke();
+    }
+
+    private void OnBonusAchieved(BonusType type)
+    {
+        if (type == BonusType.Dice)
+        {
+            SequenceManager.Instance.AddCoroutine(AddSixthDice());
+        }
+    }
+
+    private IEnumerator AddSixthDice()
+    {
+        var playDice = Instantiate(playDicePrefab, playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+
+        AddPlayDice(playDice);
+        yield return new WaitUntil(() => AreAllDiceStopped());
     }
 
     private void AddPlayDice(PlayDice playDice)

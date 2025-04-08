@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +31,10 @@ public class StateUI : MonoBehaviour
     private void OnPlayRemainChanged(int playRemain)
     {
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playRemainText, playRemain.ToString()), true);
+        if (playRemain == 0)
+        {
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
     }
 
     private void OnRollRemainChanged(int rollRemain)

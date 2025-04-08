@@ -19,14 +19,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     private void Start()
     {
         Init();
-
-        ScoreManager.Instance.OnHandCategoryScoreUpdated += OnHandCategoryScoreUpdated;
-
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
-
-        RollManager.Instance.OnRollCompleted += () => isActive = true;
-        RollManager.Instance.OnRollStarted += () => isActive = false;
+        RegisterEvents();
     }
 
     private void Init()
@@ -40,6 +33,19 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         }
 
         RebuildLayout();
+    }
+
+    private void RegisterEvents()
+    {
+        ScoreManager.Instance.OnHandCategoryScoreUpdated += OnHandCategoryScoreUpdated;
+
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+
+        RollManager.Instance.OnRollCompleted += () => isActive = true;
+        RollManager.Instance.OnRollStarted += () => isActive = false;
+
+        BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
     }
 
     private void OnHandCategoryScoreUpdated(Dictionary<HandCategory, ScorePair> dictionary)
@@ -59,6 +65,11 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     private void OnRoundCleared(int round)
     {
         ResetHandCategoryScoreUI();
+    }
+
+    private void OnAllBonusAchieved()
+    {
+        SequenceManager.Instance.AddCoroutine(() => { ScrollLayoutPanel(); });
     }
 
     public void RebuildLayout()

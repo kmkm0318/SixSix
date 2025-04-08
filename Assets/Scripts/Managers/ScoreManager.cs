@@ -10,15 +10,13 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public event Action<int> OnTargetRoundScoreUpdated;
     public event Action<int> OnCurrentRoundScoreUpdated;
-    public event Action OnDiceScoreApplied;
     public event Action<int> OnTargetRoundScoreChanged;
     public event Action<int> OnCurrentRoundScoreChanged;
     public event Action<int> OnPlayScoreChanged;
     public event Action<ScorePair> OnScorePairChanged;
     public event Action<int> OnBaseScoreChanged;
     public event Action<int> OnMultiplierChanged;
-    public event Action<ScorePair, Transform> OnScorePairApplied;
-    public event Action<PlayDice> OnPlayDiceApplied;
+    public event Action<ScorePair, Transform, bool> OnScorePairApplied;
 
 
     private int targetRoundScore = 0;
@@ -315,14 +313,14 @@ public class ScoreManager : Singleton<ScoreManager>
     #endregion
 
     #region ApplyDiceEffect
-    public void ApplyScorePairAndPlayDiceAnimation(Dice dice, ScorePair pair)
+    public void ApplyScorePairAndPlayDiceAnimation(Dice dice, ScorePair pair, bool isAvailityDice = false)
     {
         if (pair.baseScore == 0 && pair.multiplier == 0) return;
 
         ApplyScorePairEffect(pair);
 
         SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(dice, AnimationType.Shake), true);
-        OnScorePairApplied(pair, dice.transform);
+        OnScorePairApplied(pair, dice.transform, isAvailityDice);
 
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
