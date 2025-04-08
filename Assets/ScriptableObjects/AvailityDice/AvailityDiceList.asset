@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availityDiceSOList:
   - {fileID: 11400000, guid: 440cf029f0a96a34d823beb43adcbed0, type: 2}
+  - {fileID: 11400000, guid: c8d1664bb737dc7429ebfc154cbca590, type: 2}

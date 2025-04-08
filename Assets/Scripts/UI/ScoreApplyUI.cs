@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,8 +9,12 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
     [SerializeField] private Color multiplierColor;
     [SerializeField] private Vector3 offset;
 
+    private RectTransform rectTransform;
+
     private void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
+
         Hide();
         RegisterEvents();
     }
@@ -21,9 +24,9 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         ScoreManager.Instance.OnScorePairApplied += OnScorePairApplied;
     }
 
-    public void OnScorePairApplied(ScorePair pair, Transform targetTrasform, bool isAvilityDice)
+    public void OnScorePairApplied(ScorePair pair, Transform targetTransform, bool isAvilityDice)
     {
-        SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTrasform, isAvilityDice), true);
+        SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTransform, isAvilityDice), true);
         SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(this, AnimationType.Shake), true);
     }
 
@@ -37,9 +40,9 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         Hide();
     }
 
-    private void SetupScorePairUI(ScorePair pair, Transform transform, bool isAvilityDice)
+    private void SetupScorePairUI(ScorePair pair, Transform targetTransform, bool isAvilityDice)
     {
-        if (transform == null) return;
+        if (targetTransform == null) return;
 
         bool isBaseScore = pair.baseScore != 0;
         bool isMultiplier = pair.multiplier != 0;
@@ -57,14 +60,20 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
             scoreText.text = "x" + pair.multiplier.ToString();
         }
 
+        Vector3 targetPos;
+
         if (isAvilityDice)
         {
-            this.transform.position = transform.position - offset / 2f;
+            targetPos = targetTransform.position - offset / 2f;
         }
         else
         {
-            this.transform.position = transform.position + offset;
+            targetPos = targetTransform.position + offset;
         }
+
+        var uiPos = Camera.main.WorldToScreenPoint(targetPos);
+
+        rectTransform.position = uiPos;
     }
 
     private void Show()

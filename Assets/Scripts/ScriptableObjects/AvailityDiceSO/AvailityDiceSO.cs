@@ -8,8 +8,6 @@ public class AvailityDiceSO : ScriptableObject
     public string diceName;
     public int maxFaceValue;
     public DiceFaceSpriteListSO diceFaceSpriteListSO;
-    [TextArea(3, 10)]
-    public string diceDescription;
 
     [Header("Dice Trigger")]
     public AvailityTriggerType availityTriggerType;
@@ -33,7 +31,6 @@ public enum AvailityEffectType
 {
     ApplyScorePair,
     AchieveMoney,
-    EnhanceHandCategory
 }
 
 public enum AvailityDiceValueCalculationType

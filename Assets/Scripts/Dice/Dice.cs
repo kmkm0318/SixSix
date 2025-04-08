@@ -10,7 +10,7 @@ public class Dice : MonoBehaviour
 
     public event Action<bool> OnIsKeepedChanged;
 
-    private bool isKeeped = true;
+    private bool isKeeped = false;
     public bool IsKeeped
     {
         get => isKeeped;
@@ -28,7 +28,7 @@ public class Dice : MonoBehaviour
     public int FaceIndex => faceIndex;
     private int faceIndexMax;
 
-    void Start()
+    protected virtual void Start()
     {
         diceMovement.OnRollStarted += () => IsRolling = true;
         diceMovement.OnRollCompleted += () => IsRolling = false;
@@ -47,7 +47,7 @@ public class Dice : MonoBehaviour
         }
     }
 
-    public void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
+    public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
         faces = new DiceFace[maxValue];
 

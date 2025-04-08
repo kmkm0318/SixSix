@@ -5,11 +5,36 @@ public class AvailityDice : Dice
     private AvailityDiceSO availityDiceSO;
     public AvailityDiceSO AvailityDiceSO => availityDiceSO;
 
+    override protected void Start()
+    {
+        base.Start();
+        RegisterEvents();
+    }
+    #region Register Events
+
+    private void RegisterEvents()
+    {
+        DiceInteraction.OnIsMouseOverChanged += OnIsMouseOverChanged;
+    }
+
+    private void OnIsMouseOverChanged(bool isMouseOver)
+    {
+        if (isMouseOver)
+        {
+            AvailityDiceToolTipUI.Instance.ShowToolTip(this);
+        }
+        else
+        {
+            AvailityDiceToolTipUI.Instance.HideToolTip();
+        }
+    }
+    #endregion
+
     public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
-        this.availityDiceSO = availityDiceSO;
+        base.Init(availityDiceSO.maxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
 
-        Init(availityDiceSO.maxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
+        this.availityDiceSO = availityDiceSO;
     }
 
     public void ApplyEffect()
