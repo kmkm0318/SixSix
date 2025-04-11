@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StateUI : MonoBehaviour
+public class StateUI : Singleton<StateUI>
 {
     [SerializeField] private Button optionButton;
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private TMP_Text playRemainText;
     [SerializeField] private TMP_Text rollRemainText;
+
+    public event Action OnOptionButtonClicked;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        optionButton.onClick.AddListener(() =>
+        {
+            OnOptionButtonClicked?.Invoke();
+        });
+    }
 
     private void Start()
     {
@@ -18,7 +29,7 @@ public class StateUI : MonoBehaviour
 
     private void RegisterEvents()
     {
-        MoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
+        PlayerMoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
     }

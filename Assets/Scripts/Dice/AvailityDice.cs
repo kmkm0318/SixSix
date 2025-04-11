@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AvailityDice : Dice
@@ -15,6 +16,7 @@ public class AvailityDice : Dice
     private void RegisterEvents()
     {
         DiceInteraction.OnIsMouseOverChanged += OnIsMouseOverChanged;
+        RollManager.Instance.OnRollCompleted += OnRollCompleted;
     }
 
     private void OnIsMouseOverChanged(bool isMouseOver)
@@ -26,6 +28,17 @@ public class AvailityDice : Dice
         else
         {
             AvailityDiceToolTipUI.Instance.HideToolTip();
+        }
+    }
+
+    private void OnRollCompleted()
+    {
+        if (PlayerDiceManager.Instance.IsAvailityDiceAutoKeep)
+        {
+            if (FaceIndex == availityDiceSO.maxFaceValue - 1)
+            {
+                SetIsKeeped(true);
+            }
         }
     }
     #endregion

@@ -18,16 +18,26 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public List<PlayDice> PlayDiceList => playDiceList;
     private List<AvailityDice> availityDiceList = new();
     public List<AvailityDice> AvailityDiceList => availityDiceList;
+    private bool isAvailityDiceAutoKeep = false;
+    public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
 
     private void Start()
     {
+        Init();
         RegisterEvents();
     }
 
+    private void Init()
+    {
+        OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
+    }
+
+    #region RegisterEvents
     private void RegisterEvents()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
+        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AvailityDiceAutoKeep, OnAvailityDiceAutoKeepChanged);
     }
 
     private void OnGameStateChanged(GameState state)
@@ -82,6 +92,12 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         yield return new WaitUntil(() => AreAllDiceStopped());
     }
 
+    private void OnAvailityDiceAutoKeepChanged(int value)
+    {
+        isAvailityDiceAutoKeep = value == 1;
+    }
+
+    #endregion
     private void AddPlayDice(PlayDice playDice)
     {
         playDiceList.Add(playDice);

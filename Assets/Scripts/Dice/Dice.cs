@@ -77,4 +77,9 @@ public class Dice : MonoBehaviour
         faceIndex %= faceIndexMax;
         SetFace(faceIndex);
     }
+
+    protected void SetIsKeeped(bool isKeeped)
+    {
+        IsKeeped = isKeeped;
+    }
 }

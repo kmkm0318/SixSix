@@ -9,13 +9,20 @@ public class AvailityDiceToolTipUI : Singleton<AvailityDiceToolTipUI>
     [SerializeField] private TMP_Text effectTypeText;
     [SerializeField] private Vector3 offset;
 
-    RectTransform rectTransform;
-
+    private RectTransform rectTransform;
+    private Transform targetTrasnform;
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
 
         HideToolTip();
+    }
+
+    private void LateUpdate()
+    {
+        if (targetTrasnform == null) return;
+        var targetPos = Camera.main.WorldToScreenPoint(targetTrasnform.position + offset);
+        rectTransform.position = targetPos;
     }
 
     public void ShowToolTip(AvailityDice availityDice)
@@ -25,8 +32,8 @@ public class AvailityDiceToolTipUI : Singleton<AvailityDiceToolTipUI>
 
         gameObject.SetActive(true);
 
-        var targetPos = Camera.main.WorldToScreenPoint(availityDice.transform.position + offset);
-        rectTransform.position = targetPos;
+        targetTrasnform = availityDice.transform;
+
         diceNameText.text = availityDiceSO.diceName;
         triggerTypeText.text = GetTriggerTypeText(availityDiceSO);
         effectTypeText.text = GetEffectTypeText(availityDiceSO);

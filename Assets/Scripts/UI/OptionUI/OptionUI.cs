@@ -1,0 +1,89 @@
+using System;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class OptionUI : Singleton<OptionUI>
+{
+    [SerializeField] private RectTransform optionPanel;
+    [SerializeField] private Vector3 hidePos;
+    [SerializeField] private float moveDuration = 0.5f;
+    [SerializeField] private OptionSelectUI[] optionSelectUIs;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
+
+    private void Start()
+    {
+        RegisterEvents();
+        closeButton.onClick.AddListener(() => Hide());
+        Hide(true);
+    }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
+        StateUI.Instance.OnOptionButtonClicked += OnOptionButtonClicked;
+    }
+
+    private void OnOptionButtonClicked()
+    {
+        Show();
+    }
+    #endregion
+
+    #region ShowHide
+    private void Show(bool isInstant = false)
+    {
+        if (isInstant)
+        {
+            gameObject.SetActive(true);
+            optionPanel.anchoredPosition = Vector3.zero;
+            return;
+        }
+
+        gameObject.SetActive(true);
+        optionPanel.anchoredPosition = hidePos;
+        optionPanel
+            .DOAnchorPos(Vector3.zero, moveDuration)
+            .SetEase(Ease.InOutBack)
+            .OnComplete(() =>
+            {
+
+            });
+
+        fadeCanvasGroup.FadeIn(moveDuration);
+    }
+
+    private void Hide(bool isInstant = false)
+    {
+        if (isInstant)
+        {
+            gameObject.SetActive(false);
+            optionPanel.anchoredPosition = hidePos;
+            return;
+        }
+
+        optionPanel.anchoredPosition = Vector3.zero;
+        optionPanel
+            .DOAnchorPos(hidePos, moveDuration)
+            .SetEase(Ease.InOutBack)
+            .OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
+
+        fadeCanvasGroup.FadeOut(moveDuration);
+    }
+    #endregion
+
+    public void RegisterOnOptionValueChanged(OptionType type, Action<int> action)
+    {
+        foreach (var optionSelectUI in optionSelectUIs)
+        {
+            if (optionSelectUI.OptionTypeDataSO.optionType == type)
+            {
+                optionSelectUI.OnOptionValueChanged += action;
+            }
+        }
+    }
+}

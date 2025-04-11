@@ -1,0 +1,106 @@
+using System;
+using UnityEngine;
+
+public class OptionManager : Singleton<OptionManager>
+{
+    private const string OPTION_DATA_NAME = "OptionData";
+
+    [SerializeField] private OptionData optionData;
+    public OptionData OptionData => optionData;
+
+    override protected void Awake()
+    {
+        base.Awake();
+        LoadOptionDataSO();
+    }
+
+    private void Start()
+    {
+        RegisterEvents();
+    }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
+        foreach (var type in Enum.GetValues(typeof(OptionType)))
+        {
+            if (type is OptionType optionType)
+            {
+                OptionUI.Instance.RegisterOnOptionValueChanged(optionType, (value) => OnOptionValueChanged(optionType, value));
+            }
+        }
+    }
+
+    private void OnOptionValueChanged(OptionType type, int value)
+    {
+        switch (type)
+        {
+            case OptionType.GameSpeed:
+                optionData.gameSpeed = value;
+                break;
+            case OptionType.AvailityDiceAutoKeep:
+                optionData.availityDiceAutoKeep = value;
+                break;
+            case OptionType.Language:
+                optionData.language = value;
+                break;
+            case OptionType.Fullscreen:
+                optionData.fullscreen = value;
+                break;
+            case OptionType.Resolution:
+                optionData.resolution = value;
+                break;
+            case OptionType.BGMVolume:
+                optionData.bgmVolume = value;
+                break;
+            case OptionType.SFXVolume:
+                optionData.sfxVolume = value;
+                break;
+        }
+        SaveOptionDataSO();
+    }
+    #endregion
+
+    #region SaveLoad
+    private void SaveOptionDataSO()
+    {
+        string json = JsonUtility.ToJson(optionData);
+        PlayerPrefs.SetString(OPTION_DATA_NAME, json);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadOptionDataSO()
+    {
+        string json = PlayerPrefs.GetString(OPTION_DATA_NAME, string.Empty);
+        if (string.IsNullOrEmpty(json))
+        {
+            optionData = new()
+            {
+                gameSpeed = 0,
+                availityDiceAutoKeep = 0,
+                language = 0,
+                fullscreen = 0,
+                resolution = 0,
+                bgmVolume = 5,
+                sfxVolume = 5
+            };
+        }
+        else
+        {
+            optionData = JsonUtility.FromJson<OptionData>(json);
+        }
+    }
+    #endregion
+}
+
+[Serializable]
+public struct OptionData
+{
+    public int gameSpeed;
+    public int availityDiceAutoKeep;
+    public int language;
+    public int fullscreen;
+    public int resolution;
+    public int bgmVolume;
+    public int sfxVolume;
+}

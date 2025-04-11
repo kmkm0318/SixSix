@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public enum GameState
 {
@@ -28,20 +29,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    #region StartGame
     private void Start()
     {
-        StartCoroutine(StartGame());
+        Init();
         RegisterEvents();
+        StartCoroutine(StartGame());
     }
 
-    private IEnumerator StartGame()
+    private void Init()
     {
-        yield return null;
-
-        CurrentGameState = GameState.Loading;
+        OnGameSpeedChanged(OptionManager.Instance.OptionData.gameSpeed);
     }
-    #endregion
 
     #region RegisterEvents
     private void RegisterEvents()
@@ -50,6 +48,7 @@ public class GameManager : Singleton<GameManager>
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RoundManager.Instance.OnRoundFailed += OnRoundFailed;
         RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;
+        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
     }
 
     private void OnRoundClearEnded()
@@ -78,5 +77,17 @@ public class GameManager : Singleton<GameManager>
     {
         CurrentGameState = GameState.RoundFail;
     }
+
+    private void OnGameSpeedChanged(int value)
+    {
+        Time.timeScale = 1f + (value * 0.25f);
+    }
     #endregion
+
+    private IEnumerator StartGame()
+    {
+        yield return null;
+
+        CurrentGameState = GameState.Loading;
+    }
 }

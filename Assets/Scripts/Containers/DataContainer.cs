@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class DataContainer : Singleton<DataContainer>
 {
+    #region DiceFaceSpriteListSO
     [SerializeField] private DiceFaceSpriteListSO defaultDiceList;
     public DiceFaceSpriteListSO DefaultDiceList => defaultDiceList;
+    #endregion
 
+    #region AvailityDiceListSO
     [SerializeField] private AvailityDiceListSO availityDiceListSO;
     public AvailityDiceListSO AvailityDiceListSO => availityDiceListSO;
+    #endregion
 
+    #region HandCategoryListSO
     [SerializeField] private HandCategoryListSO handCategoryListSO;
     public HandCategoryListSO HandCategoryListSO => handCategoryListSO;
     [SerializeField] private HandCategoryListSO standardHandCategoryListSO;
@@ -15,11 +20,14 @@ public class DataContainer : Singleton<DataContainer>
     [SerializeField] private HandCategoryListSO specialHandCategoryListSO;
     public HandCategoryListSO SpecialHandCategoryListSO => specialHandCategoryListSO;
 
-    [SerializeField] private LayerMask playergroundLayerMask;
-    public LayerMask PlayergroundLayerMask => playergroundLayerMask;
-
     public HandCategorySO GetHandCategorySO(HandCategory handCategory)
     {
         return handCategoryListSO.handCategoryList.Find(x => x.handCategory == handCategory);
     }
+    #endregion
+
+    #region LayerMask
+    [SerializeField] private LayerMask playergroundLayerMask;
+    public LayerMask PlayergroundLayerMask => playergroundLayerMask;
+    #endregion
 }
