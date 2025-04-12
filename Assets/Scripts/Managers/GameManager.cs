@@ -48,12 +48,13 @@ public class GameManager : Singleton<GameManager>
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RoundManager.Instance.OnRoundFailed += OnRoundFailed;
         RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;
+        ShopManager.Instance.OnShopEnded += OnShopEnded; ;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
     }
 
     private void OnRoundClearEnded()
     {
-        CurrentGameState = GameState.Round;
+        CurrentGameState = GameState.Shop;
     }
 
     private void OnFirstDiceGenerated()
@@ -76,6 +77,11 @@ public class GameManager : Singleton<GameManager>
     private void OnRoundFailed(int currentRound)
     {
         CurrentGameState = GameState.RoundFail;
+    }
+
+    private void OnShopEnded()
+    {
+        CurrentGameState = GameState.Round;
     }
 
     private void OnGameSpeedChanged(int value)

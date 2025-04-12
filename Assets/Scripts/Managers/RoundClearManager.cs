@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 
 public class RoundClearManager : Singleton<RoundClearManager>
 {
@@ -14,6 +13,7 @@ public class RoundClearManager : Singleton<RoundClearManager>
     private void RegisterEvents()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -21,7 +21,20 @@ public class RoundClearManager : Singleton<RoundClearManager>
         if (state == GameState.RoundClear)
         {
             OnRoundClearStarted?.Invoke();
-            SequenceManager.Instance.ExecuteLater(() => OnRoundClearEnded?.Invoke()); ;
         }
     }
+
+    private void OnRoundClearUIClosed()
+    {
+        OnRoundClearEnded?.Invoke();
+        UnityEngine.Debug.Log("RoundClearUIClosed");
+    }
+}
+
+public enum RoundClearRewardType
+{
+    None,
+    RoundNum,
+    PlayRemain,
+    MoneyInterest,
 }

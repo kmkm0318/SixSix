@@ -16,7 +16,7 @@ public class OptionUI : Singleton<OptionUI>
     {
         RegisterEvents();
         closeButton.onClick.AddListener(() => Hide());
-        Hide(true);
+        gameObject.SetActive(false);
     }
 
     #region RegisterEvents
@@ -32,15 +32,8 @@ public class OptionUI : Singleton<OptionUI>
     #endregion
 
     #region ShowHide
-    private void Show(bool isInstant = false)
+    private void Show()
     {
-        if (isInstant)
-        {
-            gameObject.SetActive(true);
-            optionPanel.anchoredPosition = Vector3.zero;
-            return;
-        }
-
         gameObject.SetActive(true);
         optionPanel.anchoredPosition = hidePos;
         optionPanel
@@ -54,15 +47,8 @@ public class OptionUI : Singleton<OptionUI>
         fadeCanvasGroup.FadeIn(moveDuration);
     }
 
-    private void Hide(bool isInstant = false)
+    private void Hide()
     {
-        if (isInstant)
-        {
-            gameObject.SetActive(false);
-            optionPanel.anchoredPosition = hidePos;
-            return;
-        }
-
         optionPanel.anchoredPosition = Vector3.zero;
         optionPanel
             .DOAnchorPos(hidePos, moveDuration)

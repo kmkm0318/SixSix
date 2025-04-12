@@ -327,6 +327,18 @@ MonoBehaviour:
   maxScale: 1.125
   minScale: 1
   scaleSpeed: 1
+  spriteRenderer: {fileID: 7144561027022362581}
+  diceHighlightTextUI: {fileID: 4537527350973302689}
+  highlightTypeData:
+  - type: 1
+    color: {r: 1, g: 1, b: 0, a: 1}
+    text: Keep
+  - type: 2
+    color: {r: 1, g: 1, b: 0.5019608, a: 1}
+    text: Unkeep
+  - type: 3
+    color: {r: 1, g: 0.5019608, b: 1, a: 1}
+    text: Select
 --- !u!1 &6602018701721884083
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ec76d03890a2e4a98c0f71306b1aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepText: {fileID: 3390187497530082441}
+  text: {fileID: 3390187497530082441}
 --- !u!114 &3366111194355406964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,7 +571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: {fileID: 3142599990498751304}
-  keepUI: {fileID: 4537527350973302689}
 --- !u!1 &7055470765296504697
 GameObject:
   m_ObjectHideFlags: 0

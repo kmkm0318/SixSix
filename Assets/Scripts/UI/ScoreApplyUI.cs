@@ -35,7 +35,7 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         Show();
 
         SetupScorePairUI(pair, targetTransform, isAvilityDice);
-        yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(scoreText, AnimationType.Text));
+        yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(scoreText, AnimationType.Shake));
 
         Hide();
     }

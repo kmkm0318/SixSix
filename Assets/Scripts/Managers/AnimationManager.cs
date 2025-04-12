@@ -61,8 +61,8 @@ public class AnimationManager : Singleton<AnimationManager>
         string originalText = text.text;
         text.text = string.Empty;
 
-        text.DOText(originalText, 0.5f / 4f);
+        var currentTween = text.DOText(originalText, 0.5f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return currentTween.WaitForCompletion();
     }
 }
