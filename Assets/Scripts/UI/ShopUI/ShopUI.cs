@@ -7,7 +7,6 @@ public class ShopUI : Singleton<ShopUI>
 {
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private float showDuration = 0.5f;
-    [SerializeField] private Vector3 showPos;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Button RerollButton;
     [SerializeField] private Button closeButton;
@@ -38,7 +37,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         shopPanel.anchoredPosition = hidePos;
         gameObject.SetActive(true);
-        shopPanel.DOAnchorPos(showPos, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        shopPanel.DOAnchorPos(Vector3.zero, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             OnShopUIOpened?.Invoke();
         });
