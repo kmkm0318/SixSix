@@ -5,12 +5,12 @@ using UnityEngine;
 public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] private int rerollCostMax = 6;
-    [SerializeField] private int availityDiceNum = 3;
-    [SerializeField] private List<AvailityDiceMerchant> availityDiceMerchants = new();
-
+    [SerializeField] private int availityDiceMerchantCountMax = 3;
+    [SerializeField] private AvailityDiceListSO availityDiceListSO;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
+    public event Action<AvailityDiceSO, PurchaseResult> OnPurchaseAttempted;
 
     private int rerollCost = 1;
 
@@ -37,15 +37,48 @@ public class ShopManager : Singleton<ShopManager>
     {
         OnShopEnded?.Invoke();
     }
+
+    public void TryPurchaseAvailityDice(AvailityDiceSO availityDiceSO)
+    {
+        if (availityDiceSO == null)
+        {
+            OnPurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            return;
+        }
+
+        if (PlayerMoneyManager.Instance.Money < availityDiceSO.price)
+        {
+            OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
+            return;
+        }
+
+        if (PlayerDiceManager.Instance.AvailityDiceList.Count >= PlayerDiceManager.Instance.AvailityDiceCountMax)
+        {
+            OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
+            return;
+        }
+
+        OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
+    }
+
+    public List<AvailityDiceSO> GetRandomAvailityDiceList()
+    {
+        List<AvailityDiceSO> randomAvailityDiceList = new();
+        while (randomAvailityDiceList.Count < availityDiceMerchantCountMax)
+        {
+            AvailityDiceSO randomAvailityDice = availityDiceListSO.GetRandomAvailityDiceSO();
+            if (randomAvailityDice == null) continue;
+            if (randomAvailityDiceList.Contains(randomAvailityDice)) continue;
+            randomAvailityDiceList.Add(randomAvailityDice);
+        }
+        return randomAvailityDiceList;
+    }
 }
 
-public struct AvailityDiceMerchant
+public enum PurchaseResult
 {
-    public AvailityDiceSO availityDiceSO;
-    public int price;
-}
-
-public struct EnhancementMerchant
-{
-
+    Success,
+    NotEnoughMoney,
+    NotEnoughDiceSlot,
+    Failed,
 }

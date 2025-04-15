@@ -124,11 +124,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
     {
         SetTexts();
 
-        var roundAnimation = StartCoroutine(AnimationManager.Instance.PlayAnimation(roundText, AnimationType.Text));
-        var scoreAnimation = StartCoroutine(AnimationManager.Instance.PlayAnimation(roundScoreText, AnimationType.Text));
+        string roundTextValue = roundText.text;
+        string roundScoreTextValue = roundScoreText.text;
 
-        yield return roundAnimation;
-        yield return scoreAnimation;
+        roundText.text = string.Empty;
+        roundScoreText.text = string.Empty;
+
+        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(roundText, roundTextValue));
+        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(roundScoreText, roundScoreTextValue));
     }
 
     private void SetTexts()

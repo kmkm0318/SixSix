@@ -58,6 +58,6 @@ public class StateUI : Singleton<StateUI>
     {
         targetText.text = targetString;
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(targetText, AnimationType.Shake));
+        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(targetText.transform));
     }
 }

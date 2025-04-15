@@ -11,6 +11,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     [SerializeField] private Playboard availityDicePlayboard;
     [SerializeField] private int firstdiceCount = 5;
     [SerializeField] private float diceGenerateDelay = 0.25f;
+    [SerializeField] private int availityDiceCountMax = 5;
+    public int AvailityDiceCountMax => availityDiceCountMax;
 
     public event Action OnFirstDiceGenerated;
 
@@ -38,6 +40,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AvailityDiceAutoKeep, OnAvailityDiceAutoKeepChanged);
+        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -58,16 +61,6 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
 
             AddPlayDice(playDice);
-        }
-
-        foreach (var availityDiceSO in DataContainer.Instance.AvailityDiceListSO.availityDiceSOList)
-        {
-            yield return new WaitForSeconds(diceGenerateDelay);
-
-            var availityDice = Instantiate(availityDicePrefab, availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-            availityDice.Init(availityDiceSO, availityDicePlayboard);
-
-            AddAvailityDice(availityDice);
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());
@@ -97,6 +90,18 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         isAvailityDiceAutoKeep = value == 1;
     }
 
+    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    {
+        if (sO == null) return;
+
+        if (result == PurchaseResult.Success)
+        {
+            var availityDice = Instantiate(availityDicePrefab, availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            availityDice.Init(sO, availityDicePlayboard);
+
+            AddAvailityDice(availityDice);
+        }
+    }
     #endregion
     private void AddPlayDice(PlayDice playDice)
     {

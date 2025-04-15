@@ -31,10 +31,12 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         RegisterEvents();
     }
 
+    #region RegisterEvents
     private void RegisterEvents()
     {
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
+        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnRoundClearRewardTriggered(int value)
@@ -49,4 +51,15 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
             Money += bonusMoney;
         }
     }
+
+    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    {
+        if (sO == null) return;
+
+        if (result == PurchaseResult.Success)
+        {
+            Money -= sO.price;
+        }
+    }
+    #endregion
 }

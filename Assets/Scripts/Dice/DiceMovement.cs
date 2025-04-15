@@ -35,6 +35,7 @@ public class DiceMovement : MonoBehaviour
     public void RollDice(Vector2 forceOrigin, float force)
     {
         var forceDirection = (Vector2)transform.position - forceOrigin;
+        forceDirection.x *= forceDirection.x;
         forceDirection = forceDirection.normalized;
         rb.AddForce(forceDirection * force, ForceMode2D.Impulse);
         rb.AddTorque(forceDirection.x * force, ForceMode2D.Impulse);

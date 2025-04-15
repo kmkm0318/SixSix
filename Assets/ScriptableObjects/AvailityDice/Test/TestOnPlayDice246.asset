@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: TestOnPlayDice
+  m_Name: TestOnPlayDice246
   m_EditorClassIdentifier: 
-  diceName: TestOnPlayDice
+  diceName: TestOnPlayDice246
+  price: 0
   maxFaceValue: 3
   diceFaceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   availityTriggerType: 0

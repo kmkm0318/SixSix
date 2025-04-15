@@ -319,7 +319,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         ApplyScorePairEffect(pair);
 
-        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(dice, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(dice.transform), true);
         OnScorePairApplied(pair, dice.transform, isAvailityDice);
 
         SequenceManager.Instance.ApplyParallelCoroutine();

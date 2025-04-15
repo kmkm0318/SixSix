@@ -29,11 +29,20 @@ public class RoundClearRewardUI : MonoBehaviour
     {
         SetRewardText();
 
-        var nameAnimation = StartCoroutine(AnimationManager.Instance.PlayAnimation(rewardNameText, AnimationType.Text));
-        var valueAnimation = StartCoroutine(AnimationManager.Instance.PlayAnimation(rewardValueText, AnimationType.Text));
+        if (rewardValue == 0)
+        {
+            gameObject.SetActive(false);
+            yield break;
+        }
 
-        yield return nameAnimation;
-        yield return valueAnimation;
+        string rewardName = rewardNameText.text;
+        string rewardValueTextContent = rewardValueText.text;
+
+        rewardNameText.text = string.Empty;
+        rewardValueText.text = string.Empty;
+
+        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(rewardNameText, rewardName));
+        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(rewardValueText, rewardValueTextContent));
 
         RoundClearUI.Instance.TriggerReward(rewardValue);
     }

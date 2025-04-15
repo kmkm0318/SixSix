@@ -27,7 +27,7 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
     public void OnScorePairApplied(ScorePair pair, Transform targetTransform, bool isAvilityDice)
     {
         SequenceManager.Instance.AddCoroutine(ShowScorePairTextAnimation(pair, targetTransform, isAvilityDice), true);
-        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayAnimation(this, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(transform), true);
     }
 
     private IEnumerator ShowScorePairTextAnimation(ScorePair pair, Transform targetTransform, bool isAvilityDice)
@@ -35,7 +35,7 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         Show();
 
         SetupScorePairUI(pair, targetTransform, isAvilityDice);
-        yield return StartCoroutine(AnimationManager.Instance.PlayAnimation(scoreText, AnimationType.Shake));
+        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(scoreText.transform));
 
         Hide();
     }

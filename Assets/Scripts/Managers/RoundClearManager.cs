@@ -27,7 +27,6 @@ public class RoundClearManager : Singleton<RoundClearManager>
     private void OnRoundClearUIClosed()
     {
         OnRoundClearEnded?.Invoke();
-        UnityEngine.Debug.Log("RoundClearUIClosed");
     }
 }
 

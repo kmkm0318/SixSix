@@ -42,28 +42,28 @@ public class RoundUI : MonoBehaviour
     {
         string newText = currnetRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText), true);
     }
 
     private void OnTargetRoundScoreChanged(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText), true);
     }
 
     private void OnCurrentRoundScoreChanged(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText), true);
     }
 
     private void OnPlayScoreChanged(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText), true);
     }
 
     private void OnScorePairChanged(ScorePair pair)
@@ -78,19 +78,19 @@ public class RoundUI : MonoBehaviour
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(baseScoreText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(baseScoreText, newText), true);
     }
 
     private void OnMultiplierChanged(int score)
     {
         string newText = score.ToString();
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(multiplierText, newText, AnimationType.Shake), true);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(multiplierText, newText), true);
     }
 
-    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText, AnimationType animationType = AnimationType.None)
+    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText)
     {
         textComponent.text = newText;
-        yield return AnimationManager.Instance.PlayAnimation(textComponent, animationType);
+        yield return AnimationManager.Instance.PlayShakeAnimation(textComponent.transform);
     }
 }

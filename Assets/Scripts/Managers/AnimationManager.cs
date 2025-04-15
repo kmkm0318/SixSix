@@ -3,65 +3,29 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public enum AnimationType
-{
-    None,
-    Shake,
-    Text
-}
-
 public class AnimationManager : Singleton<AnimationManager>
 {
-    public IEnumerator PlayAnimation<T>(T target, AnimationType animationType) where T : MonoBehaviour
+    public IEnumerator PlayShakeAnimation(Transform targetTransform)
     {
-        switch (animationType)
-        {
-            default:
-            case AnimationType.None:
-                yield return StartCoroutine(PlayNoneAnimation());
-                break;
-            case AnimationType.Shake:
-                if (target.TryGetComponent<Transform>(out var transform))
-                {
-                    yield return StartCoroutine(PlayShakeAnimation(transform));
-                }
-                else
-                {
-                    yield return StartCoroutine(PlayNoneAnimation());
-                }
-                break;
-            case AnimationType.Text:
-                if (target.TryGetComponent<TMP_Text>(out var text))
-                {
-                    yield return StartCoroutine(PlayTextAnimation(text));
-                }
-                else
-                {
-                    yield return StartCoroutine(PlayNoneAnimation());
-                }
-                break;
-        }
+        yield return StartCoroutine(PlayShakeAnimationCoroutine(targetTransform));
     }
 
-    private IEnumerator PlayNoneAnimation()
+    private IEnumerator PlayShakeAnimationCoroutine(Transform targetTransform)
     {
-        yield return null;
-    }
-
-    private IEnumerator PlayShakeAnimation(Transform transform)
-    {
-        var currentTween =
-        transform
-        .DOShakeRotation(0.5f, new Vector3(0, 0, 30), 25, 90, true, ShakeRandomnessMode.Harmonic);
+        var currentTween = targetTransform.DOShakeRotation(0.5f, new Vector3(0, 0, 30), 25, 90, true, ShakeRandomnessMode.Harmonic);
         yield return currentTween.WaitForCompletion();
     }
 
-    private IEnumerator PlayTextAnimation(TMP_Text text)
+    public IEnumerator PlayTextAnimation(TMP_Text text, string targetText)
     {
-        string originalText = text.text;
+        yield return StartCoroutine(PlayTextAnimationCoroutine(text, targetText));
+    }
+
+    private IEnumerator PlayTextAnimationCoroutine(TMP_Text text, string targetText)
+    {
         text.text = string.Empty;
 
-        var currentTween = text.DOText(originalText, 0.5f);
+        var currentTween = text.DOText(targetText, 0.5f);
 
         yield return currentTween.WaitForCompletion();
     }
