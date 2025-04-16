@@ -12,6 +12,7 @@ public class DiceMovement : MonoBehaviour
     public event Action OnRollCompleted;
     public event Action OnDiceCollided;
 
+    private Dice dice;
     private Rigidbody2D rb;
     private Playboard playboard;
 
@@ -20,10 +21,30 @@ public class DiceMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(Playboard playboard)
+    public void Init(Dice dice, Playboard playboard)
     {
+        this.dice = dice;
         this.playboard = playboard;
+
+        RegisterEvents();
+    }
+
+    private void OnDisable()
+    {
+        if (dice != null)
+        {
+            UnregisterEvents();
+        }
+    }
+
+    private void RegisterEvents()
+    {
         RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
+    }
+
+    private void UnregisterEvents()
+    {
+        RollManager.Instance.OnRollPowerApplied -= OnRollPowerApplied;
     }
 
     private void OnRollPowerApplied(float rollDiceForce)

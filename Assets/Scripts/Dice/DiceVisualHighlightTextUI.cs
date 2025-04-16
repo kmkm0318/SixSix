@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class DiceHighlightTextUI : MonoBehaviour
+public class DiceVisualHighlightTextUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
 

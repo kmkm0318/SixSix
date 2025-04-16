@@ -5,17 +5,31 @@ public class AvailityDice : Dice
     private AvailityDiceSO availityDiceSO;
     public AvailityDiceSO AvailityDiceSO => availityDiceSO;
 
-    override protected void Start()
+    public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
-        base.Start();
+        base.Init(availityDiceSO.maxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
+
+        this.availityDiceSO = availityDiceSO;
         RegisterEvents();
     }
-    #region Register Events
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        UnregisterEvents();
+    }
+    #region Events
 
     private void RegisterEvents()
     {
         DiceInteraction.OnIsMouseOverChanged += OnIsMouseOverChanged;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
+    }
+
+    private void UnregisterEvents()
+    {
+        DiceInteraction.OnIsMouseOverChanged -= OnIsMouseOverChanged;
+        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
     }
 
     private void OnIsMouseOverChanged(bool isMouseOver)
@@ -41,13 +55,6 @@ public class AvailityDice : Dice
         }
     }
     #endregion
-
-    public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
-    {
-        base.Init(availityDiceSO.maxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
-
-        this.availityDiceSO = availityDiceSO;
-    }
 
     public void ApplyEffect()
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class PlayerDiceManager : Singleton<PlayerDiceManager>
 {
@@ -15,11 +16,15 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public int AvailityDiceCountMax => availityDiceCountMax;
 
     public event Action OnFirstDiceGenerated;
+    public event Action<PlayDice> OnPlayDiceClicked;
+    public event Action<AvailityDice> OnAvailityDiceClicked;
 
     private List<PlayDice> playDiceList = new();
     public List<PlayDice> PlayDiceList => playDiceList;
     private List<AvailityDice> availityDiceList = new();
     public List<AvailityDice> AvailityDiceList => availityDiceList;
+    private ObjectPool<PlayDice> playDicePool;
+    private ObjectPool<AvailityDice> availityDicePool;
     private bool isAvailityDiceAutoKeep = false;
     public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
 
@@ -32,6 +37,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     private void Init()
     {
         OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
+
+        playDicePool = new ObjectPool<PlayDice>(() => Instantiate(playDicePrefab), playDice => playDice.gameObject.SetActive(true), playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
+        availityDicePool = new ObjectPool<AvailityDice>(() => Instantiate(availityDicePrefab), availityDice => availityDice.gameObject.SetActive(true), availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
     }
 
     #region RegisterEvents
@@ -57,7 +65,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         {
             yield return new WaitForSeconds(diceGenerateDelay);
 
-            var playDice = Instantiate(playDicePrefab, playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            var playDice = playDicePool.Get();
+            playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+
             playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
 
             AddPlayDice(playDice);
@@ -78,7 +88,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     private IEnumerator AddSixthDice()
     {
-        var playDice = Instantiate(playDicePrefab, playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        var playDice = playDicePool.Get();
+        playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+
         playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
 
         AddPlayDice(playDice);
@@ -96,7 +108,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         if (result == PurchaseResult.Success)
         {
-            var availityDice = Instantiate(availityDicePrefab, availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            var availityDice = availityDicePool.Get();
+            availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+
             availityDice.Init(sO, availityDicePlayboard);
 
             AddAvailityDice(availityDice);
@@ -105,12 +119,20 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     #endregion
     private void AddPlayDice(PlayDice playDice)
     {
+        playDice.OnDiceClicked += () => OnPlayDiceClicked?.Invoke(playDice);
         playDiceList.Add(playDice);
     }
 
     private void AddAvailityDice(AvailityDice availityDice)
     {
+        availityDice.OnDiceClicked += () => OnAvailityDiceClicked?.Invoke(availityDice);
         availityDiceList.Add(availityDice);
+    }
+
+    public void RemoveAvailityDice(AvailityDice availityDice)
+    {
+        availityDiceList.Remove(availityDice);
+        availityDicePool.Release(availityDice);
     }
 
     public bool AreAllDiceStopped()

@@ -11,6 +11,7 @@ public class ShopManager : Singleton<ShopManager>
     public event Action OnShopStarted;
     public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnPurchaseAttempted;
+    public event Action<AvailityDiceSO> OnAvailityDiceSelled;
 
     private int rerollCost = 1;
 
@@ -19,10 +20,12 @@ public class ShopManager : Singleton<ShopManager>
         RegisterEvents();
     }
 
+    #region RegisterEvents
     private void RegisterEvents()
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
+        PlayerDiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -38,6 +41,17 @@ public class ShopManager : Singleton<ShopManager>
         OnShopEnded?.Invoke();
     }
 
+    private void OnAvailityDiceClicked(AvailityDice dice)
+    {
+        if (dice == null) return;
+        var diceSO = dice.AvailityDiceSO;
+
+        PlayerDiceManager.Instance.RemoveAvailityDice(dice);
+
+        OnAvailityDiceSelled?.Invoke(diceSO);
+    }
+    #endregion
+
     public void TryPurchaseAvailityDice(AvailityDiceSO availityDiceSO)
     {
         if (availityDiceSO == null)
@@ -46,7 +60,7 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
-        if (PlayerMoneyManager.Instance.Money < availityDiceSO.price)
+        if (PlayerMoneyManager.Instance.Money < availityDiceSO.purchasePrice)
         {
             OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
             return;

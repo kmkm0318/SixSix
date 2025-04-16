@@ -37,6 +37,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
         ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
     }
 
     private void OnRoundClearRewardTriggered(int value)
@@ -58,8 +59,15 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
 
         if (result == PurchaseResult.Success)
         {
-            Money -= sO.price;
+            Money -= sO.purchasePrice;
         }
+    }
+
+    private void OnAvailityDiceSelled(AvailityDiceSO sO)
+    {
+        if (sO == null) return;
+
+        Money += sO.sellPrice;
     }
     #endregion
 }

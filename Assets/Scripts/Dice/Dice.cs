@@ -9,6 +9,7 @@ public class Dice : MonoBehaviour
     public DiceInteraction DiceInteraction => diceInteraction;
 
     public event Action<bool> OnIsKeepedChanged;
+    public event Action OnDiceClicked;
 
     private bool isKeeped = false;
     public bool IsKeeped
@@ -34,9 +35,7 @@ public class Dice : MonoBehaviour
         diceMovement.OnRollCompleted += () => IsRolling = false;
         diceMovement.OnDiceCollided += OnDiceCollided;
 
-        diceInteraction.OnMouseClicked += () => IsKeeped = !IsKeeped;
-
-        PlayManager.Instance.OnPlayStarted += (_) => { IsKeeped = false; };
+        diceInteraction.OnMouseClicked += OnMouseClicked;
     }
 
     private void OnDiceCollided()
@@ -44,6 +43,18 @@ public class Dice : MonoBehaviour
         if (IsRolling && !IsKeeped)
         {
             ChangeFace(1);
+        }
+    }
+
+    private void OnMouseClicked()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Round)
+        {
+            IsKeeped = !IsKeeped;
+        }
+        else if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            OnDiceClicked?.Invoke();
         }
     }
 
@@ -62,8 +73,31 @@ public class Dice : MonoBehaviour
 
         SetFace(faceIndex);
 
-        diceMovement.Init(playboard);
+        diceMovement.Init(this, playboard);
         diceVisual.Init(this);
+        diceInteraction.Init(this);
+
+        RegisterEvents();
+    }
+
+    protected virtual void OnDisable()
+    {
+        UnregisterEvents();
+    }
+
+    private void RegisterEvents()
+    {
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+    }
+
+    private void UnregisterEvents()
+    {
+        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+    }
+
+    private void OnPlayStarted(int playRemain)
+    {
+        IsKeeped = false;
     }
 
     public void SetFace(int faceIndex)

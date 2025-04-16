@@ -44,7 +44,11 @@ public class RoundClearUI : Singleton<RoundClearUI>
     private void Start()
     {
         RegisterEvents();
-        closeButton.onClick.AddListener(() => SequenceManager.Instance.AddCoroutine(Hide()));
+        closeButton.onClick.AddListener(() =>
+        {
+            if (!isClosable) return;
+            SequenceManager.Instance.AddCoroutine(Hide());
+        });
         gameObject.SetActive(false);
     }
 
@@ -60,7 +64,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
         ClearRewardTexts();
         SequenceManager.Instance.AddCoroutine(Show());
         SequenceManager.Instance.AddCoroutine(ShowTextAnimation());
-        SequenceManager.Instance.AddCoroutine(CreateRewardUIs);
+        CreateRewardUIs();
         SequenceManager.Instance.AddCoroutine(() => isClosable = true);
     }
     #endregion

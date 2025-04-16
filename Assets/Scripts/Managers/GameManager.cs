@@ -54,34 +54,34 @@ public class GameManager : Singleton<GameManager>
 
     private void OnRoundClearEnded()
     {
-        CurrentGameState = GameState.Shop;
+        ChangeGameStateOneFrameLater(GameState.Shop);
     }
 
     private void OnFirstDiceGenerated()
     {
-        CurrentGameState = GameState.Round;
+        ChangeGameStateOneFrameLater(GameState.Round);
     }
 
     private void OnRoundCleared(int currentRound)
     {
         if (currentRound == RoundManager.Instance.ClearRound)
         {
-            CurrentGameState = GameState.GameClear;
+            ChangeGameStateOneFrameLater(GameState.GameClear);
         }
         else
         {
-            CurrentGameState = GameState.RoundClear;
+            ChangeGameStateOneFrameLater(GameState.RoundClear);
         }
     }
 
     private void OnRoundFailed(int currentRound)
     {
-        CurrentGameState = GameState.RoundFail;
+        ChangeGameStateOneFrameLater(GameState.RoundFail);
     }
 
     private void OnShopEnded()
     {
-        CurrentGameState = GameState.Round;
+        ChangeGameStateOneFrameLater(GameState.Round);
     }
 
     private void OnGameSpeedChanged(int value)
@@ -89,6 +89,11 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1f + (value * 0.25f);
     }
     #endregion
+
+    private void ChangeGameStateOneFrameLater(GameState state)
+    {
+        SequenceManager.Instance.AddCoroutineOneFrameLater(() => CurrentGameState = state);
+    }
 
     private IEnumerator StartGame()
     {

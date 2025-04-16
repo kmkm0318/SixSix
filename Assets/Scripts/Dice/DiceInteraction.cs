@@ -8,6 +8,8 @@ public class DiceInteraction : MonoBehaviour, IClickable
     public event Action OnMouseClicked;
     public event Action<bool> OnIsMouseOverChanged;
 
+    private Dice dice;
+
     private bool isInteractable = false;
     public bool IsInteractable
     {
@@ -38,12 +40,47 @@ public class DiceInteraction : MonoBehaviour, IClickable
         }
     }
 
-    private void Start()
+    public void Init(Dice dice)
+    {
+        this.dice = dice;
+
+        RegisterEvents();
+
+        if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            IsInteractable = true;
+        }
+        else
+        {
+            IsInteractable = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        UnregisterEvents();
+        IsMouseOver = false;
+    }
+
+    #region Events
+    private void RegisterEvents()
     {
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
         PlayManager.Instance.OnPlayEnded += OnPlayEnded;
         RollManager.Instance.OnRollStarted += OnRollStarted;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
+        ShopManager.Instance.OnShopStarted += OnShopStarted;
+        ShopManager.Instance.OnShopEnded += OnShopEnded;
+    }
+
+    private void UnregisterEvents()
+    {
+        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+        PlayManager.Instance.OnPlayEnded -= OnPlayEnded;
+        RollManager.Instance.OnRollStarted -= OnRollStarted;
+        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
+        ShopManager.Instance.OnShopStarted -= OnShopStarted;
+        ShopManager.Instance.OnShopEnded -= OnShopEnded;
     }
 
     private void OnPlayStarted(int obj)
@@ -64,6 +101,22 @@ public class DiceInteraction : MonoBehaviour, IClickable
     private void OnRollCompleted()
     {
         IsInteractable = RollManager.Instance.RollRemain > 0;
+    }
+
+    private void OnShopStarted()
+    {
+        if (dice is AvailityDice)
+        {
+            IsInteractable = true;
+        }
+    }
+
+    private void OnShopEnded()
+    {
+        if (dice is AvailityDice)
+        {
+            IsInteractable = false;
+        }
     }
 
     void OnMouseEnter()
@@ -90,4 +143,5 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
         OnMouseClicked?.Invoke();
     }
+    #endregion
 }

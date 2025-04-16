@@ -8,8 +8,8 @@ public class DiceVisualHighlight : MonoBehaviour
     [SerializeField] private float minScale;
     [SerializeField] private float scaleSpeed;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private DiceHighlightTextUI diceHighlightTextUI;
-    [SerializeField] private List<DiceHighlightTypeData> highlightTypeData;
+    [SerializeField] private DiceVisualHighlightTextUI textUI;
+    [SerializeField] private List<DiceHighlightTypeData> highlightTypeDataList;
 
     private Dice dice;
 
@@ -21,13 +21,29 @@ public class DiceVisualHighlight : MonoBehaviour
 
     public void Init(Dice dice)
     {
+        if (this.dice != null)
+        {
+            UnregisterEvents();
+        }
         this.dice = dice;
 
+        RegisterEvents();
+
+        Hide();
+    }
+
+    private void RegisterEvents()
+    {
         dice.OnIsKeepedChanged += OnIsKeepedChanged;
         dice.DiceInteraction.OnMouseEntered += OnMouseEntered;
         dice.DiceInteraction.OnMouseExited += OnMouseExited;
+    }
 
-        Hide();
+    private void UnregisterEvents()
+    {
+        dice.OnIsKeepedChanged -= OnIsKeepedChanged;
+        dice.DiceInteraction.OnMouseEntered -= OnMouseEntered;
+        dice.DiceInteraction.OnMouseExited -= OnMouseExited;
     }
 
     private void OnIsKeepedChanged(bool isKeeped)
@@ -56,28 +72,42 @@ public class DiceVisualHighlight : MonoBehaviour
         }
         else if (GameManager.Instance.CurrentGameState == GameState.Shop)
         {
-            type = DiceHighlightType.Enhance;
+            if (dice is AvailityDice)
+            {
+                type = DiceHighlightType.Sell;
+            }
+            else
+            {
+                type = DiceHighlightType.Enhance;
+            }
         }
         else
         {
             type = DiceHighlightType.None;
         }
 
-        var highlightTypeColor = highlightTypeData.Find(x => x.type == type);
+        var highlightTypeData = highlightTypeDataList.Find(x => x.type == type);
 
-        spriteRenderer.color = highlightTypeColor.color;
-        diceHighlightTextUI.SetText(highlightTypeColor.text);
+        spriteRenderer.color = highlightTypeData.color;
+
+        string text = highlightTypeData.text;
+        if (dice is AvailityDice availityDice && type == DiceHighlightType.Sell)
+        {
+            text += "$" + availityDice.AvailityDiceSO.sellPrice.ToString();
+        }
+
+        textUI.SetText(text);
     }
 
     private void Show()
     {
         gameObject.SetActive(true);
-        diceHighlightTextUI.gameObject.SetActive(true);
+        textUI.gameObject.SetActive(true);
     }
 
     private void Hide()
     {
-        diceHighlightTextUI.gameObject.SetActive(false);
+        textUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }
@@ -88,6 +118,7 @@ public enum DiceHighlightType
     Keep,
     Unkeep,
     Enhance,
+    Sell,
 }
 
 [Serializable]

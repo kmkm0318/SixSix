@@ -6,7 +6,8 @@ public class AvailityDiceSO : ScriptableObject
 {
     [Header("Dice Info")]
     public string diceName;
-    public int price;
+    public int purchasePrice;
+    public int sellPrice;
     public int maxFaceValue;
     public DiceFaceSpriteListSO diceFaceSpriteListSO;
 
@@ -24,7 +25,7 @@ public class AvailityDiceSO : ScriptableObject
     #region GetDescriptionText
     public string GetDescriptionText()
     {
-        return GetTriggerTypeText() + GetEffectTypeText();
+        return GetTriggerTypeText() + "\n" + GetEffectTypeText();
     }
     private string GetTriggerTypeText()
     {

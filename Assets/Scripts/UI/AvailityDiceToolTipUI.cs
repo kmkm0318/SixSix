@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AvailityDiceToolTipUI : Singleton<AvailityDiceToolTipUI>
 {
@@ -29,12 +30,12 @@ public class AvailityDiceToolTipUI : Singleton<AvailityDiceToolTipUI>
         if (availityDice == null || availityDice.AvailityDiceSO == null) return;
         AvailityDiceSO availityDiceSO = availityDice.AvailityDiceSO;
 
-        gameObject.SetActive(true);
-
         targetTrasnform = availityDice.transform;
 
         diceNameText.text = availityDiceSO.diceName;
         descriptionText.text = availityDiceSO.GetDescriptionText();
+
+        gameObject.SetActive(true);
     }
 
 

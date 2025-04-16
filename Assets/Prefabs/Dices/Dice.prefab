@@ -328,17 +328,20 @@ MonoBehaviour:
   minScale: 1
   scaleSpeed: 1
   spriteRenderer: {fileID: 7144561027022362581}
-  diceHighlightTextUI: {fileID: 4537527350973302689}
-  highlightTypeData:
+  textUI: {fileID: 4537527350973302689}
+  highlightTypeDataList:
   - type: 1
     color: {r: 1, g: 1, b: 0, a: 1}
     text: Keep
   - type: 2
-    color: {r: 0.13679248, g: 0.82478076, b: 1, a: 1}
+    color: {r: 0, g: 1, b: 0, a: 1}
     text: Unkeep
   - type: 3
-    color: {r: 1, g: 0.5019608, b: 1, a: 1}
-    text: Select
+    color: {r: 0, g: 1, b: 1, a: 1}
+    text: Enhance
+  - type: 4
+    color: {r: 1, g: 0, b: 0, a: 1}
+    text: Sell
 --- !u!1 &6602018701721884083
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +357,7 @@ GameObject:
   - component: {fileID: 4537527350973302689}
   - component: {fileID: 3366111194355406964}
   m_Layer: 5
-  m_Name: DiceVisualKeepUI
+  m_Name: DiceVisualHighlightTextUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

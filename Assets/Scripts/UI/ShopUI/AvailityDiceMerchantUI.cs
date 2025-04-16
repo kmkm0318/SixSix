@@ -67,7 +67,7 @@ public class AvailityDiceMerchantUI : MonoBehaviour
         diceImage.sprite = availityDiceSO.diceFaceSpriteListSO.diceFaceList[0].sprite;
         nameText.text = availityDiceSO.diceName;
         descriptionText.text = availityDiceSO.GetDescriptionText();
-        buttonText.text = $"Buy({availityDiceSO.price})";
+        buttonText.text = $"Buy({availityDiceSO.purchasePrice})";
     }
 
     private void PlayButtonAnimation()
