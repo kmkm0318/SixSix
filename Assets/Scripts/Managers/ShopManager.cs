@@ -6,13 +6,17 @@ public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] private int rerollCostMax = 6;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
+    [SerializeField] private int handCategoryEnhanceMerchantCountMax = 3;
     [SerializeField] private AvailityDiceListSO availityDiceListSO;
+    [SerializeField] private HandCategoryListSO handCategoryListSO;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
-    public event Action<AvailityDiceSO, PurchaseResult> OnPurchaseAttempted;
+    public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
+    public event Action<HandCategorySO, PurchaseResult> OnHandCategoryEnhancePurchaseAttempted;
     public event Action<AvailityDiceSO> OnAvailityDiceSelled;
     public event Action<int> OnRerollCostChanged;
+    public event Action OnRerollCompleted;
 
     private int rerollCost = 1;
     public int RerollCost
@@ -68,23 +72,40 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (availityDiceSO == null)
         {
-            OnPurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            OnAvailityDicePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
             return;
         }
 
         if (PlayerMoneyManager.Instance.Money < availityDiceSO.purchasePrice)
         {
-            OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
+            OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
             return;
         }
 
         if (PlayerDiceManager.Instance.AvailityDiceList.Count >= PlayerDiceManager.Instance.AvailityDiceCountMax)
         {
-            OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
+            OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
             return;
         }
 
-        OnPurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
+        OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
+    }
+
+    public void TryPurchaseHandCategoryEnhance(HandCategorySO handCategorySO)
+    {
+        if (handCategorySO == null)
+        {
+            OnHandCategoryEnhancePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            return;
+        }
+
+        if (PlayerMoneyManager.Instance.Money < handCategorySO.purchasePrice)
+        {
+            OnHandCategoryEnhancePurchaseAttempted?.Invoke(handCategorySO, PurchaseResult.NotEnoughMoney);
+            return;
+        }
+
+        OnHandCategoryEnhancePurchaseAttempted?.Invoke(handCategorySO, PurchaseResult.Success);
     }
 
     public List<AvailityDiceSO> GetRandomAvailityDiceList()
@@ -100,15 +121,29 @@ public class ShopManager : Singleton<ShopManager>
         return randomAvailityDiceList;
     }
 
+    public List<HandCategorySO> GetRandomHandCategoryList()
+    {
+        List<HandCategorySO> randomHandCategoryList = new();
+        while (randomHandCategoryList.Count < handCategoryEnhanceMerchantCountMax)
+        {
+            HandCategorySO randomHandCategory = handCategoryListSO.GetRandomHandCategorySO();
+            if (randomHandCategory == null) continue;
+            if (randomHandCategoryList.Contains(randomHandCategory)) continue;
+            randomHandCategoryList.Add(randomHandCategory);
+        }
+        return randomHandCategoryList;
+    }
+
     public void TryReroll()
     {
         if (PlayerMoneyManager.Instance.Money < RerollCost)
         {
-            OnPurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
+            OnAvailityDicePurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
             return;
         }
 
         PlayerMoneyManager.Instance.Money -= RerollCost;
+        OnRerollCompleted?.Invoke();
         SetRandomRerollCost();
     }
 

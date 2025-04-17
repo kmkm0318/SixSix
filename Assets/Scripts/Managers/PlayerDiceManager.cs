@@ -48,7 +48,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AvailityDiceAutoKeep, OnAvailityDiceAutoKeepChanged);
-        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnGameStateChanged(GameState state)

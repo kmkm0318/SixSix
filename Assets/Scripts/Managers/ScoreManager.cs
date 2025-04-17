@@ -115,11 +115,9 @@ public class ScoreManager : Singleton<ScoreManager>
         OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
     }
 
-    private void OnHandCategorySelected(HandCategorySO handCategorySO)
+    private void OnHandCategorySelected(HandCategorySO handCategorySO, ScorePair scorePair)
     {
-        var pair = handCategoryScoreDictionary[handCategorySO.handCategory];
-
-        ScorePair = pair;
+        ScorePair = scorePair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
         PlayerDiceManager.Instance.ApplyPlayDices();

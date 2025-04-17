@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_Text enhanceLevelText;
     [SerializeField] private TMP_Text baseScoreText;
     [SerializeField] private TMP_Text multiplierText;
     [SerializeField] private Button button;
@@ -14,6 +15,7 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
 
     private ScorePair scorePair;
     private HandCategorySO handCategorySO;
+    private int enhanceLevel = 0;
 
     private bool isActive = true;
     private bool IsActive
@@ -37,7 +39,7 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
 
         nameText.text = handCategorySO.handCategoryName;
 
-        UpdateScore(new(0, 0));
+        UpdateScore(true);
 
         OnUnfocused();
 
@@ -45,13 +47,22 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
         {
             if (scorePair.baseScore == 0 && scorePair.multiplier == 0) return;
 
-            HandCategoryScoreUI.Instance.SelectHandCategory(handCategorySO);
+            HandCategoryScoreUI.Instance.SelectHandCategory(handCategorySO, scorePair);
         });
     }
 
-    public void UpdateScore(ScorePair scorePair)
+    public void UpdateScore(bool isZero)
     {
-        this.scorePair = scorePair;
+        if (isZero)
+        {
+            scorePair = new();
+        }
+        else
+        {
+            scorePair = handCategorySO.scorePair;
+            scorePair.baseScore += enhanceLevel * handCategorySO.enhanceAmount;
+            scorePair.multiplier += enhanceLevel * handCategorySO.enhanceAmount;
+        }
 
         baseScoreText.text = scorePair.baseScore.ToString();
         multiplierText.text = scorePair.multiplier.ToString();
@@ -83,5 +94,15 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
     {
         baseScoreText.color = unfocusedColor;
         multiplierText.color = unfocusedColor;
+    }
+
+    public void Enhance(int increaseAmount)
+    {
+        enhanceLevel += increaseAmount;
+
+        enhanceLevelText.text = enhanceLevel.ToString();
+        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(enhanceLevelText.transform));
+
+        UpdateScore(scorePair.baseScore == 0 && scorePair.multiplier == 0);
     }
 }

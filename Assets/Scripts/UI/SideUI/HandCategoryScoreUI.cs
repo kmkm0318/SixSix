@@ -11,7 +11,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
     [SerializeField] private float scrollDuration;
     [SerializeField] private Vector2 targetScrollAnchoredPosition;
 
-    public event Action<HandCategorySO> OnHandCategorySelected;
+    public event Action<HandCategorySO, ScorePair> OnHandCategorySelected;
 
     private Dictionary<HandCategory, HandCategoryScoreSingleUI> handCategoryScoreSingleUIDict = new();
     private bool isActive = false;
@@ -35,6 +35,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         RebuildLayout();
     }
 
+    #region RegisterEvents
     private void RegisterEvents()
     {
         ScoreManager.Instance.OnHandCategoryScoreUpdated += OnHandCategoryScoreUpdated;
@@ -46,6 +47,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         RollManager.Instance.OnRollStarted += () => isActive = false;
 
         BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
+        ShopManager.Instance.OnHandCategoryEnhancePurchaseAttempted += OnHandCategoryEnhancePurchaseAttempted;
     }
 
     private void OnHandCategoryScoreUpdated(Dictionary<HandCategory, ScorePair> dictionary)
@@ -53,7 +55,7 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         foreach (var pair in dictionary)
         {
             handCategoryScoreSingleUIDict.TryGetValue(pair.Key, out var handCategoryScoreSingleUI);
-            handCategoryScoreSingleUI.UpdateScore(pair.Value);
+            handCategoryScoreSingleUI.UpdateScore(pair.Value.baseScore == 0 && pair.Value.multiplier == 0);
         }
     }
 
@@ -72,6 +74,16 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         SequenceManager.Instance.AddCoroutine(() => { ScrollLayoutPanel(); });
     }
 
+    private void OnHandCategoryEnhancePurchaseAttempted(HandCategorySO sO, PurchaseResult result)
+    {
+        if (result == PurchaseResult.Success)
+        {
+            handCategoryScoreSingleUIDict.TryGetValue(sO.handCategory, out var handCategoryScoreSingleUI);
+            handCategoryScoreSingleUI.Enhance(1);
+        }
+    }
+    #endregion
+
     public void RebuildLayout()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutPanel);
@@ -82,19 +94,19 @@ public class HandCategoryScoreUI : Singleton<HandCategoryScoreUI>
         layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
     }
 
-    public void SelectHandCategory(HandCategorySO handCategorySO)
+    public void SelectHandCategory(HandCategorySO handCategorySO, ScorePair scorePair)
     {
         if (!isActive) return;
         isActive = false;
 
-        OnHandCategorySelected?.Invoke(handCategorySO);
+        OnHandCategorySelected?.Invoke(handCategorySO, scorePair);
     }
 
     private void ResetHandCategoryScoreUI()
     {
         foreach (var pair in handCategoryScoreSingleUIDict)
         {
-            pair.Value.UpdateScore(new());
+            pair.Value.UpdateScore(true);
         }
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

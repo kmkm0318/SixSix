@@ -1,5 +1,3 @@
-using System.Collections;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,27 +27,14 @@ public class AvailityDiceMerchantUI : MonoBehaviour
     #region RegisterEvents
     private void RegisterEvents()
     {
-        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
     {
-        if (sO == null) return;
-
-        if (availityDiceSO == sO)
+        if (availityDiceSO == sO && result == PurchaseResult.Success)
         {
-            switch (result)
-            {
-                case PurchaseResult.Success:
-                    gameObject.SetActive(false);
-                    break;
-                case PurchaseResult.NotEnoughMoney:
-                case PurchaseResult.NotEnoughDiceSlot:
-                    PlayButtonAnimation();
-                    break;
-                default:
-                    break;
-            }
+            gameObject.SetActive(false);
         }
     }
     #endregion
@@ -68,16 +53,5 @@ public class AvailityDiceMerchantUI : MonoBehaviour
         nameText.text = availityDiceSO.diceName;
         descriptionText.text = availityDiceSO.GetDescriptionText();
         buttonText.text = $"Buy({availityDiceSO.purchasePrice})";
-    }
-
-    private void PlayButtonAnimation()
-    {
-        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(buyButton.transform, true));
-    }
-
-    private IEnumerator PlayAnimationAndReset()
-    {
-        buyButton.transform.DOKill();
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(buyButton.transform, true));
     }
 }

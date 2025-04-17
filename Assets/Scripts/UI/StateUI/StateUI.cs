@@ -32,7 +32,7 @@ public class StateUI : Singleton<StateUI>
         PlayerMoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
-        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnMoneyChanged(int money)

@@ -36,7 +36,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     {
         BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
-        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
     }
 

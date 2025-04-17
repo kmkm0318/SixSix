@@ -12,7 +12,9 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private float showDuration = 0.5f;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform availityDiceMerchantParent;
+    [SerializeField] private Transform handCategoryEnhanceMerchantParent;
     [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
+    [SerializeField] private HandCategoryEnhanceMerchantUI handCategoryEnhanceMerchantPrefab;
     [SerializeField] private Button rerollButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private TMP_Text rerollButtonText;
@@ -21,6 +23,7 @@ public class ShopUI : Singleton<ShopUI>
     public event Action OnShopUIClosed;
 
     private ObjectPool<AvailityDiceMerchantUI> availityDiceMerchantPool;
+    private ObjectPool<HandCategoryEnhanceMerchantUI> handCategoryEnhanceMerchantPool;
 
     private void Start()
     {
@@ -44,19 +47,39 @@ public class ShopUI : Singleton<ShopUI>
             merchantUI => Destroy(merchantUI.gameObject),
             maxSize: 10
         );
+
+        handCategoryEnhanceMerchantPool = new ObjectPool<HandCategoryEnhanceMerchantUI>(
+            () => Instantiate(handCategoryEnhanceMerchantPrefab, handCategoryEnhanceMerchantParent),
+            merchantUI =>
+            {
+                merchantUI.gameObject.SetActive(true);
+                merchantUI.transform.SetAsLastSibling();
+            },
+            merchantUI => merchantUI.gameObject.SetActive(false),
+            merchantUI => Destroy(merchantUI.gameObject),
+            maxSize: 10
+        );
     }
 
     #region RegisterEvents
     private void RegisterEvents()
     {
         ShopManager.Instance.OnShopStarted += OnShopStarted;
+        ShopManager.Instance.OnRerollCompleted += OnRerollCompleted;
         ShopManager.Instance.OnRerollCostChanged += OnRerollCostChanged;
     }
 
     private void OnShopStarted()
     {
         InitAvailityDiceMerchantUI();
+        InitHandCategoryEnhanceMerchantUI();
         Show();
+    }
+
+    private void OnRerollCompleted()
+    {
+        InitAvailityDiceMerchantUI();
+        InitHandCategoryEnhanceMerchantUI();
     }
 
     private void OnRerollCostChanged(int obj)
@@ -83,6 +106,21 @@ public class ShopUI : Singleton<ShopUI>
         {
             AvailityDiceMerchantUI merchantUI = availityDiceMerchantPool.Get();
             merchantUI.Init(availityDiceList[i]);
+        }
+    }
+
+    private void InitHandCategoryEnhanceMerchantUI()
+    {
+        foreach (Transform child in handCategoryEnhanceMerchantParent)
+        {
+            handCategoryEnhanceMerchantPool.Release(child.GetComponent<HandCategoryEnhanceMerchantUI>());
+        }
+
+        List<HandCategorySO> handCategoryList = ShopManager.Instance.GetRandomHandCategoryList();
+        for (int i = 0; i < handCategoryList.Count; i++)
+        {
+            HandCategoryEnhanceMerchantUI merchantUI = handCategoryEnhanceMerchantPool.Get();
+            merchantUI.Init(handCategoryList[i]);
         }
     }
 
