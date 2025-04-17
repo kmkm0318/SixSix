@@ -72,13 +72,12 @@ public class AvailityDiceMerchantUI : MonoBehaviour
 
     private void PlayButtonAnimation()
     {
-        StartCoroutine(PlayAnimationAndReset());
+        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(buyButton.transform, true));
     }
 
     private IEnumerator PlayAnimationAndReset()
     {
         buyButton.transform.DOKill();
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(buyButton.transform));
-        buyButton.transform.rotation = Quaternion.identity;
+        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(buyButton.transform, true));
     }
 }

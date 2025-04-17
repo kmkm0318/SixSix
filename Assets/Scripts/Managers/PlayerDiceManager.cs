@@ -38,8 +38,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
 
-        playDicePool = new ObjectPool<PlayDice>(() => Instantiate(playDicePrefab), playDice => playDice.gameObject.SetActive(true), playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
-        availityDicePool = new ObjectPool<AvailityDice>(() => Instantiate(availityDicePrefab), availityDice => availityDice.gameObject.SetActive(true), availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
+        playDicePool = new ObjectPool<PlayDice>(() => Instantiate(playDicePrefab), playDice => { }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
+        availityDicePool = new ObjectPool<AvailityDice>(() => Instantiate(availityDicePrefab), availityDice => { }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
     }
 
     #region RegisterEvents
@@ -67,8 +67,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
             var playDice = playDicePool.Get();
             playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-
             playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+            playDice.gameObject.SetActive(true);
 
             AddPlayDice(playDice);
         }
@@ -90,8 +90,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-
         playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+        playDice.gameObject.SetActive(true);
 
         AddPlayDice(playDice);
         yield return new WaitUntil(() => AreAllDiceStopped());
@@ -110,8 +110,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         {
             var availityDice = availityDicePool.Get();
             availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-
             availityDice.Init(sO, availityDicePlayboard);
+            availityDice.gameObject.SetActive(true);
 
             AddAvailityDice(availityDice);
         }

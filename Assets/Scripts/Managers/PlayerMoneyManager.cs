@@ -18,7 +18,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     public int Money
     {
         get => money;
-        private set
+        set
         {
             if (money == value) return;
             money = value;

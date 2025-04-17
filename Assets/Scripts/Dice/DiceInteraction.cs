@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DiceInteraction : MonoBehaviour, IClickable
 {
@@ -124,6 +126,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
         IsMouseOver = true;
 
         if (!IsInteractable) return;
+        if (Functions.IsPointerOverUIElement()) return;
 
         OnMouseEntered?.Invoke();
     }
@@ -140,6 +143,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
     public void OnClick()
     {
         if (!IsInteractable) return;
+        if (Functions.IsPointerOverUIElement()) return;
 
         OnMouseClicked?.Invoke();
     }

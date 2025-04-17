@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -12,8 +13,9 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform availityDiceMerchantParent;
     [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
-    [SerializeField] private Button RerollButton;
+    [SerializeField] private Button rerollButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private TMP_Text rerollButtonText;
 
     public event Action OnShopUIOpened;
     public event Action OnShopUIClosed;
@@ -24,6 +26,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         InitPool();
         RegisterEvents();
+        rerollButton.onClick.AddListener(ShopManager.Instance.TryReroll);
         closeButton.onClick.AddListener(() => SequenceManager.Instance.AddCoroutine(Hide));
         gameObject.SetActive(false);
     }
@@ -47,12 +50,25 @@ public class ShopUI : Singleton<ShopUI>
     private void RegisterEvents()
     {
         ShopManager.Instance.OnShopStarted += OnShopStarted;
+        ShopManager.Instance.OnRerollCostChanged += OnRerollCostChanged;
     }
 
     private void OnShopStarted()
     {
         InitAvailityDiceMerchantUI();
         Show();
+    }
+
+    private void OnRerollCostChanged(int obj)
+    {
+        if (obj > 0)
+        {
+            rerollButtonText.text = $"Reroll({obj})";
+        }
+        else
+        {
+            rerollButtonText.text = "Reroll";
+        }
     }
     #endregion
     private void InitAvailityDiceMerchantUI()

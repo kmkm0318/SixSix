@@ -32,6 +32,7 @@ public class StateUI : Singleton<StateUI>
         PlayerMoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
+        ShopManager.Instance.OnPurchaseAttempted += OnPurchaseAttempted;
     }
 
     private void OnMoneyChanged(int money)
@@ -52,6 +53,14 @@ public class StateUI : Singleton<StateUI>
     {
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(rollRemainText, rollRemain.ToString()), true);
         SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    {
+        if (result == PurchaseResult.NotEnoughMoney)
+        {
+            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(moneyText.transform, true));
+        }
     }
 
     private IEnumerator UpdateTextAndPlayAnimation(TMP_Text targetText, string targetString)

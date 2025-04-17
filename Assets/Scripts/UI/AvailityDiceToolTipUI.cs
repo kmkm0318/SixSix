@@ -28,6 +28,7 @@ public class AvailityDiceToolTipUI : Singleton<AvailityDiceToolTipUI>
     public void ShowToolTip(AvailityDice availityDice)
     {
         if (availityDice == null || availityDice.AvailityDiceSO == null) return;
+        if (Functions.IsPointerOverUIElement()) return;
         AvailityDiceSO availityDiceSO = availityDice.AvailityDiceSO;
 
         targetTrasnform = availityDice.transform;

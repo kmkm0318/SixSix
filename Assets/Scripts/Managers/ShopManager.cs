@@ -12,8 +12,19 @@ public class ShopManager : Singleton<ShopManager>
     public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnPurchaseAttempted;
     public event Action<AvailityDiceSO> OnAvailityDiceSelled;
+    public event Action<int> OnRerollCostChanged;
 
     private int rerollCost = 1;
+    public int RerollCost
+    {
+        get => rerollCost;
+        private set
+        {
+            if (rerollCost == value) return;
+            rerollCost = value;
+            OnRerollCostChanged?.Invoke(rerollCost);
+        }
+    }
 
     private void Start()
     {
@@ -32,6 +43,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (state == GameState.Shop)
         {
+            SetRandomRerollCost();
             OnShopStarted?.Invoke();
         }
     }
@@ -86,6 +98,23 @@ public class ShopManager : Singleton<ShopManager>
             randomAvailityDiceList.Add(randomAvailityDice);
         }
         return randomAvailityDiceList;
+    }
+
+    public void TryReroll()
+    {
+        if (PlayerMoneyManager.Instance.Money < RerollCost)
+        {
+            OnPurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
+            return;
+        }
+
+        PlayerMoneyManager.Instance.Money -= RerollCost;
+        SetRandomRerollCost();
+    }
+
+    private void SetRandomRerollCost()
+    {
+        RerollCost = UnityEngine.Random.Range(1, rerollCostMax + 1);
     }
 }
 
