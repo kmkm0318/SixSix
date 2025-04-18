@@ -10,7 +10,6 @@ public class AvailityDice : Dice
         base.Init(availityDiceSO.maxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
 
         this.availityDiceSO = availityDiceSO;
-        RegisterEvents();
     }
 
     protected override void OnDisable()
@@ -20,20 +19,10 @@ public class AvailityDice : Dice
     }
     #region Events
 
-    private void RegisterEvents()
+    override public void HandleMouseOver(bool isMouseOver)
     {
-        DiceInteraction.OnIsMouseOverChanged += OnIsMouseOverChanged;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-    }
+        base.HandleMouseOver(isMouseOver);
 
-    private void UnregisterEvents()
-    {
-        DiceInteraction.OnIsMouseOverChanged -= OnIsMouseOverChanged;
-        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
-    }
-
-    private void OnIsMouseOverChanged(bool isMouseOver)
-    {
         if (isMouseOver)
         {
             AvailityDiceToolTipUI.Instance.ShowToolTip(this);
@@ -44,13 +33,15 @@ public class AvailityDice : Dice
         }
     }
 
-    private void OnRollCompleted()
+    override protected void OnRollCompleted()
     {
+        base.OnRollCompleted();
+
         if (PlayerDiceManager.Instance.IsAvailityDiceAutoKeep)
         {
             if (FaceIndex == availityDiceSO.maxFaceValue - 1)
             {
-                SetIsKeeped(true);
+                IsKeeped = true;
             }
         }
     }
@@ -98,5 +89,19 @@ public class AvailityDice : Dice
             AvailityDiceValueCalculationType.Power => Mathf.FloorToInt(Mathf.Pow(value, FaceIndex + 1)),
             _ => value,
         };
+    }
+
+    protected override void OnShopStarted()
+    {
+        base.OnShopStarted();
+
+        IsInteractable = true;
+    }
+
+    protected override void OnShopEnded()
+    {
+        base.OnShopEnded();
+
+        IsInteractable = false;
     }
 }

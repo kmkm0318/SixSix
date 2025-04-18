@@ -59,9 +59,7 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
         }
         else
         {
-            scorePair = handCategorySO.scorePair;
-            scorePair.baseScore += enhanceLevel * handCategorySO.enhanceAmount;
-            scorePair.multiplier += enhanceLevel * handCategorySO.enhanceAmount;
+            scorePair = handCategorySO.GetEnhancedScorePair(enhanceLevel);
         }
 
         baseScoreText.text = scorePair.baseScore.ToString();

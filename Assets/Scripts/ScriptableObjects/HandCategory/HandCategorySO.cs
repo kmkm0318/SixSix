@@ -7,18 +7,18 @@ public class HandCategorySO : ScriptableObject
     public HandCategory handCategory;
     public string handCategoryName;
     public ScorePair scorePair;
-    public int enhanceAmount;
+    public ScorePair enhanceAmount;
     public int purchasePrice;
 
     public string GetDescriptionText()
     {
-        string description = $"Enhance {handCategoryName}\nScore({scorePair.baseScore}, {scorePair.multiplier})";
+        string description = $"Enhance {handCategoryName}\nScore(+{enhanceAmount.baseScore}, x{enhanceAmount.multiplier})";
         return description;
     }
 
     public ScorePair GetEnhancedScorePair(int enhanceLevel)
     {
-        return new ScorePair(scorePair.baseScore + enhanceLevel * enhanceAmount, scorePair.multiplier + enhanceLevel * enhanceAmount);
+        return new ScorePair(scorePair.baseScore + enhanceLevel * enhanceAmount.baseScore, scorePair.multiplier + enhanceLevel * enhanceAmount.multiplier);
     }
 }
 

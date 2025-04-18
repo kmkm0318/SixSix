@@ -1,15 +1,7 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class DiceInteraction : MonoBehaviour, IClickable
 {
-    public event Action OnMouseEntered;
-    public event Action OnMouseExited;
-    public event Action OnMouseClicked;
-    public event Action<bool> OnIsMouseOverChanged;
-
     private Dice dice;
 
     private bool isInteractable = false;
@@ -20,13 +12,14 @@ public class DiceInteraction : MonoBehaviour, IClickable
         {
             if (isInteractable == value) return;
             isInteractable = value;
+            dice.HandleIsInteractable(isInteractable);
             if (value && isMouseOver)
             {
-                OnMouseEntered?.Invoke();
+                dice.HandleMouseEnter();
             }
             else if (!value && isMouseOver)
             {
-                OnMouseExited?.Invoke();
+                dice.HandleMouseExit();
             }
         }
     }
@@ -38,87 +31,23 @@ public class DiceInteraction : MonoBehaviour, IClickable
         {
             if (isMouseOver == value) return;
             isMouseOver = value;
-            OnIsMouseOverChanged?.Invoke(isMouseOver);
+            dice.HandleMouseOver(isMouseOver);
         }
     }
 
-    public void Init(Dice dice)
+    private void Awake()
     {
-        this.dice = dice;
+        dice = GetComponent<Dice>();
+    }
 
-        RegisterEvents();
-
-        if (GameManager.Instance.CurrentGameState == GameState.Shop)
-        {
-            IsInteractable = true;
-        }
-        else
-        {
-            IsInteractable = false;
-        }
+    private void Start()
+    {
+        IsInteractable = GameManager.Instance.CurrentGameState == GameState.Shop;
     }
 
     private void OnDisable()
     {
-        UnregisterEvents();
         IsMouseOver = false;
-    }
-
-    #region Events
-    private void RegisterEvents()
-    {
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
-        RollManager.Instance.OnRollStarted += OnRollStarted;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-        ShopManager.Instance.OnShopStarted += OnShopStarted;
-        ShopManager.Instance.OnShopEnded += OnShopEnded;
-    }
-
-    private void UnregisterEvents()
-    {
-        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
-        PlayManager.Instance.OnPlayEnded -= OnPlayEnded;
-        RollManager.Instance.OnRollStarted -= OnRollStarted;
-        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
-        ShopManager.Instance.OnShopStarted -= OnShopStarted;
-        ShopManager.Instance.OnShopEnded -= OnShopEnded;
-    }
-
-    private void OnPlayStarted(int obj)
-    {
-        IsInteractable = false;
-    }
-
-    private void OnPlayEnded(int obj)
-    {
-        IsInteractable = false;
-    }
-
-    private void OnRollStarted()
-    {
-        IsInteractable = false;
-    }
-
-    private void OnRollCompleted()
-    {
-        IsInteractable = RollManager.Instance.RollRemain > 0;
-    }
-
-    private void OnShopStarted()
-    {
-        if (dice is AvailityDice)
-        {
-            IsInteractable = true;
-        }
-    }
-
-    private void OnShopEnded()
-    {
-        if (dice is AvailityDice)
-        {
-            IsInteractable = false;
-        }
     }
 
     void OnMouseEnter()
@@ -128,7 +57,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
         if (!IsInteractable) return;
         if (Functions.IsPointerOverUIElement()) return;
 
-        OnMouseEntered?.Invoke();
+        dice.HandleMouseEnter();
     }
 
     void OnMouseExit()
@@ -137,7 +66,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
 
         if (!IsInteractable) return;
 
-        OnMouseExited?.Invoke();
+        dice.HandleMouseExit();
     }
 
     public void OnClick()
@@ -145,7 +74,6 @@ public class DiceInteraction : MonoBehaviour, IClickable
         if (!IsInteractable) return;
         if (Functions.IsPointerOverUIElement()) return;
 
-        OnMouseClicked?.Invoke();
+        dice.HandleMouseClick();
     }
-    #endregion
 }

@@ -7,8 +7,6 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private int rerollCostMax = 6;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
     [SerializeField] private int handCategoryEnhanceMerchantCountMax = 3;
-    [SerializeField] private AvailityDiceListSO availityDiceListSO;
-    [SerializeField] private HandCategoryListSO handCategoryListSO;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
@@ -18,6 +16,8 @@ public class ShopManager : Singleton<ShopManager>
     public event Action<int> OnRerollCostChanged;
     public event Action OnRerollCompleted;
 
+    private AvailityDiceListSO availityDiceListSO;
+    private HandCategoryListSO handCategoryListSO;
     private int rerollCost = 1;
     public int RerollCost
     {
@@ -33,6 +33,8 @@ public class ShopManager : Singleton<ShopManager>
     private void Start()
     {
         RegisterEvents();
+        availityDiceListSO = DataContainer.Instance.AvailityDiceListSO;
+        handCategoryListSO = DataContainer.Instance.StandardHandCategoryListSO;
     }
 
     #region RegisterEvents
@@ -41,6 +43,7 @@ public class ShopManager : Singleton<ShopManager>
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
         PlayerDiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
+        BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -65,6 +68,11 @@ public class ShopManager : Singleton<ShopManager>
         PlayerDiceManager.Instance.RemoveAvailityDice(dice);
 
         OnAvailityDiceSelled?.Invoke(diceSO);
+    }
+
+    private void OnAllBonusAchieved()
+    {
+        handCategoryListSO = DataContainer.Instance.HandCategoryListSO;
     }
     #endregion
 

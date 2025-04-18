@@ -119,13 +119,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     #endregion
     private void AddPlayDice(PlayDice playDice)
     {
-        playDice.OnDiceClicked += () => OnPlayDiceClicked?.Invoke(playDice);
+        playDice.OnMouseClicked += () => OnPlayDiceClicked?.Invoke(playDice);
         playDiceList.Add(playDice);
     }
 
     private void AddAvailityDice(AvailityDice availityDice)
     {
-        availityDice.OnDiceClicked += () => OnAvailityDiceClicked?.Invoke(availityDice);
+        availityDice.OnMouseClicked += () => OnAvailityDiceClicked?.Invoke(availityDice);
         availityDiceList.Add(availityDice);
     }
 

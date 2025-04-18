@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayDice : Dice
 {
@@ -11,5 +12,16 @@ public class PlayDice : Dice
         };
         scorePairList.Add(defaultScorePair);
         return scorePairList;
+    }
+
+    private void Start()
+    {
+        foreach (var face in Faces)
+        {
+            ScorePair randomScorePair = new(Random.Range(0, 11), Random.Range(0, 0));
+            face.Enhance(randomScorePair);
+        }
+
+        ChangeFace(0);
     }
 }

@@ -8,46 +8,32 @@ public class DiceMovement : MonoBehaviour
     [SerializeField] private float stopAngularThreshold = 5f;
     [SerializeField] private float stopTime = 0.5f;
 
-    public event Action OnRollStarted;
-    public event Action OnRollCompleted;
-    public event Action OnDiceCollided;
-
+    private bool isRolling = false;
+    public bool IsRolling
+    {
+        get => isRolling;
+        private set
+        {
+            if (isRolling == value) return;
+            isRolling = value;
+        }
+    }
     private Dice dice;
     private Rigidbody2D rb;
     private Playboard playboard;
 
     private void Awake()
     {
+        dice = GetComponent<Dice>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(Dice dice, Playboard playboard)
+    public void Init(Playboard playboard)
     {
-        this.dice = dice;
         this.playboard = playboard;
-
-        RegisterEvents();
     }
 
-    private void OnDisable()
-    {
-        if (dice != null)
-        {
-            UnregisterEvents();
-        }
-    }
-
-    private void RegisterEvents()
-    {
-        RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
-    }
-
-    private void UnregisterEvents()
-    {
-        RollManager.Instance.OnRollPowerApplied -= OnRollPowerApplied;
-    }
-
-    private void OnRollPowerApplied(float rollDiceForce)
+    public void OnRollPowerApplied(float rollDiceForce)
     {
         RollDice(playboard.ForcePosition, rollDiceForce);
         StartCoroutine(CheckRollComplete());
@@ -61,7 +47,7 @@ public class DiceMovement : MonoBehaviour
         rb.AddForce(forceDirection * force, ForceMode2D.Impulse);
         rb.AddTorque(forceDirection.x * force, ForceMode2D.Impulse);
 
-        OnRollStarted?.Invoke();
+        IsRolling = true;
     }
 
     private IEnumerator CheckRollComplete()
@@ -80,14 +66,15 @@ public class DiceMovement : MonoBehaviour
 
             yield return null;
         }
-        OnRollCompleted?.Invoke();
+
+        IsRolling = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (((1 << (collision.gameObject.layer)) & DataContainer.Instance.PlayergroundLayerMask) != 0)
         {
-            OnDiceCollided?.Invoke();
+            dice.HandleDiceCollided();
         }
     }
 }

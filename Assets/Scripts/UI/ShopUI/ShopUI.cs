@@ -29,9 +29,19 @@ public class ShopUI : Singleton<ShopUI>
     {
         InitPool();
         RegisterEvents();
-        rerollButton.onClick.AddListener(ShopManager.Instance.TryReroll);
-        closeButton.onClick.AddListener(() => SequenceManager.Instance.AddCoroutine(Hide));
+        rerollButton.onClick.AddListener(OnclickRerollButton);
+        closeButton.onClick.AddListener(OnClickCloseButton);
         gameObject.SetActive(false);
+    }
+
+    private void OnclickRerollButton()
+    {
+        ShopManager.Instance.TryReroll();
+    }
+
+    private void OnClickCloseButton()
+    {
+        SequenceManager.Instance.AddCoroutine(Hide);
     }
 
     private void InitPool()
@@ -91,6 +101,11 @@ public class ShopUI : Singleton<ShopUI>
         else
         {
             rerollButtonText.text = "Reroll";
+        }
+
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(rerollButtonText.transform));
         }
     }
     #endregion

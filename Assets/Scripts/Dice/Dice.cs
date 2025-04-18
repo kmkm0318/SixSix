@@ -4,59 +4,42 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
     [SerializeField] private DiceVisual diceVisual;
+    public DiceVisual DiceVisual => diceVisual;
     [SerializeField] private DiceMovement diceMovement;
+    public DiceMovement DiceMovement => diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
     public DiceInteraction DiceInteraction => diceInteraction;
 
     public event Action<bool> OnIsKeepedChanged;
-    public event Action OnDiceClicked;
+    public event Action<bool> OnIsInteractableChanged;
+    public event Action OnMouseEntered;
+    public event Action OnMouseExited;
+    public event Action OnMouseClicked;
+    public event Action<bool> OnIsMouseOverChanged;
 
     private bool isKeeped = false;
     public bool IsKeeped
     {
         get => isKeeped;
-        private set
+        protected set
         {
             if (isKeeped == value) return;
             isKeeped = value;
             OnIsKeepedChanged?.Invoke(isKeeped);
         }
     }
-    public bool IsRolling { get; private set; } = false;
+    public bool IsRolling => diceMovement.IsRolling;
+    public bool IsInteractable
+    {
+        get => diceInteraction.IsInteractable;
+        protected set => diceInteraction.IsInteractable = value;
+    }
 
     private DiceFace[] faces;
+    public DiceFace[] Faces => faces;
     private int faceIndex;
     public int FaceIndex => faceIndex;
     private int faceIndexMax;
-
-    protected virtual void Start()
-    {
-        diceMovement.OnRollStarted += () => IsRolling = true;
-        diceMovement.OnRollCompleted += () => IsRolling = false;
-        diceMovement.OnDiceCollided += OnDiceCollided;
-
-        diceInteraction.OnMouseClicked += OnMouseClicked;
-    }
-
-    private void OnDiceCollided()
-    {
-        if (IsRolling && !IsKeeped)
-        {
-            ChangeFace(1);
-        }
-    }
-
-    private void OnMouseClicked()
-    {
-        if (GameManager.Instance.CurrentGameState == GameState.Round)
-        {
-            IsKeeped = !IsKeeped;
-        }
-        else if (GameManager.Instance.CurrentGameState == GameState.Shop)
-        {
-            OnDiceClicked?.Invoke();
-        }
-    }
 
     public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
@@ -73,10 +56,11 @@ public class Dice : MonoBehaviour
 
         SetFace(faceIndex);
 
-        diceMovement.Init(this, playboard);
-        diceVisual.Init(this);
-        diceInteraction.Init(this);
+        diceMovement.Init(playboard);
+    }
 
+    protected virtual void OnEnable()
+    {
         RegisterEvents();
     }
 
@@ -85,35 +69,118 @@ public class Dice : MonoBehaviour
         UnregisterEvents();
     }
 
-    private void RegisterEvents()
+    #region Events
+    protected virtual void RegisterEvents()
     {
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
+        RollManager.Instance.OnRollStarted += OnRollStarted;
+        RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
+        RollManager.Instance.OnRollCompleted += OnRollCompleted;
+        ShopManager.Instance.OnShopStarted += OnShopStarted;
+        ShopManager.Instance.OnShopEnded += OnShopEnded;
     }
 
-    private void UnregisterEvents()
+    protected virtual void UnregisterEvents()
     {
         PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+        PlayManager.Instance.OnPlayEnded -= OnPlayEnded;
+        RollManager.Instance.OnRollStarted -= OnRollStarted;
+        RollManager.Instance.OnRollPowerApplied -= OnRollPowerApplied;
+        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
+        ShopManager.Instance.OnShopStarted -= OnShopStarted;
+        ShopManager.Instance.OnShopEnded -= OnShopEnded;
     }
 
-    private void OnPlayStarted(int playRemain)
+    protected virtual void OnPlayStarted(int playRemain)
     {
         IsKeeped = false;
+        diceInteraction.IsInteractable = false;
     }
 
-    public void SetFace(int faceIndex)
+    protected virtual void OnPlayEnded(int obj)
+    {
+        diceInteraction.IsInteractable = false;
+    }
+
+    protected virtual void OnRollStarted()
+    {
+        diceInteraction.IsInteractable = false;
+    }
+
+    private void OnRollPowerApplied(float value)
+    {
+        diceMovement.OnRollPowerApplied(value);
+    }
+
+    protected virtual void OnRollCompleted()
+    {
+        diceInteraction.IsInteractable = RollManager.Instance.RollRemain > 0;
+    }
+
+    protected virtual void OnShopStarted()
+    {
+
+    }
+
+    protected virtual void OnShopEnded()
+    {
+
+    }
+    #endregion
+
+    #region Faces
+    public virtual void SetFace(int faceIndex)
     {
         diceVisual.SetSprite(faces[faceIndex].FaceSpriteSO.sprite);
+        diceVisual.SetColor(faces[faceIndex].EnhanceValue);
     }
 
-    public void ChangeFace(int value = 1)
+    public virtual void ChangeFace(int value = 1)
     {
         faceIndex += value;
         faceIndex %= faceIndexMax;
         SetFace(faceIndex);
     }
+    #endregion
 
-    protected void SetIsKeeped(bool isKeeped)
+    #region Handlers
+    public virtual void HandleMouseEnter()
     {
-        IsKeeped = isKeeped;
+        OnMouseEntered?.Invoke();
     }
+
+    public virtual void HandleMouseExit()
+    {
+        OnMouseExited?.Invoke();
+    }
+
+    public virtual void HandleMouseClick()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Round)
+        {
+            IsKeeped = !IsKeeped;
+        }
+
+        OnMouseClicked?.Invoke();
+    }
+
+    public virtual void HandleMouseOver(bool isMouseOver)
+    {
+        OnIsMouseOverChanged?.Invoke(isMouseOver);
+    }
+
+    public virtual void HandleIsInteractable(bool isInteractable)
+    {
+        OnIsInteractableChanged?.Invoke(isInteractable);
+    }
+
+    public virtual void HandleDiceCollided()
+    {
+        if (IsRolling && !IsKeeped)
+        {
+            ChangeFace(1);
+        }
+    }
+    #endregion
 }

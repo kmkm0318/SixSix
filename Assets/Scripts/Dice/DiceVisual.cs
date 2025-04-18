@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DiceVisual : MonoBehaviour
 {
-    [SerializeField] private DiceVisualHighlight highlight;
+    [SerializeField] private int enhanceColorMax = 10;
 
     private SpriteRenderer spriteRenderer;
 
@@ -11,13 +11,33 @@ public class DiceVisual : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Init(Dice dice)
-    {
-        highlight.Init(dice);
-    }
-
     public void SetSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
+    }
+
+    public void SetColor(ScorePair enhancedValue)
+    {
+        if (enhancedValue.baseScore == 0 && enhancedValue.multiplier == 0)
+        {
+            spriteRenderer.color = Color.white;
+            return;
+        }
+
+        float blueIntensity = Mathf.Clamp01((float)enhancedValue.baseScore / enhanceColorMax);
+        float redIntensity = Mathf.Clamp01((float)enhancedValue.multiplier / enhanceColorMax);
+
+        float redValue = 1 - blueIntensity;
+        float greenValue = 1 - redIntensity - blueIntensity;
+        float blueValue = 1 - redIntensity;
+
+        if (greenValue < 0)
+        {
+            redValue -= greenValue;
+            blueValue -= greenValue;
+            greenValue = 0;
+        }
+
+        spriteRenderer.color = new Color(redValue, greenValue, blueValue, 1);
     }
 }
