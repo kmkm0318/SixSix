@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2009c0478350a4db3a5f4044975fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enhanceColorMax: 10
+  enhanceColorMax: 20
 --- !u!1 &7055470765296504697
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 2543161663320012343}
   - component: {fileID: 5604132475623056141}
   - component: {fileID: 1265288450273385516}
-  - component: {fileID: 3085649920975083101}
   - component: {fileID: 6386283979626169909}
   - component: {fileID: -1558305301515133675}
   m_Layer: 7
@@ -211,21 +210,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3085649920975083101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7055470765296504697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b7e3edf5c4f734cbe17ef931a72bc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  diceVisual: {fileID: 6224776796104731386}
-  diceMovement: {fileID: 6386283979626169909}
-  diceInteraction: {fileID: -1558305301515133675}
 --- !u!114 &6386283979626169909
 MonoBehaviour:
   m_ObjectHideFlags: 0

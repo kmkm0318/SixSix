@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiceVisualHighlight : Singleton<DiceVisualHighlight>
+public class DiceHighlight : Singleton<DiceHighlight>
 {
     [SerializeField] private float maxScale;
     [SerializeField] private float minScale;
     [SerializeField] private float scaleSpeed;
     [SerializeField] private Transform maskPanel;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private DiceVisualHighlightTextUI textUI;
+    [SerializeField] private DiceHighlightTextUI textUI;
     [SerializeField] private List<DiceHighlightTypeData> highlightTypeDataList;
 
     private Dice targetDice;
@@ -45,18 +45,15 @@ public class DiceVisualHighlight : Singleton<DiceVisualHighlight>
     private void Start()
     {
         Hide();
-        RegisterEvents();
     }
 
-    #region Register Events
-    private void RegisterEvents()
+    public void ShowHighlight(Dice dice)
     {
-        PlayerMouseManager.Instance.OnMouseOverDice += OnMouseOverDice;
-        PlayerMouseManager.Instance.OnMouseExit += OnMouseExit;
-    }
+        if (targetDice != null)
+        {
+            HideHighlight();
+        }
 
-    private void OnMouseOverDice(Dice dice)
-    {
         targetDice = dice;
         currentMaxScale = maxScale * targetDice.transform.localScale.x;
         currentMinScale = minScale * targetDice.transform.localScale.x;
@@ -75,7 +72,7 @@ public class DiceVisualHighlight : Singleton<DiceVisualHighlight>
         }
     }
 
-    private void OnMouseExit()
+    public void HideHighlight()
     {
         if (targetDice == null) return;
         targetDice.OnIsInteractableChanged -= OnIsInteractableChanged;
@@ -101,40 +98,22 @@ public class DiceVisualHighlight : Singleton<DiceVisualHighlight>
     {
         SetHighlightType();
     }
-    #endregion
 
     private void SetHighlightType()
     {
-        DiceHighlightType type;
-
-        if (GameManager.Instance.CurrentGameState == GameState.Round)
-        {
-            type = targetDice.IsKeeped ? DiceHighlightType.Unkeep : DiceHighlightType.Keep;
-        }
-        else if (GameManager.Instance.CurrentGameState == GameState.Shop)
-        {
-            if (targetDice is AvailityDice)
-            {
-                type = DiceHighlightType.Sell;
-            }
-            else
-            {
-                type = DiceHighlightType.Enhance;
-            }
-        }
-        else
-        {
-            type = DiceHighlightType.None;
-        }
+        DiceHighlightType type = targetDice.GetHighlightType();
 
         var highlightTypeData = highlightTypeDataList.Find(x => x.type == type);
 
         spriteRenderer.color = highlightTypeData.color;
 
         string text = highlightTypeData.text;
-        if (targetDice is AvailityDice availityDice && type == DiceHighlightType.Sell)
+        if (type == DiceHighlightType.Sell)
         {
-            text += "$" + availityDice.AvailityDiceSO.sellPrice.ToString();
+            if (targetDice.TryGetComponent(out AvailityDice availityDice))
+            {
+                text += $"(${availityDice.SellPrice})";
+            }
         }
 
         textUI.SetText(text);
@@ -143,7 +122,7 @@ public class DiceVisualHighlight : Singleton<DiceVisualHighlight>
     private void Show()
     {
         gameObject.SetActive(true);
-        textUI.SetTarget(targetDice.transform);
+        textUI.SetTargetAndOffset(targetDice.transform);
     }
 
     private void Hide()

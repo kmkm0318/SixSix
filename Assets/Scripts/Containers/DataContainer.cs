@@ -10,6 +10,8 @@ public class DataContainer : Singleton<DataContainer>
     #region AvailityDiceListSO
     [SerializeField] private AvailityDiceListSO availityDiceListSO;
     public AvailityDiceListSO AvailityDiceListSO => availityDiceListSO;
+    [SerializeField] private AvailityDiceListSO merchantAvailityDiceListSO;
+    public AvailityDiceListSO MerchantAvailityDiceListSO => merchantAvailityDiceListSO;
     #endregion
 
     #region HandCategoryListSO

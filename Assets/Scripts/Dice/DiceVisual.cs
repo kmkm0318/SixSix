@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DiceVisual : MonoBehaviour
 {
-    [SerializeField] private int enhanceColorMax = 10;
+    private readonly int enhanceColorMax = 20;
 
     private SpriteRenderer spriteRenderer;
 

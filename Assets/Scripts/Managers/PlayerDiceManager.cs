@@ -165,15 +165,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         foreach (var playDice in playDiceList)
         {
-            var scorePiarList = playDice.GetScorePairList();
-            foreach (var scorePair in scorePiarList)
-            {
-                if (scorePair.baseScore == 0 && scorePair.multiplier == 0) continue;
-
-                ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(playDice, scorePair);
-
-                ApplyAvailityDiceOnPlayDiceApplied(playDice);
-            }
+            playDice.ApplyScorePairs();
+            ApplyAvailityDiceOnPlayDiceApplied(playDice);
         }
     }
 

@@ -38,11 +38,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
-    }
-
-    private void OnRoundClearRewardTriggered(int value)
-    {
-        Money += value;
+        ScoreManager.Instance.OnMoneyAchieved += OnMoneyAchieved;
     }
 
     private void OnBonusAchieved(BonusType type)
@@ -50,7 +46,14 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         if (type == BonusType.Money)
         {
             Money += bonusMoney;
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
+    }
+
+    private void OnRoundClearRewardTriggered(int value)
+    {
+        Money += value;
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
@@ -60,6 +63,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         if (result == PurchaseResult.Success)
         {
             Money -= sO.purchasePrice;
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 
@@ -68,6 +72,14 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         if (sO == null) return;
 
         Money += sO.sellPrice;
+        SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void OnMoneyAchieved(int value, Transform _, bool __)
+    {
+        if (value == 0) return;
+
+        Money += value;
     }
     #endregion
 }

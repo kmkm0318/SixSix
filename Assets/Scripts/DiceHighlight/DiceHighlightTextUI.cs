@@ -1,16 +1,18 @@
 using TMPro;
 using UnityEngine;
 
-public class DiceVisualHighlightTextUI : MonoBehaviour
+public class DiceHighlightTextUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private float offset;
 
-    Transform targetTransform;
+    private Transform targetTransform;
+    private Vector3 targetOffset;
 
-    public void SetTarget(Transform target)
+    public void SetTargetAndOffset(Transform target)
     {
         targetTransform = target;
+        targetOffset = (target.localScale.x / 2 + offset) * Vector3.up;
     }
 
     private void LateUpdate()
@@ -22,7 +24,7 @@ public class DiceVisualHighlightTextUI : MonoBehaviour
     {
         if (gameObject.activeSelf && targetTransform != null)
         {
-            transform.SetPositionAndRotation(targetTransform.position + Vector3.up * targetTransform.localScale.y + offset, Quaternion.identity);
+            transform.SetPositionAndRotation(targetTransform.position + targetOffset, Quaternion.identity);
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<int> OnBaseScoreChanged;
     public event Action<int> OnMultiplierChanged;
     public event Action<ScorePair, Transform, bool> OnScorePairApplied;
+    public event Action<int, Transform, bool> OnMoneyAchieved;
 
 
     private int targetRoundScore = 0;
@@ -323,6 +325,16 @@ public class ScoreManager : Singleton<ScoreManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
+    public void ApplyMoneyAndPlayDiceAnimation(Dice dice, int money, bool isAvailityDice = false)
+    {
+        if (money == 0) return;
+
+        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(dice.transform), true);
+        OnMoneyAchieved(money, dice.transform, isAvailityDice);
+
+        SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
     private void ApplyScorePairEffect(ScorePair pair)
     {
         bool isBaseScoreZero = pair.baseScore == 0;
@@ -377,34 +389,16 @@ public class ScoreManager : Singleton<ScoreManager>
     #region CheckOverflow
     private bool CheckAddOverFlow(int value, int addValue)
     {
-        try
-        {
-            checked
-            {
-                int result = value + addValue;
-                return result < 0 || result > int.MaxValue;
-            }
-        }
-        catch (OverflowException)
-        {
-            return true;
-        }
+        if (value == 0 || addValue == 0) return false;
+
+        return value > int.MaxValue - addValue || addValue > int.MaxValue - value;
     }
 
     private bool CheckMultiplyOverFlow(int value, int multiplyValue)
     {
-        try
-        {
-            checked
-            {
-                int result = value * multiplyValue;
-                return result < 0 || result > int.MaxValue;
-            }
-        }
-        catch (OverflowException)
-        {
-            return true;
-        }
+        if (value == 0 || multiplyValue == 0) return false;
+
+        return value > int.MaxValue / multiplyValue || multiplyValue > int.MaxValue / value;
     }
     #endregion
 }

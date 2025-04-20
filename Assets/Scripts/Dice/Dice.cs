@@ -1,21 +1,15 @@
 using System;
 using UnityEngine;
 
-public class Dice : MonoBehaviour
+public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 {
     [SerializeField] private DiceVisual diceVisual;
-    public DiceVisual DiceVisual => diceVisual;
     [SerializeField] private DiceMovement diceMovement;
-    public DiceMovement DiceMovement => diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
-    public DiceInteraction DiceInteraction => diceInteraction;
 
     public event Action<bool> OnIsKeepedChanged;
     public event Action<bool> OnIsInteractableChanged;
-    public event Action OnMouseEntered;
-    public event Action OnMouseExited;
     public event Action OnMouseClicked;
-    public event Action<bool> OnIsMouseOverChanged;
 
     private bool isKeeped = false;
     public bool IsKeeped
@@ -66,6 +60,10 @@ public class Dice : MonoBehaviour
 
     protected virtual void OnDisable()
     {
+        if (PlayManager.Instance == null) return;
+        if (RollManager.Instance == null) return;
+        if (ShopManager.Instance == null) return;
+
         UnregisterEvents();
     }
 
@@ -118,15 +116,8 @@ public class Dice : MonoBehaviour
         diceInteraction.IsInteractable = RollManager.Instance.RollRemain > 0;
     }
 
-    protected virtual void OnShopStarted()
-    {
-
-    }
-
-    protected virtual void OnShopEnded()
-    {
-
-    }
+    protected abstract void OnShopStarted();
+    protected abstract void OnShopEnded();
     #endregion
 
     #region Faces
@@ -145,16 +136,6 @@ public class Dice : MonoBehaviour
     #endregion
 
     #region Handlers
-    public virtual void HandleMouseEnter()
-    {
-        OnMouseEntered?.Invoke();
-    }
-
-    public virtual void HandleMouseExit()
-    {
-        OnMouseExited?.Invoke();
-    }
-
     public virtual void HandleMouseClick()
     {
         if (GameManager.Instance.CurrentGameState == GameState.Round)
@@ -163,11 +144,6 @@ public class Dice : MonoBehaviour
         }
 
         OnMouseClicked?.Invoke();
-    }
-
-    public virtual void HandleMouseOver(bool isMouseOver)
-    {
-        OnIsMouseOverChanged?.Invoke(isMouseOver);
     }
 
     public virtual void HandleIsInteractable(bool isInteractable)
@@ -183,4 +159,31 @@ public class Dice : MonoBehaviour
         }
     }
     #endregion
+
+    public void ShowHighlight()
+    {
+        if (Functions.IsPointerOverUIElement()) return;
+        DiceHighlight.Instance.ShowHighlight(this);
+    }
+
+    public virtual DiceHighlightType GetHighlightType()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Round)
+        {
+            return IsKeeped ? DiceHighlightType.Unkeep : DiceHighlightType.Keep;
+        }
+        else
+        {
+            return DiceHighlightType.None;
+        }
+    }
+
+    public virtual void EnhanceDice(ScorePair scorePair)
+    {
+        faces[faceIndex].Enhance(scorePair);
+        diceVisual.SetColor(faces[faceIndex].EnhanceValue);
+        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(transform), true);
+    }
+
+    public abstract void ShowToolTip();
 }

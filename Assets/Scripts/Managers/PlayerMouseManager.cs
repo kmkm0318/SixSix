@@ -7,7 +7,6 @@ public class PlayerMouseManager : Singleton<PlayerMouseManager>
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private LayerMask mouseOverLayerMask;
 
-    public event Action<Dice> OnMouseOverDice;
     public event Action OnMouseExit;
 
     private GameObject lastHoveredObject;
@@ -46,16 +45,23 @@ public class PlayerMouseManager : Singleton<PlayerMouseManager>
                 lastHoveredObject = hoveredObject;
                 OnMouseExit?.Invoke();
 
-                if (hoveredObject.TryGetComponent(out Dice dice))
+                if (hoveredObject.TryGetComponent(out IHighlightable highlightable))
                 {
-                    OnMouseOverDice?.Invoke(dice);
+                    highlightable.ShowHighlight();
+                }
+
+                if (hoveredObject.TryGetComponent(out IToolTipable toolTipable))
+                {
+                    toolTipable.ShowToolTip();
                 }
             }
         }
         else
         {
             lastHoveredObject = null;
-            OnMouseExit?.Invoke();
+
+            DiceHighlight.Instance.HideHighlight();
+            ToolTipUI.Instance.HideToolTip();
         }
     }
 }

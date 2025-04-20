@@ -37,7 +37,7 @@ public class StateUI : Singleton<StateUI>
 
     private void OnMoneyChanged(int money)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()));
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()), true);
     }
 
     private void OnPlayRemainChanged(int playRemain)

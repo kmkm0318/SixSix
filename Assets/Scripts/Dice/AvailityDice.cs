@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class AvailityDice : Dice
 {
     private AvailityDiceSO availityDiceSO;
     public AvailityDiceSO AvailityDiceSO => availityDiceSO;
+    public int SellPrice => availityDiceSO.sellPrice;
 
     public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
@@ -12,27 +14,7 @@ public class AvailityDice : Dice
         this.availityDiceSO = availityDiceSO;
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        UnregisterEvents();
-    }
     #region Events
-
-    override public void HandleMouseOver(bool isMouseOver)
-    {
-        base.HandleMouseOver(isMouseOver);
-
-        if (isMouseOver)
-        {
-            AvailityDiceToolTipUI.Instance.ShowToolTip(this);
-        }
-        else
-        {
-            AvailityDiceToolTipUI.Instance.HideToolTip();
-        }
-    }
-
     override protected void OnRollCompleted()
     {
         base.OnRollCompleted();
@@ -56,6 +38,9 @@ public class AvailityDice : Dice
             case AvailityEffectType.ApplyScorePair:
                 ApplyScorePairEffect();
                 break;
+            case AvailityEffectType.AchieveMoney:
+                ApplyAchieveMoneyEffect();
+                break;
             default:
                 break;
         }
@@ -67,6 +52,23 @@ public class AvailityDice : Dice
         scorePair.baseScore = CalculateEffectValue(scorePair.baseScore);
         scorePair.multiplier = CalculateEffectValue(scorePair.multiplier);
         ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, true);
+    }
+
+    private int CalculateEffectValue(int value)
+    {
+        return availityDiceSO.availityDiceValueCalculationType switch
+        {
+            AvailityDiceValueCalculationType.Multiply => value * (FaceIndex + 1),
+            AvailityDiceValueCalculationType.Power => Mathf.FloorToInt(Mathf.Pow(value, FaceIndex + 1)),
+            _ => value,
+        };
+    }
+
+    private void ApplyAchieveMoneyEffect()
+    {
+        int money = availityDiceSO.moneyAmount;
+        money = CalculateEffectValue(money);
+        ScoreManager.Instance.ApplyMoneyAndPlayDiceAnimation(this, money, true);
     }
 
     public bool IsTriggeredByPlayDice(PlayDice playDice)
@@ -81,27 +83,36 @@ public class AvailityDice : Dice
         return availityDiceSO.targetHandCategorySO == null || availityDiceSO.targetHandCategorySO == handCategorySO;
     }
 
-    private int CalculateEffectValue(int value)
-    {
-        return availityDiceSO.availityDiceValueCalculationType switch
-        {
-            AvailityDiceValueCalculationType.Multiply => value * (FaceIndex + 1),
-            AvailityDiceValueCalculationType.Power => Mathf.FloorToInt(Mathf.Pow(value, FaceIndex + 1)),
-            _ => value,
-        };
-    }
-
     protected override void OnShopStarted()
     {
-        base.OnShopStarted();
-
         IsInteractable = true;
     }
 
     protected override void OnShopEnded()
     {
-        base.OnShopEnded();
-
         IsInteractable = false;
+    }
+
+    public override DiceHighlightType GetHighlightType()
+    {
+        var type = base.GetHighlightType();
+
+        if (type != DiceHighlightType.None) return type;
+
+        if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            return DiceHighlightType.Sell;
+        }
+        else
+        {
+            return DiceHighlightType.None;
+        }
+    }
+
+    public override void ShowToolTip()
+    {
+        string name = availityDiceSO.diceName;
+        string description = availityDiceSO.GetDescriptionText();
+        ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
     }
 }

@@ -7,11 +7,13 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private int rerollCostMax = 6;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
     [SerializeField] private int handCategoryEnhanceMerchantCountMax = 3;
+    [SerializeField] private int playDiceEnhanceMerchantCountMax = 3;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
     public event Action<HandCategorySO, PurchaseResult> OnHandCategoryEnhancePurchaseAttempted;
+    public event Action<ScorePair, int, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
     public event Action<AvailityDiceSO> OnAvailityDiceSelled;
     public event Action<int> OnRerollCostChanged;
     public event Action OnRerollCompleted;
@@ -33,7 +35,7 @@ public class ShopManager : Singleton<ShopManager>
     private void Start()
     {
         RegisterEvents();
-        availityDiceListSO = DataContainer.Instance.AvailityDiceListSO;
+        availityDiceListSO = DataContainer.Instance.MerchantAvailityDiceListSO;
         handCategoryListSO = DataContainer.Instance.StandardHandCategoryListSO;
     }
 
@@ -116,6 +118,17 @@ public class ShopManager : Singleton<ShopManager>
         OnHandCategoryEnhancePurchaseAttempted?.Invoke(handCategorySO, PurchaseResult.Success);
     }
 
+    public void TryPurchasePlayDiceEnhance(ScorePair enhanceValue, int price)
+    {
+        if (PlayerMoneyManager.Instance.Money < price)
+        {
+            OnPlayDiceEnhancePurchaseAttempted?.Invoke(enhanceValue, price, PurchaseResult.NotEnoughMoney);
+            return;
+        }
+
+        OnPlayDiceEnhancePurchaseAttempted?.Invoke(enhanceValue, price, PurchaseResult.Success);
+    }
+
     public List<AvailityDiceSO> GetRandomAvailityDiceList()
     {
         List<AvailityDiceSO> randomAvailityDiceList = new();
@@ -142,6 +155,29 @@ public class ShopManager : Singleton<ShopManager>
         return randomHandCategoryList;
     }
 
+    public List<ScorePair> GetRandomPlayDiceEnhanceList()
+    {
+        List<ScorePair> randomPlayDiceEnhanceList = new();
+        while (randomPlayDiceEnhanceList.Count < playDiceEnhanceMerchantCountMax)
+        {
+            ScorePair randomScorePair = new(UnityEngine.Random.Range(1, 7), UnityEngine.Random.Range(1, 7));
+
+            bool flag = false;
+            foreach (var scorePair in randomPlayDiceEnhanceList)
+            {
+                if (scorePair.baseScore == randomScorePair.baseScore && scorePair.multiplier == randomScorePair.multiplier)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) continue;
+
+            randomPlayDiceEnhanceList.Add(randomScorePair);
+        }
+        return randomPlayDiceEnhanceList;
+    }
+
     public void TryReroll()
     {
         if (PlayerMoneyManager.Instance.Money < RerollCost)
@@ -151,6 +187,7 @@ public class ShopManager : Singleton<ShopManager>
         }
 
         PlayerMoneyManager.Instance.Money -= RerollCost;
+        SequenceManager.Instance.ApplyParallelCoroutine();
         OnRerollCompleted?.Invoke();
         SetRandomRerollCost();
     }

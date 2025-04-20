@@ -13,25 +13,6 @@ public class DiceInteraction : MonoBehaviour, IClickable
             if (isInteractable == value) return;
             isInteractable = value;
             dice.HandleIsInteractable(isInteractable);
-            if (value && isMouseOver)
-            {
-                dice.HandleMouseEnter();
-            }
-            else if (!value && isMouseOver)
-            {
-                dice.HandleMouseExit();
-            }
-        }
-    }
-    private bool isMouseOver = false;
-    public bool IsMouseOver
-    {
-        get => isMouseOver;
-        private set
-        {
-            if (isMouseOver == value) return;
-            isMouseOver = value;
-            dice.HandleMouseOver(isMouseOver);
         }
     }
 
@@ -43,30 +24,6 @@ public class DiceInteraction : MonoBehaviour, IClickable
     private void Start()
     {
         IsInteractable = GameManager.Instance.CurrentGameState == GameState.Shop;
-    }
-
-    private void OnDisable()
-    {
-        IsMouseOver = false;
-    }
-
-    void OnMouseEnter()
-    {
-        IsMouseOver = true;
-
-        if (!IsInteractable) return;
-        if (Functions.IsPointerOverUIElement()) return;
-
-        dice.HandleMouseEnter();
-    }
-
-    void OnMouseExit()
-    {
-        IsMouseOver = false;
-
-        if (!IsInteractable) return;
-
-        dice.HandleMouseExit();
     }
 
     public void OnClick()
