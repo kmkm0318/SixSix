@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class AvailityDice : Dice
@@ -51,10 +50,25 @@ public class AvailityDice : Dice
         ScorePair scorePair = new(availityDiceSO.scorePairAmount.baseScore, availityDiceSO.scorePairAmount.multiplier);
         scorePair.baseScore = CalculateEffectValue(scorePair.baseScore);
         scorePair.multiplier = CalculateEffectValue(scorePair.multiplier);
-        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, true);
+
+        for (int i = 0; i < GetPowerValue(); i++)
+        {
+            ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, true);
+        }
     }
 
-    private int CalculateEffectValue(int value)
+    private void ApplyAchieveMoneyEffect()
+    {
+        int money = availityDiceSO.moneyAmount;
+        money = CalculateEffectValue(money);
+
+        for (int i = 0; i < GetPowerValue(); i++)
+        {
+            ScoreManager.Instance.ApplyMoneyAndPlayDiceAnimation(this, money, true);
+        }
+    }
+
+    private float CalculateEffectValue(float value)
     {
         return availityDiceSO.availityDiceValueCalculationType switch
         {
@@ -64,11 +78,14 @@ public class AvailityDice : Dice
         };
     }
 
-    private void ApplyAchieveMoneyEffect()
+    private int CalculateEffectValue(int value)
     {
-        int money = availityDiceSO.moneyAmount;
-        money = CalculateEffectValue(money);
-        ScoreManager.Instance.ApplyMoneyAndPlayDiceAnimation(this, money, true);
+        return (int)CalculateEffectValue((float)value);
+    }
+
+    private int GetPowerValue()
+    {
+        return availityDiceSO.availityDiceValueCalculationType == AvailityDiceValueCalculationType.Power ? FaceIndex + 1 : 1;
     }
 
     public bool IsTriggeredByPlayDice(PlayDice playDice)

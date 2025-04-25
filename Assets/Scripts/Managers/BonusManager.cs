@@ -23,6 +23,7 @@ public struct BonusTypeScorePair
         this.score = score;
     }
 }
+
 public class BonusManager : Singleton<BonusManager>
 {
     [SerializeField] private List<BonusTypeScorePair> bonusTargetScoreList;
@@ -64,7 +65,7 @@ public class BonusManager : Singleton<BonusManager>
         ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
     }
 
-    private void OnCurrentRoundScoreUpdated(int score)
+    private void OnCurrentRoundScoreUpdated(float score)
     {
         var diceValueList = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
         Dictionary<int, int> currentDiceSumDict = new();

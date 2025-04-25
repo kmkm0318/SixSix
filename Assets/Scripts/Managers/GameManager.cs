@@ -8,9 +8,9 @@ public enum GameState
     Loading,
     Round,
     RoundClear,
-    RoundFail,
     Shop,
     GameClear,
+    GameOver,
 }
 
 public class GameManager : Singleton<GameManager>
@@ -48,7 +48,8 @@ public class GameManager : Singleton<GameManager>
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RoundManager.Instance.OnRoundFailed += OnRoundFailed;
         RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;
-        ShopManager.Instance.OnShopEnded += OnShopEnded; ;
+        ShopManager.Instance.OnShopEnded += OnShopEnded;
+        GameResultUI.Instance.OnInfinityModeButtonClicked += OnInfinityModeButtonClicked;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
     }
 
@@ -76,12 +77,17 @@ public class GameManager : Singleton<GameManager>
 
     private void OnRoundFailed(int currentRound)
     {
-        ChangeGameStateOneFrameLater(GameState.RoundFail);
+        ChangeGameStateOneFrameLater(GameState.GameOver);
     }
 
     private void OnShopEnded()
     {
         ChangeGameStateOneFrameLater(GameState.Round);
+    }
+
+    private void OnInfinityModeButtonClicked()
+    {
+        ChangeGameStateOneFrameLater(GameState.RoundClear);
     }
 
     private void OnGameSpeedChanged(int value)

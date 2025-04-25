@@ -31,10 +31,10 @@ public enum HandCategory
 [Serializable]
 public struct ScorePair
 {
-    public int baseScore;
-    public int multiplier;
+    public float baseScore;
+    public float multiplier;
 
-    public ScorePair(int baseScore = 0, int multiplier = 0)
+    public ScorePair(float baseScore = 0, float multiplier = 0)
     {
         this.baseScore = baseScore;
         this.multiplier = multiplier;

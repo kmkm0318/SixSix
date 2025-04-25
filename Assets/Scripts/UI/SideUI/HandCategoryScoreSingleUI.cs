@@ -62,8 +62,8 @@ public class HandCategoryScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IP
             scorePair = handCategorySO.GetEnhancedScorePair(enhanceLevel);
         }
 
-        baseScoreText.text = scorePair.baseScore.ToString();
-        multiplierText.text = scorePair.multiplier.ToString();
+        baseScoreText.text = Functions.FormatNumber(scorePair.baseScore);
+        multiplierText.text = Functions.FormatNumber(scorePair.multiplier);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

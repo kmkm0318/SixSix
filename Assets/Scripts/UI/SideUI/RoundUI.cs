@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -38,54 +37,49 @@ public class RoundUI : MonoBehaviour
         ScoreManager.Instance.OnMultiplierChanged += OnMultiplierChanged;
     }
 
-    private void OnCurrentRoundUpdated(int currnetRound)
+    private void OnCurrentRoundUpdated(int currentRound)
     {
-        string newText = currnetRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
+        string newText = currentRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText), true);
     }
 
-    private void OnTargetRoundScoreChanged(int score)
+    private void OnTargetRoundScoreChanged(float score)
     {
-        string newText = score.ToString();
-
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(targetRoundScoreText, newText), true);
+        UpdateScoreText(targetRoundScoreText, score);
     }
 
-    private void OnCurrentRoundScoreChanged(int score)
+    private void OnCurrentRoundScoreChanged(float score)
     {
-        string newText = score.ToString();
-
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundScoreText, newText), true);
+        UpdateScoreText(currentRoundScoreText, score);
     }
 
-    private void OnPlayScoreChanged(int score)
+    private void OnPlayScoreChanged(float score)
     {
-        string newText = score.ToString();
-
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playScoreText, newText), true);
+        UpdateScoreText(playScoreText, score);
     }
 
     private void OnScorePairChanged(ScorePair pair)
     {
-        OnBaseScoreChanged(pair.baseScore);
-        OnMultiplierChanged(pair.multiplier);
-
+        UpdateScoreText(baseScoreText, pair.baseScore);
+        UpdateScoreText(multiplierText, pair.multiplier);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void OnBaseScoreChanged(int score)
+    private void OnBaseScoreChanged(float score)
     {
-        string newText = score.ToString();
-
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(baseScoreText, newText), true);
+        UpdateScoreText(baseScoreText, score);
     }
 
-    private void OnMultiplierChanged(int score)
+    private void OnMultiplierChanged(float score)
     {
-        string newText = score.ToString();
+        UpdateScoreText(multiplierText, score);
+    }
 
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(multiplierText, newText), true);
+    private void UpdateScoreText(TMP_Text textComponent, float score)
+    {
+        string newText = Functions.FormatNumber(score);
+        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(textComponent, newText), true);
     }
 
     private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText)

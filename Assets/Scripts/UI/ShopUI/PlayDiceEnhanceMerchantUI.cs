@@ -58,6 +58,6 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
 
     private int GetPrice()
     {
-        return enhanceValue.baseScore + enhanceValue.multiplier;
+        return (int)(enhanceValue.baseScore + enhanceValue.multiplier);
     }
 }

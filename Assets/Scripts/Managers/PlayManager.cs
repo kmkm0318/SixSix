@@ -32,13 +32,13 @@ public class PlayManager : Singleton<PlayManager>
         ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
     }
 
-    private void OnTargetRoundScoreUpdated(int score)
+    private void OnTargetRoundScoreUpdated(float score)
     {
         PlayRemain = playMax;
         OnPlayStarted?.Invoke(PlayRemain);
     }
 
-    private void OnCurrentRoundScoreUpdated(int score)
+    private void OnCurrentRoundScoreUpdated(float score)
     {
         if (score <= 0) return;
         PlayRemain--;

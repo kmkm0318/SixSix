@@ -10,20 +10,20 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<Dictionary<HandCategory, ScorePair>> OnHandCategoryScoreUpdated;
     private Dictionary<HandCategory, ScorePair> handCategoryScoreDictionary = new();
 
-    public event Action<int> OnTargetRoundScoreUpdated;
-    public event Action<int> OnCurrentRoundScoreUpdated;
-    public event Action<int> OnTargetRoundScoreChanged;
-    public event Action<int> OnCurrentRoundScoreChanged;
-    public event Action<int> OnPlayScoreChanged;
+    public event Action<float> OnTargetRoundScoreUpdated;
+    public event Action<float> OnCurrentRoundScoreUpdated;
+    public event Action<float> OnTargetRoundScoreChanged;
+    public event Action<float> OnCurrentRoundScoreChanged;
+    public event Action<float> OnPlayScoreChanged;
     public event Action<ScorePair> OnScorePairChanged;
-    public event Action<int> OnBaseScoreChanged;
-    public event Action<int> OnMultiplierChanged;
+    public event Action<float> OnBaseScoreChanged;
+    public event Action<float> OnMultiplierChanged;
     public event Action<ScorePair, Transform, bool> OnScorePairApplied;
     public event Action<int, Transform, bool> OnMoneyAchieved;
 
 
-    private int targetRoundScore = 0;
-    public int TargetRoundScore
+    private float targetRoundScore = 0;
+    public float TargetRoundScore
     {
         get => targetRoundScore;
         private set
@@ -34,20 +34,27 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private int currentRoundScore = 0;
-    public int CurrentRoundScore
+    private float currentRoundScore = 0;
+    public float CurrentRoundScore
     {
         get => currentRoundScore;
         private set
         {
             if (currentRoundScore == value) return;
             currentRoundScore = value;
+            if (highestRoundScore < currentRoundScore)
+            {
+                highestRoundScore = currentRoundScore;
+            }
             OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
 
-    private int playScore = 0;
-    public int PlayScore
+    private float highestRoundScore = 0;
+    public float HighestRoundScore => highestRoundScore;
+
+    private float playScore = 0;
+    public float PlayScore
     {
         get => playScore;
         private set
@@ -126,11 +133,11 @@ public class ScoreManager : Singleton<ScoreManager>
         PlayerDiceManager.Instance.ApplyPlayDices();
         PlayerDiceManager.Instance.ApplyAvailityDiceOnHandCategoryApplied(handCategorySO);
 
-        PlayScore = TryMuliply(scorePair.baseScore, scorePair.multiplier);
+        PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
         ScorePair = new();
         SequenceManager.Instance.ApplyParallelCoroutine();
-        UpdateCurrentRoundScore(TryAdd(currentRoundScore, playScore));
+        UpdateCurrentRoundScore(SafeAdd(CurrentRoundScore, PlayScore));
     }
     #endregion
 
@@ -264,7 +271,7 @@ public class ScoreManager : Singleton<ScoreManager>
     #endregion
 
     #region UpdateScore
-    private void UpdateCurrentRoundScore(int score)
+    private void UpdateCurrentRoundScore(float score)
     {
         CurrentRoundScore = score;
         PlayScore = 0;
@@ -278,15 +285,15 @@ public class ScoreManager : Singleton<ScoreManager>
         int roundIdx = currentRound - 1;
         if (roundIdx < 0) return;
 
-        int baseScore = (int)(100 * Mathf.Pow(6, roundIdx / 5));
+        float baseScore = 100 * Mathf.Pow(6, roundIdx);
         float multiplier = 1f + roundIdx % 5 * 0.5f;
-        int score = (int)(baseScore * multiplier);
+        float score = baseScore * multiplier;
 
-        int digits = score.ToString().Length;
-        if (digits > 2)
+        int digits = score.ToString("F0").Length;
+        if (digits > 3)
         {
-            int divisor = (int)Mathf.Pow(10, digits - 2);
-            TargetRoundScore = score / divisor * divisor;
+            float divisor = Mathf.Pow(10, digits - 3);
+            TargetRoundScore = Mathf.Floor(score / divisor) * divisor;
         }
         else
         {
@@ -339,49 +346,49 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void ApplyBaseScore(int value)
+    private void ApplyBaseScore(float value)
     {
         ScorePair tmp = scorePair;
 
-        tmp.baseScore = TryAdd(tmp.baseScore, value);
+        tmp.baseScore = SafeAdd(tmp.baseScore, value);
 
         ScorePair = tmp;
     }
 
-    private void ApplyMultiplier(int value)
+    private void ApplyMultiplier(float value)
     {
         ScorePair tmp = scorePair;
 
-        tmp.multiplier = TryMuliply(tmp.multiplier, value);
+        tmp.multiplier = SafeMultiply(tmp.multiplier, value);
 
         ScorePair = tmp;
     }
     #endregion
 
     #region Arithmatic
-    private int TryAdd(int valeu1, int value2)
+    private float SafeAdd(float value1, float value2)
     {
-        long res = (long)valeu1 + value2;
-        if (res > int.MaxValue || res < 0)
+        float res = value1 + value2;
+        if (float.IsInfinity(res) || res < 0)
         {
-            return int.MaxValue;
+            return float.PositiveInfinity;
         }
         else
         {
-            return (int)res;
+            return res;
         }
     }
 
-    private int TryMuliply(int value1, int value2)
+    private float SafeMultiply(float value1, float value2)
     {
-        long res = (long)value1 * value2;
-        if (res > int.MaxValue || res < 0)
+        float res = value1 * value2;
+        if (float.IsInfinity(res) || res < 0)
         {
-            return int.MaxValue;
+            return float.PositiveInfinity;
         }
         else
         {
-            return (int)res;
+            return res;
         }
     }
     #endregion

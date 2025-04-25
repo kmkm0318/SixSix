@@ -118,6 +118,11 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected abstract void OnShopStarted();
     protected abstract void OnShopEnded();
+
+    public void ResetMouseClickEvent()
+    {
+        OnMouseClicked = null;
+    }
     #endregion
 
     #region Faces

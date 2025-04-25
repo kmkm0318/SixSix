@@ -131,6 +131,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     public void RemoveAvailityDice(AvailityDice availityDice)
     {
+        availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
         availityDicePool.Release(availityDice);
     }

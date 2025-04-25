@@ -23,6 +23,8 @@ public class DiceFace
     public void Enhance(ScorePair value)
     {
         enhanceValue.baseScore += value.baseScore;
+
+        if (enhanceValue.multiplier == 0) enhanceValue.multiplier = 1;
         enhanceValue.multiplier += value.multiplier;
     }
 

@@ -14,4 +14,13 @@ public static class Functions
         EventSystem.current.RaycastAll(eventData, results);
         return results.Count > 0;
     }
+
+    public static string FormatNumber(float value)
+    {
+        if (value >= 1e12f)
+        {
+            return value.ToString("0.00e0");
+        }
+        return value.ToString("N0");
+    }
 }
