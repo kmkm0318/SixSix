@@ -1,5 +1,4 @@
 using System;
-using System.Reflection.Emit;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HandCategorySO", menuName = "Scriptable Objects/HandCategorySO")]

@@ -17,5 +17,7 @@ MonoBehaviour:
   scorePair:
     baseScore: 5
     multiplier: 5
-  enhanceAmount: 1
+  enhanceAmount:
+    baseScore: 1
+    multiplier: 1
   purchasePrice: 0

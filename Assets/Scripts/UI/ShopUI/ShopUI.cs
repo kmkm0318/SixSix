@@ -28,6 +28,8 @@ public class ShopUI : Singleton<ShopUI>
     private ObjectPool<HandCategoryEnhanceMerchantUI> handCategoryEnhanceMerchantPool;
     private ObjectPool<PlayDiceEnhanceMerchantUI> playDiceEnhanceMerchantPool;
 
+    private Tween currentTween;
+
     private void Start()
     {
         InitPool();
@@ -194,9 +196,10 @@ public class ShopUI : Singleton<ShopUI>
 
     private void Show(bool isInvoke = true)
     {
+        currentTween?.Kill(true);
         shopPanel.anchoredPosition = hidePos;
         gameObject.SetActive(true);
-        shopPanel.DOAnchorPos(Vector3.zero, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(Vector3.zero, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             if (isInvoke)
             {
@@ -209,8 +212,9 @@ public class ShopUI : Singleton<ShopUI>
     {
         if (!gameObject.activeSelf) return;
 
+        currentTween?.Kill(true);
         shopPanel.anchoredPosition = Vector3.zero;
-        shopPanel.DOAnchorPos(hidePos, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(hidePos, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             if (isInvoke)
             {

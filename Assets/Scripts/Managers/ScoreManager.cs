@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -125,26 +126,11 @@ public class ScoreManager : Singleton<ScoreManager>
         PlayerDiceManager.Instance.ApplyPlayDices();
         PlayerDiceManager.Instance.ApplyAvailityDiceOnHandCategoryApplied(handCategorySO);
 
-        if (CheckMultiplyOverFlow(scorePair.baseScore, scorePair.multiplier))
-        {
-            PlayScore = int.MaxValue;
-        }
-        else
-        {
-            PlayScore = ScorePair.baseScore * ScorePair.multiplier;
-        }
+        PlayScore = TryMuliply(scorePair.baseScore, scorePair.multiplier);
 
         ScorePair = new();
         SequenceManager.Instance.ApplyParallelCoroutine();
-
-        if (CheckAddOverFlow(CurrentRoundScore, PlayScore))
-        {
-            UpdateCurrentRoundScore(int.MaxValue);
-        }
-        else
-        {
-            UpdateCurrentRoundScore(CurrentRoundScore + PlayScore);
-        }
+        UpdateCurrentRoundScore(TryAdd(currentRoundScore, playScore));
     }
     #endregion
 
@@ -357,14 +343,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         ScorePair tmp = scorePair;
 
-        if (CheckAddOverFlow(tmp.baseScore, value))
-        {
-            tmp.baseScore = int.MaxValue;
-        }
-        else
-        {
-            tmp.baseScore += value;
-        }
+        tmp.baseScore = TryAdd(tmp.baseScore, value);
 
         ScorePair = tmp;
     }
@@ -373,32 +352,37 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         ScorePair tmp = scorePair;
 
-        if (CheckMultiplyOverFlow(tmp.multiplier, value))
-        {
-            tmp.multiplier = int.MaxValue;
-        }
-        else
-        {
-            tmp.multiplier *= value;
-        }
+        tmp.multiplier = TryMuliply(tmp.multiplier, value);
 
         ScorePair = tmp;
     }
     #endregion
 
-    #region CheckOverflow
-    private bool CheckAddOverFlow(int value, int addValue)
+    #region Arithmatic
+    private int TryAdd(int valeu1, int value2)
     {
-        if (value == 0 || addValue == 0) return false;
-
-        return value > int.MaxValue - addValue || addValue > int.MaxValue - value;
+        long res = (long)valeu1 + value2;
+        if (res > int.MaxValue || res < 0)
+        {
+            return int.MaxValue;
+        }
+        else
+        {
+            return (int)res;
+        }
     }
 
-    private bool CheckMultiplyOverFlow(int value, int multiplyValue)
+    private int TryMuliply(int value1, int value2)
     {
-        if (value == 0 || multiplyValue == 0) return false;
-
-        return value > int.MaxValue / multiplyValue || multiplyValue > int.MaxValue / value;
+        long res = (long)value1 * value2;
+        if (res > int.MaxValue || res < 0)
+        {
+            return int.MaxValue;
+        }
+        else
+        {
+            return (int)res;
+        }
     }
     #endregion
 }
