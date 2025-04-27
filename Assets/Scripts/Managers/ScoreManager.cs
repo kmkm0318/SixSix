@@ -178,7 +178,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private void ResetHandScore()
     {
         handScoreDictionary.Clear();
-        foreach (var hand in DataContainer.Instance.HandListSO.handList)
+        foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
         {
             handScoreDictionary[hand.hand] = new ScorePair(0, 0);
         }
@@ -284,7 +284,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         if (currentRound < 1) return;
 
-        float baseScore = 100 * Mathf.Pow(6, currentRound - 1);
+        float baseScore = 100 * Mathf.Pow(6, (currentRound - 1) / 5);
         float multiplier = 1f + (currentRound - 1) % 5 * 0.5f;
         float score = baseScore * multiplier;
 

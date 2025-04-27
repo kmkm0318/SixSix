@@ -117,6 +117,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         }
     }
     #endregion
+
+    #region Dice List Function
     private void AddPlayDice(PlayDice playDice)
     {
         playDice.OnMouseClicked += () => OnPlayDiceClicked?.Invoke(playDice);
@@ -129,6 +131,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         availityDiceList.Add(availityDice);
     }
 
+    public void RemovePlayDice(PlayDice playDice)
+    {
+        playDice.ResetMouseClickEvent();
+        playDiceList.Remove(playDice);
+        playDicePool.Release(playDice);
+    }
+
     public void RemoveAvailityDice(AvailityDice availityDice)
     {
         availityDice.ResetMouseClickEvent();
@@ -136,12 +145,24 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         availityDicePool.Release(availityDice);
     }
 
+    public void RespawnPlayDice(PlayDice playDice)
+    {
+        playDice.gameObject.SetActive(true);
+        playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+    }
+
+    public void RespawnAvailityDice(AvailityDice availityDice)
+    {
+        availityDice.gameObject.SetActive(true);
+        availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+    }
+
     public bool AreAllDiceStopped()
     {
         return playDiceList.TrueForAll(dice => !dice.IsRolling) && availityDiceList.TrueForAll(dice => !dice.IsRolling);
     }
 
-    public List<PlayDice> GetOrderedPlayDiceList()
+    private List<PlayDice> GetOrderedPlayDiceList()
     {
         List<PlayDice> orderedList = new(playDiceList);
         orderedList.Sort((a, b) => a.FaceIndex.CompareTo(b.FaceIndex));
@@ -158,6 +179,23 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         playDiceValues.Sort();
         return playDiceValues;
     }
+
+    public PlayDice GetRandomPlayDice()
+    {
+        if (playDiceList.Count == 0) return null;
+
+        int randomIndex = UnityEngine.Random.Range(0, playDiceList.Count);
+        return playDiceList[randomIndex];
+    }
+
+    public AvailityDice GetRandomAvailityDice()
+    {
+        if (availityDiceList.Count == 0) return null;
+
+        int randomIndex = UnityEngine.Random.Range(0, availityDiceList.Count);
+        return availityDiceList[randomIndex];
+    }
+    #endregion
 
     #region ApplyDice
     public void ApplyPlayDices()

@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayManager : Singleton<PlayManager>
 {
     [SerializeField] private int playMax = 3;
+    public int PlayMax => playMax;
 
     public event Action<int> OnPlayStarted;
     public event Action<int> OnPlayEnded;
@@ -48,6 +49,15 @@ public class PlayManager : Singleton<PlayManager>
         if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
         {
             OnPlayStarted?.Invoke(PlayRemain);
+        }
+    }
+
+    public void SetPlayMax(int value, bool resetPlayRemain = true)
+    {
+        playMax = value;
+        if (resetPlayRemain)
+        {
+            PlayRemain = playMax;
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RollManager : Singleton<RollManager>
 {
     [SerializeField] private int rollMax = 3;
+    public int RollMax => rollMax;
     [SerializeField] private float rollPowerMax = 10f;
     public float RollPowerMax => rollPowerMax;
     [SerializeField] private float rollPowerMin = 1f;
@@ -100,5 +101,14 @@ public class RollManager : Singleton<RollManager>
         yield return null;
         yield return new WaitUntil(() => PlayerDiceManager.Instance.AreAllDiceStopped());
         OnRollCompleted?.Invoke();
+    }
+
+    public void SetRollMax(int value, bool resetRollRemain = true)
+    {
+        rollMax = value;
+        if (resetRollRemain)
+        {
+            RollRemain = rollMax;
+        }
     }
 }

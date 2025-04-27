@@ -15,8 +15,8 @@ public class DataContainer : Singleton<DataContainer>
     #endregion
 
     #region HandListSO
-    [SerializeField] private HandListSO handListSO;
-    public HandListSO HandListSO => handListSO;
+    [SerializeField] private HandListSO totalHandListSO;
+    public HandListSO TotalHandListSO => totalHandListSO;
     [SerializeField] private HandListSO standardHandListSO;
     public HandListSO StandardHandListSO => standardHandListSO;
     [SerializeField] private HandListSO specialHandListSO;
@@ -24,7 +24,7 @@ public class DataContainer : Singleton<DataContainer>
 
     public HandSO GetHandSO(Hand hand)
     {
-        return handListSO.handList.Find(x => x.hand == hand);
+        return totalHandListSO.handList.Find(x => x.hand == hand);
     }
     #endregion
 

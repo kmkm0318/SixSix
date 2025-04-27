@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954fffd143ac01d49871e9cca4cc64ef, type: 3}
   m_Name: Hand_SixSix
   m_EditorClassIdentifier: 
-  targetHandCategory: {fileID: 11400000, guid: d7c82d9f60bdf2e48a39f02d1165534f, type: 2}
+  targetHand: {fileID: 11400000, guid: d7c82d9f60bdf2e48a39f02d1165534f, type: 2}

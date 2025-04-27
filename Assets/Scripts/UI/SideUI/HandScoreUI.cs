@@ -24,7 +24,7 @@ public class HandScoreUI : Singleton<HandScoreUI>
 
     private void Init()
     {
-        foreach (var handSO in DataContainer.Instance.HandListSO.handList)
+        foreach (var handSO in DataContainer.Instance.TotalHandListSO.handList)
         {
             var handScoreSingleUITransform = Instantiate(handScoreSingleUIPrefab, layoutPanel);
             var handScoreSingleUI = handScoreSingleUITransform.GetComponent<HandScoreSingleUI>();

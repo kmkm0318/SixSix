@@ -74,7 +74,7 @@ public class ShopManager : Singleton<ShopManager>
 
     private void OnAllBonusAchieved()
     {
-        handListSO = DataContainer.Instance.HandListSO;
+        handListSO = DataContainer.Instance.TotalHandListSO;
     }
     #endregion
 
