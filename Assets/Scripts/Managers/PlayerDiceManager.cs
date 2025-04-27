@@ -8,23 +8,30 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 {
     [SerializeField] private PlayDice playDicePrefab;
     [SerializeField] private AvailityDice availityDicePrefab;
+    [SerializeField] private ChaosDice chaosDicePrefab;
     [SerializeField] private Playboard playDicePlayboard;
     [SerializeField] private Playboard availityDicePlayboard;
     [SerializeField] private int firstdiceCount = 5;
     [SerializeField] private float diceGenerateDelay = 0.25f;
     [SerializeField] private int availityDiceCountMax = 5;
     public int AvailityDiceCountMax => availityDiceCountMax;
+    [SerializeField] private int defaultChaosDiceFaceValueMax = 4;
+
 
     public event Action OnFirstDiceGenerated;
     public event Action<PlayDice> OnPlayDiceClicked;
     public event Action<AvailityDice> OnAvailityDiceClicked;
+    public event Action<ChaosDice> OnChaosDiceClicked;
 
     private List<PlayDice> playDiceList = new();
     public List<PlayDice> PlayDiceList => playDiceList;
     private List<AvailityDice> availityDiceList = new();
     public List<AvailityDice> AvailityDiceList => availityDiceList;
+    private List<ChaosDice> chaosDiceList = new();
+    public List<ChaosDice> ChaosDiceList => chaosDiceList;
     private ObjectPool<PlayDice> playDicePool;
     private ObjectPool<AvailityDice> availityDicePool;
+    private ObjectPool<ChaosDice> chaosDicePool;
     private bool isAvailityDiceAutoKeep = false;
     public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
 
@@ -40,6 +47,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         playDicePool = new ObjectPool<PlayDice>(() => Instantiate(playDicePrefab), playDice => { }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
         availityDicePool = new ObjectPool<AvailityDice>(() => Instantiate(availityDicePrefab), availityDice => { }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
+        chaosDicePool = new ObjectPool<ChaosDice>(() => Instantiate(chaosDicePrefab), chaosDice => { }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
     }
 
     #region RegisterEvents
@@ -131,6 +139,12 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         availityDiceList.Add(availityDice);
     }
 
+    private void AddChaosDice(ChaosDice chaosDice)
+    {
+        chaosDice.OnMouseClicked += () => OnChaosDiceClicked?.Invoke(chaosDice);
+        chaosDiceList.Add(chaosDice);
+    }
+
     public void RemovePlayDice(PlayDice playDice)
     {
         playDice.ResetMouseClickEvent();
@@ -143,6 +157,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
         availityDicePool.Release(availityDice);
+    }
+
+    public void RemoveChaosDice(ChaosDice chaosDice)
+    {
+        chaosDice.ResetMouseClickEvent();
+        chaosDiceList.Remove(chaosDice);
+        chaosDicePool.Release(chaosDice);
     }
 
     public void RespawnPlayDice(PlayDice playDice)

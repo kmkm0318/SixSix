@@ -35,6 +35,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     public int FaceIndex => faceIndex;
     private int faceIndexMax;
     public int FaceValue => faceIndex + 1;
+    public int FaceValueMax => faceIndexMax + 1;
 
     public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
@@ -133,7 +134,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
     }
 
-    public virtual void ChangeFace(int value = 1)
+    protected virtual void ChangeFace(int value = 1)
     {
         faceIndex += value;
         faceIndex %= faceIndexMax;

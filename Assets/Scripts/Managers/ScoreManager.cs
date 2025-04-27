@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -368,9 +367,13 @@ public class ScoreManager : Singleton<ScoreManager>
     private float SafeAdd(float value1, float value2)
     {
         float res = value1 + value2;
-        if (float.IsInfinity(res) || res < 0)
+        if (float.IsInfinity(res) || float.IsNaN(res))
         {
             return float.PositiveInfinity;
+        }
+        else if (res < 0)
+        {
+            return 0;
         }
         else
         {
@@ -381,9 +384,13 @@ public class ScoreManager : Singleton<ScoreManager>
     private float SafeMultiply(float value1, float value2)
     {
         float res = value1 * value2;
-        if (float.IsInfinity(res) || res < 0)
+        if (float.IsInfinity(res) || float.IsNaN(res))
         {
             return float.PositiveInfinity;
+        }
+        else if (res < 0)
+        {
+            return 0;
         }
         else
         {
