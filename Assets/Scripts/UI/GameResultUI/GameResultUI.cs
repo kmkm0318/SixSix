@@ -43,8 +43,7 @@ public class GameResultUI : Singleton<GameResultUI>
 
     private void OnClickInfinityModeButton()
     {
-        Hide();
-        OnInfinityModeButtonClicked?.Invoke();
+        Hide(() => OnInfinityModeButtonClicked?.Invoke());
     }
 
     #region RegisterEvents
@@ -88,7 +87,7 @@ public class GameResultUI : Singleton<GameResultUI>
         fadeCanvasGroup.FadeIn(moveDuration);
     }
 
-    private void Hide()
+    private void Hide(Action onComplete = null)
     {
         gameOverPanel.anchoredPosition = Vector3.zero;
         gameOverPanel
@@ -96,6 +95,7 @@ public class GameResultUI : Singleton<GameResultUI>
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
+                onComplete?.Invoke();
                 gameObject.SetActive(false);
             });
 

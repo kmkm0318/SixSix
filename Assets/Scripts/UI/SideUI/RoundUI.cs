@@ -19,6 +19,7 @@ public class RoundUI : MonoBehaviour
 
     private void ResetUI()
     {
+        currentRoundText.text = $"0/{RoundManager.Instance.ClearRound}";
         targetRoundScoreText.text = "0";
         currentRoundScoreText.text = "0";
         playScoreText.text = "0";
@@ -39,7 +40,7 @@ public class RoundUI : MonoBehaviour
 
     private void OnCurrentRoundUpdated(int currentRound)
     {
-        string newText = currentRound.ToString() + "/" + RoundManager.Instance.ClearRound.ToString();
+        string newText = $"{currentRound}/{RoundManager.Instance.ClearRound}";
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText), true);
     }

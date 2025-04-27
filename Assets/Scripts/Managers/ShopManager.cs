@@ -6,20 +6,20 @@ public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] private int rerollCostMax = 6;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
-    [SerializeField] private int handCategoryEnhanceMerchantCountMax = 3;
+    [SerializeField] private int handEnhanceMerchantCountMax = 3;
     [SerializeField] private int playDiceEnhanceMerchantCountMax = 3;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
-    public event Action<HandCategorySO, PurchaseResult> OnHandCategoryEnhancePurchaseAttempted;
+    public event Action<HandSO, PurchaseResult> OnHandEnhancePurchaseAttempted;
     public event Action<ScorePair, int, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
     public event Action<AvailityDiceSO> OnAvailityDiceSelled;
     public event Action<int> OnRerollCostChanged;
     public event Action OnRerollCompleted;
 
     private AvailityDiceListSO availityDiceListSO;
-    private HandCategoryListSO handCategoryListSO;
+    private HandListSO handListSO;
     private int rerollCost = 1;
     public int RerollCost
     {
@@ -36,7 +36,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         RegisterEvents();
         availityDiceListSO = DataContainer.Instance.MerchantAvailityDiceListSO;
-        handCategoryListSO = DataContainer.Instance.StandardHandCategoryListSO;
+        handListSO = DataContainer.Instance.StandardHandListSO;
     }
 
     #region RegisterEvents
@@ -64,7 +64,7 @@ public class ShopManager : Singleton<ShopManager>
 
     private void OnAvailityDiceClicked(AvailityDice dice)
     {
-        if (dice == null) return;
+        if (dice == null || GameManager.Instance.CurrentGameState != GameState.Shop) return;
         var diceSO = dice.AvailityDiceSO;
 
         PlayerDiceManager.Instance.RemoveAvailityDice(dice);
@@ -74,7 +74,7 @@ public class ShopManager : Singleton<ShopManager>
 
     private void OnAllBonusAchieved()
     {
-        handCategoryListSO = DataContainer.Instance.HandCategoryListSO;
+        handListSO = DataContainer.Instance.HandListSO;
     }
     #endregion
 
@@ -101,21 +101,21 @@ public class ShopManager : Singleton<ShopManager>
         OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
     }
 
-    public void TryPurchaseHandCategoryEnhance(HandCategorySO handCategorySO)
+    public void TryPurchaseHandEnhance(HandSO handSO)
     {
-        if (handCategorySO == null)
+        if (handSO == null)
         {
-            OnHandCategoryEnhancePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            OnHandEnhancePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
             return;
         }
 
-        if (PlayerMoneyManager.Instance.Money < handCategorySO.purchasePrice)
+        if (PlayerMoneyManager.Instance.Money < handSO.purchasePrice)
         {
-            OnHandCategoryEnhancePurchaseAttempted?.Invoke(handCategorySO, PurchaseResult.NotEnoughMoney);
+            OnHandEnhancePurchaseAttempted?.Invoke(handSO, PurchaseResult.NotEnoughMoney);
             return;
         }
 
-        OnHandCategoryEnhancePurchaseAttempted?.Invoke(handCategorySO, PurchaseResult.Success);
+        OnHandEnhancePurchaseAttempted?.Invoke(handSO, PurchaseResult.Success);
     }
 
     public void TryPurchasePlayDiceEnhance(ScorePair enhanceValue, int price)
@@ -142,17 +142,17 @@ public class ShopManager : Singleton<ShopManager>
         return randomAvailityDiceList;
     }
 
-    public List<HandCategorySO> GetRandomHandCategoryList()
+    public List<HandSO> GetRandomHandList()
     {
-        List<HandCategorySO> randomHandCategoryList = new();
-        while (randomHandCategoryList.Count < handCategoryEnhanceMerchantCountMax)
+        List<HandSO> randomHandList = new();
+        while (randomHandList.Count < handEnhanceMerchantCountMax)
         {
-            HandCategorySO randomHandCategory = handCategoryListSO.GetRandomHandCategorySO();
-            if (randomHandCategory == null) continue;
-            if (randomHandCategoryList.Contains(randomHandCategory)) continue;
-            randomHandCategoryList.Add(randomHandCategory);
+            HandSO randomHand = handListSO.GetRandomHandSO();
+            if (randomHand == null) continue;
+            if (randomHandList.Contains(randomHand)) continue;
+            randomHandList.Add(randomHand);
         }
-        return randomHandCategoryList;
+        return randomHandList;
     }
 
     public List<ScorePair> GetRandomPlayDiceEnhanceList()

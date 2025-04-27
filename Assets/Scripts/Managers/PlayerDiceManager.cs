@@ -153,7 +153,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         List<int> playDiceValues = new();
         foreach (Dice dice in playDiceList)
         {
-            playDiceValues.Add(dice.FaceIndex + 1);
+            playDiceValues.Add(dice.FaceValue);
         }
         playDiceValues.Sort();
         return playDiceValues;
@@ -173,7 +173,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     private void ApplyAvailityDiceOnPlayDiceApplied(PlayDice playDice)
     {
-        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggeredByPlayDice(playDice));
+        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(new(playDice: playDice)));
 
         foreach (var availityDice in triggeredAvailityDiceList)
         {
@@ -181,9 +181,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         }
     }
 
-    public void ApplyAvailityDiceOnHandCategoryApplied(HandCategorySO handCategorySO)
+    public void ApplyAvailityDiceOnHandApplied(HandSO handSO)
     {
-        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggeredByHandCategory(handCategorySO));
+        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(new(handSO: handSO)));
 
         foreach (var availityDice in triggeredAvailityDiceList)
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 public enum BonusType
 {
     Money,
-    HandCategoryEnhancement,
+    HandEnhancement,
     Dice,
 }
 

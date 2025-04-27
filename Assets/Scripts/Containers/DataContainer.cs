@@ -14,17 +14,17 @@ public class DataContainer : Singleton<DataContainer>
     public AvailityDiceListSO MerchantAvailityDiceListSO => merchantAvailityDiceListSO;
     #endregion
 
-    #region HandCategoryListSO
-    [SerializeField] private HandCategoryListSO handCategoryListSO;
-    public HandCategoryListSO HandCategoryListSO => handCategoryListSO;
-    [SerializeField] private HandCategoryListSO standardHandCategoryListSO;
-    public HandCategoryListSO StandardHandCategoryListSO => standardHandCategoryListSO;
-    [SerializeField] private HandCategoryListSO specialHandCategoryListSO;
-    public HandCategoryListSO SpecialHandCategoryListSO => specialHandCategoryListSO;
+    #region HandListSO
+    [SerializeField] private HandListSO handListSO;
+    public HandListSO HandListSO => handListSO;
+    [SerializeField] private HandListSO standardHandListSO;
+    public HandListSO StandardHandListSO => standardHandListSO;
+    [SerializeField] private HandListSO specialHandListSO;
+    public HandListSO SpecialHandListSO => specialHandListSO;
 
-    public HandCategorySO GetHandCategorySO(HandCategory handCategory)
+    public HandSO GetHandSO(Hand hand)
     {
-        return handCategoryListSO.handCategoryList.Find(x => x.handCategory == handCategory);
+        return handListSO.handList.Find(x => x.hand == hand);
     }
     #endregion
 

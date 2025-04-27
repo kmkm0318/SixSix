@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    public event Action<Dictionary<HandCategory, ScorePair>> OnHandCategoryScoreUpdated;
-    private Dictionary<HandCategory, ScorePair> handCategoryScoreDictionary = new();
+    public event Action<Dictionary<Hand, ScorePair>> OnHandScoreUpdated;
+    private Dictionary<Hand, ScorePair> handScoreDictionary = new();
 
     public event Action<float> OnTargetRoundScoreUpdated;
     public event Action<float> OnCurrentRoundScoreUpdated;
@@ -104,7 +104,7 @@ public class ScoreManager : Singleton<ScoreManager>
         RoundManager.Instance.OnRoundStarted += OnRoundStarted;
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
-        HandCategoryScoreUI.Instance.OnHandCategorySelected += OnHandCategorySelected;
+        HandScoreUI.Instance.OnHandSelected += OnHandSelected;
     }
 
     private void OnRoundStarted(int currentRound)
@@ -121,17 +121,17 @@ public class ScoreManager : Singleton<ScoreManager>
     private void OnRollCompleted()
     {
         var playDiceValues = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
-        UpdateHandCategoryScoreDictionary(playDiceValues);
-        OnHandCategoryScoreUpdated?.Invoke(handCategoryScoreDictionary);
+        UpdateHandScoreDictionary(playDiceValues);
+        OnHandScoreUpdated?.Invoke(handScoreDictionary);
     }
 
-    private void OnHandCategorySelected(HandCategorySO handCategorySO, ScorePair scorePair)
+    private void OnHandSelected(HandSO handSO, ScorePair scorePair)
     {
         ScorePair = scorePair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
         PlayerDiceManager.Instance.ApplyPlayDices();
-        PlayerDiceManager.Instance.ApplyAvailityDiceOnHandCategoryApplied(handCategorySO);
+        PlayerDiceManager.Instance.ApplyAvailityDiceOnHandApplied(handSO);
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
@@ -141,12 +141,12 @@ public class ScoreManager : Singleton<ScoreManager>
     }
     #endregion
 
-    #region CalculateHandCategoryScore
-    private void UpdateHandCategoryScoreDictionary(List<int> diceValues)
+    #region CalculateHandScore
+    private void UpdateHandScoreDictionary(List<int> diceValues)
     {
         if (diceValues == null || diceValues.Count == 0) return;
 
-        ResetHandCategoryScore();
+        ResetHandScore();
         var countMap = GetCountMap(diceValues);
 
         UpdateChoiceScore();
@@ -175,25 +175,25 @@ public class ScoreManager : Singleton<ScoreManager>
         return countMap;
     }
 
-    private void ResetHandCategoryScore()
+    private void ResetHandScore()
     {
-        handCategoryScoreDictionary.Clear();
-        foreach (var handCategory in DataContainer.Instance.HandCategoryListSO.handCategoryList)
+        handScoreDictionary.Clear();
+        foreach (var hand in DataContainer.Instance.HandListSO.handList)
         {
-            handCategoryScoreDictionary[handCategory.handCategory] = new ScorePair(0, 0);
+            handScoreDictionary[hand.hand] = new ScorePair(0, 0);
         }
     }
 
     private void UpdateChoiceScore()
     {
-        handCategoryScoreDictionary[HandCategory.Choice] = DataContainer.Instance.GetHandCategorySO(HandCategory.Choice).scorePair;
+        handScoreDictionary[Hand.Choice] = DataContainer.Instance.GetHandSO(Hand.Choice).scorePair;
     }
 
     private void UpdateFourOfAKindScore(Dictionary<int, int> countMap)
     {
         if (countMap.Any(x => x.Value >= 4))
         {
-            handCategoryScoreDictionary[HandCategory.FourOfAKind] = DataContainer.Instance.GetHandCategorySO(HandCategory.FourOfAKind).scorePair;
+            handScoreDictionary[Hand.FourOfAKind] = DataContainer.Instance.GetHandSO(Hand.FourOfAKind).scorePair;
         }
     }
 
@@ -203,7 +203,7 @@ public class ScoreManager : Singleton<ScoreManager>
         var hasAnotherTwoOrMore = countMap.Count(x => x.Value >= 2) >= 2;
         if (hasThreeOrMore && hasAnotherTwoOrMore)
         {
-            handCategoryScoreDictionary[HandCategory.FullHouse] = DataContainer.Instance.GetHandCategorySO(HandCategory.FullHouse).scorePair;
+            handScoreDictionary[Hand.FullHouse] = DataContainer.Instance.GetHandSO(Hand.FullHouse).scorePair;
         }
     }
 
@@ -212,7 +212,7 @@ public class ScoreManager : Singleton<ScoreManager>
         var threeOrMoreCount = countMap.Count(x => x.Value >= 3);
         if (threeOrMoreCount >= 2)
         {
-            handCategoryScoreDictionary[HandCategory.DoubleThreeOfAKind] = DataContainer.Instance.GetHandCategorySO(HandCategory.DoubleThreeOfAKind).scorePair;
+            handScoreDictionary[Hand.DoubleThreeOfAKind] = DataContainer.Instance.GetHandSO(Hand.DoubleThreeOfAKind).scorePair;
         }
     }
 
@@ -235,17 +235,17 @@ public class ScoreManager : Singleton<ScoreManager>
 
         if (maxStraightCount >= 4)
         {
-            handCategoryScoreDictionary[HandCategory.SmallStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.SmallStraight).scorePair;
+            handScoreDictionary[Hand.SmallStraight] = DataContainer.Instance.GetHandSO(Hand.SmallStraight).scorePair;
         }
 
         if (maxStraightCount >= 5)
         {
-            handCategoryScoreDictionary[HandCategory.LargeStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.LargeStraight).scorePair;
+            handScoreDictionary[Hand.LargeStraight] = DataContainer.Instance.GetHandSO(Hand.LargeStraight).scorePair;
         }
 
         if (maxStraightCount >= 6)
         {
-            handCategoryScoreDictionary[HandCategory.FullStraight] = DataContainer.Instance.GetHandCategorySO(HandCategory.FullStraight).scorePair;
+            handScoreDictionary[Hand.FullStraight] = DataContainer.Instance.GetHandSO(Hand.FullStraight).scorePair;
         }
     }
 
@@ -253,7 +253,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         if (countMap.Any(x => x.Value >= 5))
         {
-            handCategoryScoreDictionary[HandCategory.Yacht] = DataContainer.Instance.GetHandCategorySO(HandCategory.Yacht).scorePair;
+            handScoreDictionary[Hand.Yacht] = DataContainer.Instance.GetHandSO(Hand.Yacht).scorePair;
         }
     }
 
@@ -262,10 +262,10 @@ public class ScoreManager : Singleton<ScoreManager>
         var maxPair = countMap.OrderByDescending(x => x.Value).FirstOrDefault();
         if (maxPair.Value >= 6)
         {
-            ScorePair scorePair = DataContainer.Instance.GetHandCategorySO(HandCategory.SixSix).scorePair;
+            ScorePair scorePair = DataContainer.Instance.GetHandSO(Hand.SixSix).scorePair;
             scorePair.baseScore *= maxPair.Key;
             scorePair.multiplier *= maxPair.Key;
-            handCategoryScoreDictionary[HandCategory.SixSix] = scorePair;
+            handScoreDictionary[Hand.SixSix] = scorePair;
         }
     }
     #endregion
@@ -282,11 +282,10 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void UpdateTargetRoundScore(int currentRound)
     {
-        int roundIdx = currentRound - 1;
-        if (roundIdx < 0) return;
+        if (currentRound < 1) return;
 
-        float baseScore = 100 * Mathf.Pow(6, roundIdx);
-        float multiplier = 1f + roundIdx % 5 * 0.5f;
+        float baseScore = 100 * Mathf.Pow(6, currentRound - 1);
+        float multiplier = 1f + (currentRound - 1) % 5 * 0.5f;
         float score = baseScore * multiplier;
 
         int digits = score.ToString("F0").Length;

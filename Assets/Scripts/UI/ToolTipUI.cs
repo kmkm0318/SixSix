@@ -15,6 +15,9 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         rectTransform = GetComponent<RectTransform>();
 
+        ShopUI.Instance.OnShopUIOpened += HideToolTip;
+        RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
+
         HideToolTip();
     }
 

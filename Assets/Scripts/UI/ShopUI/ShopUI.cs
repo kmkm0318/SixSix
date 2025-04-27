@@ -12,10 +12,10 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private float showDuration = 0.5f;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform availityDiceMerchantParent;
-    [SerializeField] private Transform handCategoryEnhanceMerchantParent;
+    [SerializeField] private Transform handEnhanceMerchantParent;
     [SerializeField] private Transform playDiceEnhanceMerchantParent;
     [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
-    [SerializeField] private HandCategoryEnhanceMerchantUI handCategoryEnhanceMerchantPrefab;
+    [SerializeField] private HandEnhanceMerchantUI handEnhanceMerchantPrefab;
     [SerializeField] private PlayDiceEnhanceMerchantUI playDiceEnhanceMerchantPrefab;
     [SerializeField] private Button rerollButton;
     [SerializeField] private Button closeButton;
@@ -25,7 +25,7 @@ public class ShopUI : Singleton<ShopUI>
     public event Action OnShopUIClosed;
 
     private ObjectPool<AvailityDiceMerchantUI> availityDiceMerchantPool;
-    private ObjectPool<HandCategoryEnhanceMerchantUI> handCategoryEnhanceMerchantPool;
+    private ObjectPool<HandEnhanceMerchantUI> handEnhanceMerchantPool;
     private ObjectPool<PlayDiceEnhanceMerchantUI> playDiceEnhanceMerchantPool;
 
     private Tween currentTween;
@@ -63,8 +63,8 @@ public class ShopUI : Singleton<ShopUI>
             maxSize: 10
         );
 
-        handCategoryEnhanceMerchantPool = new ObjectPool<HandCategoryEnhanceMerchantUI>(
-            () => Instantiate(handCategoryEnhanceMerchantPrefab, handCategoryEnhanceMerchantParent),
+        handEnhanceMerchantPool = new ObjectPool<HandEnhanceMerchantUI>(
+            () => Instantiate(handEnhanceMerchantPrefab, handEnhanceMerchantParent),
             merchantUI =>
             {
                 merchantUI.gameObject.SetActive(true);
@@ -111,7 +111,7 @@ public class ShopUI : Singleton<ShopUI>
     private void OnShopStarted()
     {
         InitAvailityDiceMerchantUI();
-        InitHandCategoryEnhanceMerchantUI();
+        InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
         Show();
     }
@@ -119,7 +119,7 @@ public class ShopUI : Singleton<ShopUI>
     private void OnRerollCompleted()
     {
         InitAvailityDiceMerchantUI();
-        InitHandCategoryEnhanceMerchantUI();
+        InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
     }
 
@@ -158,21 +158,21 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void InitHandCategoryEnhanceMerchantUI()
+    private void InitHandEnhanceMerchantUI()
     {
-        foreach (Transform child in handCategoryEnhanceMerchantParent)
+        foreach (Transform child in handEnhanceMerchantParent)
         {
-            if (child.TryGetComponent(out HandCategoryEnhanceMerchantUI merchantUI))
+            if (child.TryGetComponent(out HandEnhanceMerchantUI merchantUI))
             {
-                handCategoryEnhanceMerchantPool.Release(merchantUI);
+                handEnhanceMerchantPool.Release(merchantUI);
             }
         }
 
-        List<HandCategorySO> handCategoryList = ShopManager.Instance.GetRandomHandCategoryList();
-        for (int i = 0; i < handCategoryList.Count; i++)
+        List<HandSO> handList = ShopManager.Instance.GetRandomHandList();
+        for (int i = 0; i < handList.Count; i++)
         {
-            HandCategoryEnhanceMerchantUI merchantUI = handCategoryEnhanceMerchantPool.Get();
-            merchantUI.Init(handCategoryList[i]);
+            HandEnhanceMerchantUI merchantUI = handEnhanceMerchantPool.Get();
+            merchantUI.Init(handList[i]);
         }
     }
 

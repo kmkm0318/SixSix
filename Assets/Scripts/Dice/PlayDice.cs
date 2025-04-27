@@ -9,7 +9,7 @@ public class PlayDice : Dice
 
     public void ApplyScorePairs()
     {
-        ScorePair scorePair = new(FaceIndex + 1, 0);
+        ScorePair scorePair = new(FaceValue, 0);
 
         ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, false);
 
@@ -56,8 +56,8 @@ public class PlayDice : Dice
 
     public override void ShowToolTip()
     {
-        string name = $"PlayDice({FaceIndex + 1})";
-        string description = $"Get Score(+{FaceIndex + 1})" + Faces[FaceIndex].GetDescriptionText();
+        string name = $"PlayDice({FaceValue})";
+        string description = $"Get Score(+{FaceValue})" + Faces[FaceIndex].GetDescriptionText();
 
         ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
     }

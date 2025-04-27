@@ -19,6 +19,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
     [SerializeField] private RoundClearRewardUI roundClearRewardUI;
 
     public event Action<int> OnRewardTriggered;
+    public event Action OnRoundClearUIOpened;
     public event Action OnRoundClearUIClosed;
 
     private ObjectPool<RoundClearRewardUI> rewardPool;
@@ -77,11 +78,16 @@ public class RoundClearUI : Singleton<RoundClearUI>
 
         var myTween = roundClearPanel
             .DOAnchorPos(Vector3.zero, moveDuration)
-            .SetEase(Ease.InOutBack);
+            .SetEase(Ease.InOutBack)
+            .OnComplete(() =>
+            {
+
+            });
 
         fadeCanvasGroup.FadeIn(moveDuration);
 
         yield return myTween.WaitForCompletion();
+        OnRoundClearUIOpened?.Invoke();
     }
 
     private IEnumerator Hide()
@@ -141,7 +147,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
     private void SetTexts()
     {
         roundText.text = "Cleared Round : " + RoundManager.Instance.CurrentRound.ToString();
-        roundScoreText.text = "Target Score : " + ScoreManager.Instance.TargetRoundScore.ToString();
+        roundScoreText.text = "Target Score : " + Functions.FormatNumber(ScoreManager.Instance.TargetRoundScore);
     }
     #endregion
 

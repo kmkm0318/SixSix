@@ -5,7 +5,7 @@ public class OptionManager : Singleton<OptionManager>
 {
     private const string OPTION_DATA_NAME = "OptionData";
 
-    [SerializeField] private OptionData optionData;
+    private OptionData optionData;
     public OptionData OptionData => optionData;
 
     override protected void Awake()

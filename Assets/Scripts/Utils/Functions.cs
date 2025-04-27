@@ -6,7 +6,7 @@ public static class Functions
 {
     public static bool IsPointerOverUIElement()
     {
-        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        PointerEventData eventData = new(EventSystem.current)
         {
             position = Input.mousePosition
         };

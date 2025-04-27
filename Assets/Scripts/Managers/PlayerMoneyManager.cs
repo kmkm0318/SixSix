@@ -14,6 +14,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     public int MoneyInterestReward => Mathf.Min(interestMax, Money / interestUnit * interestPerUnit);
 
     public event Action<int> OnMoneyChanged;
+
     private int money = 0;
     public int Money
     {
@@ -38,6 +39,8 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
+        ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
+        ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
         ScoreManager.Instance.OnMoneyAchieved += OnMoneyAchieved;
     }
 
@@ -73,6 +76,24 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
 
         Money += sO.sellPrice;
         SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void OnHandEnhancePurchaseAttempted(HandSO sO, PurchaseResult result)
+    {
+        if (result == PurchaseResult.Success)
+        {
+            Money -= sO.purchasePrice;
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
+    }
+
+    private void OnPlayDiceEnhancePurchaseAttempted(ScorePair pair, int price, PurchaseResult result)
+    {
+        if (result == PurchaseResult.Success)
+        {
+            Money -= price;
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
     }
 
     private void OnMoneyAchieved(int value, Transform _, bool __)

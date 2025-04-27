@@ -34,6 +34,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     private int faceIndex;
     public int FaceIndex => faceIndex;
     private int faceIndexMax;
+    public int FaceValue => faceIndex + 1;
 
     public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
