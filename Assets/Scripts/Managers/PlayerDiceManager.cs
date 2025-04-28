@@ -180,7 +180,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     public bool AreAllDiceStopped()
     {
-        return playDiceList.TrueForAll(dice => !dice.IsRolling) && availityDiceList.TrueForAll(dice => !dice.IsRolling);
+        List<Dice> diceList = new();
+
+        diceList.AddRange(playDiceList);
+        diceList.AddRange(availityDiceList);
+        diceList.AddRange(chaosDiceList);
+
+        return diceList.TrueForAll(dice => !dice.IsRolling);
     }
 
     private List<PlayDice> GetOrderedPlayDiceList()
@@ -249,5 +255,42 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             availityDice.ApplyEffect();
         }
     }
+
+    public void ApplyChaosDices()
+    {
+        foreach (var chaosDice in chaosDiceList)
+        {
+            chaosDice.ApplyScorePairs();
+        }
+    }
     #endregion
+
+    public void GenerateChaosDices(int chaosDiceCount)
+    {
+        SequenceManager.Instance.AddCoroutine(AddChaosDiceCoroutine(chaosDiceCount));
+    }
+
+    private IEnumerator AddChaosDiceCoroutine(int chaosDiceCount)
+    {
+        for (int i = 0; i < chaosDiceCount; i++)
+        {
+            yield return new WaitForSeconds(diceGenerateDelay);
+            var chaosDice = chaosDicePool.Get();
+            chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+            chaosDice.gameObject.SetActive(true);
+
+            AddChaosDice(chaosDice);
+        }
+
+        yield return new WaitUntil(() => AreAllDiceStopped());
+    }
+
+    public void ClearChaosDices()
+    {
+        foreach (var chaosDice in chaosDiceList)
+        {
+            RemoveChaosDice(chaosDice);
+        }
+    }
 }

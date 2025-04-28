@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class DiceHighlight : Singleton<DiceHighlight>
@@ -44,8 +45,16 @@ public class DiceHighlight : Singleton<DiceHighlight>
 
     private void Start()
     {
+        RegisterEvents();
         Hide();
     }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
+        PlayerMouseManager.Instance.OnMouseExit += HideHighlight;
+    }
+    #endregion
 
     public void ShowHighlight(Dice dice)
     {

@@ -57,11 +57,10 @@ public class PlayerMouseManager : Singleton<PlayerMouseManager>
             }
         }
         else
+        if (lastHoveredObject != null)
         {
+            OnMouseExit?.Invoke();
             lastHoveredObject = null;
-
-            DiceHighlight.Instance.HideHighlight();
-            ToolTipUI.Instance.HideToolTip();
         }
     }
 }

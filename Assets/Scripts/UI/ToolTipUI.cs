@@ -14,12 +14,18 @@ public class ToolTipUI : Singleton<ToolTipUI>
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-
-        ShopUI.Instance.OnShopUIOpened += HideToolTip;
-        RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
-
+        RegisterEvents();
         HideToolTip();
     }
+
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
+        ShopUI.Instance.OnShopUIOpened += HideToolTip;
+        RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
+        PlayerMouseManager.Instance.OnMouseExit += HideToolTip;
+    }
+    #endregion
 
     private void LateUpdate()
     {

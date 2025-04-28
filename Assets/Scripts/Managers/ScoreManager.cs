@@ -130,6 +130,7 @@ public class ScoreManager : Singleton<ScoreManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
 
         PlayerDiceManager.Instance.ApplyPlayDices();
+        PlayerDiceManager.Instance.ApplyChaosDices();
         PlayerDiceManager.Instance.ApplyAvailityDiceOnHandApplied(handSO);
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
@@ -329,16 +330,16 @@ public class ScoreManager : Singleton<ScoreManager>
     private void ApplyScorePairEffect(ScorePair pair)
     {
         bool isBaseScoreZero = pair.baseScore == 0;
-        bool isMultiplierZero = pair.multiplier == 0;
+        bool isMultiplierZeroOrOne = pair.multiplier == 0 || pair.multiplier == 1f;
 
-        if (isBaseScoreZero && isMultiplierZero) return;
+        if (isBaseScoreZero && isMultiplierZeroOrOne) return;
 
         if (!isBaseScoreZero)
         {
             ApplyBaseScore(pair.baseScore);
         }
 
-        if (!isMultiplierZero)
+        if (!isMultiplierZeroOrOne)
         {
             ApplyMultiplier(pair.multiplier);
         }

@@ -18,16 +18,6 @@ public class ChaosDice : Dice
         ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, false);
     }
 
-    protected override void OnShopStarted()
-    {
-
-    }
-
-    protected override void OnShopEnded()
-    {
-
-    }
-
     public override void ShowToolTip()
     {
         string name = $"Chaos Dice({FaceValue})";

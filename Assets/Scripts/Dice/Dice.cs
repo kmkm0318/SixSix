@@ -118,8 +118,14 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         diceInteraction.IsInteractable = RollManager.Instance.RollRemain > 0;
     }
 
-    protected abstract void OnShopStarted();
-    protected abstract void OnShopEnded();
+    protected virtual void OnShopStarted()
+    {
+
+    }
+    protected virtual void OnShopEnded()
+    {
+
+    }
 
     public void ResetMouseClickEvent()
     {
