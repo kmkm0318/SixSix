@@ -12,10 +12,10 @@ public class ChaosDice : Dice
         ScorePair scorePair;
 
         scorePair = new(-FaceValue * 25, 0);
-        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, false);
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);
 
         scorePair = new(0, (FaceValueMax - FaceValue + 1) * (1f / FaceValueMax));
-        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, false);
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);
     }
 
     public override void ShowToolTip()

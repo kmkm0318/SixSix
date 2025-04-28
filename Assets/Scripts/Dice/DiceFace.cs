@@ -35,13 +35,13 @@ public class DiceFace
         if (enhanceValue.baseScore != 0)
         {
             ScorePair scorePair = new(enhanceValue.baseScore, 0);
-            ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(dice, scorePair, isAvailityDice);
+            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, scorePair, isAvailityDice);
         }
 
         if (enhanceValue.multiplier != 0)
         {
             ScorePair scorePair = new(0, enhanceValue.multiplier);
-            ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(dice, scorePair, isAvailityDice);
+            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, scorePair, isAvailityDice);
         }
     }
 

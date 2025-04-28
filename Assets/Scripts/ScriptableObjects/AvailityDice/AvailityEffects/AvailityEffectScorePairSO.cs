@@ -13,12 +13,12 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
 
         if (baseScore != 0)
         {
-            ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(context.availtiyDice, new(baseScore, 0), true);
+            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(baseScore, 0), true);
         }
 
         if (multiplier != 0)
         {
-            ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(context.availtiyDice, new(0, multiplier), true);
+            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(0, multiplier), true);
         }
     }
 

@@ -19,6 +19,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<float> OnMultiplierChanged;
     public event Action<ScorePair, Transform, bool> OnScorePairApplied;
     public event Action<int, Transform, bool> OnMoneyAchieved;
+    public event Action<HandSO> OnHandApplied;
 
 
     private float targetRoundScore = 0;
@@ -132,6 +133,7 @@ public class ScoreManager : Singleton<ScoreManager>
         PlayerDiceManager.Instance.ApplyPlayDices();
         PlayerDiceManager.Instance.ApplyChaosDices();
         PlayerDiceManager.Instance.ApplyAvailityDiceOnHandApplied(handSO);
+        OnHandApplied?.Invoke(handSO);
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
@@ -304,8 +306,8 @@ public class ScoreManager : Singleton<ScoreManager>
     }
     #endregion
 
-    #region ApplyDiceEffect
-    public void ApplyScorePairAndPlayDiceAnimation(Dice dice, ScorePair pair, bool isAvailityDice = false)
+    #region ApplyEffect
+    public void ApplyDiceScorePairEffectAndPlayAnimation(Dice dice, ScorePair pair, bool isAvailityDice = false)
     {
         if (pair.baseScore == 0 && pair.multiplier == 0) return;
 

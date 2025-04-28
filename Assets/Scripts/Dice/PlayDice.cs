@@ -11,7 +11,7 @@ public class PlayDice : Dice
     {
         ScorePair scorePair = new(FaceValue, 0);
 
-        ScoreManager.Instance.ApplyScorePairAndPlayDiceAnimation(this, scorePair, false);
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);
 
         Faces[FaceIndex].ApplyDiceFaceValue(this, false);
     }
