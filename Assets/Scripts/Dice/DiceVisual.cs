@@ -20,12 +20,11 @@ public class DiceVisual : MonoBehaviour
     {
         if (enhancedValue.baseScore == 0 && enhancedValue.multiplier == 0)
         {
-            spriteRenderer.color = Color.white;
             return;
         }
 
-        float blueIntensity = Mathf.Clamp01((float)enhancedValue.baseScore / enhanceColorMax);
-        float redIntensity = Mathf.Clamp01((float)enhancedValue.multiplier / enhanceColorMax);
+        float blueIntensity = Mathf.Clamp01(enhancedValue.baseScore / enhanceColorMax);
+        float redIntensity = Mathf.Clamp01(enhancedValue.multiplier / enhanceColorMax);
 
         float redValue = 1 - blueIntensity;
         float greenValue = 1 - redIntensity - blueIntensity;
@@ -38,6 +37,13 @@ public class DiceVisual : MonoBehaviour
             greenValue = 0;
         }
 
-        spriteRenderer.color = new Color(redValue, greenValue, blueValue, 1);
+        spriteRenderer.color = new Color(redValue, greenValue, blueValue, spriteRenderer.color.a);
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        Color color = spriteRenderer.color;
+        color.a = alpha;
+        spriteRenderer.color = color;
     }
 }

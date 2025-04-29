@@ -40,12 +40,12 @@ public class AvailityDice : Dice
 
     public bool IsTriggered(AvailityDiceContext context)
     {
-        return availityDiceSO.availityTrigger.IsTriggered(new(this, context.playDice, context.handSO));
+        return IsEnabled && availityDiceSO.availityTrigger.IsTriggered(new(this, context.playDice, context.handSO));
     }
 
     public void ApplyEffect()
     {
-        if (availityDiceSO == null) return;
+        if (availityDiceSO == null || !IsEnabled) return;
 
         availityDiceSO.availityEffect.ApplyEffect(new(this));
     }

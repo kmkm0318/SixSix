@@ -29,6 +29,19 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         protected set => diceInteraction.IsInteractable = value;
     }
 
+    private bool isEnabled = true;
+    public bool IsEnabled
+    {
+        get => isEnabled;
+        set
+        {
+            if (isEnabled == value) return;
+            isEnabled = value;
+
+            diceVisual.SetAlpha(value ? 1 : 0.5f);
+        }
+    }
+
     private DiceFace[] faces;
     public DiceFace[] Faces => faces;
     private int faceIndex;

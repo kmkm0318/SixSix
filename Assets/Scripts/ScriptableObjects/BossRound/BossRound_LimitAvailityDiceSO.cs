@@ -11,15 +11,13 @@ public class BossRound_LimitAvailityDiceSO : BossRoundSO
 
         if (disabledAvailityDice == null) return;
 
-        PlayerDiceManager.Instance.RemoveAvailityDice(disabledAvailityDice, false);
+        PlayerDiceManager.Instance.DisableAvailityDice(disabledAvailityDice);
     }
 
     public override void OnExit()
     {
         if (disabledAvailityDice == null) return;
 
-        disabledAvailityDice.gameObject.SetActive(true);
-
-        PlayerDiceManager.Instance.RespawnAvailityDice(disabledAvailityDice);
+        PlayerDiceManager.Instance.EnableAvailityDice(disabledAvailityDice);
     }
 }

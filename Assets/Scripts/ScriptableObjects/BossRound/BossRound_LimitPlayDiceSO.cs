@@ -11,15 +11,13 @@ public class BossRound_LimitPlayDiceSO : BossRoundSO
 
         if (disabledPlayDice == null) return;
 
-        PlayerDiceManager.Instance.RemovePlayDice(disabledPlayDice, false);
+        PlayerDiceManager.Instance.DisablePlayDice(disabledPlayDice);
     }
 
     public override void OnExit()
     {
         if (disabledPlayDice == null) return;
 
-        disabledPlayDice.gameObject.SetActive(true);
-
-        PlayerDiceManager.Instance.RespawnPlayDice(disabledPlayDice);
+        PlayerDiceManager.Instance.EnablePlayDice(disabledPlayDice);
     }
 }

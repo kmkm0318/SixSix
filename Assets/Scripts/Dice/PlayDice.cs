@@ -9,6 +9,8 @@ public class PlayDice : Dice
 
     public void ApplyScorePairs()
     {
+        if (!IsEnabled) return;
+
         ScorePair scorePair = new(FaceValue, 0);
 
         ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);

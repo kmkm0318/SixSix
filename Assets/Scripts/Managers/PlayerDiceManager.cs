@@ -145,34 +145,18 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         chaosDiceList.Add(chaosDice);
     }
 
-    public void RemovePlayDice(PlayDice playDice, bool isRelease = true)
+    public void RemovePlayDice(PlayDice playDice)
     {
         playDice.ResetMouseClickEvent();
         playDiceList.Remove(playDice);
-
-        if (isRelease)
-        {
-            playDicePool.Release(playDice);
-        }
-        else
-        {
-            playDice.gameObject.SetActive(false);
-        }
+        playDicePool.Release(playDice);
     }
 
-    public void RemoveAvailityDice(AvailityDice availityDice, bool isRelease = true)
+    public void RemoveAvailityDice(AvailityDice availityDice)
     {
         availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
-
-        if (isRelease)
-        {
-            availityDicePool.Release(availityDice);
-        }
-        else
-        {
-            availityDice.gameObject.SetActive(false);
-        }
+        availityDicePool.Release(availityDice);
     }
 
     private void RemoveChaosDice(ChaosDice chaosDice)
@@ -182,18 +166,32 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         chaosDicePool.Release(chaosDice);
     }
 
-    public void RespawnPlayDice(PlayDice playDice)
+    public void EnablePlayDice(PlayDice playDice)
     {
-        playDice.gameObject.SetActive(true);
-        playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        AddPlayDice(playDice);
+        playDice.IsEnabled = true;
+
+        playDiceList.Add(playDice);
     }
 
-    public void RespawnAvailityDice(AvailityDice availityDice)
+    public void DisablePlayDice(PlayDice playDice)
     {
-        availityDice.gameObject.SetActive(true);
-        availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        AddAvailityDice(availityDice);
+        playDice.IsEnabled = false;
+
+        playDiceList.Remove(playDice);
+    }
+
+    public void EnableAvailityDice(AvailityDice availityDice)
+    {
+        availityDice.IsEnabled = true;
+
+        availityDiceList.Add(availityDice);
+    }
+
+    public void DisableAvailityDice(AvailityDice availityDice)
+    {
+        availityDice.IsEnabled = false;
+
+        availityDiceList.Remove(availityDice);
     }
 
     public bool AreAllDiceStopped()
