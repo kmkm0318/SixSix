@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_AddChaosDiceSO", menuName = "Scriptable Objects/BossRounds/BossRound_AddChaosDiceSO")]
-public abstract class BossRound_AddChaosDiceSO : BossRoundSO
+public class BossRound_AddChaosDiceSO : BossRoundSO
 {
     [SerializeField] private int chaosDiceCount = 1;
 

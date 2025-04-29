@@ -16,6 +16,17 @@ public class HandScoreUI : Singleton<HandScoreUI>
     private Dictionary<Hand, HandScoreSingleUI> handScoreSingleUIDict = new();
     private bool isActive = false;
 
+    private HandSO usableHandSO = null;
+    public HandSO UsableHandSO
+    {
+        get => usableHandSO;
+        set
+        {
+            if (usableHandSO == value) return;
+            usableHandSO = value;
+        }
+    }
+
     private void Start()
     {
         Init();
@@ -96,6 +107,7 @@ public class HandScoreUI : Singleton<HandScoreUI>
 
     public void SelectHand(HandSO handSO, ScorePair scorePair)
     {
+        if (usableHandSO != null && usableHandSO != handSO) return;
         if (!isActive) return;
         isActive = false;
 

@@ -1,19 +1,25 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_LimitPlayDiceSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitPlayDiceSO")]
-public abstract class BossRound_LimitPlayDiceSO : BossRoundSO
+public class BossRound_LimitPlayDiceSO : BossRoundSO
 {
     private PlayDice disabledPlayDice;
 
     public override void OnEnter()
     {
         disabledPlayDice = PlayerDiceManager.Instance.GetRandomPlayDice();
-        PlayerDiceManager.Instance.RemovePlayDice(disabledPlayDice);
+
+        if (disabledPlayDice == null) return;
+
+        PlayerDiceManager.Instance.RemovePlayDice(disabledPlayDice, false);
     }
 
     public override void OnExit()
     {
+        if (disabledPlayDice == null) return;
+
         disabledPlayDice.gameObject.SetActive(true);
+
         PlayerDiceManager.Instance.RespawnPlayDice(disabledPlayDice);
     }
 }

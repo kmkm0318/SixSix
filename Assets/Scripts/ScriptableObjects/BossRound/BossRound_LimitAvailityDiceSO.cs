@@ -1,19 +1,25 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_LimitAvailityDiceSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitAvailityDiceSO")]
-public abstract class BossRound_LimitAvailityDiceSO : BossRoundSO
+public class BossRound_LimitAvailityDiceSO : BossRoundSO
 {
     private AvailityDice disabledAvailityDice;
 
     public override void OnEnter()
     {
         disabledAvailityDice = PlayerDiceManager.Instance.GetRandomAvailityDice();
-        PlayerDiceManager.Instance.RemoveAvailityDice(disabledAvailityDice);
+
+        if (disabledAvailityDice == null) return;
+
+        PlayerDiceManager.Instance.RemoveAvailityDice(disabledAvailityDice, false);
     }
 
     public override void OnExit()
     {
+        if (disabledAvailityDice == null) return;
+
         disabledAvailityDice.gameObject.SetActive(true);
+
         PlayerDiceManager.Instance.RespawnAvailityDice(disabledAvailityDice);
     }
 }

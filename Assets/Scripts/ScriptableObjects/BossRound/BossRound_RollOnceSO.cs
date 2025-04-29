@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_RollOnceSO", menuName = "Scriptable Objects/BossRounds/BossRound_RollOnceSO")]
-public abstract class BossRound_RollOnceSO : BossRoundSO
+public class BossRound_RollOnceSO : BossRoundSO
 {
     private int previousRollMax;
 

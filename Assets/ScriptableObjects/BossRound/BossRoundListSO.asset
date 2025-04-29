@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc24583ed2f2ff41b5b808ea49157c5, type: 3}
+  m_Name: BossRoundListSO
+  m_EditorClassIdentifier: 
+  bossRounds:
+  - {fileID: 11400000, guid: 8ad33e6e007c4c94c93aa17ce4d838fd, type: 2}
+  - {fileID: 11400000, guid: 8d9a295ee7bba734984527284041aa07, type: 2}
+  - {fileID: 11400000, guid: fb0ec87bd102aa840b34861f6c623b4d, type: 2}
+  - {fileID: 11400000, guid: 363a5c2b5997c5f478c7bd1a33108871, type: 2}
+  - {fileID: 11400000, guid: a9898ce92faeb7147a7c6abd906d5cb9, type: 2}
+  - {fileID: 11400000, guid: 197c8a335e8dd4a4b870665c961220c4, type: 2}
+  - {fileID: 11400000, guid: d4f4a3a0456a6b145bc03cfb2fd762bc, type: 2}
+  - {fileID: 11400000, guid: 200f1b1ae36f8c64397cc475581ceae5, type: 2}
+  - {fileID: 11400000, guid: bd7c4f6984ae27c47869cdd2ab7ca66b, type: 2}

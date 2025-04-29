@@ -145,21 +145,37 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         chaosDiceList.Add(chaosDice);
     }
 
-    public void RemovePlayDice(PlayDice playDice)
+    public void RemovePlayDice(PlayDice playDice, bool isRelease = true)
     {
         playDice.ResetMouseClickEvent();
         playDiceList.Remove(playDice);
-        playDicePool.Release(playDice);
+
+        if (isRelease)
+        {
+            playDicePool.Release(playDice);
+        }
+        else
+        {
+            playDice.gameObject.SetActive(false);
+        }
     }
 
-    public void RemoveAvailityDice(AvailityDice availityDice)
+    public void RemoveAvailityDice(AvailityDice availityDice, bool isRelease = true)
     {
         availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
-        availityDicePool.Release(availityDice);
+
+        if (isRelease)
+        {
+            availityDicePool.Release(availityDice);
+        }
+        else
+        {
+            availityDice.gameObject.SetActive(false);
+        }
     }
 
-    public void RemoveChaosDice(ChaosDice chaosDice)
+    private void RemoveChaosDice(ChaosDice chaosDice)
     {
         chaosDice.ResetMouseClickEvent();
         chaosDiceList.Remove(chaosDice);
@@ -170,12 +186,14 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         playDice.gameObject.SetActive(true);
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        AddPlayDice(playDice);
     }
 
     public void RespawnAvailityDice(AvailityDice availityDice)
     {
         availityDice.gameObject.SetActive(true);
         availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        AddAvailityDice(availityDice);
     }
 
     public bool AreAllDiceStopped()
@@ -222,6 +240,35 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         int randomIndex = UnityEngine.Random.Range(0, availityDiceList.Count);
         return availityDiceList[randomIndex];
     }
+
+    public void GenerateChaosDices(int chaosDiceCount)
+    {
+        SequenceManager.Instance.AddCoroutine(AddChaosDiceCoroutine(chaosDiceCount));
+    }
+
+    private IEnumerator AddChaosDiceCoroutine(int chaosDiceCount)
+    {
+        for (int i = 0; i < chaosDiceCount; i++)
+        {
+            yield return new WaitForSeconds(diceGenerateDelay);
+            var chaosDice = chaosDicePool.Get();
+            chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+            chaosDice.gameObject.SetActive(true);
+
+            AddChaosDice(chaosDice);
+        }
+
+        yield return new WaitUntil(() => AreAllDiceStopped());
+    }
+
+    public void ClearChaosDices()
+    {
+        while (chaosDiceList.Count > 0)
+        {
+            RemoveChaosDice(chaosDiceList[0]);
+        }
+    }
     #endregion
 
     #region ApplyDice
@@ -265,32 +312,15 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     }
     #endregion
 
-    public void GenerateChaosDices(int chaosDiceCount)
+    public void UnkeepAllDices()
     {
-        SequenceManager.Instance.AddCoroutine(AddChaosDiceCoroutine(chaosDiceCount));
-    }
+        List<Dice> dices = new(playDiceList);
+        dices.AddRange(availityDiceList);
+        dices.AddRange(chaosDiceList);
 
-    private IEnumerator AddChaosDiceCoroutine(int chaosDiceCount)
-    {
-        for (int i = 0; i < chaosDiceCount; i++)
+        foreach (var dice in dices)
         {
-            yield return new WaitForSeconds(diceGenerateDelay);
-            var chaosDice = chaosDicePool.Get();
-            chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
-            chaosDice.gameObject.SetActive(true);
-
-            AddChaosDice(chaosDice);
-        }
-
-        yield return new WaitUntil(() => AreAllDiceStopped());
-    }
-
-    public void ClearChaosDices()
-    {
-        foreach (var chaosDice in chaosDiceList)
-        {
-            RemoveChaosDice(chaosDice);
+            dice.IsKeeped = false;
         }
     }
 }

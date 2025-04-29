@@ -15,7 +15,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     public bool IsKeeped
     {
         get => isKeeped;
-        protected set
+        set
         {
             if (isKeeped == value) return;
             isKeeped = value;
@@ -33,9 +33,10 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     public DiceFace[] Faces => faces;
     private int faceIndex;
     public int FaceIndex => faceIndex;
-    private int faceIndexMax;
     public int FaceValue => faceIndex + 1;
-    public int FaceValueMax => faceIndexMax + 1;
+
+    private int faceValueMax;
+    public int FaceValueMax => faceValueMax;
 
     public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
@@ -48,7 +49,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         }
 
         faceIndex = 0;
-        faceIndexMax = maxValue;
+        faceValueMax = maxValue;
 
         SetFace(faceIndex);
 
@@ -143,7 +144,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     protected virtual void ChangeFace(int value = 1)
     {
         faceIndex += value;
-        faceIndex %= faceIndexMax;
+        faceIndex %= faceValueMax;
         SetFace(faceIndex);
     }
     #endregion

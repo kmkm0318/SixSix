@@ -21,7 +21,7 @@ public class ChaosDice : Dice
     public override void ShowToolTip()
     {
         string name = $"Chaos Dice({FaceValue})";
-        string description = $"Get Score(-{FaceValue * 25}, {(FaceValueMax - FaceValue + 1) * (1f / FaceValueMax)})";
+        string description = $"Get Score(-{FaceValue * 25}, x{(FaceValueMax - FaceValue + 1) * (1f / FaceValueMax)})";
 
         ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
     }

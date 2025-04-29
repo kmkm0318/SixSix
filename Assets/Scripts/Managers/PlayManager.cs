@@ -41,7 +41,6 @@ public class PlayManager : Singleton<PlayManager>
 
     private void OnCurrentRoundScoreUpdated(float score)
     {
-        if (score <= 0) return;
         PlayRemain--;
 
         OnPlayEnded?.Invoke(PlayRemain);

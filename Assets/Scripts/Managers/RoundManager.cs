@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class RoundManager : Singleton<RoundManager>
 {
-    [SerializeField] private int clearRound = 25;
+    [SerializeField] private int clearRound = 36;
     public int ClearRound => clearRound;
+    [SerializeField] private int bossRoundInterval = 6;
+    public bool IsBossRound => (CurrentRound % bossRoundInterval) == 0 && CurrentRound != 0;
 
     public event Action<int> OnRoundStarted;
     public event Action<int> OnRoundCleared;

@@ -72,7 +72,7 @@ public class SequenceManager : Singleton<SequenceManager>
     private IEnumerator ExecuteAction(Action action)
     {
         action.Invoke();
-        yield return null;
+        yield break;
     }
 
     private IEnumerator AddOneFrameLater(IEnumerator coroutine, bool isParallel = false)
