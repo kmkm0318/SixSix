@@ -94,8 +94,8 @@ public class ShopUI : Singleton<ShopUI>
         ShopManager.Instance.OnShopStarted += OnShopStarted;
         ShopManager.Instance.OnRerollCompleted += OnRerollCompleted;
         ShopManager.Instance.OnRerollCostChanged += OnRerollCostChanged;
-        DiceEnhanceManager.Instance.OnEnhanceStarted += OnEnhanceStarted;
-        DiceEnhanceManager.Instance.OnEnhanceCompleted += OnEnhanceCompleted;
+        EnhanceManager.Instance.OnDiceEnhanceStarted += OnEnhanceStarted;
+        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnEnhanceCompleted;
     }
 
     private void OnEnhanceStarted()

@@ -11,7 +11,7 @@ public class DiceHighlight : Singleton<DiceHighlight>
     [SerializeField] private Transform maskPanel;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private DiceHighlightTextUI textUI;
-    [SerializeField] private List<DiceHighlightTypeData> highlightTypeDataList;
+    [SerializeField] private List<DiceInteractTypeData> highlightTypeDataList;
 
     private Dice targetDice;
     private float currentMaxScale;
@@ -110,14 +110,14 @@ public class DiceHighlight : Singleton<DiceHighlight>
 
     private void SetHighlightType()
     {
-        DiceHighlightType type = targetDice.GetHighlightType();
+        DiceInteractType type = targetDice.GetHighlightType();
 
         var highlightTypeData = highlightTypeDataList.Find(x => x.type == type);
 
         spriteRenderer.color = highlightTypeData.color;
 
         string text = highlightTypeData.text;
-        if (type == DiceHighlightType.Sell)
+        if (type == DiceInteractType.Sell)
         {
             if (targetDice.TryGetComponent(out AvailityDice availityDice))
             {
@@ -137,29 +137,5 @@ public class DiceHighlight : Singleton<DiceHighlight>
     private void Hide()
     {
         gameObject.SetActive(false);
-    }
-}
-
-public enum DiceHighlightType
-{
-    None,
-    Keep,
-    Unkeep,
-    Enhance,
-    Sell,
-}
-
-[Serializable]
-public struct DiceHighlightTypeData
-{
-    public DiceHighlightType type;
-    public Color color;
-    public string text;
-
-    public DiceHighlightTypeData(DiceHighlightType type, Color color, string text)
-    {
-        this.type = type;
-        this.color = color;
-        this.text = text;
     }
 }

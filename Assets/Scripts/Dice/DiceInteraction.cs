@@ -1,8 +1,19 @@
+using System;
 using UnityEngine;
 
 public class DiceInteraction : MonoBehaviour, IClickable
 {
     private Dice dice;
+    private DiceInteractType interactType;
+    public DiceInteractType InteractType
+    {
+        get => interactType;
+        set
+        {
+            if (interactType == value) return;
+            interactType = value;
+        }
+    }
 
     private bool isInteractable = false;
     public bool IsInteractable
@@ -32,5 +43,29 @@ public class DiceInteraction : MonoBehaviour, IClickable
         if (Functions.IsPointerOverUIElement()) return;
 
         dice.HandleMouseClick();
+    }
+}
+
+public enum DiceInteractType
+{
+    None,
+    Keep,
+    Unkeep,
+    Enhance,
+    Sell,
+}
+
+[Serializable]
+public struct DiceInteractTypeData
+{
+    public DiceInteractType type;
+    public Color color;
+    public string text;
+
+    public DiceInteractTypeData(DiceInteractType type, Color color, string text)
+    {
+        this.type = type;
+        this.color = color;
+        this.text = text;
     }
 }

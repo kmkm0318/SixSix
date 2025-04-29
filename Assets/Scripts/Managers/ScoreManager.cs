@@ -261,10 +261,7 @@ public class ScoreManager : Singleton<ScoreManager>
         var maxPair = countMap.OrderByDescending(x => x.Value).FirstOrDefault();
         if (maxPair.Value >= 6)
         {
-            ScorePair scorePair = DataContainer.Instance.GetHandSO(Hand.SixSix).scorePair;
-            scorePair.baseScore *= maxPair.Key;
-            scorePair.multiplier *= maxPair.Key;
-            handScoreDictionary[Hand.SixSix] = scorePair;
+            handScoreDictionary[Hand.SixSix] = DataContainer.Instance.GetHandSO(Hand.SixSix).scorePair;
         }
     }
     #endregion

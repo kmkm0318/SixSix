@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AvailityDice : Dice
@@ -30,11 +31,34 @@ public class AvailityDice : Dice
     protected override void OnShopStarted()
     {
         IsInteractable = true;
+        DiceInteractType = DiceInteractType.Sell;
     }
 
     protected override void OnShopEnded()
     {
         IsInteractable = false;
+        DiceInteractType = DiceInteractType.None;
+    }
+
+    protected override void OnDiceEnhanceStarted()
+    {
+        IsInteractable = false;
+    }
+
+    protected override void OnDiceEnhanceCompleted()
+    {
+        IsInteractable = true;
+        DiceInteractType = DiceInteractType.Sell;
+    }
+
+    protected override void OnHandEnhanceStarted()
+    {
+        IsInteractable = false;
+    }
+
+    protected override void OnHandEnhanceCompleted()
+    {
+        IsInteractable = true;
     }
     #endregion
 
@@ -50,19 +74,19 @@ public class AvailityDice : Dice
         availityDiceSO.availityEffect.ApplyEffect(new(this));
     }
 
-    public override DiceHighlightType GetHighlightType()
+    public override DiceInteractType GetHighlightType()
     {
         var type = base.GetHighlightType();
 
-        if (type != DiceHighlightType.None) return type;
+        if (type != DiceInteractType.None) return type;
 
         if (GameManager.Instance.CurrentGameState == GameState.Shop)
         {
-            return DiceHighlightType.Sell;
+            return DiceInteractType.Sell;
         }
         else
         {
-            return DiceHighlightType.None;
+            return DiceInteractType.None;
         }
     }
 

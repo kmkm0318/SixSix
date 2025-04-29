@@ -29,7 +29,7 @@ public class RoundUI : MonoBehaviour
 
     private void RegisterEvents()
     {
-        RoundManager.Instance.OnCurrentRoundUpdated += OnCurrentRoundUpdated;
+        RoundManager.Instance.OnCurrentRoundChanged += OnCurrentRoundChanged;
         ScoreManager.Instance.OnTargetRoundScoreChanged += OnTargetRoundScoreChanged;
         ScoreManager.Instance.OnCurrentRoundScoreChanged += OnCurrentRoundScoreChanged;
         ScoreManager.Instance.OnPlayScoreChanged += OnPlayScoreChanged;
@@ -38,7 +38,7 @@ public class RoundUI : MonoBehaviour
         ScoreManager.Instance.OnMultiplierChanged += OnMultiplierChanged;
     }
 
-    private void OnCurrentRoundUpdated(int currentRound)
+    private void OnCurrentRoundChanged(int currentRound)
     {
         string newText = $"{currentRound}/{RoundManager.Instance.ClearRound}";
 

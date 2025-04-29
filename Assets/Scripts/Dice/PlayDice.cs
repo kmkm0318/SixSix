@@ -7,6 +7,30 @@ public class PlayDice : Dice
         ChangeFace(0);
     }
 
+    #region Events
+    protected override void OnDiceEnhanceStarted()
+    {
+        IsInteractable = true;
+        DiceInteractType = DiceInteractType.Enhance;
+    }
+
+    protected override void OnDiceEnhanceCompleted()
+    {
+        IsInteractable = false;
+    }
+
+    protected override void OnHandEnhanceStarted()
+    {
+        IsInteractable = true;
+        DiceInteractType = DiceInteractType.None;
+    }
+
+    protected override void OnHandEnhanceCompleted()
+    {
+        IsInteractable = false;
+    }
+    #endregion
+
     public void ApplyScorePairs()
     {
         if (!IsEnabled) return;
@@ -18,41 +42,19 @@ public class PlayDice : Dice
         Faces[FaceIndex].ApplyDiceFaceValue(this, false);
     }
 
-    protected override void OnShopStarted()
-    {
-        DiceEnhanceManager.Instance.OnEnhanceStarted += OnEnhanceStarted;
-        DiceEnhanceManager.Instance.OnEnhanceCompleted += OnEnhanceCompleted;
-    }
-
-    protected override void OnShopEnded()
-    {
-        DiceEnhanceManager.Instance.OnEnhanceStarted -= OnEnhanceStarted;
-        DiceEnhanceManager.Instance.OnEnhanceCompleted -= OnEnhanceCompleted;
-    }
-
-    private void OnEnhanceStarted()
-    {
-        IsInteractable = true;
-    }
-
-    private void OnEnhanceCompleted()
-    {
-        IsInteractable = false;
-    }
-
-    public override DiceHighlightType GetHighlightType()
+    public override DiceInteractType GetHighlightType()
     {
         var type = base.GetHighlightType();
 
-        if (type != DiceHighlightType.None) return type;
+        if (type != DiceInteractType.None) return type;
 
         if (GameManager.Instance.CurrentGameState == GameState.Shop)
         {
-            return DiceHighlightType.Enhance;
+            return DiceInteractType.Enhance;
         }
         else
         {
-            return DiceHighlightType.None;
+            return DiceInteractType.None;
         }
     }
 

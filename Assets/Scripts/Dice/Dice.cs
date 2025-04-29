@@ -6,6 +6,21 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     [SerializeField] private DiceVisual diceVisual;
     [SerializeField] private DiceMovement diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
+    protected DiceInteractType DiceInteractType
+    {
+        get => diceInteraction.InteractType;
+        set
+        {
+            if (value == DiceInteractType.None)
+            {
+                diceInteraction.InteractType = IsKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
+            }
+            else
+            {
+                diceInteraction.InteractType = value;
+            }
+        }
+    }
 
     public event Action<bool> OnIsKeepedChanged;
     public event Action<bool> OnIsInteractableChanged;
@@ -19,6 +34,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         {
             if (isKeeped == value) return;
             isKeeped = value;
+            diceInteraction.InteractType = isKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
             OnIsKeepedChanged?.Invoke(isKeeped);
         }
     }
@@ -86,6 +102,9 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     #region Events
     protected virtual void RegisterEvents()
     {
+        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
+        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+        RoundManager.Instance.OnRoundFailed += OnRoundFailed;
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
         PlayManager.Instance.OnPlayEnded += OnPlayEnded;
         RollManager.Instance.OnRollStarted += OnRollStarted;
@@ -93,10 +112,17 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
         ShopManager.Instance.OnShopStarted += OnShopStarted;
         ShopManager.Instance.OnShopEnded += OnShopEnded;
+        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
+        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
+        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
+        EnhanceManager.Instance.OnHandEnhanceCompleted += OnHandEnhanceCompleted;
     }
 
     protected virtual void UnregisterEvents()
     {
+        RoundManager.Instance.OnRoundStarted -= OnRoundStarted;
+        RoundManager.Instance.OnRoundCleared -= OnRoundCleared;
+        RoundManager.Instance.OnRoundFailed -= OnRoundFailed;
         PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
         PlayManager.Instance.OnPlayEnded -= OnPlayEnded;
         RollManager.Instance.OnRollStarted -= OnRollStarted;
@@ -104,12 +130,32 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         RollManager.Instance.OnRollCompleted -= OnRollCompleted;
         ShopManager.Instance.OnShopStarted -= OnShopStarted;
         ShopManager.Instance.OnShopEnded -= OnShopEnded;
+        EnhanceManager.Instance.OnDiceEnhanceStarted -= OnDiceEnhanceStarted;
+        EnhanceManager.Instance.OnDiceEnhanceCompleted -= OnDiceEnhanceCompleted;
+        EnhanceManager.Instance.OnHandEnhanceStarted -= OnHandEnhanceStarted;
+        EnhanceManager.Instance.OnHandEnhanceCompleted -= OnHandEnhanceCompleted;
+    }
+
+    protected virtual void OnRoundStarted(int round)
+    {
+
+    }
+
+    protected virtual void OnRoundCleared(int round)
+    {
+
+    }
+
+    protected virtual void OnRoundFailed(int round)
+    {
+
     }
 
     protected virtual void OnPlayStarted(int playRemain)
     {
         IsKeeped = false;
         diceInteraction.IsInteractable = false;
+        diceInteraction.InteractType = DiceInteractType.Keep;
     }
 
     protected virtual void OnPlayEnded(int obj)
@@ -137,6 +183,26 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     }
     protected virtual void OnShopEnded()
+    {
+
+    }
+
+    protected virtual void OnDiceEnhanceStarted()
+    {
+
+    }
+
+    protected virtual void OnDiceEnhanceCompleted()
+    {
+
+    }
+
+    protected virtual void OnHandEnhanceStarted()
+    {
+
+    }
+
+    protected virtual void OnHandEnhanceCompleted()
     {
 
     }
@@ -193,15 +259,15 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         DiceHighlight.Instance.ShowHighlight(this);
     }
 
-    public virtual DiceHighlightType GetHighlightType()
+    public virtual DiceInteractType GetHighlightType()
     {
         if (GameManager.Instance.CurrentGameState == GameState.Round)
         {
-            return IsKeeped ? DiceHighlightType.Unkeep : DiceHighlightType.Keep;
+            return IsKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
         }
         else
         {
-            return DiceHighlightType.None;
+            return DiceInteractType.None;
         }
     }
 
