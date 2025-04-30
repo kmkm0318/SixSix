@@ -96,6 +96,8 @@ public class ShopUI : Singleton<ShopUI>
         ShopManager.Instance.OnRerollCostChanged += OnRerollCostChanged;
         EnhanceManager.Instance.OnDiceEnhanceStarted += OnEnhanceStarted;
         EnhanceManager.Instance.OnDiceEnhanceCompleted += OnEnhanceCompleted;
+        EnhanceManager.Instance.OnHandEnhanceStarted += OnEnhanceStarted;
+        EnhanceManager.Instance.OnHandEnhanceCompleted += OnEnhanceCompleted;
     }
 
     private void OnEnhanceStarted()
@@ -168,11 +170,12 @@ public class ShopUI : Singleton<ShopUI>
             }
         }
 
-        List<HandSO> handList = ShopManager.Instance.GetRandomHandList();
-        for (int i = 0; i < handList.Count; i++)
+        List<HandEnhancePurchaseContext> handEnhanceList = ShopManager.Instance.GetRandomHandEnhanceList();
+
+        for (int i = 0; i < handEnhanceList.Count; i++)
         {
             HandEnhanceMerchantUI merchantUI = handEnhanceMerchantPool.Get();
-            merchantUI.Init(handList[i]);
+            merchantUI.Init(handEnhanceList[i].EnhanceLevel, handEnhanceList[i].Price, handEnhanceList[i].Index);
         }
     }
 
@@ -186,11 +189,11 @@ public class ShopUI : Singleton<ShopUI>
             }
         }
 
-        List<ScorePair> scorePairs = ShopManager.Instance.GetRandomPlayDiceEnhanceList();
+        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList();
         for (int i = 0; i < scorePairs.Count; i++)
         {
             PlayDiceEnhanceMerchantUI merchantUI = playDiceEnhanceMerchantPool.Get();
-            merchantUI.Init(scorePairs[i]);
+            merchantUI.Init(scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
         }
     }
 

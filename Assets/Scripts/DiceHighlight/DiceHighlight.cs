@@ -131,11 +131,13 @@ public class DiceHighlight : Singleton<DiceHighlight>
     private void Show()
     {
         gameObject.SetActive(true);
+        textUI.gameObject.SetActive(true);
         textUI.SetTargetAndOffset(targetDice.transform);
     }
 
     private void Hide()
     {
         gameObject.SetActive(false);
+        textUI.gameObject.SetActive(false);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 
 public class EnhanceManager : Singleton<EnhanceManager>
 {
@@ -7,7 +8,8 @@ public class EnhanceManager : Singleton<EnhanceManager>
     public event Action OnHandEnhanceStarted;
     public event Action OnHandEnhanceCompleted;
 
-    public ScorePair ScorePair { get; private set; }
+    public int HandEnhanceLevel { get; private set; }
+    public ScorePair DiceEnhanceValue { get; private set; }
 
     private void Start()
     {
@@ -16,11 +18,11 @@ public class EnhanceManager : Singleton<EnhanceManager>
     }
 
     #region Play Dice Enhancement
-    private void OnPlayDiceEnhancePurchaseAttempted(ScorePair pair, int price, PurchaseResult result)
+    private void OnPlayDiceEnhancePurchaseAttempted(DiceEnhancePurchaseContext context, PurchaseResult result)
     {
         if (result == PurchaseResult.Success)
         {
-            ScorePair = pair;
+            DiceEnhanceValue = context.EnhanceValue;
             StartDiceEnhance();
         }
     }
@@ -33,7 +35,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void OnPlayDiceClicked(PlayDice dice)
     {
-        dice.EnhanceDice(ScorePair);
+        dice.EnhanceDice(DiceEnhanceValue);
         SequenceManager.Instance.ApplyParallelCoroutine();
         CompleteDiceEnhance();
     }
@@ -45,27 +47,30 @@ public class EnhanceManager : Singleton<EnhanceManager>
     }
     #endregion
 
-    private void OnHandEnhancePurchaseAttempted(HandSO sO, PurchaseResult result)
+    private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
     {
         if (result == PurchaseResult.Success)
         {
+            HandEnhanceLevel = context.EnhanceLevel;
             StartHandEnhance();
         }
     }
 
     private void StartHandEnhance()
     {
-        OnHandEnhanceStarted?.Invoke();
         HandScoreUI.Instance.OnHandSelected += OnHandSelected;
+        OnHandEnhanceStarted?.Invoke();
     }
 
     private void OnHandSelected(HandSO sO, ScorePair pair)
     {
-        throw new NotImplementedException();
+        HandScoreUI.Instance.EnhanceHand(sO, HandEnhanceLevel);
+        CompleteHandEnhance();
     }
 
     private void CompleteHandEnhance()
     {
+        HandScoreUI.Instance.OnHandSelected -= OnHandSelected;
         OnHandEnhanceCompleted?.Invoke();
     }
 }

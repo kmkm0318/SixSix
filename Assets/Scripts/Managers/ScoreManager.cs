@@ -125,6 +125,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void OnHandSelected(HandSO handSO, ScorePair scorePair)
     {
+        if (GameManager.Instance.CurrentGameState != GameState.Round) return;
+
         ScorePair = scorePair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 

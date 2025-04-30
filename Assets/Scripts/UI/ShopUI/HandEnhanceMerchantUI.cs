@@ -9,7 +9,9 @@ public class HandEnhanceMerchantUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text buttonText;
 
-    private HandSO handSO;
+    private int enhanceLevel;
+    private int price;
+    private int idx;
 
     private void Start()
     {
@@ -18,9 +20,7 @@ public class HandEnhanceMerchantUI : MonoBehaviour
     }
     private void OnBuyButtonClicked()
     {
-        if (handSO == null) return;
-
-        ShopManager.Instance.TryPurchaseHandEnhance(handSO);
+        ShopManager.Instance.TryPurchaseHandEnhance(new(enhanceLevel, price, idx));
     }
 
     #region RegisterEvents
@@ -29,27 +29,28 @@ public class HandEnhanceMerchantUI : MonoBehaviour
         ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
     }
 
-    private void OnHandEnhancePurchaseAttempted(HandSO sO, PurchaseResult result)
+    private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
     {
-        if (handSO == sO && result == PurchaseResult.Success)
+        if (context.Index == idx)
         {
             gameObject.SetActive(false);
         }
     }
     #endregion
 
-    public void Init(HandSO sO)
+    public void Init(int enhanceLevel, int price, int idx)
     {
-        handSO = sO;
+        this.enhanceLevel = enhanceLevel;
+        this.price = price;
+        this.idx = idx;
+
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        if (handSO == null) return;
-
-        nameText.text = handSO.handName;
-        descriptionText.text = handSO.GetDescriptionText();
-        buttonText.text = $"Buy({handSO.purchasePrice})";
+        nameText.text = $"Hand Enhance({enhanceLevel})";
+        descriptionText.text = $"Enhance Hand {enhanceLevel} levels\nwhich hand you selected";
+        buttonText.text = $"Buy({price})";
     }
 }

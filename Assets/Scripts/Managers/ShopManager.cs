@@ -12,8 +12,8 @@ public class ShopManager : Singleton<ShopManager>
     public event Action OnShopStarted;
     public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
-    public event Action<HandSO, PurchaseResult> OnHandEnhancePurchaseAttempted;
-    public event Action<ScorePair, int, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
+    public event Action<HandEnhancePurchaseContext, PurchaseResult> OnHandEnhancePurchaseAttempted;
+    public event Action<DiceEnhancePurchaseContext, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
     public event Action<AvailityDiceSO> OnAvailityDiceSelled;
     public event Action<int> OnRerollCostChanged;
     public event Action OnRerollCompleted;
@@ -101,32 +101,28 @@ public class ShopManager : Singleton<ShopManager>
         OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
     }
 
-    public void TryPurchaseHandEnhance(HandSO handSO)
+    public void TryPurchaseHandEnhance(HandEnhancePurchaseContext context)
     {
-        if (handSO == null)
+        if (PlayerMoneyManager.Instance.Money < context.Price)
         {
-            OnHandEnhancePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
-            return;
+            OnHandEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.NotEnoughMoney);
         }
-
-        if (PlayerMoneyManager.Instance.Money < handSO.purchasePrice)
+        else
         {
-            OnHandEnhancePurchaseAttempted?.Invoke(handSO, PurchaseResult.NotEnoughMoney);
-            return;
+            OnHandEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.Success);
         }
-
-        OnHandEnhancePurchaseAttempted?.Invoke(handSO, PurchaseResult.Success);
     }
 
-    public void TryPurchasePlayDiceEnhance(ScorePair enhanceValue, int price)
+    public void TryPurchasePlayDiceEnhance(DiceEnhancePurchaseContext context)
     {
-        if (PlayerMoneyManager.Instance.Money < price)
+        if (PlayerMoneyManager.Instance.Money < context.Price)
         {
-            OnPlayDiceEnhancePurchaseAttempted?.Invoke(enhanceValue, price, PurchaseResult.NotEnoughMoney);
-            return;
+            OnPlayDiceEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.NotEnoughMoney);
         }
-
-        OnPlayDiceEnhancePurchaseAttempted?.Invoke(enhanceValue, price, PurchaseResult.Success);
+        else
+        {
+            OnPlayDiceEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.Success);
+        }
     }
 
     public List<AvailityDiceSO> GetRandomAvailityDiceList()
@@ -142,40 +138,33 @@ public class ShopManager : Singleton<ShopManager>
         return randomAvailityDiceList;
     }
 
-    public List<HandSO> GetRandomHandList()
+    public List<HandEnhancePurchaseContext> GetRandomHandEnhanceList()
     {
-        List<HandSO> randomHandList = new();
-        while (randomHandList.Count < handEnhanceMerchantCountMax)
+        List<HandEnhancePurchaseContext> res = new();
+        for (int i = 0; i < 3; i++)
         {
-            HandSO randomHand = handListSO.GetRandomHandSO();
-            if (randomHand == null) continue;
-            if (randomHandList.Contains(randomHand)) continue;
-            randomHandList.Add(randomHand);
+            int enhanceLevel = UnityEngine.Random.Range(1, 4);
+            int price = enhanceLevel * 3 - (enhanceLevel - 1);
+
+            res.Add(new(enhanceLevel, price, i));
         }
-        return randomHandList;
+        return res;
     }
 
-    public List<ScorePair> GetRandomPlayDiceEnhanceList()
+    public List<DiceEnhancePurchaseContext> GetRandomDiceEnhanceList()
     {
-        List<ScorePair> randomPlayDiceEnhanceList = new();
-        while (randomPlayDiceEnhanceList.Count < playDiceEnhanceMerchantCountMax)
+        List<DiceEnhancePurchaseContext> diceEnhanceList = new();
+        for (int i = 0; i < playDiceEnhanceMerchantCountMax; i++)
         {
-            ScorePair randomScorePair = new(UnityEngine.Random.Range(1, 7), UnityEngine.Random.Range(1, 7));
+            int enhanceLevel = UnityEngine.Random.Range(1, 4);
+            int price = enhanceLevel * 5 - (enhanceLevel - 1);
 
-            bool flag = false;
-            foreach (var scorePair in randomPlayDiceEnhanceList)
-            {
-                if (scorePair.baseScore == randomScorePair.baseScore && scorePair.multiplier == randomScorePair.multiplier)
-                {
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag) continue;
+            int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
+            ScorePair scorePair = new(baseScore, (enhanceLevel * 10 - baseScore) * 0.1f);
 
-            randomPlayDiceEnhanceList.Add(randomScorePair);
+            diceEnhanceList.Add(new(scorePair, price, i));
         }
-        return randomPlayDiceEnhanceList;
+        return diceEnhanceList;
     }
 
     public void TryReroll()

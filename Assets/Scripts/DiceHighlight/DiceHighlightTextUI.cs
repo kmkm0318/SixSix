@@ -5,9 +5,16 @@ public class DiceHighlightTextUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
     [SerializeField] private float offset;
+    [SerializeField] private Camera targetCamera;
 
+    private RectTransform rectTransform;
     private Transform targetTransform;
     private Vector3 targetOffset;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
 
     public void SetTargetAndOffset(Transform target)
     {
@@ -24,7 +31,8 @@ public class DiceHighlightTextUI : MonoBehaviour
     {
         if (gameObject.activeSelf && targetTransform != null)
         {
-            transform.SetPositionAndRotation(targetTransform.position + targetOffset, Quaternion.identity);
+            var targetPos = targetCamera.WorldToScreenPoint(targetTransform.position + targetOffset);
+            rectTransform.position = targetPos;
         }
     }
 

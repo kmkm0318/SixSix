@@ -21,8 +21,8 @@ public class PlayDice : Dice
 
     protected override void OnHandEnhanceStarted()
     {
-        IsInteractable = true;
-        DiceInteractType = DiceInteractType.None;
+        IsInteractable = false;
+        DiceInteractType = DiceInteractType.Keep;
     }
 
     protected override void OnHandEnhanceCompleted()
@@ -40,22 +40,6 @@ public class PlayDice : Dice
         ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);
 
         Faces[FaceIndex].ApplyDiceFaceValue(this, false);
-    }
-
-    public override DiceInteractType GetHighlightType()
-    {
-        var type = base.GetHighlightType();
-
-        if (type != DiceInteractType.None) return type;
-
-        if (GameManager.Instance.CurrentGameState == GameState.Shop)
-        {
-            return DiceInteractType.Enhance;
-        }
-        else
-        {
-            return DiceInteractType.None;
-        }
     }
 
     public override void ShowToolTip()

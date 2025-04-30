@@ -38,10 +38,19 @@ public class RollManager : Singleton<RollManager>
     {
         powerChangeSpeed = rollPowerMax - rollPowerMin;
 
+        RegisterEvents();
+    }
 
+    #region RegisterEvents
+    private void RegisterEvents()
+    {
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+
         RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
+
+        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
+        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
     }
 
     private void OnPlayStarted(int playRemain)
@@ -63,6 +72,17 @@ public class RollManager : Singleton<RollManager>
 
         RollDice();
     }
+
+    private void OnDiceEnhanceStarted()
+    {
+        RollRemain = RollMax;
+    }
+
+    private void OnHandEnhanceStarted()
+    {
+        RollRemain = RollMax;
+    }
+    #endregion
 
     IEnumerator ChangingRollPower()
     {

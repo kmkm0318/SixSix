@@ -54,11 +54,15 @@ public class HandScoreUI : Singleton<HandScoreUI>
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
 
-        RollManager.Instance.OnRollCompleted += () => isActive = true;
-        RollManager.Instance.OnRollStarted += () => isActive = false;
+        RollManager.Instance.OnRollStarted += OnRollStarted;
+        RollManager.Instance.OnRollCompleted += OnRollCompleted;
 
         BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
-        ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
+
+        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
+        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
+        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
+        EnhanceManager.Instance.OnHandEnhanceCompleted += OnHandEnhanceCompleted;
     }
 
     private void OnHandScoreUpdated(Dictionary<Hand, ScorePair> dictionary)
@@ -80,18 +84,48 @@ public class HandScoreUI : Singleton<HandScoreUI>
         ResetHandScoreUI();
     }
 
-    private void OnAllBonusAchieved()
+
+    private void OnRollStarted()
     {
-        SequenceManager.Instance.AddCoroutine(() => { ScrollLayoutPanel(); });
+        isActive = false;
     }
 
-    private void OnHandEnhancePurchaseAttempted(HandSO sO, PurchaseResult result)
+    private void OnRollCompleted()
     {
-        if (result == PurchaseResult.Success)
-        {
-            handScoreSingleUIDict.TryGetValue(sO.hand, out var handScoreSingleUI);
-            handScoreSingleUI.Enhance(1);
-        }
+        isActive = true;
+    }
+
+    private void OnAllBonusAchieved()
+    {
+        SequenceManager.Instance.AddCoroutine(ScrollLayoutPanel);
+    }
+
+    private void OnDiceEnhanceStarted()
+    {
+        isActive = false;
+        ResetHandScoreUI();
+
+        ScoreManager.Instance.OnHandScoreUpdated -= OnHandScoreUpdated;
+    }
+
+    private void OnDiceEnhanceCompleted()
+    {
+        isActive = false;
+        ResetHandScoreUI();
+
+        ScoreManager.Instance.OnHandScoreUpdated += OnHandScoreUpdated;
+    }
+
+    private void OnHandEnhanceStarted()
+    {
+        isActive = false;
+        ResetHandScoreUI();
+    }
+
+    private void OnHandEnhanceCompleted()
+    {
+        isActive = false;
+        ResetHandScoreUI();
     }
     #endregion
 
@@ -121,5 +155,13 @@ public class HandScoreUI : Singleton<HandScoreUI>
             pair.Value.UpdateScore(true);
         }
         SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    public void EnhanceHand(HandSO handSO, int enhanceLevel)
+    {
+        if (handScoreSingleUIDict.TryGetValue(handSO.hand, out var handScoreSingleUI))
+        {
+            handScoreSingleUI.Enhance(enhanceLevel);
+        }
     }
 }

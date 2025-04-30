@@ -78,20 +78,20 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void OnHandEnhancePurchaseAttempted(HandSO sO, PurchaseResult result)
+    private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
     {
         if (result == PurchaseResult.Success)
         {
-            Money -= sO.purchasePrice;
+            Money -= context.Price;
             SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 
-    private void OnPlayDiceEnhancePurchaseAttempted(ScorePair pair, int price, PurchaseResult result)
+    private void OnPlayDiceEnhancePurchaseAttempted(DiceEnhancePurchaseContext context, PurchaseResult result)
     {
         if (result == PurchaseResult.Success)
         {
-            Money -= price;
+            Money -= context.Price;
             SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }

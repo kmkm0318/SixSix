@@ -11,7 +11,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         get => diceInteraction.InteractType;
         set
         {
-            if (value == DiceInteractType.None)
+            if (value == DiceInteractType.Keep || value == DiceInteractType.Unkeep)
             {
                 diceInteraction.InteractType = IsKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
             }
@@ -81,8 +81,14 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         faceValueMax = maxValue;
 
         SetFace(faceIndex);
+        InitDiceInteractType();
 
         diceMovement.Init(playboard);
+    }
+
+    protected virtual void InitDiceInteractType()
+    {
+        DiceInteractType = DiceInteractType.Keep;
     }
 
     protected virtual void OnEnable()
@@ -138,7 +144,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void OnRoundStarted(int round)
     {
-
+        DiceInteractType = DiceInteractType.Keep;
     }
 
     protected virtual void OnRoundCleared(int round)
@@ -155,11 +161,11 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
         IsKeeped = false;
         diceInteraction.IsInteractable = false;
-        diceInteraction.InteractType = DiceInteractType.Keep;
     }
 
     protected virtual void OnPlayEnded(int obj)
     {
+        IsKeeped = false;
         diceInteraction.IsInteractable = false;
     }
 
@@ -175,7 +181,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void OnRollCompleted()
     {
-        diceInteraction.IsInteractable = RollManager.Instance.RollRemain > 0;
+        diceInteraction.IsInteractable = DiceInteractType != DiceInteractType.Sell && (DiceInteractType == DiceInteractType.Enhance || RollManager.Instance.RollRemain > 0);
     }
 
     protected virtual void OnShopStarted()
@@ -231,7 +237,9 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     #region Handlers
     public virtual void HandleMouseClick()
     {
-        if (GameManager.Instance.CurrentGameState == GameState.Round)
+        if (!IsInteractable) return;
+
+        if (DiceInteractType == DiceInteractType.Keep || DiceInteractType == DiceInteractType.Unkeep)
         {
             IsKeeped = !IsKeeped;
         }
@@ -261,14 +269,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     public virtual DiceInteractType GetHighlightType()
     {
-        if (GameManager.Instance.CurrentGameState == GameState.Round)
-        {
-            return IsKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
-        }
-        else
-        {
-            return DiceInteractType.None;
-        }
+        return DiceInteractType;
     }
 
     public virtual void EnhanceDice(ScorePair scorePair)

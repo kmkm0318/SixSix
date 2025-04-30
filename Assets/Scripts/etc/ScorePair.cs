@@ -11,4 +11,28 @@ public struct ScorePair
         this.baseScore = baseScore;
         this.multiplier = multiplier;
     }
+
+    public override readonly string ToString()
+    {
+        string res = "Score";
+
+        if (baseScore != 0 && multiplier != 0)
+        {
+            res += $"(+{baseScore}, x{multiplier})";
+        }
+        else if (baseScore != 0)
+        {
+            res += $"(+{baseScore})";
+        }
+        else if (multiplier != 0)
+        {
+            res += $"(x{multiplier})";
+        }
+        else
+        {
+            res += "(0)";
+        }
+
+        return res;
+    }
 }

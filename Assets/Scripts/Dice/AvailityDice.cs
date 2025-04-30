@@ -19,7 +19,7 @@ public class AvailityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (PlayerDiceManager.Instance.IsAvailityDiceAutoKeep)
+        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep)
         {
             if (FaceIndex == availityDiceSO.maxFaceValue - 1)
             {
@@ -37,7 +37,7 @@ public class AvailityDice : Dice
     protected override void OnShopEnded()
     {
         IsInteractable = false;
-        DiceInteractType = DiceInteractType.None;
+        DiceInteractType = DiceInteractType.Keep;
     }
 
     protected override void OnDiceEnhanceStarted()
@@ -74,26 +74,20 @@ public class AvailityDice : Dice
         availityDiceSO.availityEffect.ApplyEffect(new(this));
     }
 
-    public override DiceInteractType GetHighlightType()
-    {
-        var type = base.GetHighlightType();
-
-        if (type != DiceInteractType.None) return type;
-
-        if (GameManager.Instance.CurrentGameState == GameState.Shop)
-        {
-            return DiceInteractType.Sell;
-        }
-        else
-        {
-            return DiceInteractType.None;
-        }
-    }
-
     public override void ShowToolTip()
     {
         string name = availityDiceSO.diceName;
         string description = availityDiceSO.GetDescriptionText();
         ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
+    }
+
+    protected override void InitDiceInteractType()
+    {
+        base.InitDiceInteractType();
+
+        if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            DiceInteractType = DiceInteractType.Sell;
+        }
     }
 }

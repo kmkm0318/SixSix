@@ -10,6 +10,8 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
     [SerializeField] private TMP_Text buttonText;
 
     private ScorePair enhanceValue;
+    private int price;
+    private int idx;
 
     private void Start()
     {
@@ -18,7 +20,7 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
     }
     private void OnBuyButtonClicked()
     {
-        ShopManager.Instance.TryPurchasePlayDiceEnhance(enhanceValue, GetPrice());
+        ShopManager.Instance.TryPurchasePlayDiceEnhance(new(enhanceValue, price, idx));
     }
 
     #region RegisterEvents
@@ -27,37 +29,28 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
         ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
     }
 
-    private void OnPlayDiceEnhancePurchaseAttempted(ScorePair pair, int price, PurchaseResult result)
+    private void OnPlayDiceEnhancePurchaseAttempted(DiceEnhancePurchaseContext context, PurchaseResult result)
     {
-        if (enhanceValue.baseScore == pair.baseScore && enhanceValue.multiplier == pair.multiplier && result == PurchaseResult.Success)
+        if (context.Index == idx && result == PurchaseResult.Success)
         {
             gameObject.SetActive(false);
         }
     }
     #endregion
 
-    public void Init(ScorePair scorePair)
+    public void Init(ScorePair enhanceValue, int price, int idx)
     {
-        enhanceValue = scorePair;
+        this.enhanceValue = enhanceValue;
+        this.price = price;
+        this.idx = idx;
 
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        nameText.text = "Enhance Play Dice";
-        descriptionText.text = GetDescriptionText();
-        buttonText.text = $"Buy({GetPrice()})";
-    }
-
-    private string GetDescriptionText()
-    {
-        return $"Enhance Play Dice\n" +
-               $"Enhance Value: ({enhanceValue.baseScore}, {enhanceValue.multiplier})\n";
-    }
-
-    private int GetPrice()
-    {
-        return (int)(enhanceValue.baseScore + enhanceValue.multiplier);
+        nameText.text = $"Dice Enhance({enhanceValue})";
+        descriptionText.text = $"Enhance Selected Play Dice\nEnhance Value: {enhanceValue}";
+        buttonText.text = $"Buy({price})";
     }
 }
