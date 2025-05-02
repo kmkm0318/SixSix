@@ -129,6 +129,7 @@ public class RollManager : Singleton<RollManager>
         if (resetRollRemain)
         {
             RollRemain = rollMax;
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 }

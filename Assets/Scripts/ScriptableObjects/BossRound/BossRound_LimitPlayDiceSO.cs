@@ -1,23 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_LimitPlayDiceSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitPlayDiceSO")]
 public class BossRound_LimitPlayDiceSO : BossRoundSO
 {
-    private PlayDice disabledPlayDice;
+    [SerializeField] private int limitCount = 1;
+    private List<PlayDice> disabledPlayDiceList;
 
     public override void OnEnter()
     {
-        disabledPlayDice = PlayerDiceManager.Instance.GetRandomPlayDice();
-
-        if (disabledPlayDice == null) return;
-
-        PlayerDiceManager.Instance.DisablePlayDice(disabledPlayDice);
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        DisableDices();
     }
 
     public override void OnExit()
     {
-        if (disabledPlayDice == null) return;
+        EnableDices();
+        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+    }
 
-        PlayerDiceManager.Instance.EnablePlayDice(disabledPlayDice);
+    private void OnPlayStarted(int obj)
+    {
+        SequenceManager.Instance.AddCoroutine(() =>
+        {
+            EnableDices();
+            DisableDices();
+        });
+    }
+
+    private void EnableDices()
+    {
+        if (disabledPlayDiceList == null) return;
+
+        foreach (var playDice in disabledPlayDiceList)
+        {
+            if (playDice == null) continue;
+            PlayerDiceManager.Instance.EnablePlayDice(playDice);
+        }
+    }
+
+    private void DisableDices()
+    {
+        disabledPlayDiceList = PlayerDiceManager.Instance.GetRandomPlayDiceList(limitCount);
+
+        if (disabledPlayDiceList == null) return;
+
+        foreach (var playDice in disabledPlayDiceList)
+        {
+            if (playDice == null) continue;
+            PlayerDiceManager.Instance.DisablePlayDice(playDice);
+        }
     }
 }

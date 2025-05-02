@@ -20,6 +20,7 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private Button rerollButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private TMP_Text rerollButtonText;
+    [SerializeField] private List<ScrollRect> scrollRects;
 
     public event Action OnShopUIOpened;
     public event Action OnShopUIClosed;
@@ -115,6 +116,7 @@ public class ShopUI : Singleton<ShopUI>
         InitAvailityDiceMerchantUI();
         InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
+        ScrollToTop();
         Show();
     }
 
@@ -123,6 +125,7 @@ public class ShopUI : Singleton<ShopUI>
         InitAvailityDiceMerchantUI();
         InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
+        ScrollToTop();
     }
 
     private void OnRerollCostChanged(int obj)
@@ -225,6 +228,14 @@ public class ShopUI : Singleton<ShopUI>
             }
             gameObject.SetActive(false);
         });
+    }
+
+    private void ScrollToTop()
+    {
+        foreach (var scrollRect in scrollRects)
+        {
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
     }
 }
 

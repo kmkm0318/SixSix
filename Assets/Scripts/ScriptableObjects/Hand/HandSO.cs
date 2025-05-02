@@ -8,7 +8,6 @@ public class HandSO : ScriptableObject
     public string handName;
     public ScorePair scorePair;
     public ScorePair enhanceAmount;
-    public int purchasePrice;
 
     public string GetDescriptionText()
     {

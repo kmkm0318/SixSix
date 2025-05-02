@@ -19,12 +19,9 @@ public class AvailityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep)
+        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable && FaceIndex == availityDiceSO.maxFaceValue - 1)
         {
-            if (FaceIndex == availityDiceSO.maxFaceValue - 1)
-            {
-                IsKeeped = true;
-            }
+            IsKeeped = true;
         }
     }
 

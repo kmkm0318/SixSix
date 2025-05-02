@@ -77,6 +77,7 @@ public class PlayManager : Singleton<PlayManager>
         if (resetPlayRemain)
         {
             PlayRemain = playMax;
+            SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
 }

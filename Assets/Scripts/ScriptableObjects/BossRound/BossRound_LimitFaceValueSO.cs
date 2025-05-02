@@ -8,11 +8,11 @@ public class BossRound_LimitFaceValueSO : BossRoundSO
 
     public override void OnEnter()
     {
-
+        PlayerDiceManager.Instance.UsableFaceValues = targetFaceValues;
     }
 
     public override void OnExit()
     {
-
+        PlayerDiceManager.Instance.UsableFaceValues = null;
     }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BossRound_LimitFaceValueSO_135
   m_EditorClassIdentifier: 
   bossName: Only Odd
-  bossDescription: Only Odd Play Dice Can Get Score
+  bossDescription: Only Odd Dice Can Get Score
   targetFaceValues: 010000000300000005000000

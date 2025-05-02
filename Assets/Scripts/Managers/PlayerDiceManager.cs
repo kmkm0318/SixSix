@@ -34,6 +34,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     private ObjectPool<ChaosDice> chaosDicePool;
     private bool isAvailityDiceAutoKeep = false;
     public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
+    public List<int> UsableFaceValues { get; set; }
+    public bool IsKeepable { get; set; } = true;
 
     private void Start()
     {
@@ -223,20 +225,48 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         return playDiceValues;
     }
 
-    public PlayDice GetRandomPlayDice()
+    public List<PlayDice> GetRandomPlayDiceList(int count)
     {
-        if (playDiceList.Count == 0) return null;
+        List<PlayDice> res = new();
 
-        int randomIndex = UnityEngine.Random.Range(0, playDiceList.Count);
-        return playDiceList[randomIndex];
+        if (PlayDiceList.Count <= count)
+        {
+            res.AddRange(PlayDiceList);
+            return res;
+        }
+        else
+        {
+            var cloneList = new List<PlayDice>(playDiceList);
+            for (int i = 0; i < count; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, cloneList.Count);
+                res.Add(cloneList[randomIndex]);
+                cloneList.RemoveAt(randomIndex);
+            }
+            return res;
+        }
     }
 
-    public AvailityDice GetRandomAvailityDice()
+    public List<AvailityDice> GetRandomAvailityDiceList(int count)
     {
-        if (availityDiceList.Count == 0) return null;
+        List<AvailityDice> res = new();
 
-        int randomIndex = UnityEngine.Random.Range(0, availityDiceList.Count);
-        return availityDiceList[randomIndex];
+        if (AvailityDiceList.Count <= count)
+        {
+            res.AddRange(AvailityDiceList);
+            return res;
+        }
+        else
+        {
+            var cloneList = new List<AvailityDice>(availityDiceList);
+            for (int i = 0; i < count; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, cloneList.Count);
+                res.Add(cloneList[randomIndex]);
+                cloneList.RemoveAt(randomIndex);
+            }
+            return res;
+        }
     }
 
     public void GenerateChaosDices(int chaosDiceCount)
@@ -276,6 +306,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         foreach (var playDice in playDiceList)
         {
+            if (UsableFaceValues != null && !UsableFaceValues.Contains(playDice.FaceValue)) continue;
+
             playDice.ApplyScorePairs();
             ApplyAvailityDiceOnPlayDiceApplied(playDice);
         }
@@ -287,6 +319,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         foreach (var availityDice in triggeredAvailityDiceList)
         {
+            if (UsableFaceValues != null && !UsableFaceValues.Contains(availityDice.FaceValue)) continue;
+
             availityDice.ApplyEffect();
         }
     }
@@ -309,16 +343,4 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         }
     }
     #endregion
-
-    public void UnkeepAllDices()
-    {
-        List<Dice> dices = new(playDiceList);
-        dices.AddRange(availityDiceList);
-        dices.AddRange(chaosDiceList);
-
-        foreach (var dice in dices)
-        {
-            dice.IsKeeped = false;
-        }
-    }
 }

@@ -282,8 +282,8 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         if (currentRound < 1) return;
 
-        float baseScore = 100 * Mathf.Pow(6, (currentRound - 1) / 5);
-        float multiplier = 1f + (currentRound - 1) % 5 * 0.5f;
+        float baseScore = 500 * Mathf.Pow(6, (currentRound - 1) / 6);
+        float multiplier = 1f + (currentRound - 1) % 6 * 0.5f;
         float score = baseScore * multiplier;
 
         int digits = score.ToString("F0").Length;

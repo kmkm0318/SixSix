@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearRound: 36
-  bossRoundInterval: 3
+  bossRoundInterval: 6
 --- !u!1 &144455909
 GameObject:
   m_ObjectHideFlags: 0
@@ -10021,7 +10021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97630ecaca4c9d04994382f5da576122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossRoundListSO: {fileID: 11400000, guid: 0617ce7abcc4143439af200729ad997c, type: 2}
+  bossRoundListSO: {fileID: 11400000, guid: ff63d5c2cb8924940ad124a9d909a0b5, type: 2}
 --- !u!1 &1248467258
 GameObject:
   m_ObjectHideFlags: 0
@@ -10212,6 +10212,9 @@ MonoBehaviour:
   rerollButton: {fileID: 1873068615}
   closeButton: {fileID: 368185613}
   rerollButtonText: {fileID: 680529435}
+  scrollRects:
+  - {fileID: 341086082}
+  - {fileID: 2108941687}
 --- !u!1001 &1259895329
 PrefabInstance:
   m_ObjectHideFlags: 0

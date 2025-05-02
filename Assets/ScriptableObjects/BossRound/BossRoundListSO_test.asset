@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc24583ed2f2ff41b5b808ea49157c5, type: 3}
-  m_Name: TestBossRoundListSO
+  m_Name: BossRoundListSO_test
   m_EditorClassIdentifier: 
   bossRounds:
-  - {fileID: 11400000, guid: 8d9a295ee7bba734984527284041aa07, type: 2}
   - {fileID: 11400000, guid: 197c8a335e8dd4a4b870665c961220c4, type: 2}

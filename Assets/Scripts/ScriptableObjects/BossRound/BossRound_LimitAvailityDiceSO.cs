@@ -1,23 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_LimitAvailityDiceSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitAvailityDiceSO")]
 public class BossRound_LimitAvailityDiceSO : BossRoundSO
 {
-    private AvailityDice disabledAvailityDice;
+    [SerializeField] private int limitCount = 1;
+    private List<AvailityDice> disabledAvailityDiceList;
 
     public override void OnEnter()
     {
-        disabledAvailityDice = PlayerDiceManager.Instance.GetRandomAvailityDice();
-
-        if (disabledAvailityDice == null) return;
-
-        PlayerDiceManager.Instance.DisableAvailityDice(disabledAvailityDice);
+        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        DisableDices();
     }
 
     public override void OnExit()
     {
-        if (disabledAvailityDice == null) return;
+        EnableDices();
+        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+    }
 
-        PlayerDiceManager.Instance.EnableAvailityDice(disabledAvailityDice);
+    private void OnPlayStarted(int obj)
+    {
+        SequenceManager.Instance.AddCoroutine(() =>
+        {
+            EnableDices();
+            DisableDices();
+        });
+    }
+
+    private void DisableDices()
+    {
+        disabledAvailityDiceList = PlayerDiceManager.Instance.GetRandomAvailityDiceList(limitCount);
+
+        if (disabledAvailityDiceList == null) return;
+
+        foreach (var availityDice in disabledAvailityDiceList)
+        {
+            if (availityDice == null) continue;
+            PlayerDiceManager.Instance.DisableAvailityDice(availityDice);
+        }
+    }
+
+    private void EnableDices()
+    {
+        if (disabledAvailityDiceList == null) return;
+
+        foreach (var availityDice in disabledAvailityDiceList)
+        {
+            if (availityDice == null) continue;
+            PlayerDiceManager.Instance.EnableAvailityDice(availityDice);
+        }
     }
 }
