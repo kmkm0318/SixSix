@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AnimationManager : Singleton<AnimationManager>
 {
-    public IEnumerator PlayShakeAnimation(Transform targetTransform, bool isReset = false)
+    public IEnumerator PlayShakeAnimation(Transform targetTransform, bool isReset = true)
     {
         var currentTween = targetTransform
         .DOShakeRotation(0.5f, new Vector3(0, 0, 30), 25, 90, true, ShakeRandomnessMode.Harmonic)

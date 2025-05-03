@@ -19,7 +19,6 @@ public class ShopManager : Singleton<ShopManager>
     public event Action OnRerollCompleted;
 
     private AvailityDiceListSO availityDiceListSO;
-    private HandListSO handListSO;
     private int rerollCost = 1;
     public int RerollCost
     {
@@ -36,7 +35,6 @@ public class ShopManager : Singleton<ShopManager>
     {
         RegisterEvents();
         availityDiceListSO = DataContainer.Instance.MerchantAvailityDiceListSO;
-        handListSO = DataContainer.Instance.StandardHandListSO;
     }
 
     #region RegisterEvents
@@ -45,7 +43,6 @@ public class ShopManager : Singleton<ShopManager>
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
         PlayerDiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
-        BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -70,11 +67,6 @@ public class ShopManager : Singleton<ShopManager>
         PlayerDiceManager.Instance.RemoveAvailityDice(dice);
 
         OnAvailityDiceSelled?.Invoke(diceSO);
-    }
-
-    private void OnAllBonusAchieved()
-    {
-        handListSO = DataContainer.Instance.TotalHandListSO;
     }
     #endregion
 
@@ -160,7 +152,7 @@ public class ShopManager : Singleton<ShopManager>
             int price = enhanceLevel * 5 - (enhanceLevel - 1);
 
             int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
-            ScorePair scorePair = new(baseScore, (enhanceLevel * 10 - baseScore) * 0.1f);
+            ScorePair scorePair = new(baseScore, 1f + (enhanceLevel * 10 - baseScore) * 0.1f);
 
             diceEnhanceList.Add(new(scorePair, price, i));
         }

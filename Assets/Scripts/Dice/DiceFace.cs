@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class DiceFace
 {
@@ -6,8 +8,9 @@ public class DiceFace
     public int FaceValue => faceValue;
     private DiceFaceSpriteSO faceSpriteSO;
     public DiceFaceSpriteSO FaceSpriteSO => faceSpriteSO;
-    private ScorePair enhanceValue = new();
+    private ScorePair enhanceValue = new(0, 0);
     public ScorePair EnhanceValue => enhanceValue;
+    private ScorePair ApplyValue => new(enhanceValue.baseScore, enhanceValue.multiplier + 1f);
 
     public void Init(int faceValue, DiceFaceSpriteSO faceSpriteSO)
     {
@@ -23,42 +26,23 @@ public class DiceFace
     public void Enhance(ScorePair value)
     {
         enhanceValue.baseScore += value.baseScore;
-
-        if (enhanceValue.multiplier == 0) enhanceValue.multiplier = 1;
         enhanceValue.multiplier += value.multiplier;
     }
 
     public void ApplyDiceFaceValue(Dice dice, bool isAvailityDice)
     {
-        if (enhanceValue.baseScore == 0 && enhanceValue.multiplier == 0) return;
-
-        if (enhanceValue.baseScore != 0)
-        {
-            ScorePair scorePair = new(enhanceValue.baseScore, 0);
-            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, scorePair, isAvailityDice);
-        }
-
-        if (enhanceValue.multiplier != 0)
-        {
-            ScorePair scorePair = new(0, enhanceValue.multiplier);
-            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, scorePair, isAvailityDice);
-        }
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, ApplyValue, isAvailityDice);
     }
 
     public string GetDescriptionText()
     {
-        string res = "";
-
-        if (enhanceValue.baseScore != 0)
+        if (enhanceValue.baseScore == 0f && enhanceValue.multiplier == 0f)
         {
-            res += $"\nGet Score(+{enhanceValue.baseScore})";
+            return string.Empty;
         }
-
-        if (enhanceValue.multiplier != 0)
+        else
         {
-            res += $"\nGet Score(x{enhanceValue.multiplier})";
+            return $"\nGet {ApplyValue}";
         }
-
-        return res;
     }
 }

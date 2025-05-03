@@ -31,7 +31,7 @@ public class HandEnhanceMerchantUI : MonoBehaviour
 
     private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
     {
-        if (context.Index == idx)
+        if (context.Index == idx && result == PurchaseResult.Success)
         {
             gameObject.SetActive(false);
         }

@@ -114,8 +114,8 @@ public class ShopUI : Singleton<ShopUI>
     private void OnShopStarted()
     {
         InitAvailityDiceMerchantUI();
-        InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
+        InitHandEnhanceMerchantUI();
         ScrollToTop();
         Show();
     }
@@ -123,8 +123,8 @@ public class ShopUI : Singleton<ShopUI>
     private void OnRerollCompleted()
     {
         InitAvailityDiceMerchantUI();
-        InitHandEnhanceMerchantUI();
         InitPlayDiceEnhanceMerchantUI();
+        InitHandEnhanceMerchantUI();
         ScrollToTop();
     }
 
@@ -141,7 +141,7 @@ public class ShopUI : Singleton<ShopUI>
 
         if (gameObject.activeSelf)
         {
-            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(rerollButtonText.transform, true));
+            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(rerollButtonText.transform));
         }
     }
     #endregion

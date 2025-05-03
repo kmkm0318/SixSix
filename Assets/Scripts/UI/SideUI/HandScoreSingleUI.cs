@@ -100,6 +100,8 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         enhanceLevelText.text = enhanceLevel.ToString();
         StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(enhanceLevelText.transform));
+        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(baseScoreText.transform));
+        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(multiplierText.transform));
 
         UpdateScore(scorePair.baseScore == 0 && scorePair.multiplier == 0);
     }

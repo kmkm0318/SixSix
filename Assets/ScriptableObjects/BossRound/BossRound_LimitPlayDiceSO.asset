@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BossRound_LimitPlayDiceSO
   m_EditorClassIdentifier: 
   bossName: Limit Play Dice
-  bossDescription: Disable 2 Play Dice
-  limitCount: 2
+  bossDescription: Disable 1 Play Dice
+  limitCount: 1

@@ -11,15 +11,7 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
         float baseScore = GetCalculatedEffectValue(scorePair.baseScore, context.availtiyDice.FaceValue);
         float multiplier = GetCalculatedEffectValue(scorePair.multiplier, context.availtiyDice.FaceValue);
 
-        if (baseScore != 0)
-        {
-            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(baseScore, 0), true);
-        }
-
-        if (multiplier != 0)
-        {
-            ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(0, multiplier), true);
-        }
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(baseScore, multiplier), true);
     }
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)

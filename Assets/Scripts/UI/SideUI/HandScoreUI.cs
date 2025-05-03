@@ -52,7 +52,6 @@ public class HandScoreUI : Singleton<HandScoreUI>
         ScoreManager.Instance.OnHandScoreUpdated += OnHandScoreUpdated;
 
         PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
 
         RollManager.Instance.OnRollStarted += OnRollStarted;
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
@@ -79,12 +78,6 @@ public class HandScoreUI : Singleton<HandScoreUI>
         ResetHandScoreUI();
     }
 
-    private void OnRoundCleared(int round)
-    {
-        ResetHandScoreUI();
-    }
-
-
     private void OnRollStarted()
     {
         isActive = false;
@@ -103,7 +96,6 @@ public class HandScoreUI : Singleton<HandScoreUI>
     private void OnDiceEnhanceStarted()
     {
         isActive = false;
-        ResetHandScoreUI();
 
         ScoreManager.Instance.OnHandScoreUpdated -= OnHandScoreUpdated;
     }
@@ -111,21 +103,18 @@ public class HandScoreUI : Singleton<HandScoreUI>
     private void OnDiceEnhanceCompleted()
     {
         isActive = false;
-        ResetHandScoreUI();
 
         ScoreManager.Instance.OnHandScoreUpdated += OnHandScoreUpdated;
     }
 
     private void OnHandEnhanceStarted()
     {
-        isActive = false;
-        ResetHandScoreUI();
+        isActive = true;
     }
 
     private void OnHandEnhanceCompleted()
     {
         isActive = false;
-        ResetHandScoreUI();
     }
     #endregion
 

@@ -82,12 +82,12 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         if (isBaseScore)
         {
             scoreText.color = baseScoreColor;
-            scoreText.text = pair.baseScore.ToString("+0.#;-0.#;0");
+            scoreText.text = pair.baseScore.ToString("+0;-0;0");
         }
         else if (isMultiplier)
         {
             scoreText.color = multiplierColor;
-            scoreText.text = "x" + pair.multiplier.ToString("0.#");
+            scoreText.text = "x" + pair.multiplier.ToString("0.##");
         }
     }
 

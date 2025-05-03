@@ -279,7 +279,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
         faces[faceIndex].Enhance(scorePair);
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
-        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(transform), true);
+        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(transform, false));
     }
 
     public abstract void ShowToolTip();

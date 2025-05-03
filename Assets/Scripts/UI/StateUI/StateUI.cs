@@ -59,7 +59,7 @@ public class StateUI : Singleton<StateUI>
     {
         if (result == PurchaseResult.NotEnoughMoney)
         {
-            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(moneyText.transform, true));
+            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(moneyText.transform));
         }
     }
 

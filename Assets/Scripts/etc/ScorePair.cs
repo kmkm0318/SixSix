@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 [Serializable]
 public struct ScorePair
@@ -6,7 +8,7 @@ public struct ScorePair
     public float baseScore;
     public float multiplier;
 
-    public ScorePair(float baseScore = 0, float multiplier = 0)
+    public ScorePair(float baseScore, float multiplier)
     {
         this.baseScore = baseScore;
         this.multiplier = multiplier;
@@ -14,25 +16,22 @@ public struct ScorePair
 
     public override readonly string ToString()
     {
-        string res = "Score";
-
-        if (baseScore != 0 && multiplier != 0)
+        List<string> parts = new();
+        if (baseScore != 0)
         {
-            res += $"(+{baseScore}, x{multiplier})";
-        }
-        else if (baseScore != 0)
-        {
-            res += $"(+{baseScore})";
-        }
-        else if (multiplier != 0)
-        {
-            res += $"(x{multiplier})";
-        }
-        else
-        {
-            res += "(0)";
+            parts.Add($"{baseScore:+0;-0;0}");
         }
 
-        return res;
+        if (multiplier != 0 && multiplier != 1)
+        {
+            parts.Add($"x{multiplier:0.##}");
+        }
+
+        if (parts.Count == 0)
+        {
+            parts.Add("0");
+        }
+
+        return $"Score({string.Join(", ", parts)})";
     }
 }

@@ -36,7 +36,6 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void OnPlayDiceClicked(PlayDice dice)
     {
         dice.EnhanceDice(DiceEnhanceValue);
-        SequenceManager.Instance.ApplyParallelCoroutine();
         CompleteDiceEnhance();
     }
 

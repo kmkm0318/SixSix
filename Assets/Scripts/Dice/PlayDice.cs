@@ -35,9 +35,7 @@ public class PlayDice : Dice
     {
         if (!IsEnabled) return;
 
-        ScorePair scorePair = new(FaceValue, 0);
-
-        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, scorePair, false);
+        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, new(FaceValue, 1), false);
 
         Faces[FaceIndex].ApplyDiceFaceValue(this, false);
     }

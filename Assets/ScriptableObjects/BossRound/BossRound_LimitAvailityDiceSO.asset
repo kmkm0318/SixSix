@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BossRound_LimitAvailityDiceSO
   m_EditorClassIdentifier: 
   bossName: Limit Availity Dice
-  bossDescription: Disable 2 Availity Dice
-  limitCount: 2
+  bossDescription: Disable 1 Availity Dice
+  limitCount: 1
