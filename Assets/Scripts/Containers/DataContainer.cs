@@ -17,10 +17,14 @@ public class DataContainer : Singleton<DataContainer>
     #region HandListSO
     [SerializeField] private HandListSO totalHandListSO;
     public HandListSO TotalHandListSO => totalHandListSO;
-    [SerializeField] private HandListSO standardHandListSO;
-    public HandListSO StandardHandListSO => standardHandListSO;
-    [SerializeField] private HandListSO specialHandListSO;
-    public HandListSO SpecialHandListSO => specialHandListSO;
+    [SerializeField] private HandListSO oneDiceHandListSO;
+    public HandListSO OneDiceHandListSO => oneDiceHandListSO;
+    [SerializeField] private HandListSO fourDiceHandListSO;
+    public HandListSO FourDiceHandListSO => fourDiceHandListSO;
+    [SerializeField] private HandListSO fiveDiceHandListSO;
+    public HandListSO FiveDiceHandListSO => fiveDiceHandListSO;
+    [SerializeField] private HandListSO sixDiceHandListSO;
+    public HandListSO SixDiceHandListSO => sixDiceHandListSO;
 
     public HandSO GetHandSO(Hand hand)
     {

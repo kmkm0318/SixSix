@@ -482,8 +482,10 @@ MonoBehaviour:
   availityDiceListSO: {fileID: 11400000, guid: c27df7a214bcb154c8db8a4f8bb0adb6, type: 2}
   merchantAvailityDiceListSO: {fileID: 11400000, guid: 048d75fb1d0e51f4180cc16815f93226, type: 2}
   totalHandListSO: {fileID: 11400000, guid: 32b7c6e513868eb40acbc0dc9e8b76cc, type: 2}
-  standardHandListSO: {fileID: 11400000, guid: e074b4bdc04a1704e882423d9602cbd3, type: 2}
-  specialHandListSO: {fileID: 11400000, guid: 287a05ba5411dd2438d87227c394d9aa, type: 2}
+  oneDiceHandListSO: {fileID: 11400000, guid: cb2fe0ca5207a65488064a833f727ca4, type: 2}
+  fourDiceHandListSO: {fileID: 11400000, guid: d2e217dec1c09aa4fa249c0cd70983de, type: 2}
+  fiveDiceHandListSO: {fileID: 11400000, guid: e074b4bdc04a1704e882423d9602cbd3, type: 2}
+  sixDiceHandListSO: {fileID: 11400000, guid: 287a05ba5411dd2438d87227c394d9aa, type: 2}
   playergroundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -11660,7 +11662,7 @@ MonoBehaviour:
   chaosDicePrefab: {fileID: -4255643495825327016, guid: 68de99022cf8a1943b94acc25c81316a, type: 3}
   playDicePlayboard: {fileID: 1471330191}
   availityDicePlayboard: {fileID: 779005321}
-  firstdiceCount: 5
+  firstdiceCount: 10
   diceGenerateDelay: 0.25
   availityDiceCountMax: 5
   defaultChaosDiceFaceValueMax: 4

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 658cae3d805dd62468d6e414c81ec1e6, type: 3}
-  m_Name: SpecialHandList
+  m_Name: SixDiceHandList
   m_EditorClassIdentifier: 
   handList:
   - {fileID: 11400000, guid: adc4f3ae747abcf41849c5471647ff0d, type: 2}

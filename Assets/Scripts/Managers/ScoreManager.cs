@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -117,8 +119,15 @@ public class ScoreManager : Singleton<ScoreManager>
     private void OnRollCompleted()
     {
         var playDiceValues = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
-        handScoreDictionary = HandCalculator.CalculateHandScore(playDiceValues);
+        handScoreDictionary = HandCalculator.GetHandScorePairs(playDiceValues);
         OnHandScoreUpdated?.Invoke(handScoreDictionary);
+
+        var handProbabilities = HandCalculator.GetHandProbabilities(playDiceValues);
+
+        foreach (var hand in handProbabilities.OrderByDescending(x => x.Value))
+        {
+            Debug.Log($"{hand.Key}: {hand.Value}");
+        }
     }
 
     private void OnHandSelected(HandSO handSO, ScorePair scorePair)
