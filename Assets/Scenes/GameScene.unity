@@ -11662,7 +11662,7 @@ MonoBehaviour:
   chaosDicePrefab: {fileID: -4255643495825327016, guid: 68de99022cf8a1943b94acc25c81316a, type: 3}
   playDicePlayboard: {fileID: 1471330191}
   availityDicePlayboard: {fileID: 779005321}
-  firstdiceCount: 10
+  firstdiceCount: 5
   diceGenerateDelay: 0.25
   availityDiceCountMax: 5
   defaultChaosDiceFaceValueMax: 4

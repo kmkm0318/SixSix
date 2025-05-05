@@ -151,7 +151,7 @@ public static class HandCalculator
 
         if (diceValues == null || diceValues.Count == 0) return res;
 
-        int maxRollDiceNum = Mathf.RoundToInt(diceValues.Count / 2f);
+        int maxRollDiceNum = Mathf.CeilToInt(diceValues.Count / 2f);
 
         return CalculateHandProbabilities(diceValues, maxRollDiceNum);
     }
@@ -165,7 +165,7 @@ public static class HandCalculator
             res[hand.hand] = 0;
         }
 
-        for (int i = 0; i < maxRollDiceNum; i++)
+        for (int i = 0; i <= maxRollDiceNum; i++)
         {
             Dictionary<Hand, float> tmp = new();
 
