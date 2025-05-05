@@ -16,7 +16,7 @@ public class AvailityEffectMoneySO : AvailityEffectSO
     {
         string res = $"Get Money({moneyAmount})";
 
-        res += GetCalculateDescription(availityDiceSO.maxFaceValue);
+        res += GetCalculateDescription(availityDiceSO.MaxFaceValue);
 
         return res;
     }

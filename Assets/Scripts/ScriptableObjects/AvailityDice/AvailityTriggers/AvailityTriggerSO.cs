@@ -2,6 +2,16 @@ using UnityEngine;
 
 public abstract class AvailityTriggerSO : ScriptableObject
 {
-    public abstract bool IsTriggered(AvailityDiceContext context);
+    [SerializeField] private AvailityTriggerType triggerType;
+    public AvailityTriggerType TriggerType => triggerType;
+
+    public abstract bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context);
     public abstract string GetTriggerDescription(AvailityDiceSO availityDiceSO);
+}
+
+public enum AvailityTriggerType
+{
+    None,
+    PlayDice,
+    Hand,
 }

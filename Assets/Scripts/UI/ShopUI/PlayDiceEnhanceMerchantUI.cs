@@ -9,6 +9,7 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text buttonText;
 
+    private int enhanceLevel;
     private ScorePair enhanceValue;
     private int price;
     private int idx;
@@ -20,7 +21,7 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
     }
     private void OnBuyButtonClicked()
     {
-        ShopManager.Instance.TryPurchasePlayDiceEnhance(new(enhanceValue, price, idx));
+        ShopManager.Instance.TryPurchasePlayDiceEnhance(new(enhanceLevel, enhanceValue, price, idx));
     }
 
     #region RegisterEvents
@@ -38,8 +39,9 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
     }
     #endregion
 
-    public void Init(ScorePair enhanceValue, int price, int idx)
+    public void Init(int enhanceLevel, ScorePair enhanceValue, int price, int idx)
     {
+        this.enhanceLevel = enhanceLevel;
         this.enhanceValue = enhanceValue;
         this.price = price;
         this.idx = idx;
@@ -49,8 +51,8 @@ public class PlayDiceEnhanceMerchantUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        nameText.text = $"Dice Enhance({enhanceValue})";
+        nameText.text = $"Dice Enhance Lv{enhanceLevel}";
         descriptionText.text = $"Enhance Selected Play Dice\nEnhance Value: {enhanceValue}";
-        buttonText.text = $"Buy({price})";
+        buttonText.text = $"Buy(${price})";
     }
 }

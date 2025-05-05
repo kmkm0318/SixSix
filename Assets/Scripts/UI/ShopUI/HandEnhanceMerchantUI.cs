@@ -49,8 +49,8 @@ public class HandEnhanceMerchantUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        nameText.text = $"Hand Enhance({enhanceLevel})";
+        nameText.text = $"Hand Enhance Lv.{enhanceLevel}";
         descriptionText.text = $"Enhance Hand {enhanceLevel} levels\nwhich hand you selected";
-        buttonText.text = $"Buy({price})";
+        buttonText.text = $"Buy(${price})";
     }
 }

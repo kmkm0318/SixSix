@@ -65,7 +65,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
 
         if (result == PurchaseResult.Success)
         {
-            Money -= sO.purchasePrice;
+            Money -= sO.price;
             SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }
@@ -74,7 +74,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     {
         if (sO == null) return;
 
-        Money += sO.sellPrice;
+        Money += sO.SellPrice;
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 

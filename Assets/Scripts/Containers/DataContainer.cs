@@ -5,26 +5,20 @@ public class DataContainer : Singleton<DataContainer>
     #region DiceFaceSpriteListSO
     [SerializeField] private DiceFaceSpriteListSO defaultDiceList;
     public DiceFaceSpriteListSO DefaultDiceList => defaultDiceList;
+    [SerializeField] private DiceFaceSpriteListSO playDiceList;
+    public DiceFaceSpriteListSO PlayDiceList => playDiceList;
+    [SerializeField] private DiceFaceSpriteListSO chaosDiceList;
+    public DiceFaceSpriteListSO ChaosDiceList => chaosDiceList;
     #endregion
 
     #region AvailityDiceListSO
-    [SerializeField] private AvailityDiceListSO availityDiceListSO;
-    public AvailityDiceListSO AvailityDiceListSO => availityDiceListSO;
-    [SerializeField] private AvailityDiceListSO merchantAvailityDiceListSO;
-    public AvailityDiceListSO MerchantAvailityDiceListSO => merchantAvailityDiceListSO;
+    [SerializeField] private AvailityDiceListSO shopAvailityDiceListSO;
+    public AvailityDiceListSO ShopAvailityDiceListSO => shopAvailityDiceListSO;
     #endregion
 
     #region HandListSO
     [SerializeField] private HandListSO totalHandListSO;
     public HandListSO TotalHandListSO => totalHandListSO;
-    [SerializeField] private HandListSO oneDiceHandListSO;
-    public HandListSO OneDiceHandListSO => oneDiceHandListSO;
-    [SerializeField] private HandListSO fourDiceHandListSO;
-    public HandListSO FourDiceHandListSO => fourDiceHandListSO;
-    [SerializeField] private HandListSO fiveDiceHandListSO;
-    public HandListSO FiveDiceHandListSO => fiveDiceHandListSO;
-    [SerializeField] private HandListSO sixDiceHandListSO;
-    public HandListSO SixDiceHandListSO => sixDiceHandListSO;
 
     public HandSO GetHandSO(Hand hand)
     {

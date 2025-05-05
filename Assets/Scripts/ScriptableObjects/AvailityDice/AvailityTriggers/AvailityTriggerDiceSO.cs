@@ -7,13 +7,24 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
     [SerializeField] private List<int> targetValues;
     public List<int> TargetValues => targetValues;
 
-    public override bool IsTriggered(AvailityDiceContext context)
+    public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
     {
-        return context.playDice != null && targetValues.Contains(context.playDice.FaceValue);
+        return triggerType == TriggerType && context.playDice != null && targetValues.Contains(context.playDice.FaceValue);
     }
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"When Dice is\n({string.Join(", ", targetValues)})";
+        if (targetValues == null || targetValues.Count == 0)
+        {
+            return "No Target Values Set";
+        }
+        else if (targetValues.Count == 1)
+        {
+            return $"When Dice is {targetValues[0]}";
+        }
+        else
+        {
+            return $"When Dice is in\n({string.Join(", ", targetValues)})";
+        }
     }
 }

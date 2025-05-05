@@ -30,7 +30,7 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
 
         string res = "Get Score(" + string.Join(", ", parts) + ")";
 
-        res += GetCalculateDescription(availityDiceSO.maxFaceValue);
+        res += GetCalculateDescription(availityDiceSO.MaxFaceValue);
 
         return res;
     }

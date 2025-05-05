@@ -309,13 +309,13 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             if (UsableFaceValues != null && !UsableFaceValues.Contains(playDice.FaceValue)) continue;
 
             playDice.ApplyScorePairs();
-            ApplyAvailityDiceOnPlayDiceApplied(playDice);
+            ApplyAvailityDice(playDice);
         }
     }
 
-    private void ApplyAvailityDiceOnPlayDiceApplied(PlayDice playDice)
+    private void ApplyAvailityDice(AvailityTriggerType triggerType, AvailityDiceContext context)
     {
-        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(new(playDice: playDice)));
+        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(triggerType, context));
 
         foreach (var availityDice in triggeredAvailityDiceList)
         {
@@ -325,14 +325,19 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         }
     }
 
-    public void ApplyAvailityDiceOnHandApplied(HandSO handSO)
+    private void ApplyAvailityDice(AvailityTriggerType triggerType)
     {
-        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(new(handSO: handSO)));
+        ApplyAvailityDice(triggerType, new());
+    }
 
-        foreach (var availityDice in triggeredAvailityDiceList)
-        {
-            availityDice.ApplyEffect();
-        }
+    private void ApplyAvailityDice(PlayDice playDice)
+    {
+        ApplyAvailityDice(AvailityTriggerType.PlayDice, new(playDice: playDice));
+    }
+
+    public void ApplyAvailityDice(HandSO handSO)
+    {
+        ApplyAvailityDice(AvailityTriggerType.Hand, new(handSO: handSO));
     }
 
     public void ApplyChaosDices()

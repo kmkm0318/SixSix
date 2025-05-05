@@ -16,6 +16,11 @@ public class DiceVisual : MonoBehaviour
         spriteRenderer.sprite = sprite;
     }
 
+    public void SetSpriteMaterial(Material material)
+    {
+        spriteRenderer.material = material;
+    }
+
     public void SetColor(ScorePair enhancedValue)
     {
         float blueIntensity = Mathf.Clamp01(enhancedValue.baseScore / enhanceColorMax);

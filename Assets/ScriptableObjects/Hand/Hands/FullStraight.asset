@@ -18,6 +18,5 @@ MonoBehaviour:
     baseScore: 36
     multiplier: 36
   enhanceAmount:
-    baseScore: 0
-    multiplier: 0
-  purchasePrice: 0
+    baseScore: 12
+    multiplier: 12

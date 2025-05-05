@@ -5,10 +5,13 @@ public class AvailityDiceSO : ScriptableObject
 {
     [Header("Dice Info")]
     public string diceName;
-    public int purchasePrice;
-    public int sellPrice;
-    public int maxFaceValue;
+    public AvailityDiceRarity rarity;
+    public int price;
+    public int SellPrice => price / 2;
     public DiceFaceSpriteListSO diceFaceSpriteListSO;
+    public int maxFaceValue;
+    public int MaxFaceValue => Mathf.Min(maxFaceValue, diceFaceSpriteListSO.DiceFaceCount);
+
 
     [Header("Dice Trigger, Effect")]
     public AvailityTriggerSO availityTrigger;
@@ -21,4 +24,12 @@ public class AvailityDiceSO : ScriptableObject
     }
 
     #endregion
+}
+
+public enum AvailityDiceRarity
+{
+    Normal,
+    Rare,
+    Epic,
+    Legendary,
 }

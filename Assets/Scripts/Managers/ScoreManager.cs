@@ -124,9 +124,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
         var handProbabilities = HandCalculator.GetHandProbabilities(playDiceValues);
 
-        foreach (var hand in handProbabilities.OrderByDescending(x => x.Value))
+        foreach (var pair in handProbabilities.OrderByDescending(x => x.Value))
         {
-            Debug.Log($"{hand.Key}: {hand.Value}");
+            Debug.Log($"{pair.Key}: {pair.Value}");
         }
     }
 
@@ -139,7 +139,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         PlayerDiceManager.Instance.ApplyPlayDices();
         PlayerDiceManager.Instance.ApplyChaosDices();
-        PlayerDiceManager.Instance.ApplyAvailityDiceOnHandApplied(handSO);
+        PlayerDiceManager.Instance.ApplyAvailityDice(handSO);
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 

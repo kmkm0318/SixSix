@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fea4933942614448017702fb4c1e72, type: 3}
   m_Name: Dice_123456
   m_EditorClassIdentifier: 
+  triggerType: 1
   targetValues: 010000000200000003000000040000000500000006000000

@@ -69,17 +69,24 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
     {
+        if (maxValue > diceFaceSpriteListSO.DiceFaceCount)
+        {
+            maxValue = diceFaceSpriteListSO.DiceFaceCount;
+            Debug.LogWarning($"Dice face count is {maxValue} but max value is {maxValue}. Set to {maxValue}.");
+        }
+
         faces = new DiceFace[maxValue];
 
         for (int i = 0; i < faces.Length; i++)
         {
             faces[i] = new();
-            faces[i].Init(i + 1, diceFaceSpriteListSO.diceFaceList[i]);
+            faces[i].Init(i + 1, diceFaceSpriteListSO.spriteList[i]);
         }
 
         faceIndex = 0;
         faceValueMax = maxValue;
 
+        diceVisual.SetSpriteMaterial(diceFaceSpriteListSO.spriteMaterial);
         SetFace(faceIndex);
         InitDiceInteractType();
 
@@ -222,7 +229,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     #region Faces
     public virtual void SetFace(int faceIndex)
     {
-        diceVisual.SetSprite(faces[faceIndex].FaceSpriteSO.sprite);
+        diceVisual.SetSprite(faces[faceIndex].CurrentSprite);
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
     }
 

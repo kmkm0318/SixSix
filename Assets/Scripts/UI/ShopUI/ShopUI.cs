@@ -113,18 +113,29 @@ public class ShopUI : Singleton<ShopUI>
 
     private void OnShopStarted()
     {
-        InitAvailityDiceMerchantUI();
-        InitPlayDiceEnhanceMerchantUI();
-        InitHandEnhanceMerchantUI();
-        ScrollToTop();
+        InitMerchantUI();
         Show();
     }
 
     private void OnRerollCompleted()
     {
+        InitMerchantUI();
+    }
+
+    private void InitMerchantUI()
+    {
         InitAvailityDiceMerchantUI();
-        InitPlayDiceEnhanceMerchantUI();
-        InitHandEnhanceMerchantUI();
+
+        var handEnhanceCount = ShopManager.Instance.EnhanceMerchantCountMax;
+
+        if (handEnhanceCount > 0)
+        {
+            int playDiceEnhanceCount = UnityEngine.Random.Range(1, handEnhanceCount);
+
+            InitPlayDiceEnhanceMerchantUI(playDiceEnhanceCount);
+            InitHandEnhanceMerchantUI(handEnhanceCount - playDiceEnhanceCount);
+        }
+
         ScrollToTop();
     }
 
@@ -149,7 +160,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         foreach (Transform child in availityDiceMerchantParent)
         {
-            if (child.TryGetComponent(out AvailityDiceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out AvailityDiceMerchantUI merchantUI))
             {
                 availityDiceMerchantPool.Release(merchantUI);
             }
@@ -163,17 +174,17 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void InitHandEnhanceMerchantUI()
+    private void InitHandEnhanceMerchantUI(int count)
     {
         foreach (Transform child in handEnhanceMerchantParent)
         {
-            if (child.TryGetComponent(out HandEnhanceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out HandEnhanceMerchantUI merchantUI))
             {
                 handEnhanceMerchantPool.Release(merchantUI);
             }
         }
 
-        List<HandEnhancePurchaseContext> handEnhanceList = ShopManager.Instance.GetRandomHandEnhanceList();
+        List<HandEnhancePurchaseContext> handEnhanceList = ShopManager.Instance.GetRandomHandEnhanceList(count);
 
         for (int i = 0; i < handEnhanceList.Count; i++)
         {
@@ -182,21 +193,21 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void InitPlayDiceEnhanceMerchantUI()
+    private void InitPlayDiceEnhanceMerchantUI(int count)
     {
         foreach (Transform child in playDiceEnhanceMerchantParent)
         {
-            if (child.TryGetComponent(out PlayDiceEnhanceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out PlayDiceEnhanceMerchantUI merchantUI))
             {
                 playDiceEnhanceMerchantPool.Release(merchantUI);
             }
         }
 
-        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList();
+        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList(count);
         for (int i = 0; i < scorePairs.Count; i++)
         {
             PlayDiceEnhanceMerchantUI merchantUI = playDiceEnhanceMerchantPool.Get();
-            merchantUI.Init(scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
+            merchantUI.Init(scorePairs[i].EnhanceLevel, scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
         }
     }
 

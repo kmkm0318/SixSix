@@ -1,26 +1,24 @@
-using System;
-using System.Diagnostics;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine;
 
 public class DiceFace
 {
     private int faceValue;
     public int FaceValue => faceValue;
-    private DiceFaceSpriteSO faceSpriteSO;
-    public DiceFaceSpriteSO FaceSpriteSO => faceSpriteSO;
+    private Sprite currentSprite;
+    public Sprite CurrentSprite => currentSprite;
     private ScorePair enhanceValue = new(0, 0);
     public ScorePair EnhanceValue => enhanceValue;
     private ScorePair ApplyValue => new(enhanceValue.baseScore, enhanceValue.multiplier + 1f);
 
-    public void Init(int faceValue, DiceFaceSpriteSO faceSpriteSO)
+    public void Init(int faceValue, Sprite sprite)
     {
         this.faceValue = faceValue;
-        this.faceSpriteSO = faceSpriteSO;
+        currentSprite = sprite;
     }
 
-    public void SetFaceSpriteSO(DiceFaceSpriteSO faceSpriteSO)
+    public void SetSprite(Sprite sprite)
     {
-        this.faceSpriteSO = faceSpriteSO;
+        currentSprite = sprite;
     }
 
     public void Enhance(ScorePair value)

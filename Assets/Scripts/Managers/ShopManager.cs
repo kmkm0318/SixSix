@@ -6,8 +6,8 @@ public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] private int rerollCostMax = 6;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
-    [SerializeField] private int handEnhanceMerchantCountMax = 3;
-    [SerializeField] private int playDiceEnhanceMerchantCountMax = 3;
+    [SerializeField] private int enhanceMerchantCountMax = 3;
+    public int EnhanceMerchantCountMax => enhanceMerchantCountMax;
 
     public event Action OnShopStarted;
     public event Action OnShopEnded;
@@ -34,7 +34,7 @@ public class ShopManager : Singleton<ShopManager>
     private void Start()
     {
         RegisterEvents();
-        availityDiceListSO = DataContainer.Instance.MerchantAvailityDiceListSO;
+        availityDiceListSO = DataContainer.Instance.ShopAvailityDiceListSO;
     }
 
     #region RegisterEvents
@@ -78,7 +78,7 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
-        if (PlayerMoneyManager.Instance.Money < availityDiceSO.purchasePrice)
+        if (PlayerMoneyManager.Instance.Money < availityDiceSO.price)
         {
             OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
             return;
@@ -130,23 +130,10 @@ public class ShopManager : Singleton<ShopManager>
         return randomAvailityDiceList;
     }
 
-    public List<HandEnhancePurchaseContext> GetRandomHandEnhanceList()
-    {
-        List<HandEnhancePurchaseContext> res = new();
-        for (int i = 0; i < 3; i++)
-        {
-            int enhanceLevel = UnityEngine.Random.Range(1, 4);
-            int price = enhanceLevel * 3 - (enhanceLevel - 1);
-
-            res.Add(new(enhanceLevel, price, i));
-        }
-        return res;
-    }
-
-    public List<DiceEnhancePurchaseContext> GetRandomDiceEnhanceList()
+    public List<DiceEnhancePurchaseContext> GetRandomDiceEnhanceList(int count)
     {
         List<DiceEnhancePurchaseContext> diceEnhanceList = new();
-        for (int i = 0; i < playDiceEnhanceMerchantCountMax; i++)
+        for (int i = 0; i < count; i++)
         {
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
             int price = enhanceLevel * 5 - (enhanceLevel - 1);
@@ -154,9 +141,22 @@ public class ShopManager : Singleton<ShopManager>
             int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
             ScorePair scorePair = new(baseScore, 1f + (enhanceLevel * 10 - baseScore) * 0.1f);
 
-            diceEnhanceList.Add(new(scorePair, price, i));
+            diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }
         return diceEnhanceList;
+    }
+
+    public List<HandEnhancePurchaseContext> GetRandomHandEnhanceList(int count)
+    {
+        List<HandEnhancePurchaseContext> res = new();
+        for (int i = 0; i < count; i++)
+        {
+            int enhanceLevel = UnityEngine.Random.Range(1, 4);
+            int price = enhanceLevel * 3 - (enhanceLevel - 1);
+
+            res.Add(new(enhanceLevel, price, i));
+        }
+        return res;
     }
 
     public void TryReroll()

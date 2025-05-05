@@ -6,9 +6,9 @@ public class AvailityTriggerHandSO : AvailityTriggerSO
     [SerializeField] private HandSO targetHand;
     public HandSO TargetHand => targetHand;
 
-    public override bool IsTriggered(AvailityDiceContext context)
+    public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
     {
-        return context.handSO != null && context.handSO == targetHand;
+        return triggerType == TriggerType && context.handSO != null && context.handSO == targetHand;
     }
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
