@@ -43,7 +43,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         if (toolTipable == null) return;
         if (transform == null) return;
-        if (Functions.IsPointerOverUIElement()) return;
+        if (UtilityFunctions.IsPointerOverUIElement()) return;
 
         targetTransform = transform;
         targetOffset = (transform.localScale.x / 2 + offset) * direction;

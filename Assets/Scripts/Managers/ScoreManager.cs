@@ -121,13 +121,6 @@ public class ScoreManager : Singleton<ScoreManager>
         var playDiceValues = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
         handScoreDictionary = HandCalculator.GetHandScorePairs(playDiceValues);
         OnHandScoreUpdated?.Invoke(handScoreDictionary);
-
-        var handProbabilities = HandCalculator.GetHandProbabilities(playDiceValues);
-
-        foreach (var pair in handProbabilities.OrderByDescending(x => x.Value))
-        {
-            Debug.Log($"{pair.Key}: {pair.Value}");
-        }
     }
 
     private void OnHandSelected(HandSO handSO, ScorePair scorePair)
@@ -201,7 +194,7 @@ public class ScoreManager : Singleton<ScoreManager>
         var isApplied = TryApplyScorePairEffect(pair);
         if (!isApplied) return;
 
-        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(dice.transform, false), true);
+        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(dice.transform, false), true);
         OnScorePairApplied(pair, dice.transform, isAvailityDice);
 
         SequenceManager.Instance.ApplyParallelCoroutine();
@@ -211,7 +204,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         if (money == 0) return;
 
-        SequenceManager.Instance.AddCoroutine(AnimationManager.Instance.PlayShakeAnimation(dice.transform, false), true);
+        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(dice.transform, false), true);
         OnMoneyAchieved(money, dice.transform, isAvailityDice);
 
         SequenceManager.Instance.ApplyParallelCoroutine();

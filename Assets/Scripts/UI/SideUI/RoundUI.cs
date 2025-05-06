@@ -79,13 +79,13 @@ public class RoundUI : MonoBehaviour
 
     private void UpdateScoreText(TMP_Text textComponent, float score)
     {
-        string newText = Functions.FormatNumber(score);
+        string newText = UtilityFunctions.FormatNumber(score);
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(textComponent, newText), true);
     }
 
     private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText)
     {
         textComponent.text = newText;
-        yield return AnimationManager.Instance.PlayShakeAnimation(textComponent.transform);
+        yield return AnimationFunction.PlayShakeAnimation(textComponent.transform);
     }
 }

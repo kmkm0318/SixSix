@@ -37,7 +37,9 @@ public class StateUI : Singleton<StateUI>
 
     private void OnMoneyChanged(int money)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()), true);
+        // SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()), true);
+
+        StartCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()));
     }
 
     private void OnPlayRemainChanged(int playRemain)
@@ -59,7 +61,7 @@ public class StateUI : Singleton<StateUI>
     {
         if (result == PurchaseResult.NotEnoughMoney)
         {
-            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(moneyText.transform));
+            StartCoroutine(AnimationFunction.PlayShakeAnimation(moneyText.transform));
         }
     }
 
@@ -67,6 +69,6 @@ public class StateUI : Singleton<StateUI>
     {
         targetText.text = targetString;
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(targetText.transform));
+        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(targetText.transform, true));
     }
 }

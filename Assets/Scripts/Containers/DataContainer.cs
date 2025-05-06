@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class DataContainer : Singleton<DataContainer>
 {
-    #region DiceFaceSpriteListSO
-    [SerializeField] private DiceFaceSpriteListSO defaultDiceList;
-    public DiceFaceSpriteListSO DefaultDiceList => defaultDiceList;
-    [SerializeField] private DiceFaceSpriteListSO playDiceList;
-    public DiceFaceSpriteListSO PlayDiceList => playDiceList;
-    [SerializeField] private DiceFaceSpriteListSO chaosDiceList;
-    public DiceFaceSpriteListSO ChaosDiceList => chaosDiceList;
+    #region DiceSpriteListSO
+    [SerializeField] private DiceSpriteListSO defaultDiceList;
+    public DiceSpriteListSO DefaultDiceList => defaultDiceList;
+    [SerializeField] private DiceSpriteListSO numberDiceList;
+    public DiceSpriteListSO NumberDiceList => numberDiceList;
+    #endregion
+
+    #region DiceMaterialSO
+    [SerializeField] private DiceMaterialSO defaultDiceMaterial;
+    public DiceMaterialSO DefaultDiceMaterial => defaultDiceMaterial;
+    [SerializeField] private DiceMaterialSO chaosDiceMaterial;
+    public DiceMaterialSO ChaosDiceMaterial => chaosDiceMaterial;
     #endregion
 
     #region AvailityDiceListSO

@@ -8,9 +8,10 @@ public class AvailityDiceSO : ScriptableObject
     public AvailityDiceRarity rarity;
     public int price;
     public int SellPrice => price / 2;
-    public DiceFaceSpriteListSO diceFaceSpriteListSO;
+    public DiceSpriteListSO diceSpriteListSO;
+    public DiceMaterialSO diceMaterialSO;
     public int maxFaceValue;
-    public int MaxFaceValue => Mathf.Min(maxFaceValue, diceFaceSpriteListSO.DiceFaceCount);
+    public int MaxFaceValue => Mathf.Min(maxFaceValue, diceSpriteListSO.DiceFaceCount);
 
 
     [Header("Dice Trigger, Effect")]

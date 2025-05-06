@@ -7,8 +7,8 @@ using UnityEngine;
 public enum BonusType
 {
     Money,
-    HandEnhancement,
-    Dice,
+    AvailityDiceCountMax,
+    PlayDice,
 }
 
 [Serializable]

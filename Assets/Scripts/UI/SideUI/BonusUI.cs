@@ -95,6 +95,6 @@ public class BonusUI : Singleton<BonusUI>
     {
         targetText.text = targetString;
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(targetText.transform));
+        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(targetText.transform));
     }
 }

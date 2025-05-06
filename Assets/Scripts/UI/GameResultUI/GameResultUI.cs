@@ -58,14 +58,14 @@ public class GameResultUI : Singleton<GameResultUI>
         {
             Show();
             resultText.text = gameClearText;
-            highScoreText.text = "HighestRoundScore: " + Functions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+            highScoreText.text = "HighestRoundScore: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
             infinityModeButtonRow.SetActive(true);
         }
         else if (state == GameState.GameOver)
         {
             Show();
             resultText.text = gameOverText;
-            highScoreText.text = "HighestRoundScore: " + Functions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+            highScoreText.text = "HighestRoundScore: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
             infinityModeButtonRow.SetActive(false);
         }
     }

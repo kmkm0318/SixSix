@@ -43,7 +43,7 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         SetupMoneyUI(money);
         SetPosition(transform, isAvailityDice);
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(scoreText.transform));
+        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(scoreText.transform));
 
         Hide();
     }
@@ -67,7 +67,7 @@ public class ScoreApplyUI : Singleton<ScoreApplyUI>
         SetupScorePairUI(pair);
         SetPosition(targetTransform, isAvilityDice);
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(scoreText.transform));
+        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(scoreText.transform));
 
         Hide();
     }

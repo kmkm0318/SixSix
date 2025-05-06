@@ -41,8 +41,8 @@ public class RoundClearRewardUI : MonoBehaviour
         rewardNameText.text = string.Empty;
         rewardValueText.text = string.Empty;
 
-        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(rewardNameText, rewardName));
-        yield return StartCoroutine(AnimationManager.Instance.PlayTextAnimation(rewardValueText, rewardValueTextContent));
+        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(rewardNameText, rewardName));
+        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(rewardValueText, rewardValueTextContent));
 
         RoundClearUI.Instance.TriggerReward(rewardValue);
     }

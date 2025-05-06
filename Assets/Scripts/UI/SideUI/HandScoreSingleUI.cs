@@ -15,7 +15,9 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private ScorePair scorePair;
     private HandSO handSO;
+    public HandSO HandSO => handSO;
     private int enhanceLevel = 0;
+    public int EnhanceLevel => enhanceLevel;
 
     private bool isActive = true;
     private bool IsActive
@@ -59,11 +61,11 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
         else
         {
-            scorePair = handSO.GetEnhancedScorePair(enhanceLevel);
+            scorePair = GetEnhancedSocrePair();
         }
 
-        baseScoreText.text = Functions.FormatNumber(scorePair.baseScore);
-        multiplierText.text = Functions.FormatNumber(scorePair.multiplier);
+        baseScoreText.text = UtilityFunctions.FormatNumber(scorePair.baseScore);
+        multiplierText.text = UtilityFunctions.FormatNumber(scorePair.multiplier);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -99,10 +101,15 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         enhanceLevel += increaseAmount;
 
         enhanceLevelText.text = enhanceLevel.ToString();
-        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(enhanceLevelText.transform));
-        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(baseScoreText.transform));
-        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(multiplierText.transform));
+        StartCoroutine(AnimationFunction.PlayShakeAnimation(enhanceLevelText.transform));
+        StartCoroutine(AnimationFunction.PlayShakeAnimation(baseScoreText.transform));
+        StartCoroutine(AnimationFunction.PlayShakeAnimation(multiplierText.transform));
 
         UpdateScore(scorePair.baseScore == 0 && scorePair.multiplier == 0);
+    }
+
+    public ScorePair GetEnhancedSocrePair()
+    {
+        return handSO.GetEnhancedScorePair(enhanceLevel);
     }
 }

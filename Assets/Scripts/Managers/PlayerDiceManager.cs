@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -15,6 +16,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     [SerializeField] private float diceGenerateDelay = 0.25f;
     [SerializeField] private int availityDiceCountMax = 5;
     public int AvailityDiceCountMax => availityDiceCountMax;
+    [SerializeField] private int defaultPlayDiceFaceValueMax = 6;
     [SerializeField] private int defaultChaosDiceFaceValueMax = 4;
 
 
@@ -22,6 +24,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public event Action<PlayDice> OnPlayDiceClicked;
     public event Action<AvailityDice> OnAvailityDiceClicked;
     public event Action<ChaosDice> OnChaosDiceClicked;
+    public event Action<int> OnAvailityDiceCountChanged;
+    public event Action<int> OnAvailityDiceCountMaxChanged;
 
     private List<PlayDice> playDiceList = new();
     public List<PlayDice> PlayDiceList => playDiceList;
@@ -74,13 +78,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         for (int i = 0; i < firstdiceCount; i++)
         {
             yield return new WaitForSeconds(diceGenerateDelay);
-
-            var playDice = playDicePool.Get();
-            playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-            playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
-            playDice.gameObject.SetActive(true);
-
-            AddPlayDice(playDice);
+            GeneratePlayDice();
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());
@@ -88,22 +86,36 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         OnFirstDiceGenerated?.Invoke();
     }
 
+    private void GeneratePlayDice()
+    {
+        var playDice = playDicePool.Get();
+        playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        playDice.Init(defaultPlayDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, DataContainer.Instance.DefaultDiceMaterial, playDicePlayboard);
+        playDice.gameObject.SetActive(true);
+
+        AddPlayDice(playDice);
+    }
+
     private void OnBonusAchieved(BonusType type)
     {
-        if (type == BonusType.Dice)
+        if (type == BonusType.PlayDice)
         {
             SequenceManager.Instance.AddCoroutine(AddSixthDice());
+        }
+        else if (type == BonusType.AvailityDiceCountMax)
+        {
+            SequenceManager.Instance.AddCoroutine(() =>
+            {
+                availityDiceCountMax += 1;
+                OnAvailityDiceCountMaxChanged?.Invoke(availityDiceCountMax);
+            });
         }
     }
 
     private IEnumerator AddSixthDice()
     {
-        var playDice = playDicePool.Get();
-        playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        playDice.Init(6, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
-        playDice.gameObject.SetActive(true);
+        GeneratePlayDice();
 
-        AddPlayDice(playDice);
         yield return new WaitUntil(() => AreAllDiceStopped());
     }
 
@@ -139,6 +151,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         availityDice.OnMouseClicked += () => OnAvailityDiceClicked?.Invoke(availityDice);
         availityDiceList.Add(availityDice);
+
+        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
     }
 
     private void AddChaosDice(ChaosDice chaosDice)
@@ -159,6 +173,8 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
         availityDicePool.Release(availityDice);
+
+        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
     }
 
     private void RemoveChaosDice(ChaosDice chaosDice)
@@ -281,7 +297,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             yield return new WaitForSeconds(diceGenerateDelay);
             var chaosDice = chaosDicePool.Get();
             chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, playDicePlayboard);
+            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, DataContainer.Instance.ChaosDiceMaterial, playDicePlayboard);
             chaosDice.gameObject.SetActive(true);
 
             AddChaosDice(chaosDice);

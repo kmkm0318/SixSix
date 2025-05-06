@@ -40,7 +40,7 @@ public class DiceInteraction : MonoBehaviour, IClickable
     public void OnClick()
     {
         if (!IsInteractable) return;
-        if (Functions.IsPointerOverUIElement()) return;
+        if (UtilityFunctions.IsPointerOverUIElement()) return;
 
         dice.HandleMouseClick();
     }

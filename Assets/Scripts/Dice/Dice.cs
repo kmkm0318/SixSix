@@ -67,11 +67,11 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     private int faceValueMax;
     public int FaceValueMax => faceValueMax;
 
-    public virtual void Init(int maxValue, DiceFaceSpriteListSO diceFaceSpriteListSO, Playboard playboard)
+    public virtual void Init(int maxValue, DiceSpriteListSO diceSpriteListSO, DiceMaterialSO diceMaterialSO, Playboard playboard)
     {
-        if (maxValue > diceFaceSpriteListSO.DiceFaceCount)
+        if (maxValue > diceSpriteListSO.DiceFaceCount)
         {
-            maxValue = diceFaceSpriteListSO.DiceFaceCount;
+            maxValue = diceSpriteListSO.DiceFaceCount;
             Debug.LogWarning($"Dice face count is {maxValue} but max value is {maxValue}. Set to {maxValue}.");
         }
 
@@ -80,13 +80,13 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         for (int i = 0; i < faces.Length; i++)
         {
             faces[i] = new();
-            faces[i].Init(i + 1, diceFaceSpriteListSO.spriteList[i]);
+            faces[i].Init(i + 1, diceSpriteListSO.spriteList[i]);
         }
 
         faceIndex = 0;
         faceValueMax = maxValue;
 
-        diceVisual.SetSpriteMaterial(diceFaceSpriteListSO.spriteMaterial);
+        diceVisual.SetSpriteMaterial(diceMaterialSO.defaultMaterial);
         SetFace(faceIndex);
         InitDiceInteractType();
 
@@ -273,7 +273,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     public void ShowHighlight()
     {
-        if (Functions.IsPointerOverUIElement()) return;
+        if (UtilityFunctions.IsPointerOverUIElement()) return;
         DiceHighlight.Instance.ShowHighlight(this);
     }
 
@@ -286,7 +286,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
         faces[faceIndex].Enhance(scorePair);
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
-        StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(transform, false));
+        StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, false));
     }
 
     public abstract void ShowToolTip();

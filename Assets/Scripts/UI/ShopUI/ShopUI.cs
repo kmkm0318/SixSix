@@ -152,7 +152,7 @@ public class ShopUI : Singleton<ShopUI>
 
         if (gameObject.activeSelf)
         {
-            StartCoroutine(AnimationManager.Instance.PlayShakeAnimation(rerollButtonText.transform));
+            StartCoroutine(AnimationFunction.PlayShakeAnimation(rerollButtonText.transform));
         }
     }
     #endregion

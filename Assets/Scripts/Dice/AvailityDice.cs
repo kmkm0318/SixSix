@@ -9,7 +9,7 @@ public class AvailityDice : Dice
 
     public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
-        base.Init(availityDiceSO.MaxFaceValue, availityDiceSO.diceFaceSpriteListSO, playboard);
+        base.Init(availityDiceSO.MaxFaceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.diceMaterialSO, playboard);
 
         this.availityDiceSO = availityDiceSO;
     }

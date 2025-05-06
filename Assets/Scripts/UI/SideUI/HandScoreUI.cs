@@ -153,4 +153,16 @@ public class HandScoreUI : Singleton<HandScoreUI>
             handScoreSingleUI.Enhance(enhanceLevel);
         }
     }
+
+    public Dictionary<Hand, ScorePair> GetHandScorePairs()
+    {
+        var res = new Dictionary<Hand, ScorePair>();
+
+        foreach (var pair in handScoreSingleUIDict)
+        {
+            res.Add(pair.Key, pair.Value.GetEnhancedSocrePair());
+        }
+
+        return res;
+    }
 }
