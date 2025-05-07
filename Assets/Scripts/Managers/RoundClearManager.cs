@@ -28,6 +28,18 @@ public class RoundClearManager : Singleton<RoundClearManager>
     {
         OnRoundClearEnded?.Invoke();
     }
+
+    public int GetRewardValue(RoundClearRewardType type)
+    {
+        return type switch
+        {
+            RoundClearRewardType.RoundNum => PlayerMoneyManager.Instance.RoundClearReward,
+            RoundClearRewardType.PlayRemain => PlayerMoneyManager.Instance.PlayRemainReward,
+            RoundClearRewardType.BossRound => PlayerMoneyManager.Instance.BossRoundReward,
+            RoundClearRewardType.MoneyInterest => PlayerMoneyManager.Instance.MoneyInterestReward,
+            _ => 0,
+        };
+    }
 }
 
 public enum RoundClearRewardType
@@ -35,5 +47,6 @@ public enum RoundClearRewardType
     None,
     RoundNum,
     PlayRemain,
+    BossRound,
     MoneyInterest,
 }

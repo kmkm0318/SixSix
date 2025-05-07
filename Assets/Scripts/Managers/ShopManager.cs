@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopManager : Singleton<ShopManager>
 {
-    [SerializeField] private int rerollCostMax = 6;
+    [SerializeField] private int initialRerollCost = 5;
     [SerializeField] private int availityDiceMerchantCountMax = 3;
     [SerializeField] private int enhanceMerchantCountMax = 3;
     public int EnhanceMerchantCountMax => enhanceMerchantCountMax;
@@ -19,7 +19,7 @@ public class ShopManager : Singleton<ShopManager>
     public event Action OnRerollCompleted;
 
     private AvailityDiceListSO availityDiceListSO;
-    private int rerollCost = 1;
+    private int rerollCost = 0;
     public int RerollCost
     {
         get => rerollCost;
@@ -49,7 +49,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (state == GameState.Shop)
         {
-            SetRandomRerollCost();
+            RerollCost = initialRerollCost;
             OnShopStarted?.Invoke();
         }
     }
@@ -136,10 +136,10 @@ public class ShopManager : Singleton<ShopManager>
         for (int i = 0; i < count; i++)
         {
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
-            int price = enhanceLevel * 5 - (enhanceLevel - 1);
+            int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
             int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
-            ScorePair scorePair = new(baseScore, 1f + (enhanceLevel * 10 - baseScore) * 0.1f);
+            ScorePair scorePair = new(baseScore, 1f + (enhanceLevel * 10 - baseScore) * 0.05f);
 
             diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }
@@ -170,12 +170,7 @@ public class ShopManager : Singleton<ShopManager>
         PlayerMoneyManager.Instance.Money -= RerollCost;
         SequenceManager.Instance.ApplyParallelCoroutine();
         OnRerollCompleted?.Invoke();
-        SetRandomRerollCost();
-    }
-
-    private void SetRandomRerollCost()
-    {
-        RerollCost = UnityEngine.Random.Range(1, rerollCostMax + 1);
+        RerollCost++;
     }
 }
 

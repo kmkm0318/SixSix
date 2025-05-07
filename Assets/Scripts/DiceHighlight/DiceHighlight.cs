@@ -27,7 +27,7 @@ public class DiceHighlight : Singleton<DiceHighlight>
     {
         if (!gameObject.activeSelf || targetDice == null) return;
 
-        var targetScale = Mathf.PingPong(Time.time * scaleSpeed, currentMaxScale - currentMinScale) + currentMinScale;
+        var targetScale = Mathf.PingPong(Time.time * scaleSpeed, 1) * (currentMaxScale - currentMinScale) + currentMinScale;
         maskPanel.transform.localScale = new Vector3(targetScale, targetScale, 1);
     }
 

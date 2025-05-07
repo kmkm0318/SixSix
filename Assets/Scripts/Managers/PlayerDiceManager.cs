@@ -335,8 +335,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
         foreach (var availityDice in triggeredAvailityDiceList)
         {
-            if (UsableFaceValues != null && !UsableFaceValues.Contains(availityDice.FaceValue)) continue;
-
+            // if (UsableFaceValues != null && !UsableFaceValues.Contains(availityDice.FaceValue)) continue;
             availityDice.ApplyEffect();
         }
     }

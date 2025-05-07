@@ -16,7 +16,7 @@ MonoBehaviour:
   rarity: 0
   price: 5
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  diceMaterialSO: {fileID: 11400000, guid: ecec0e61916752547aa7366dcbb095d1, type: 2}
+  diceMaterialSO: {fileID: 11400000, guid: 0432b9755ff245e4abc9a2d5fbadad91, type: 2}
   maxFaceValue: 5
   availityTrigger: {fileID: 11400000, guid: 3b2fc54b35c39cd4291fada74b219fa6, type: 2}
   availityEffect: {fileID: 11400000, guid: 5312276571c1fb640ab901ec83ca9107, type: 2}

@@ -12,6 +12,8 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     [SerializeField] private int interestPerUnit = 1;
     [SerializeField] private int interestMax = 5;
     public int MoneyInterestReward => Mathf.Min(interestMax, Money / interestUnit * interestPerUnit);
+    [SerializeField] private int bossRoundReward = 3;
+    public int BossRoundReward => RoundManager.Instance.IsBossRound ? bossRoundReward : 0;
 
     public event Action<int> OnMoneyChanged;
 
@@ -48,8 +50,11 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
     {
         if (type == BonusType.Money)
         {
-            Money += bonusMoney;
-            SequenceManager.Instance.ApplyParallelCoroutine();
+            SequenceManager.Instance.AddCoroutine(() =>
+            {
+                Money += bonusMoney;
+                SequenceManager.Instance.ApplyParallelCoroutine();
+            });
         }
     }
 

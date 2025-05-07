@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50dc845823cc5cc4e82eba88840f0442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rerollCostMax: 6
+  initialRerollCost: 5
   availityDiceMerchantCountMax: 3
   enhanceMerchantCountMax: 3
 --- !u!1 &155283467
@@ -9328,7 +9328,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!1 &1025096028
 GameObject:
@@ -9490,7 +9490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 35, y: 520}
+  m_AnchoredPosition: {x: 35, y: 345}
   m_SizeDelta: {x: 75, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075700333
@@ -18677,7 +18677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxScale: 1.125
   minScale: 1
-  scaleSpeed: 0.5
+  scaleSpeed: 5
   maskPanel: {fileID: 5560694499706373919}
   spriteRenderer: {fileID: 3277868765947517375}
   textUI: {fileID: 3774068739783765915}

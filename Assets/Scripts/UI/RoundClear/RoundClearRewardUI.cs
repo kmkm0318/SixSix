@@ -49,21 +49,24 @@ public class RoundClearRewardUI : MonoBehaviour
 
     private void SetRewardText()
     {
+        rewardValue = RoundClearManager.Instance.GetRewardValue(type);
+
         switch (type)
         {
             case RoundClearRewardType.RoundNum:
                 rewardNameText.text = "Round Clear";
-                rewardValue = PlayerMoneyManager.Instance.RoundClearReward;
                 rewardValueText.text = GetRewardValueText(rewardValue);
                 break;
             case RoundClearRewardType.PlayRemain:
                 rewardNameText.text = "Play Remain";
-                rewardValue = PlayerMoneyManager.Instance.PlayRemainReward;
                 rewardValueText.text = GetRewardValueText(rewardValue);
                 break;
             case RoundClearRewardType.MoneyInterest:
                 rewardNameText.text = "Money Interest";
-                rewardValue = PlayerMoneyManager.Instance.MoneyInterestReward;
+                rewardValueText.text = GetRewardValueText(rewardValue);
+                break;
+            case RoundClearRewardType.BossRound:
+                rewardNameText.text = "Boss Round Clear";
                 rewardValueText.text = GetRewardValueText(rewardValue);
                 break;
             default:
