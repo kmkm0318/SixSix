@@ -14,4 +14,8 @@ public enum AvailityTriggerType
     None,
     PlayDice,
     Hand,
+    RoundStarted,
+    RoundCleared,
+    ShopStarted,
+    ShopEnded,
 }

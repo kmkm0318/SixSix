@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: BossRoundListSO_test
   m_EditorClassIdentifier: 
   bossRounds:
-  - {fileID: 11400000, guid: 197c8a335e8dd4a4b870665c961220c4, type: 2}
+  - {fileID: 11400000, guid: d4f4a3a0456a6b145bc03cfb2fd762bc, type: 2}
+  - {fileID: 11400000, guid: 200f1b1ae36f8c64397cc475581ceae5, type: 2}

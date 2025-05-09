@@ -50,7 +50,7 @@ public class AvailityDiceMerchantUI : MonoBehaviour
         if (availityDiceSO == null) return;
 
         diceImage.material = availityDiceSO.diceMaterialSO.uiMaterial;
-        diceImage.sprite = availityDiceSO.diceSpriteListSO.spriteList[availityDiceSO.MaxFaceValue - 1];
+        diceImage.sprite = availityDiceSO.diceSpriteListSO.spriteList[availityDiceSO.MaxDiceValue - 1];
         nameText.text = availityDiceSO.diceName;
         descriptionText.text = availityDiceSO.GetDescriptionText();
         buttonText.text = $"Buy(${availityDiceSO.price})";

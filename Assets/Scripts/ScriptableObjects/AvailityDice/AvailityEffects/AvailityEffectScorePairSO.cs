@@ -6,12 +6,15 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
 {
     [SerializeField] private ScorePair scorePair;
 
-    public override void ApplyEffect(AvailityDiceContext context)
+    public override void TriggerEffect(AvailityDiceContext context)
     {
-        float baseScore = GetCalculatedEffectValue(scorePair.baseScore, context.availtiyDice.FaceValue);
-        float multiplier = GetCalculatedEffectValue(scorePair.multiplier, context.availtiyDice.FaceValue);
+        float baseScore = GetCalculatedEffectValue(scorePair.baseScore, context.availtiyDice.DiceValue);
+        float multiplier = GetCalculatedEffectValue(scorePair.multiplier, context.availtiyDice.DiceValue);
 
-        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(context.availtiyDice, new(baseScore, multiplier), true);
+        ScorePair tmp = new(baseScore, multiplier);
+
+        ScoreManager.Instance.ApplyScorePair(tmp);
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(context.availtiyDice.transform, Vector3.down, tmp);
     }
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
@@ -30,7 +33,7 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
 
         string res = "Get Score(" + string.Join(", ", parts) + ")";
 
-        res += GetCalculateDescription(availityDiceSO.MaxFaceValue);
+        res += GetCalculateDescription(availityDiceSO.MaxDiceValue);
 
         return res;
     }

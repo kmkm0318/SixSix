@@ -4,26 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
-public enum BonusType
-{
-    Money,
-    AvailityDiceCountMax,
-    PlayDice,
-}
-
-[Serializable]
-public struct BonusTypeScorePair
-{
-    public BonusType type;
-    public int score;
-
-    public BonusTypeScorePair(BonusType type, int score)
-    {
-        this.type = type;
-        this.score = score;
-    }
-}
-
 public class BonusManager : Singleton<BonusManager>
 {
     [SerializeField] private List<BonusTypeScorePair> bonusTargetScoreList;
@@ -57,7 +37,14 @@ public class BonusManager : Singleton<BonusManager>
 
     private void Start()
     {
-        RegisterEvents();
+        if (DataContainer.Instance.DefaultPlayDiceCount >= 6)
+        {
+            HandScoreUI.Instance.ScrollLayoutPanel(true);
+        }
+        else
+        {
+            RegisterEvents();
+        }
     }
 
     private void RegisterEvents()
@@ -143,5 +130,28 @@ public class BonusManager : Singleton<BonusManager>
         {
             OnAllBonusAchieved?.Invoke();
         }
+    }
+}
+
+[Serializable]
+public enum BonusType
+{
+    Money,
+    AvailityDiceCountMax,
+    PlayDice,
+    PlayMax,
+    RollMax,
+}
+
+[Serializable]
+public struct BonusTypeScorePair
+{
+    public BonusType type;
+    public int score;
+
+    public BonusTypeScorePair(BonusType type, int score)
+    {
+        this.type = type;
+        this.score = score;
     }
 }

@@ -2,17 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public enum GameState
-{
-    None,
-    Loading,
-    Round,
-    RoundClear,
-    Shop,
-    GameClear,
-    GameOver,
-}
-
 public class GameManager : Singleton<GameManager>
 {
     public event Action<GameState> OnGameStateChanged;
@@ -107,4 +96,15 @@ public class GameManager : Singleton<GameManager>
 
         CurrentGameState = GameState.Loading;
     }
+}
+
+public enum GameState
+{
+    None,
+    Loading,
+    Round,
+    RoundClear,
+    Shop,
+    GameClear,
+    GameOver,
 }

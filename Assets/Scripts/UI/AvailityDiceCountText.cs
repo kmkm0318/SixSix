@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ public class AvailityDiceCountText : MonoBehaviour
     private void RegisterEvents()
     {
         PlayerDiceManager.Instance.OnAvailityDiceCountChanged += OnAvailityDiceCountChanged;
-        PlayerDiceManager.Instance.OnAvailityDiceCountMaxChanged += OnAvailityDiceCountMaxChanged;
+        PlayerDiceManager.Instance.OnCurrentAvailityDiceMaxChanged += OnCurrentAvailityDiceMaxChanged;
     }
 
     private void OnAvailityDiceCountChanged(int count)
@@ -33,7 +32,7 @@ public class AvailityDiceCountText : MonoBehaviour
         StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, true));
     }
 
-    private void OnAvailityDiceCountMaxChanged(int count)
+    private void OnCurrentAvailityDiceMaxChanged(int count)
     {
         maxCount = count;
         SetText();
@@ -43,7 +42,7 @@ public class AvailityDiceCountText : MonoBehaviour
     private void Init()
     {
         currentCount = PlayerDiceManager.Instance.AvailityDiceList.Count;
-        maxCount = PlayerDiceManager.Instance.AvailityDiceCountMax;
+        maxCount = PlayerDiceManager.Instance.CurrentAvailityDiceMax;
         SetText();
     }
 

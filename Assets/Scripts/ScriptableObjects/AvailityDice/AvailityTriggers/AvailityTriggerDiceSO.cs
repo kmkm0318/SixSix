@@ -9,7 +9,7 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
 
     public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
     {
-        return triggerType == TriggerType && context.playDice != null && targetValues.Contains(context.playDice.FaceValue);
+        return triggerType == TriggerType && context.playDice != null && targetValues.Contains(context.playDice.DiceValue);
     }
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
@@ -20,11 +20,11 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
         }
         else if (targetValues.Count == 1)
         {
-            return $"When Dice is {targetValues[0]}";
+            return $"When Dice Value is\n\"{targetValues[0]}\"";
         }
         else
         {
-            return $"When Dice is in\n({string.Join(", ", targetValues)})";
+            return $"When Dice Value is\nin ({string.Join(", ", targetValues)})";
         }
     }
 }

@@ -7,7 +7,6 @@ public class OptionUI : Singleton<OptionUI>
 {
     [SerializeField] private RectTransform optionPanel;
     [SerializeField] private Vector3 hidePos;
-    [SerializeField] private float moveDuration = 0.5f;
     [SerializeField] private OptionSelectUI[] optionSelectUIs;
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
@@ -37,28 +36,28 @@ public class OptionUI : Singleton<OptionUI>
         gameObject.SetActive(true);
         optionPanel.anchoredPosition = hidePos;
         optionPanel
-            .DOAnchorPos(Vector3.zero, moveDuration)
+            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(moveDuration);
+        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
     }
 
     private void Hide()
     {
         optionPanel.anchoredPosition = Vector3.zero;
         optionPanel
-            .DOAnchorPos(hidePos, moveDuration)
+            .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
                 gameObject.SetActive(false);
             });
 
-        fadeCanvasGroup.FadeOut(moveDuration);
+        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
     }
     #endregion
 

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b16ba16e8bf2fe4d861ce493f5ce264, type: 3}
-  m_Name: BossRound_LimitPlayDiceSO
+  m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
+  m_Name: DefaultDiceStat
   m_EditorClassIdentifier: 
-  bossName: Limit Play Dice
-  bossDescription: Disable 1 Play Dice
-  limitCount: 1
+  defaultDiceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  defaultMaxPlay: 3
+  defaultMaxRoll: 3

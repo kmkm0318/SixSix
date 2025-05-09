@@ -90,7 +90,7 @@ public class HandScoreUI : Singleton<HandScoreUI>
 
     private void OnAllBonusAchieved()
     {
-        SequenceManager.Instance.AddCoroutine(ScrollLayoutPanel);
+        SequenceManager.Instance.AddCoroutine(() => ScrollLayoutPanel());
     }
 
     private void OnDiceEnhanceStarted()
@@ -123,9 +123,16 @@ public class HandScoreUI : Singleton<HandScoreUI>
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutPanel);
     }
 
-    private void ScrollLayoutPanel()
+    public void ScrollLayoutPanel(bool isImmediate = false)
     {
-        layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
+        if (isImmediate)
+        {
+            layoutPanel.anchoredPosition = targetScrollAnchoredPosition;
+        }
+        else
+        {
+            layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
+        }
     }
 
     public void SelectHand(HandSO handSO, ScorePair scorePair)

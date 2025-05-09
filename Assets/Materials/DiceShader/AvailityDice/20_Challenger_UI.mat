@@ -258,7 +258,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":0.0,"g":0.501960813999176,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -292,7 +292,7 @@ Texture2D:
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 256
-  _typelessdata: 0000ffff0004fbff0008f7ff000cf3ff0010efff0014ebff0018e7ff001ce3ff0020dfff0024dbff0028d7ff002dd2ff0031ceff0035caff0039c6ff003dc2ff0041beff0045baff0049b6ff004db2ff0051aeff0055aaff0059a6ff005da2ff00619eff00659aff006996ff006d92ff00718eff00758aff007986ff007d82ff00827dff008679ff008a75ff008e71ff00926dff009669ff009a65ff009e61ff00a25dff00a659ff00aa55ff00ae51ff00b24dff00b649ff00ba45ff00be41ff00c23dff00c639ff00ca35ff00ce31ff00d22dff00d728ff00db24ff00df20ff00e31cff00e718ff00eb14ff00ef10ff00f30cff00f708ff00fb04ff00ff00ff
+  _typelessdata: 008000ff008200ff008400ff008600ff008800ff008a00ff008c00ff008e00ff009000ff009200ff009400ff009600ff009800ff009a00ff009c00ff009e00ff00a000ff00a200ff00a400ff00a600ff00a800ff00aa00ff00ac00ff00ae00ff00b000ff00b200ff00b400ff00b600ff00b800ff00ba00ff00bc00ff00be00ff00c100ff00c300ff00c500ff00c700ff00c900ff00cb00ff00cd00ff00cf00ff00d100ff00d300ff00d500ff00d700ff00d900ff00db00ff00dd00ff00df00ff00e100ff00e300ff00e500ff00e700ff00e900ff00eb00ff00ed00ff00ef00ff00f100ff00f300ff00f500ff00f700ff00f900ff00fb00ff00fd00ff00ff00ff
   m_StreamData:
     serializedVersion: 2
     offset: 0

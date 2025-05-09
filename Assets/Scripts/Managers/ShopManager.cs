@@ -23,9 +23,10 @@ public class ShopManager : Singleton<ShopManager>
     public int RerollCost
     {
         get => rerollCost;
-        private set
+        set
         {
             if (rerollCost == value) return;
+            if (value < 0) value = 0;
             rerollCost = value;
             OnRerollCostChanged?.Invoke(rerollCost);
         }
@@ -33,8 +34,8 @@ public class ShopManager : Singleton<ShopManager>
 
     private void Start()
     {
-        RegisterEvents();
         availityDiceListSO = DataContainer.Instance.ShopAvailityDiceListSO;
+        RegisterEvents();
     }
 
     #region RegisterEvents
@@ -84,7 +85,7 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
-        if (PlayerDiceManager.Instance.AvailityDiceList.Count >= PlayerDiceManager.Instance.AvailityDiceCountMax)
+        if (PlayerDiceManager.Instance.AvailityDiceList.Count >= PlayerDiceManager.Instance.CurrentAvailityDiceMax)
         {
             OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
             return;
@@ -139,7 +140,7 @@ public class ShopManager : Singleton<ShopManager>
             int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
             int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
-            ScorePair scorePair = new(baseScore, 1f + (enhanceLevel * 10 - baseScore) * 0.05f);
+            ScorePair scorePair = new(baseScore, (enhanceLevel * 10 - baseScore) * 0.05f);
 
             diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }
@@ -152,7 +153,7 @@ public class ShopManager : Singleton<ShopManager>
         for (int i = 0; i < count; i++)
         {
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
-            int price = enhanceLevel * 3 - (enhanceLevel - 1);
+            int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
             res.Add(new(enhanceLevel, price, i));
         }

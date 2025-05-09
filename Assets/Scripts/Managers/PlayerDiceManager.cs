@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -12,12 +11,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     [SerializeField] private ChaosDice chaosDicePrefab;
     [SerializeField] private Playboard playDicePlayboard;
     [SerializeField] private Playboard availityDicePlayboard;
-    [SerializeField] private int firstdiceCount = 5;
     [SerializeField] private float diceGenerateDelay = 0.25f;
-    [SerializeField] private int availityDiceCountMax = 5;
-    public int AvailityDiceCountMax => availityDiceCountMax;
-    [SerializeField] private int defaultPlayDiceFaceValueMax = 6;
-    [SerializeField] private int defaultChaosDiceFaceValueMax = 4;
+    [SerializeField] private int defaultPlayDiceValueMax = 6;
+    [SerializeField] private int defaultChaosDiceValueMax = 4;
 
 
     public event Action OnFirstDiceGenerated;
@@ -25,7 +21,19 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public event Action<AvailityDice> OnAvailityDiceClicked;
     public event Action<ChaosDice> OnChaosDiceClicked;
     public event Action<int> OnAvailityDiceCountChanged;
-    public event Action<int> OnAvailityDiceCountMaxChanged;
+    public event Action<int> OnCurrentAvailityDiceMaxChanged;
+
+    private int currentAvailityDiceMax = 0;
+    public int CurrentAvailityDiceMax
+    {
+        get => currentAvailityDiceMax;
+        set
+        {
+            if (currentAvailityDiceMax == value) return;
+            currentAvailityDiceMax = value;
+            OnCurrentAvailityDiceMaxChanged?.Invoke(currentAvailityDiceMax);
+        }
+    }
 
     private List<PlayDice> playDiceList = new();
     public List<PlayDice> PlayDiceList => playDiceList;
@@ -38,7 +46,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     private ObjectPool<ChaosDice> chaosDicePool;
     private bool isAvailityDiceAutoKeep = false;
     public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
-    public List<int> UsableFaceValues { get; set; }
+    public List<int> UsableDiceValues { get; set; }
     public bool IsKeepable { get; set; } = true;
 
     private void Start()
@@ -51,9 +59,11 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
 
-        playDicePool = new ObjectPool<PlayDice>(() => Instantiate(playDicePrefab), playDice => { }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
-        availityDicePool = new ObjectPool<AvailityDice>(() => Instantiate(availityDicePrefab), availityDice => { }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
-        chaosDicePool = new ObjectPool<ChaosDice>(() => Instantiate(chaosDicePrefab), chaosDice => { }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
+        playDicePool = new(() => Instantiate(playDicePrefab), playDice => { }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
+        availityDicePool = new(() => Instantiate(availityDicePrefab), availityDice => { }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
+        chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
+
+        CurrentAvailityDiceMax = DataContainer.Instance.DefaultAvailityDiceMax;
     }
 
     #region RegisterEvents
@@ -75,7 +85,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
 
     private IEnumerator FirstDiceGenerate()
     {
-        for (int i = 0; i < firstdiceCount; i++)
+        for (int i = 0; i < DataContainer.Instance.DefaultPlayDiceCount; i++)
         {
             yield return new WaitForSeconds(diceGenerateDelay);
             GeneratePlayDice();
@@ -90,7 +100,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        playDice.Init(defaultPlayDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, DataContainer.Instance.DefaultDiceMaterial, playDicePlayboard);
+        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultDiceMaterial, playDicePlayboard);
         playDice.gameObject.SetActive(true);
 
         AddPlayDice(playDice);
@@ -100,19 +110,18 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         if (type == BonusType.PlayDice)
         {
-            SequenceManager.Instance.AddCoroutine(AddSixthDice());
+            SequenceManager.Instance.AddCoroutine(AddBonusPlayDice());
         }
         else if (type == BonusType.AvailityDiceCountMax)
         {
             SequenceManager.Instance.AddCoroutine(() =>
             {
-                availityDiceCountMax += 1;
-                OnAvailityDiceCountMaxChanged?.Invoke(availityDiceCountMax);
+                CurrentAvailityDiceMax++;
             });
         }
     }
 
-    private IEnumerator AddSixthDice()
+    private IEnumerator AddBonusPlayDice()
     {
         GeneratePlayDice();
 
@@ -223,7 +232,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         return diceList.TrueForAll(dice => !dice.IsRolling);
     }
 
-    private List<PlayDice> GetOrderedPlayDiceList()
+    public List<PlayDice> GetOrderedPlayDiceList()
     {
         List<PlayDice> orderedList = new(playDiceList);
         orderedList.Sort((a, b) => a.FaceIndex.CompareTo(b.FaceIndex));
@@ -235,7 +244,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         List<int> playDiceValues = new();
         foreach (Dice dice in playDiceList)
         {
-            playDiceValues.Add(dice.FaceValue);
+            playDiceValues.Add(dice.DiceValue);
         }
         playDiceValues.Sort();
         return playDiceValues;
@@ -297,7 +306,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             yield return new WaitForSeconds(diceGenerateDelay);
             var chaosDice = chaosDicePool.Get();
             chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-            chaosDice.Init(defaultChaosDiceFaceValueMax, DataContainer.Instance.DefaultDiceList, DataContainer.Instance.ChaosDiceMaterial, playDicePlayboard);
+            chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosDiceMaterial, playDicePlayboard);
             chaosDice.gameObject.SetActive(true);
 
             AddChaosDice(chaosDice);
@@ -311,55 +320,6 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         while (chaosDiceList.Count > 0)
         {
             RemoveChaosDice(chaosDiceList[0]);
-        }
-    }
-    #endregion
-
-    #region ApplyDice
-    public void ApplyPlayDices()
-    {
-        var playDiceList = Instance.GetOrderedPlayDiceList();
-
-        foreach (var playDice in playDiceList)
-        {
-            if (UsableFaceValues != null && !UsableFaceValues.Contains(playDice.FaceValue)) continue;
-
-            playDice.ApplyScorePairs();
-            ApplyAvailityDice(playDice);
-        }
-    }
-
-    private void ApplyAvailityDice(AvailityTriggerType triggerType, AvailityDiceContext context)
-    {
-        List<AvailityDice> triggeredAvailityDiceList = availityDiceList.FindAll(dice => dice.IsTriggered(triggerType, context));
-
-        foreach (var availityDice in triggeredAvailityDiceList)
-        {
-            // if (UsableFaceValues != null && !UsableFaceValues.Contains(availityDice.FaceValue)) continue;
-            availityDice.ApplyEffect();
-        }
-    }
-
-    private void ApplyAvailityDice(AvailityTriggerType triggerType)
-    {
-        ApplyAvailityDice(triggerType, new());
-    }
-
-    private void ApplyAvailityDice(PlayDice playDice)
-    {
-        ApplyAvailityDice(AvailityTriggerType.PlayDice, new(playDice: playDice));
-    }
-
-    public void ApplyAvailityDice(HandSO handSO)
-    {
-        ApplyAvailityDice(AvailityTriggerType.Hand, new(handSO: handSO));
-    }
-
-    public void ApplyChaosDices()
-    {
-        foreach (var chaosDice in chaosDiceList)
-        {
-            chaosDice.ApplyScorePairs();
         }
     }
     #endregion

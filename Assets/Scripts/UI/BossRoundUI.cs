@@ -53,7 +53,7 @@ public class BossRoundUI : Singleton<BossRoundUI>
         bossRoundUIPanel.anchoredPosition = hidePos;
 
         currentTween = bossRoundUIPanel
-        .DOAnchorPos(Vector3.zero, 0.5f)
+        .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {
@@ -68,7 +68,7 @@ public class BossRoundUI : Singleton<BossRoundUI>
         bossRoundUIPanel.anchoredPosition = Vector3.zero;
 
         currentTween = bossRoundUIPanel
-        .DOAnchorPos(hidePos, 0.5f)
+        .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {

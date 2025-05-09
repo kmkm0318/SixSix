@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class DataContainer : Singleton<DataContainer>
 {
-    #region DiceSpriteListSO
-    [SerializeField] private DiceSpriteListSO defaultDiceList;
-    public DiceSpriteListSO DefaultDiceList => defaultDiceList;
-    [SerializeField] private DiceSpriteListSO numberDiceList;
-    public DiceSpriteListSO NumberDiceList => numberDiceList;
+    public readonly float DefaultDuration = 0.5f;
+
+    #region DiceStatSO
+    [SerializeField] private DiceStatSO currentDiceStat;
+    public DiceStatSO CurrentDiceStat => currentDiceStat;
+    public DiceSpriteListSO DefaultDiceSpriteList => currentDiceStat.defaultDiceSpriteListSO;
+    public int DefaultPlayDiceCount => currentDiceStat.defaultPlayDiceCount;
+    public int DefaultAvailityDiceMax => currentDiceStat.defaultAvailityDiceMax;
+    public int DefaultMaxPlay => currentDiceStat.defaultMaxPlay;
+    public int DefaultMaxRoll => currentDiceStat.defaultMaxRoll;
     #endregion
 
     #region DiceMaterialSO

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceName: Conqueror
   rarity: 0
-  price: 6
+  price: 5
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   diceMaterialSO: {fileID: 11400000, guid: 4438c36a6f10bc2498feea07d8848a39, type: 2}
-  maxFaceValue: 4
+  maxDiceValue: 6
   availityTrigger: {fileID: 11400000, guid: 0bb6a98230a11ee46afd26e4057f1d95, type: 2}
   availityEffect: {fileID: 11400000, guid: b6a5562b7a236c64fb90ca275e668709, type: 2}

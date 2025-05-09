@@ -15,8 +15,8 @@ MonoBehaviour:
   hand: 8
   handName: Six Six
   scorePair:
-    baseScore: 600
-    multiplier: 600
+    baseScore: 666
+    multiplier: 666
   enhanceAmount:
-    baseScore: 100
-    multiplier: 100
+    baseScore: 111
+    multiplier: 111

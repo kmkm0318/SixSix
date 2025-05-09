@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DiceMovement : MonoBehaviour
 {
-    [SerializeField] private float stopThreshold = 0.1f;
+    [SerializeField] private float stopSpeedThreshold = 0.1f;
     [SerializeField] private float stopAngularThreshold = 5f;
-    [SerializeField] private float stopTime = 0.5f;
+    [SerializeField] private float stopTimeThreshold = 0.5f;
 
     private bool isRolling = false;
     public bool IsRolling
@@ -53,9 +53,9 @@ public class DiceMovement : MonoBehaviour
     private IEnumerator CheckRollComplete()
     {
         float elapsedTime = 0f;
-        while (elapsedTime < stopTime)
+        while (elapsedTime < stopTimeThreshold)
         {
-            if (rb.linearVelocity.magnitude < stopThreshold && Mathf.Abs(rb.angularVelocity) < stopAngularThreshold)
+            if (rb.linearVelocity.magnitude < stopSpeedThreshold && Mathf.Abs(rb.angularVelocity) < stopAngularThreshold)
             {
                 elapsedTime += Time.deltaTime;
             }

@@ -49,7 +49,7 @@ public class AdviserUI : Singleton<AdviserUI>
     #region GetAdviseString
     private static List<(Hand, float, ScorePair)> GetHandList()
     {
-        var diceValues = PlayerDiceManager.Instance.PlayDiceList.Select(dice => dice.FaceValue).ToList();
+        var diceValues = PlayerDiceManager.Instance.PlayDiceList.Select(dice => dice.DiceValue).ToList();
         var handProbabilities = HandCalculator.GetHandProbabilities(diceValues);
         var handScorePairs = HandScoreUI.Instance.GetHandScorePairs();
 
@@ -112,7 +112,7 @@ public class AdviserUI : Singleton<AdviserUI>
         advisePanel.anchoredPosition = hidePos;
 
         currentTween = advisePanel
-        .DOAnchorPos(Vector3.zero, 0.5f)
+        .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {
@@ -127,7 +127,7 @@ public class AdviserUI : Singleton<AdviserUI>
         advisePanel.anchoredPosition = Vector3.zero;
 
         currentTween = advisePanel
-        .DOAnchorPos(hidePos, 0.5f)
+        .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {

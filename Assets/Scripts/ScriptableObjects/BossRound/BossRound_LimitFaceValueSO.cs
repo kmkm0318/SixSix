@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BossRound_LimitFaceValueSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitFaceValueSO")]
-public class BossRound_LimitFaceValueSO : BossRoundSO
+[CreateAssetMenu(fileName = "BossRound_LimitDiceValueSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitDiceValueSO")]
+public class BossRound_LimitDiceValueSO : BossRoundSO
 {
-    [SerializeField] private List<int> targetFaceValues;
+    [SerializeField] private List<int> targetDiceValues;
 
     public override void OnEnter()
     {
-        PlayerDiceManager.Instance.UsableFaceValues = targetFaceValues;
+        PlayerDiceManager.Instance.UsableDiceValues = targetDiceValues;
     }
 
     public override void OnExit()
     {
-        PlayerDiceManager.Instance.UsableFaceValues = null;
+        PlayerDiceManager.Instance.UsableDiceValues = null;
     }
 }

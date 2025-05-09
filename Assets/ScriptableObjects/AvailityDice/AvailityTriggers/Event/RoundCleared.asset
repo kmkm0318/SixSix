@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8036bb4b269fb429c59ed760f7fa59, type: 3}
-  m_Name: BossRound_LimitAvailityDiceSO
+  m_Script: {fileID: 11500000, guid: bd57ced50233f644eb5805dc013c8cba, type: 3}
+  m_Name: RoundCleared
   m_EditorClassIdentifier: 
-  bossName: Limit Availity Dice
-  bossDescription: Disable 1 Availity Dice
-  limitCount: 1
+  triggerType: 4

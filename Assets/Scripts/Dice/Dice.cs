@@ -60,12 +60,13 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     private DiceFace[] faces;
     public DiceFace[] Faces => faces;
+
     private int faceIndex;
     public int FaceIndex => faceIndex;
-    public int FaceValue => faceIndex + 1;
+    public int DiceValue => faces[faceIndex].FaceValue;
 
-    private int faceValueMax;
-    public int FaceValueMax => faceValueMax;
+    private int diceValueMax;
+    public int DiceValueMax => diceValueMax;
 
     public virtual void Init(int maxValue, DiceSpriteListSO diceSpriteListSO, DiceMaterialSO diceMaterialSO, Playboard playboard)
     {
@@ -84,7 +85,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         }
 
         faceIndex = 0;
-        faceValueMax = maxValue;
+        diceValueMax = maxValue;
 
         diceVisual.SetSpriteMaterial(diceMaterialSO.defaultMaterial);
         SetFace(faceIndex);
@@ -236,7 +237,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     protected virtual void ChangeFace(int value = 1)
     {
         faceIndex += value;
-        faceIndex %= faceValueMax;
+        faceIndex %= diceValueMax;
         SetFace(faceIndex);
     }
     #endregion

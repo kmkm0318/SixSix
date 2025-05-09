@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class RollManager : Singleton<RollManager>
 {
-    [SerializeField] private int rollMax = 3;
-    public int RollMax => rollMax;
+    [SerializeField] private int rollMax;
     [SerializeField] private float rollPowerMax = 10f;
     public float RollPowerMax => rollPowerMax;
     [SerializeField] private float rollPowerMin = 1f;
@@ -19,6 +18,7 @@ public class RollManager : Singleton<RollManager>
 
     public bool IsRolling { get; private set; } = false;
 
+    private int currentRollMax;
     private int rollRemain = 0;
     public int RollRemain
     {
@@ -36,9 +36,15 @@ public class RollManager : Singleton<RollManager>
 
     private void Start()
     {
-        powerChangeSpeed = rollPowerMax - rollPowerMin;
-
+        Init();
         RegisterEvents();
+    }
+
+    private void Init()
+    {
+        rollMax = DataContainer.Instance.CurrentDiceStat.defaultMaxRoll;
+        currentRollMax = rollMax;
+        powerChangeSpeed = rollPowerMax - rollPowerMin;
     }
 
     #region RegisterEvents
@@ -51,11 +57,13 @@ public class RollManager : Singleton<RollManager>
 
         EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
         EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
+
+        BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
     }
 
     private void OnPlayStarted(int playRemain)
     {
-        RollRemain = rollMax;
+        RollRemain = currentRollMax;
     }
 
     private void OnRollButtonPressed()
@@ -75,12 +83,20 @@ public class RollManager : Singleton<RollManager>
 
     private void OnDiceEnhanceStarted()
     {
-        RollRemain = RollMax;
+        RollRemain = currentRollMax;
     }
 
     private void OnHandEnhanceStarted()
     {
-        RollRemain = RollMax;
+        RollRemain = currentRollMax;
+    }
+
+    private void OnBonusAchieved(BonusType type)
+    {
+        if (type == BonusType.RollMax)
+        {
+            SetRollMax(rollMax + 1, false);
+        }
     }
     #endregion
 
@@ -126,9 +142,23 @@ public class RollManager : Singleton<RollManager>
     public void SetRollMax(int value, bool resetRollRemain = true)
     {
         rollMax = value;
+        currentRollMax = rollMax;
+
         if (resetRollRemain)
         {
             RollRemain = rollMax;
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
+    }
+
+    public void SetCurrentRollMax(int value = -1, bool resetRollRemain = true)
+    {
+        if (value == -1) value = rollMax;
+        currentRollMax = value;
+
+        if (resetRollRemain)
+        {
+            RollRemain = currentRollMax;
             SequenceManager.Instance.ApplyParallelCoroutine();
         }
     }

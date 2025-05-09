@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class ShopUI : Singleton<ShopUI>
 {
     [SerializeField] private RectTransform shopPanel;
-    [SerializeField] private float showDuration = 0.5f;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform availityDiceMerchantParent;
     [SerializeField] private Transform handEnhanceMerchantParent;
@@ -216,7 +215,7 @@ public class ShopUI : Singleton<ShopUI>
         currentTween?.Kill(true);
         shopPanel.anchoredPosition = hidePos;
         gameObject.SetActive(true);
-        currentTween = shopPanel.DOAnchorPos(Vector3.zero, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             if (isInvoke)
             {
@@ -231,7 +230,7 @@ public class ShopUI : Singleton<ShopUI>
 
         currentTween?.Kill(true);
         shopPanel.anchoredPosition = Vector3.zero;
-        currentTween = shopPanel.DOAnchorPos(hidePos, showDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             if (isInvoke)
             {

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BossRound_LimitFaceValueSO_246
   m_EditorClassIdentifier: 
   bossName: Only Even
-  bossDescription: Only Even Dice Can Get Score
-  targetFaceValues: 020000000400000006000000
+  bossDescription: Only Even Play Dice\nCan Get Score
+  targetDiceValues: 020000000400000006000000

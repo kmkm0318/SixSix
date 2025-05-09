@@ -9,7 +9,7 @@ public class AvailityDice : Dice
 
     public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
-        base.Init(availityDiceSO.MaxFaceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.diceMaterialSO, playboard);
+        base.Init(availityDiceSO.MaxDiceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.diceMaterialSO, playboard);
 
         this.availityDiceSO = availityDiceSO;
     }
@@ -19,7 +19,7 @@ public class AvailityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable && FaceIndex == availityDiceSO.MaxFaceValue - 1)
+        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable && FaceIndex == availityDiceSO.MaxDiceValue - 1)
         {
             IsKeeped = true;
         }
@@ -59,18 +59,6 @@ public class AvailityDice : Dice
     }
     #endregion
 
-    public bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
-    {
-        return IsEnabled && availityDiceSO.availityTrigger.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
-    }
-
-    public void ApplyEffect()
-    {
-        if (availityDiceSO == null || !IsEnabled) return;
-
-        availityDiceSO.availityEffect.ApplyEffect(new(this));
-    }
-
     public override void ShowToolTip()
     {
         string name = availityDiceSO.diceName;
@@ -86,5 +74,17 @@ public class AvailityDice : Dice
         {
             DiceInteractType = DiceInteractType.Sell;
         }
+    }
+
+    public bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
+    {
+        return IsEnabled && availityDiceSO.availityTrigger.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
+    }
+
+    public void TriggerEffect()
+    {
+        if (availityDiceSO == null || !IsEnabled) return;
+
+        availityDiceSO.availityEffect.TriggerEffect(new(this));
     }
 }

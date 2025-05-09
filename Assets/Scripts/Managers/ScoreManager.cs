@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
+    [SerializeField] private float initialTargetRoundScore;
     public event Action<Dictionary<Hand, ScorePair>> OnHandScoreUpdated;
-    private Dictionary<Hand, ScorePair> handScoreDictionary = new();
-
     public event Action<float> OnTargetRoundScoreUpdated;
     public event Action<float> OnCurrentRoundScoreUpdated;
     public event Action<float> OnTargetRoundScoreChanged;
@@ -17,9 +14,9 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<ScorePair> OnScorePairChanged;
     public event Action<float> OnBaseScoreChanged;
     public event Action<float> OnMultiplierChanged;
-    public event Action<ScorePair, Transform, bool> OnScorePairApplied;
-    public event Action<int, Transform, bool> OnMoneyAchieved;
+    public event Action<int> OnMoneyAchieved;
 
+    private Dictionary<Hand, ScorePair> handScoreDictionary = new();
     private float targetRoundScore = 0;
     public float TargetRoundScore
     {
@@ -31,7 +28,6 @@ public class ScoreManager : Singleton<ScoreManager>
             OnTargetRoundScoreChanged?.Invoke(targetRoundScore);
         }
     }
-
     private float currentRoundScore = 0;
     public float CurrentRoundScore
     {
@@ -47,10 +43,8 @@ public class ScoreManager : Singleton<ScoreManager>
             OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
-
     private float highestRoundScore = 0;
     public float HighestRoundScore => highestRoundScore;
-
     private float playScore = 0;
     public float PlayScore
     {
@@ -62,7 +56,6 @@ public class ScoreManager : Singleton<ScoreManager>
             OnPlayScoreChanged?.Invoke(playScore);
         }
     }
-
     private ScorePair scorePair = new();
     public ScorePair ScorePair
     {
@@ -130,9 +123,9 @@ public class ScoreManager : Singleton<ScoreManager>
         ScorePair = scorePair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
-        PlayerDiceManager.Instance.ApplyPlayDices();
-        PlayerDiceManager.Instance.ApplyChaosDices();
-        PlayerDiceManager.Instance.ApplyAvailityDice(handSO);
+        TriggerManager.Instance.TriggerPlayDices();
+        TriggerManager.Instance.TriggerChaosDices();
+        TriggerManager.Instance.TriggerAvailityDice(handSO);
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
@@ -156,7 +149,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         if (currentRound < 1) return;
 
-        float baseScore = 500 * Mathf.Pow(6, (currentRound - 1) / 6);
+        float baseScore = initialTargetRoundScore * Mathf.Pow(6, (currentRound - 1) / 6);
         float multiplier = 1f + (currentRound - 1) % 6 * 0.5f;
         float score = baseScore * multiplier;
 
@@ -176,8 +169,8 @@ public class ScoreManager : Singleton<ScoreManager>
     }
     #endregion
 
-    #region ApplyEffect
-    public void ApplyDiceScorePairEffectAndPlayAnimation(Dice dice, ScorePair pair, bool isAvailityDice = false)
+    #region ApplyScorePair
+    public void ApplyScorePair(ScorePair pair)
     {
         bool isBaseScoreZero = pair.baseScore == 0f;
         bool isMultiplierZeroOrOne = pair.multiplier == 0f || pair.multiplier == 1f;
@@ -186,36 +179,20 @@ public class ScoreManager : Singleton<ScoreManager>
 
         if (!isBaseScoreZero && !isMultiplierZeroOrOne)
         {
-            ApplyDiceScorePairEffectAndPlayAnimation(dice, new(pair.baseScore, 1), isAvailityDice);
-            ApplyDiceScorePairEffectAndPlayAnimation(dice, new(0, pair.multiplier), isAvailityDice);
+            ApplyScorePair(new(pair.baseScore, 1));
+            ApplyScorePair(new(0, pair.multiplier));
             return;
         }
 
-        var isApplied = TryApplyScorePairEffect(pair);
-        if (!isApplied) return;
-
-        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(dice.transform, false), true);
-        OnScorePairApplied(pair, dice.transform, isAvailityDice);
-
-        SequenceManager.Instance.ApplyParallelCoroutine();
+        TryApplyScorePair(pair);
     }
 
-    public void ApplyMoneyAndPlayDiceAnimation(Dice dice, int money, bool isAvailityDice = false)
-    {
-        if (money == 0) return;
-
-        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(dice.transform, false), true);
-        OnMoneyAchieved(money, dice.transform, isAvailityDice);
-
-        SequenceManager.Instance.ApplyParallelCoroutine();
-    }
-
-    private bool TryApplyScorePairEffect(ScorePair pair)
+    private void TryApplyScorePair(ScorePair pair)
     {
         bool isBaseScoreZero = pair.baseScore == 0f;
         bool isMultiplierZeroOrOne = pair.multiplier == 0f || pair.multiplier == 1f;
 
-        if (isBaseScoreZero && isMultiplierZeroOrOne) return false;
+        if (isBaseScoreZero && isMultiplierZeroOrOne) return;
 
         if (!isBaseScoreZero)
         {
@@ -226,8 +203,6 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             ApplyMultiplier(pair.multiplier);
         }
-
-        return true;
     }
 
     private void ApplyBaseScore(float value)

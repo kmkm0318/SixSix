@@ -17,6 +17,6 @@ MonoBehaviour:
   price: 5
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   diceMaterialSO: {fileID: 11400000, guid: 7359c33758b7d0e4ab63b7fd7cdf8933, type: 2}
-  maxFaceValue: 6
+  maxDiceValue: 6
   availityTrigger: {fileID: 11400000, guid: 6f05d1c8dac922d439e7c16b3b80c6df, type: 2}
   availityEffect: {fileID: 11400000, guid: d008d0275533dd7448c60a74381b6e08, type: 2}

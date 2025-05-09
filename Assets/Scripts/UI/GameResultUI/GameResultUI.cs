@@ -9,7 +9,6 @@ public class GameResultUI : Singleton<GameResultUI>
 {
     [SerializeField] private RectTransform gameOverPanel;
     [SerializeField] private Vector3 hidePos;
-    [SerializeField] private float moveDuration = 0.5f;
     [SerializeField] private TMP_Text resultText;
     [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private string gameClearText = "Game Clear";
@@ -77,21 +76,21 @@ public class GameResultUI : Singleton<GameResultUI>
         gameObject.SetActive(true);
         gameOverPanel.anchoredPosition = hidePos;
         gameOverPanel
-            .DOAnchorPos(Vector3.zero, moveDuration)
+            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(moveDuration);
+        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
     }
 
     private void Hide(Action onComplete = null)
     {
         gameOverPanel.anchoredPosition = Vector3.zero;
         gameOverPanel
-            .DOAnchorPos(hidePos, moveDuration)
+            .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
@@ -99,7 +98,7 @@ public class GameResultUI : Singleton<GameResultUI>
                 gameObject.SetActive(false);
             });
 
-        fadeCanvasGroup.FadeOut(moveDuration);
+        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
     }
     #endregion
 }

@@ -35,15 +35,17 @@ public class PlayDice : Dice
     {
         if (!IsEnabled) return;
 
-        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(this, new(FaceValue, 1), false);
+        ScorePair scorePair = new(DiceValue, 1);
+        ScoreManager.Instance.ApplyScorePair(scorePair);
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(transform, Vector3.up, scorePair);
 
-        Faces[FaceIndex].ApplyDiceFaceValue(this, false);
+        Faces[FaceIndex].ApplyFaceValue(this, false);
     }
 
     public override void ShowToolTip()
     {
-        string name = $"PlayDice({FaceValue})";
-        string description = $"Get Score(+{FaceValue})" + Faces[FaceIndex].GetDescriptionText();
+        string name = $"PlayDice({DiceValue})";
+        string description = $"Get Score(+{DiceValue})" + Faces[FaceIndex].GetDescriptionText();
 
         ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
     }

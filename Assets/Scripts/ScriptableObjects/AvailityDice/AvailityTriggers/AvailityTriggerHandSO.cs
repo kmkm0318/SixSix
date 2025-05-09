@@ -8,11 +8,18 @@ public class AvailityTriggerHandSO : AvailityTriggerSO
 
     public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
     {
-        return triggerType == TriggerType && context.handSO != null && context.handSO == targetHand;
+        return triggerType == TriggerType && (context.handSO == null || context.handSO == targetHand);
     }
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"When Hand is\n{targetHand.handName}";
+        if (targetHand == null)
+        {
+            return "When Play With Any Hand";
+        }
+        else
+        {
+            return $"When Play With\n\"{targetHand.handName}\"";
+        }
     }
 }

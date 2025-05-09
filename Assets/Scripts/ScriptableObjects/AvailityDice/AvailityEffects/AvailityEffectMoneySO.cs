@@ -5,18 +5,19 @@ public class AvailityEffectMoneySO : AvailityEffectSO
 {
     [SerializeField] private int moneyAmount;
 
-    public override void ApplyEffect(AvailityDiceContext context)
+    public override void TriggerEffect(AvailityDiceContext context)
     {
-        int money = CalculateEffectValue(moneyAmount, context.availtiyDice.FaceValue);
+        int money = CalculateEffectValue(moneyAmount, context.availtiyDice.DiceValue);
 
-        ScoreManager.Instance.ApplyMoneyAndPlayDiceAnimation(context.availtiyDice, money, true);
+        PlayerMoneyManager.Instance.Money -= money;
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(context.availtiyDice.transform, Vector3.down, money);
     }
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
         string res = $"Get Money({moneyAmount})";
 
-        res += GetCalculateDescription(availityDiceSO.MaxFaceValue);
+        res += GetCalculateDescription(availityDiceSO.MaxDiceValue);
 
         return res;
     }

@@ -24,6 +24,14 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         set
         {
             if (money == value) return;
+            if (value < 0)
+            {
+                value = 0;
+            }
+            else if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
             money = value;
             OnMoneyChanged?.Invoke(money);
         }
@@ -101,7 +109,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         }
     }
 
-    private void OnMoneyAchieved(int value, Transform _, bool __)
+    private void OnMoneyAchieved(int value)
     {
         if (value == 0) return;
 

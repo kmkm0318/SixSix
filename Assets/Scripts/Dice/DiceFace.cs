@@ -27,9 +27,10 @@ public class DiceFace
         enhanceValue.multiplier += value.multiplier;
     }
 
-    public void ApplyDiceFaceValue(Dice dice, bool isAvailityDice)
+    public void ApplyFaceValue(Dice dice, bool isAvailityDice)
     {
-        ScoreManager.Instance.ApplyDiceScorePairEffectAndPlayAnimation(dice, ApplyValue, isAvailityDice);
+        ScoreManager.Instance.ApplyScorePair(ApplyValue);
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(dice.transform, isAvailityDice ? Vector3.down : Vector3.up, ApplyValue);
     }
 
     public string GetDescriptionText()

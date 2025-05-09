@@ -10,7 +10,6 @@ public class RoundClearUI : Singleton<RoundClearUI>
 {
     [SerializeField] private RectTransform roundClearPanel;
     [SerializeField] private Vector3 hidePos;
-    [SerializeField] private float moveDuration = 0.5f;
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
     [SerializeField] private TMP_Text roundText;
@@ -77,14 +76,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
         roundClearPanel.anchoredPosition = hidePos;
 
         var myTween = roundClearPanel
-            .DOAnchorPos(Vector3.zero, moveDuration)
+            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(moveDuration);
+        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
 
         yield return myTween.WaitForCompletion();
         OnRoundClearUIOpened?.Invoke();
@@ -98,14 +97,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
         roundClearPanel.anchoredPosition = Vector3.zero;
 
         var myTween = roundClearPanel
-             .DOAnchorPos(hidePos, moveDuration)
+             .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
              .SetEase(Ease.InOutBack)
              .OnComplete(() =>
              {
                  gameObject.SetActive(false);
              });
 
-        fadeCanvasGroup.FadeOut(moveDuration);
+        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
 
         yield return myTween.WaitForCompletion();
         OnRoundClearUIClosed?.Invoke();

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58851ab32a60a143976af533b63779d, type: 3}
-  m_Name: DefaultAvailityDice
+  m_Script: {fileID: 11500000, guid: ae8036bb4b269fb429c59ed760f7fa59, type: 3}
+  m_Name: BossRound_DisableAvailityDiceSO
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 2100000, guid: 43540b95bf9870c438a52cd79d7a13f3, type: 2}
-  uiMaterial: {fileID: 2100000, guid: 6f91a911b01d4734f8a7998323a4f003, type: 2}
+  bossName: Disable Availity Dice
+  bossDescription: Disable 1 Availity Dice
+  limitCount: 1

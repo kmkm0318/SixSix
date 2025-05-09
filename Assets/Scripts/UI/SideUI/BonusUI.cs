@@ -4,40 +4,30 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[Serializable]
-public struct BonusTypeTextPair
-{
-    public BonusType type;
-    public TMP_Text text;
-
-    public BonusTypeTextPair(BonusType type, TMP_Text text)
-    {
-        this.type = type;
-        this.text = text;
-    }
-}
-
 public class BonusUI : Singleton<BonusUI>
 {
     [SerializeField] private List<TMP_Text> diceCountTextList;
-    [SerializeField] private List<BonusTypeTextPair> bonusTargetTextList;
+    [SerializeField] private Transform bonusTargetTextParent;
+    [SerializeField] private BonusTargetText bonusTargetTextPrefab;
 
     private Dictionary<BonusType, TMP_Text> bonusTargetTextDict = new();
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        foreach (var bonusTargetText in bonusTargetTextList)
-        {
-            bonusTargetTextDict[bonusTargetText.type] = bonusTargetText.text;
-        }
-    }
-
     private void Start()
     {
+        InitBonusData();
         InitTexts();
         RegisterEvents();
+    }
+
+    private void InitBonusData()
+    {
+        foreach (var bonusPair in BonusManager.Instance.BonusTargetScoreDict)
+        {
+            var newText = Instantiate(bonusTargetTextPrefab, bonusTargetTextParent);
+            newText.gameObject.SetActive(true);
+            newText.Text.text = "0/" + bonusPair.Value.ToString();
+            bonusTargetTextDict[bonusPair.Key] = newText.Text;
+        }
     }
 
     private void InitTexts()
@@ -96,5 +86,18 @@ public class BonusUI : Singleton<BonusUI>
         targetText.text = targetString;
 
         yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(targetText.transform));
+    }
+}
+
+[Serializable]
+public struct BonusTypeTextPair
+{
+    public BonusType type;
+    public TMP_Text text;
+
+    public BonusTypeTextPair(BonusType type, TMP_Text text)
+    {
+        this.type = type;
+        this.text = text;
     }
 }
