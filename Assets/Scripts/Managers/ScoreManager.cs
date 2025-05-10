@@ -177,23 +177,6 @@ public class ScoreManager : Singleton<ScoreManager>
 
         if (isBaseScoreZero && isMultiplierZeroOrOne) return;
 
-        if (!isBaseScoreZero && !isMultiplierZeroOrOne)
-        {
-            ApplyScorePair(new(pair.baseScore, 1));
-            ApplyScorePair(new(0, pair.multiplier));
-            return;
-        }
-
-        TryApplyScorePair(pair);
-    }
-
-    private void TryApplyScorePair(ScorePair pair)
-    {
-        bool isBaseScoreZero = pair.baseScore == 0f;
-        bool isMultiplierZeroOrOne = pair.multiplier == 0f || pair.multiplier == 1f;
-
-        if (isBaseScoreZero && isMultiplierZeroOrOne) return;
-
         if (!isBaseScoreZero)
         {
             ApplyBaseScore(pair.baseScore);
@@ -207,7 +190,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void ApplyBaseScore(float value)
     {
-        ScorePair tmp = scorePair;
+        ScorePair tmp = ScorePair;
 
         tmp.baseScore = SafeAdd(tmp.baseScore, value);
 
@@ -216,7 +199,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void ApplyMultiplier(float value)
     {
-        ScorePair tmp = scorePair;
+        ScorePair tmp = ScorePair;
 
         tmp.multiplier = SafeMultiply(tmp.multiplier, value);
 

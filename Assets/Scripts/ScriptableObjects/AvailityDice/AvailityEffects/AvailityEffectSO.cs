@@ -6,7 +6,18 @@ public abstract class AvailityEffectSO : ScriptableObject
     public abstract void TriggerEffect(AvailityDiceContext context);
     public abstract string GetEffectDescription(AvailityDiceSO availityDiceSO);
 
-    protected virtual int CalculateEffectValue(int value, int diceValue)
+    protected virtual ScorePair GetCalculatedEffectValue(ScorePair value, int diceValue)
+    {
+        ScorePair result = new()
+        {
+            baseScore = GetCalculatedEffectValue(value.baseScore, diceValue),
+            multiplier = GetCalculatedEffectValue(value.multiplier, diceValue)
+        };
+
+        return result;
+    }
+
+    protected virtual int GetCalculatedEffectValue(int value, int diceValue)
     {
         return calculateType switch
         {

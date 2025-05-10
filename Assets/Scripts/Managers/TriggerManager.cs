@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class TriggerManager : Singleton<TriggerManager>
 {
@@ -62,7 +63,7 @@ public class TriggerManager : Singleton<TriggerManager>
         }
     }
 
-    public void TriggerAvailityDice(AvailityTriggerType triggerType)
+    private void TriggerAvailityDice(AvailityTriggerType triggerType)
     {
         TriggerAvailityDice(triggerType, new());
     }
@@ -83,6 +84,36 @@ public class TriggerManager : Singleton<TriggerManager>
         {
             chaosDice.ApplyScorePairs();
         }
+    }
+    #endregion
+
+    #region ApplyTriggerEffect
+    public void ApplyTriggerEffect(Transform targetTransform, Vector3 offset, ScorePair scorePair)
+    {
+        bool isBaseScoreZero = scorePair.baseScore == 0;
+        bool isMultiplierZeroOrOne = scorePair.multiplier == 0 || scorePair.multiplier == 1;
+
+        if (isBaseScoreZero && isMultiplierZeroOrOne) return;
+
+        if (!isBaseScoreZero && !isMultiplierZeroOrOne)
+        {
+            ApplyTriggerEffect(targetTransform, offset, new ScorePair(scorePair.baseScore, 1));
+            ApplyTriggerEffect(targetTransform, offset, new ScorePair(0, scorePair.multiplier));
+            return;
+        }
+
+        ScoreManager.Instance.ApplyScorePair(scorePair);
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(targetTransform, offset, scorePair);
+        SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    public void ApplyTriggerEffect(Transform targetTransform, Vector3 offset, int money)
+    {
+        if (money == 0) return;
+
+        PlayerMoneyManager.Instance.Money += money;
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(targetTransform, offset, money);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
     #endregion
 }

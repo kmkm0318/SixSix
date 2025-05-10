@@ -7,10 +7,11 @@ public class AvailityEffectMoneySO : AvailityEffectSO
 
     public override void TriggerEffect(AvailityDiceContext context)
     {
-        int money = CalculateEffectValue(moneyAmount, context.availtiyDice.DiceValue);
+        int money = GetCalculatedEffectValue(moneyAmount, context.availtiyDice.DiceValue);
 
-        PlayerMoneyManager.Instance.Money -= money;
+        PlayerMoneyManager.Instance.Money += money;
         TriggerAnimationManager.Instance.PlayTriggerAnimation(context.availtiyDice.transform, Vector3.down, money);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)

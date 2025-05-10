@@ -18,8 +18,7 @@ public class ChaosDice : Dice
     public void ApplyScorePairs()
     {
         UpdateScorePair();
-        ScoreManager.Instance.ApplyScorePair(scorePair);
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(transform, Vector3.up, scorePair);
+        TriggerManager.Instance.ApplyTriggerEffect(transform, Vector3.up, scorePair);
     }
 
     public override void ShowToolTip()

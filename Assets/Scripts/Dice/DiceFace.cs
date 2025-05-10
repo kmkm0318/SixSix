@@ -29,8 +29,7 @@ public class DiceFace
 
     public void ApplyFaceValue(Dice dice, bool isAvailityDice)
     {
-        ScoreManager.Instance.ApplyScorePair(ApplyValue);
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(dice.transform, isAvailityDice ? Vector3.down : Vector3.up, ApplyValue);
+        TriggerManager.Instance.ApplyTriggerEffect(dice.transform, isAvailityDice ? Vector3.down : Vector3.up, ApplyValue);
     }
 
     public string GetDescriptionText()

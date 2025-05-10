@@ -14,6 +14,7 @@ public class AdviserUI : Singleton<AdviserUI>
     [SerializeField] private float adviseMinProbability;
 
     private Tween currentTween;
+    private bool isAvailiable = true;
 
     private void Start()
     {
@@ -25,11 +26,13 @@ public class AdviserUI : Singleton<AdviserUI>
     private void RegisterEvents()
     {
         RollManager.Instance.OnRollCompleted += OnRollCompleted;
+        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
+        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
     }
 
     private void OnRollCompleted()
     {
-        if (RollManager.Instance.RollRemain == 0) return;
+        if (RollManager.Instance.RollRemain == 0 || !isAvailiable) return;
 
         var handList = GetHandList();
 
@@ -43,6 +46,16 @@ public class AdviserUI : Singleton<AdviserUI>
 
         adviseText.text = adviseString;
         Show(() => DelayHide(showTime));
+    }
+
+    private void OnDiceEnhanceStarted()
+    {
+        isAvailiable = false;
+    }
+
+    private void OnDiceEnhanceCompleted()
+    {
+        isAvailiable = true;
     }
     #endregion
 

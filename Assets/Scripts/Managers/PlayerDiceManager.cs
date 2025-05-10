@@ -59,9 +59,9 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
 
-        playDicePool = new(() => Instantiate(playDicePrefab), playDice => { }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
-        availityDicePool = new(() => Instantiate(availityDicePrefab), availityDice => { }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
-        chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
+        playDicePool = new(() => Instantiate(playDicePrefab), playDice => { playDice.gameObject.SetActive(true); }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
+        availityDicePool = new(() => Instantiate(availityDicePrefab), availityDice => { availityDice.gameObject.SetActive(true); }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
+        chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { chaosDice.gameObject.SetActive(true); }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
 
         CurrentAvailityDiceMax = DataContainer.Instance.DefaultAvailityDiceMax;
     }
@@ -101,7 +101,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultDiceMaterial, playDicePlayboard);
-        playDice.gameObject.SetActive(true);
+        // playDice.gameObject.SetActive(true);
 
         AddPlayDice(playDice);
     }
@@ -142,7 +142,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             var availityDice = availityDicePool.Get();
             availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
             availityDice.Init(sO, availityDicePlayboard);
-            availityDice.gameObject.SetActive(true);
+            // availityDice.gameObject.SetActive(true);
 
             AddAvailityDice(availityDice);
         }
@@ -174,14 +174,20 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         playDice.ResetMouseClickEvent();
         playDiceList.Remove(playDice);
-        playDicePool.Release(playDice);
+        playDice.FadeOut(() =>
+        {
+            playDice.gameObject.SetActive(false);
+        });
     }
 
     public void RemoveAvailityDice(AvailityDice availityDice)
     {
         availityDice.ResetMouseClickEvent();
         availityDiceList.Remove(availityDice);
-        availityDicePool.Release(availityDice);
+        availityDice.FadeOut(() =>
+        {
+            availityDice.gameObject.SetActive(false);
+        });
 
         OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
     }
@@ -190,7 +196,10 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     {
         chaosDice.ResetMouseClickEvent();
         chaosDiceList.Remove(chaosDice);
-        chaosDicePool.Release(chaosDice);
+        chaosDice.FadeOut(() =>
+        {
+            chaosDice.gameObject.SetActive(false);
+        });
     }
 
     public void EnablePlayDice(PlayDice playDice)
@@ -307,7 +316,7 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
             var chaosDice = chaosDicePool.Get();
             chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
             chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosDiceMaterial, playDicePlayboard);
-            chaosDice.gameObject.SetActive(true);
+            // chaosDice.gameObject.SetActive(true);
 
             AddChaosDice(chaosDice);
         }

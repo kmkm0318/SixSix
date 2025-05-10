@@ -4,7 +4,7 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
 {
     public void PlayTriggerAnimation(Transform targetTransform)
     {
-        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(targetTransform, false), false);
+        SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(targetTransform, false), true);
     }
 
     public void PlayTriggerAnimation(Transform targetTransform, Vector3 offset, ScorePair scorePair)
@@ -13,7 +13,6 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
 
         SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(targetTransform, false), true);
         SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowContext(targetTransform, offset, scorePair), true);
-        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     public void PlayTriggerAnimation(Transform targetTransform, Vector3 offset, int money)
@@ -22,6 +21,5 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
 
         SequenceManager.Instance.AddCoroutine(AnimationFunction.PlayShakeAnimation(targetTransform, false), true);
         SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowContext(targetTransform, offset, money), true);
-        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 }

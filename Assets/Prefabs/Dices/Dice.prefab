@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 913672955282215222}
   - component: {fileID: 1642127778009038658}
   - component: {fileID: 6224776796104731386}
+  - component: {fileID: 2623982099466883439}
   m_Layer: 0
   m_Name: DiceVisual
   m_TagString: Untagged
@@ -100,7 +101,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2009c0478350a4db3a5f4044975fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enhanceColorMax: 20
+--- !u!95 &2623982099466883439
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657018082328724502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1c713c85d2940e44180160b50b34edcf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7055470765296504697
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,9 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005568398b6df764b888b7744b40e100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopThreshold: 0.1
+  stopSpeedThreshold: 0.1
   stopAngularThreshold: 5
-  stopTime: 0.5
+  stopTimeThreshold: 0.5
 --- !u!114 &-1558305301515133675
 MonoBehaviour:
   m_ObjectHideFlags: 0

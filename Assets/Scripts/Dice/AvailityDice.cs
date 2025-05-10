@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class AvailityDice : Dice
@@ -11,7 +10,8 @@ public class AvailityDice : Dice
     {
         base.Init(availityDiceSO.MaxDiceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.diceMaterialSO, playboard);
 
-        this.availityDiceSO = availityDiceSO;
+        this.availityDiceSO = Instantiate(availityDiceSO);
+        this.availityDiceSO.Init();
     }
 
     #region Events
@@ -19,9 +19,22 @@ public class AvailityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable && FaceIndex == availityDiceSO.MaxDiceValue - 1)
+        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable)
         {
-            IsKeeped = true;
+            if (availityDiceSO.autoKeepType == AbailityDiceAutoKeepType.High)
+            {
+                if (DiceValue >= availityDiceSO.MaxDiceValue)
+                {
+                    IsKeeped = true;
+                }
+            }
+            else
+            {
+                if (DiceValue <= 1)
+                {
+                    IsKeeped = true;
+                }
+            }
         }
     }
 

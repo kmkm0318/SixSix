@@ -6,6 +6,7 @@ public class AvailityDiceSO : ScriptableObject
     [Header("Dice Info")]
     public string diceName;
     public AvailityDiceRarity rarity;
+    public AbailityDiceAutoKeepType autoKeepType;
     public int price;
     public int SellPrice => price / 2;
     public DiceSpriteListSO diceSpriteListSO;
@@ -18,13 +19,15 @@ public class AvailityDiceSO : ScriptableObject
     public AvailityTriggerSO availityTrigger;
     public AvailityEffectSO availityEffect;
 
-    #region GetDescriptionText
+    public void Init()
+    {
+        availityEffect = Instantiate(availityEffect);
+    }
+
     public string GetDescriptionText()
     {
         return availityTrigger.GetTriggerDescription(this) + "\n" + availityEffect.GetEffectDescription(this);
     }
-
-    #endregion
 }
 
 public enum AvailityDiceRarity
@@ -33,4 +36,10 @@ public enum AvailityDiceRarity
     Rare,
     Epic,
     Legendary,
+}
+
+public enum AbailityDiceAutoKeepType
+{
+    High,
+    Low,
 }

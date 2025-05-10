@@ -139,8 +139,10 @@ public class ShopManager : Singleton<ShopManager>
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
             int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
-            int baseScore = UnityEngine.Random.Range(0, enhanceLevel * 10 + 1);
-            ScorePair scorePair = new(baseScore, (enhanceLevel * 10 - baseScore) * 0.05f);
+            float baseScore = enhanceLevel * 10f;
+            float multiplier = enhanceLevel * 0.05f;
+
+            ScorePair scorePair = new(baseScore, multiplier);
 
             diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }

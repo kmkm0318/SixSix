@@ -1,5 +1,4 @@
 using System;
-using System.Xml.Serialization;
 
 public class EnhanceManager : Singleton<EnhanceManager>
 {

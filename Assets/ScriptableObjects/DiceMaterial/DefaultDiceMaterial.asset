@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58851ab32a60a143976af533b63779d, type: 3}
   m_Name: DefaultDiceMaterial
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 43540b95bf9870c438a52cd79d7a13f3, type: 2}
   uiMaterial: {fileID: 0}

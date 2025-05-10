@@ -92,6 +92,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         InitDiceInteractType();
 
         diceMovement.Init(playboard);
+        FadeIn();
     }
 
     protected virtual void InitDiceInteractType()
@@ -291,4 +292,14 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     }
 
     public abstract void ShowToolTip();
+
+    public void FadeIn(Action onComplete = null)
+    {
+        diceVisual.FadeIn(onComplete);
+    }
+
+    public void FadeOut(Action onComplete = null)
+    {
+        diceVisual.FadeOut(onComplete);
+    }
 }

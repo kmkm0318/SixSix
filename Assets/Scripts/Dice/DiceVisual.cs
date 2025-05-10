@@ -1,14 +1,22 @@
+using System;
 using UnityEngine;
 
 public class DiceVisual : MonoBehaviour
 {
+    private const string fadeOutTriggerName = "FadeOut";
+    private const string fadeInTriggerName = "FadeIn";
+
     private readonly int enhanceColorMax = 20;
 
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Action onFadeInComplete;
+    private Action onFadeOutComplete;
 
-    void Awake()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     public void SetSprite(Sprite sprite)
@@ -45,5 +53,29 @@ public class DiceVisual : MonoBehaviour
         Color color = spriteRenderer.color;
         color.a = alpha;
         spriteRenderer.color = color;
+    }
+
+    public void FadeIn(Action onComplete = null)
+    {
+        onFadeInComplete = onComplete;
+        animator.SetTrigger(fadeInTriggerName);
+    }
+
+    public void FadeOut(Action onComplete = null)
+    {
+        onFadeOutComplete = onComplete;
+        animator.SetTrigger(fadeOutTriggerName);
+    }
+
+    public void OnFadeInComplete()
+    {
+        onFadeInComplete?.Invoke();
+        onFadeInComplete = null;
+    }
+
+    public void OnFadeOutComplete()
+    {
+        onFadeOutComplete?.Invoke();
+        onFadeOutComplete = null;
     }
 }

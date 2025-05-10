@@ -36,8 +36,7 @@ public class PlayDice : Dice
         if (!IsEnabled) return;
 
         ScorePair scorePair = new(DiceValue, 1);
-        ScoreManager.Instance.ApplyScorePair(scorePair);
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(transform, Vector3.up, scorePair);
+        TriggerManager.Instance.ApplyTriggerEffect(transform, Vector3.up, scorePair);
 
         Faces[FaceIndex].ApplyFaceValue(this, false);
     }

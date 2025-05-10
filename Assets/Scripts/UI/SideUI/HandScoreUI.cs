@@ -96,15 +96,11 @@ public class HandScoreUI : Singleton<HandScoreUI>
     private void OnDiceEnhanceStarted()
     {
         isActive = false;
-
-        ScoreManager.Instance.OnHandScoreUpdated -= OnHandScoreUpdated;
     }
 
     private void OnDiceEnhanceCompleted()
     {
         isActive = false;
-
-        ScoreManager.Instance.OnHandScoreUpdated += OnHandScoreUpdated;
     }
 
     private void OnHandEnhanceStarted()

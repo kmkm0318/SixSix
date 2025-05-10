@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestDiceStat
   m_EditorClassIdentifier: 
   defaultDiceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  defaultPlayDiceCount: 6
-  defaultAvailityDiceMax: 6
+  defaultPlayDiceCount: 5
+  defaultAvailityDiceMax: 5
   defaultMaxPlay: 4
   defaultMaxRoll: 4
