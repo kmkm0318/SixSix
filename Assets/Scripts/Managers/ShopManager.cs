@@ -139,8 +139,12 @@ public class ShopManager : Singleton<ShopManager>
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
             int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
-            float baseScore = enhanceLevel * 10f;
-            float multiplier = enhanceLevel * 0.05f;
+            int totalEnhance = enhanceLevel * 5;
+            int baseScoreEnhance = UnityEngine.Random.Range(1, totalEnhance);
+            int multiplierEnhance = totalEnhance - baseScoreEnhance;
+
+            float baseScore = baseScoreEnhance * 5f;
+            float multiplier = multiplierEnhance * 0.05f;
 
             ScorePair scorePair = new(baseScore, multiplier);
 

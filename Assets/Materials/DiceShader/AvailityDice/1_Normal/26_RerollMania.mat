@@ -7,12 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 25_RerollMania_UI
-  m_Shader: {fileID: 4800000, guid: a53f4bb29f3644b43b5075c6dcfecb32, type: 3}
+  m_Name: 26_RerollMania
+  m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - COLORRAMP_ON
+  - FADE_ON
   - GRADIENTCOLORRAMP_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -30,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ColorRampTexGradient:
-        m_Texture: {fileID: 1191171953718931822}
+        m_Texture: {fileID: 5556104565131112848}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ColorSwapTex:
@@ -252,13 +253,13 @@ Material:
     - _ShineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!28 &1191171953718931822
+--- !u!28 &5556104565131112848
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":0.501960813999176,"g":1.0,"b":0.501960813999176,"a":1.0},"time":0.0},{"color":{"r":0.501960813999176,"g":0.501960813999176,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":0.501960813999176,"g":0.501960813999176,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -292,7 +293,7 @@ Texture2D:
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 256
-  _typelessdata: 80ff80ff80fd82ff80fb84ff80f986ff80f788ff80f58aff80f38cff80f18eff80ef90ff80ed92ff80eb94ff80e996ff80e798ff80e59aff80e39cff80e19eff80dfa0ff80dda2ff80dba4ff80d9a6ff80d7a8ff80d5aaff80d3acff80d1aeff80cfb0ff80cdb2ff80cbb4ff80c9b6ff80c7b8ff80c5baff80c3bcff80c1beff80bec1ff80bcc3ff80bac5ff80b8c7ff80b6c9ff80b4cbff80b2cdff80b0cfff80aed1ff80acd3ff80aad5ff80a8d7ff80a6d9ff80a4dbff80a2ddff80a0dfff809ee1ff809ce3ff809ae5ff8098e7ff8096e9ff8094ebff8092edff8090efff808ef1ff808cf3ff808af5ff8088f7ff8086f9ff8084fbff8082fdff8080ffff
+  _typelessdata: 00ff00ff02fd04ff04fb08ff06f90cff08f710ff0af514ff0cf318ff0ef11cff10ef20ff12ed24ff14eb28ff16e92dff18e731ff1ae535ff1ce339ff1ee13dff21df41ff23dd45ff25db49ff27d94dff29d751ff2bd555ff2dd359ff2fd15dff31cf61ff33cd65ff35cb69ff37c96dff39c771ff3bc575ff3dc379ff3fc17dff41be82ff43bc86ff45ba8aff47b88eff49b692ff4bb496ff4db29aff4fb09eff51aea2ff53aca6ff55aaaaff57a8aeff59a6b2ff5ba4b6ff5da2baff5fa0beff629ec2ff649cc6ff669acaff6898ceff6a96d2ff6c94d7ff6e92dbff7090dfff728ee3ff748ce7ff768aebff7888efff7a86f3ff7c84f7ff7e82fbff8080ffff
   m_StreamData:
     serializedVersion: 2
     offset: 0

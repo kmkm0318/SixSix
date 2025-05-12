@@ -44,7 +44,9 @@ public class PlayDice : Dice
     public override void ShowToolTip()
     {
         string name = $"PlayDice({DiceValue})";
-        string description = $"Get Score(+{DiceValue})" + Faces[FaceIndex].GetDescriptionText();
+
+        ScorePair scorePair = new(DiceValue, 1);
+        string description = $"Get {scorePair}" + Faces[FaceIndex].GetDescriptionText();
 
         ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
     }

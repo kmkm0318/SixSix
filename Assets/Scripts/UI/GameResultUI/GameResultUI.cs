@@ -11,8 +11,6 @@ public class GameResultUI : Singleton<GameResultUI>
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private TMP_Text resultText;
     [SerializeField] private TMP_Text highScoreText;
-    [SerializeField] private string gameClearText = "Game Clear";
-    [SerializeField] private string gameOverText = "Game Over";
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button infinityModeButton;
@@ -56,15 +54,15 @@ public class GameResultUI : Singleton<GameResultUI>
         if (state == GameState.GameClear)
         {
             Show();
-            resultText.text = gameClearText;
-            highScoreText.text = "HighestRoundScore: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+            resultText.text = "Game Clear";
+            highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
             infinityModeButtonRow.SetActive(true);
         }
         else if (state == GameState.GameOver)
         {
             Show();
-            resultText.text = gameOverText;
-            highScoreText.text = "HighestRoundScore: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+            resultText.text = "Game Over";
+            highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
             infinityModeButtonRow.SetActive(false);
         }
     }

@@ -13,7 +13,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
     [SerializeField] private TMP_Text roundText;
-    [SerializeField] private TMP_Text roundScoreText;
+    [SerializeField] private TMP_Text targetRoundScoreText;
+    [SerializeField] private TMP_Text achievedRoundScoreText;
     [SerializeField] private Transform roundClearRewardParent;
     [SerializeField] private RoundClearRewardUI roundClearRewardUI;
 
@@ -115,7 +116,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
     private void ClearTexts()
     {
         roundText.text = string.Empty;
-        roundScoreText.text = string.Empty;
+        targetRoundScoreText.text = string.Empty;
+        achievedRoundScoreText.text = string.Empty;
     }
 
     private void ClearRewardTexts()
@@ -134,19 +136,23 @@ public class RoundClearUI : Singleton<RoundClearUI>
         SetTexts();
 
         string roundTextValue = roundText.text;
-        string roundScoreTextValue = roundScoreText.text;
+        string targetRoundScoreTextValue = targetRoundScoreText.text;
+        string achievedRoundScoreTextValue = achievedRoundScoreText.text;
 
         roundText.text = string.Empty;
-        roundScoreText.text = string.Empty;
+        targetRoundScoreText.text = string.Empty;
+        achievedRoundScoreText.text = string.Empty;
 
         yield return StartCoroutine(AnimationFunction.PlayTextAnimation(roundText, roundTextValue));
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(roundScoreText, roundScoreTextValue));
+        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(targetRoundScoreText, targetRoundScoreTextValue));
+        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(achievedRoundScoreText, achievedRoundScoreTextValue));
     }
 
     private void SetTexts()
     {
         roundText.text = "Cleared Round : " + RoundManager.Instance.CurrentRound.ToString();
-        roundScoreText.text = "Target Score : " + UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore);
+        targetRoundScoreText.text = "Target Score : " + UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore);
+        achievedRoundScoreText.text = "Achieved Score : " + UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore);
     }
     #endregion
 

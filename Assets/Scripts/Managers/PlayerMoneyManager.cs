@@ -17,7 +17,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
 
     public event Action<int> OnMoneyChanged;
 
-    private int money = 0;
+    private int money = 50;
     public int Money
     {
         get => money;
@@ -51,7 +51,6 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
         ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
         ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
-        ScoreManager.Instance.OnMoneyAchieved += OnMoneyAchieved;
     }
 
     private void OnBonusAchieved(BonusType type)
@@ -107,13 +106,6 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
             Money -= context.Price;
             SequenceManager.Instance.ApplyParallelCoroutine();
         }
-    }
-
-    private void OnMoneyAchieved(int value)
-    {
-        if (value == 0) return;
-
-        Money += value;
     }
     #endregion
 }

@@ -15,7 +15,7 @@ public class AvailityEffectGrowingScorePairSO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"Get {scorePair} And Grow\n{growValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        return $"Get {scorePair} And\nGrow {growValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
     }
 
     private void GrowScorePair(int diceValue)

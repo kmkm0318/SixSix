@@ -14,7 +14,6 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<ScorePair> OnScorePairChanged;
     public event Action<float> OnBaseScoreChanged;
     public event Action<float> OnMultiplierChanged;
-    public event Action<int> OnMoneyAchieved;
 
     private Dictionary<Hand, ScorePair> handScoreDictionary = new();
     private float targetRoundScore = 0;
@@ -43,6 +42,8 @@ public class ScoreManager : Singleton<ScoreManager>
             OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
+    private float previousRoundScore = 0;
+    public float PreviousRoundScore => previousRoundScore;
     private float highestRoundScore = 0;
     public float HighestRoundScore => highestRoundScore;
     private float playScore = 0;
@@ -105,6 +106,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void OnRoundCleared(int currentRound)
     {
+        previousRoundScore = CurrentRoundScore;
         CurrentRoundScore = 0;
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

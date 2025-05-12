@@ -85,7 +85,6 @@ public class SequenceManager : Singleton<SequenceManager>
     {
         if (parallelCoroutineList.Count == 0)
         {
-            Debug.LogWarning("No parallel coroutines to apply.");
             return;
         }
 

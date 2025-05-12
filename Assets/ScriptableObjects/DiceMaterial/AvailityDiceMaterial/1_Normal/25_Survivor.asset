@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b58851ab32a60a143976af533b63779d, type: 3}
-  m_Name: 26_Survivor
+  m_Name: 25_Survivor
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 2100000, guid: 7f14314085629004f92d6cf911423868, type: 2}
   uiMaterial: {fileID: 2100000, guid: 0d0ff8168e2383641a668e772ace764f, type: 2}

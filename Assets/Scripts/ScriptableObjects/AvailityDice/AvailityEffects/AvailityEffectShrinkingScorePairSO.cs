@@ -17,7 +17,7 @@ public class AvailityEffectShrinkingScorePairSO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"Get {scorePair} And Shrink\n{shrinkValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        return $"Get {scorePair} And\nShrink {shrinkValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
     }
 
     private void ShrinkScorePair(int diceValue)
@@ -27,9 +27,14 @@ public class AvailityEffectShrinkingScorePairSO : AvailityEffectSO
 
     private void CheckThenRemove(AvailityDice dice)
     {
-        if (scorePair.baseScore <= 0 && scorePair.multiplier <= 1)
+        float ellipson = 0.001f;
+
+        if (scorePair.baseScore < ellipson && scorePair.multiplier < 1f + ellipson)
         {
-            PlayerDiceManager.Instance.RemoveAvailityDice(dice);
+            SequenceManager.Instance.AddCoroutine(() =>
+            {
+                PlayerDiceManager.Instance.RemoveAvailityDice(dice);
+            });
         }
     }
 }

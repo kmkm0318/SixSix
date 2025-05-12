@@ -20,7 +20,7 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
         }
         else if (targetValues.Count == 1)
         {
-            return $"When Dice Value is\n\"{targetValues[0]}\"";
+            return $"When Dice Value is \"{targetValues[0]}\"";
         }
         else
         {

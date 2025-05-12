@@ -1,10 +1,12 @@
+using Febucci.UI;
 using TMPro;
 using UnityEngine;
 
 public class ToolTipUI : Singleton<ToolTipUI>
 {
-    [SerializeField] private TMP_Text diceNameText;
-    [SerializeField] private TMP_Text descriptionText;
+    [SerializeField] private RectTransform toolTipPanel;
+    [SerializeField] private AnimatedText diceNameText;
+    [SerializeField] private AnimatedText descriptionText;
     [SerializeField] private float offset;
 
     private RectTransform rectTransform;
@@ -45,12 +47,43 @@ public class ToolTipUI : Singleton<ToolTipUI>
         if (transform == null) return;
         if (UtilityFunctions.IsPointerOverUIElement()) return;
 
+        gameObject.SetActive(true);
+
+        SetPanelAnchor(direction);
         targetTransform = transform;
         targetOffset = (transform.localScale.x / 2 + offset) * direction;
-        diceNameText.text = name;
-        descriptionText.text = description;
+        diceNameText.ShowText(name, true);
+        descriptionText.SetText(description, true);
+    }
 
-        gameObject.SetActive(true);
+    private void SetPanelAnchor(Vector3 direction)
+    {
+        if (direction == Vector3.up)
+        {
+            toolTipPanel.anchorMin = new Vector2(0.5f, 0);
+            toolTipPanel.anchorMax = new Vector2(0.5f, 0);
+            toolTipPanel.pivot = new Vector2(0.5f, 0);
+        }
+        else if (direction == Vector3.down)
+        {
+            toolTipPanel.anchorMin = new Vector2(0.5f, 1);
+            toolTipPanel.anchorMax = new Vector2(0.5f, 1);
+            toolTipPanel.pivot = new Vector2(0.5f, 1);
+        }
+        else if (direction == Vector3.left)
+        {
+            toolTipPanel.anchorMin = new Vector2(1, 0.5f);
+            toolTipPanel.anchorMax = new Vector2(1, 0.5f);
+            toolTipPanel.pivot = new Vector2(1, 0.5f);
+        }
+        else if (direction == Vector3.right)
+        {
+            toolTipPanel.anchorMin = new Vector2(0, 0.5f);
+            toolTipPanel.anchorMax = new Vector2(0, 0.5f);
+            toolTipPanel.pivot = new Vector2(0, 0.5f);
+        }
+
+        toolTipPanel.anchoredPosition = Vector2.zero;
     }
 
     public void HideToolTip()
@@ -59,3 +92,4 @@ public class ToolTipUI : Singleton<ToolTipUI>
         gameObject.SetActive(false);
     }
 }
+

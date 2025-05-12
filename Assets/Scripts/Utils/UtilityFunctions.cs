@@ -17,6 +17,7 @@ public static class UtilityFunctions
 
     public static string FormatNumber(float value)
     {
+        value = Mathf.Floor(value);
         if (value >= 1e12f)
         {
             return value.ToString("0.00e0");
