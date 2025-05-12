@@ -250,7 +250,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
         if (DiceInteractType == DiceInteractType.Keep || DiceInteractType == DiceInteractType.Unkeep)
         {
-            if (PlayerDiceManager.Instance.IsKeepable)
+            if (DiceManager.Instance.IsKeepable)
             {
                 IsKeeped = !IsKeeped;
             }

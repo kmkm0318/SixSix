@@ -135,7 +135,7 @@ public class RollManager : Singleton<RollManager>
     private IEnumerator WaitForAllDiceToStop()
     {
         yield return null;
-        yield return new WaitUntil(() => PlayerDiceManager.Instance.AreAllDiceStopped());
+        yield return new WaitUntil(() => DiceManager.Instance.AreAllDiceStopped());
         OnRollCompleted?.Invoke();
     }
 

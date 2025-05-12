@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class PlayerDiceManager : Singleton<PlayerDiceManager>
+public class DiceManager : Singleton<DiceManager>
 {
     [SerializeField] private PlayDice playDicePrefab;
     [SerializeField] private AvailityDice availityDicePrefab;
@@ -41,6 +41,17 @@ public class PlayerDiceManager : Singleton<PlayerDiceManager>
     public List<AvailityDice> AvailityDiceList => availityDiceList;
     private List<ChaosDice> chaosDiceList = new();
     public List<ChaosDice> ChaosDiceList => chaosDiceList;
+    public List<Dice> AllDiceList
+    {
+        get
+        {
+            List<Dice> allDiceList = new();
+            allDiceList.AddRange(playDiceList);
+            allDiceList.AddRange(availityDiceList);
+            allDiceList.AddRange(chaosDiceList);
+            return allDiceList;
+        }
+    }
     private ObjectPool<PlayDice> playDicePool;
     private ObjectPool<AvailityDice> availityDicePool;
     private ObjectPool<ChaosDice> chaosDicePool;

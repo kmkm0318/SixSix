@@ -28,7 +28,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void StartDiceEnhance()
     {
-        PlayerDiceManager.Instance.OnPlayDiceClicked += OnPlayDiceClicked;
+        DiceManager.Instance.OnPlayDiceClicked += OnPlayDiceClicked;
         OnDiceEnhanceStarted?.Invoke();
     }
 
@@ -41,7 +41,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void CompleteDiceEnhance()
     {
         OnDiceEnhanceCompleted?.Invoke();
-        PlayerDiceManager.Instance.OnPlayDiceClicked -= OnPlayDiceClicked;
+        DiceManager.Instance.OnPlayDiceClicked -= OnPlayDiceClicked;
     }
     #endregion
 

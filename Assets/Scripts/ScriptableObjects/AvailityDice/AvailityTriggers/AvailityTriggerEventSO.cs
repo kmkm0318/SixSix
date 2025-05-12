@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AvailityTriggerEventSO", menuName = "Scriptable Objects/AvailityTriggers/AvailityTriggerEventSO")]
@@ -11,27 +11,22 @@ public class AvailityTriggerEventSO : AvailityTriggerSO
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        string res = "When ";
-
-        switch (TriggerType)
-        {
-            case AvailityTriggerType.RoundStarted:
-                res += "Round Started";
-                break;
-            case AvailityTriggerType.RoundCleared:
-                res += "Round Cleared";
-                break;
-            case AvailityTriggerType.ShopStarted:
-                res += "Shop Started";
-                break;
-            case AvailityTriggerType.ShopEnded:
-                res += "Shop Ended";
-                break;
-            default:
-                res = "Unknown Event";
-                break;
-        }
+        string res = "When " + SplitString(TriggerType.ToString());
 
         return res;
+    }
+
+    private string SplitString(string str)
+    {
+        StringBuilder sb = new();
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (char.IsUpper(str[i]) && i > 0)
+            {
+                sb.Append(" ");
+            }
+            sb.Append(str[i]);
+        }
+        return sb.ToString();
     }
 }

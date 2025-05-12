@@ -54,7 +54,7 @@ public class BonusManager : Singleton<BonusManager>
 
     private void OnCurrentRoundScoreUpdated(float score)
     {
-        var diceValueList = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
+        var diceValueList = DiceManager.Instance.GetOrderedPlayDiceValues();
         Dictionary<int, int> currentDiceSumDict = new();
 
         bool isUpdated = false;

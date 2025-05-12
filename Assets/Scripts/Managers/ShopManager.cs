@@ -43,7 +43,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
-        PlayerDiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
+        DiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -65,7 +65,7 @@ public class ShopManager : Singleton<ShopManager>
         if (dice == null || GameManager.Instance.CurrentGameState != GameState.Shop) return;
         var diceSO = dice.AvailityDiceSO;
 
-        PlayerDiceManager.Instance.RemoveAvailityDice(dice);
+        DiceManager.Instance.RemoveAvailityDice(dice);
 
         OnAvailityDiceSelled?.Invoke(diceSO);
     }
@@ -79,13 +79,13 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
-        if (PlayerMoneyManager.Instance.Money < availityDiceSO.price)
+        if (MoneyManager.Instance.Money < availityDiceSO.price)
         {
             OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
             return;
         }
 
-        if (PlayerDiceManager.Instance.AvailityDiceList.Count >= PlayerDiceManager.Instance.CurrentAvailityDiceMax)
+        if (DiceManager.Instance.AvailityDiceList.Count >= DiceManager.Instance.CurrentAvailityDiceMax)
         {
             OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
             return;
@@ -96,7 +96,7 @@ public class ShopManager : Singleton<ShopManager>
 
     public void TryPurchaseHandEnhance(HandEnhancePurchaseContext context)
     {
-        if (PlayerMoneyManager.Instance.Money < context.Price)
+        if (MoneyManager.Instance.Money < context.Price)
         {
             OnHandEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.NotEnoughMoney);
         }
@@ -108,7 +108,7 @@ public class ShopManager : Singleton<ShopManager>
 
     public void TryPurchasePlayDiceEnhance(DiceEnhancePurchaseContext context)
     {
-        if (PlayerMoneyManager.Instance.Money < context.Price)
+        if (MoneyManager.Instance.Money < context.Price)
         {
             OnPlayDiceEnhancePurchaseAttempted?.Invoke(context, PurchaseResult.NotEnoughMoney);
         }
@@ -168,13 +168,13 @@ public class ShopManager : Singleton<ShopManager>
 
     public void TryReroll()
     {
-        if (PlayerMoneyManager.Instance.Money < RerollCost)
+        if (MoneyManager.Instance.Money < RerollCost)
         {
             OnAvailityDicePurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
             return;
         }
 
-        PlayerMoneyManager.Instance.Money -= RerollCost;
+        MoneyManager.Instance.Money -= RerollCost;
         SequenceManager.Instance.ApplyParallelCoroutine();
         OnRerollCompleted?.Invoke();
         RerollCost++;

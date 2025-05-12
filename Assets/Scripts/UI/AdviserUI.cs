@@ -62,7 +62,7 @@ public class AdviserUI : Singleton<AdviserUI>
     #region GetAdviseString
     private static List<(Hand, float, ScorePair)> GetHandList()
     {
-        var diceValues = PlayerDiceManager.Instance.PlayDiceList.Select(dice => dice.DiceValue).ToList();
+        var diceValues = DiceManager.Instance.PlayDiceList.Select(dice => dice.DiceValue).ToList();
         var handProbabilities = HandCalculator.GetHandProbabilities(diceValues);
         var handScorePairs = HandScoreUI.Instance.GetHandScorePairs();
 

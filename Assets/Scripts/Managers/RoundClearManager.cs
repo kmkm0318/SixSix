@@ -33,10 +33,10 @@ public class RoundClearManager : Singleton<RoundClearManager>
     {
         return type switch
         {
-            RoundClearRewardType.RoundNum => PlayerMoneyManager.Instance.RoundClearReward,
-            RoundClearRewardType.PlayRemain => PlayerMoneyManager.Instance.PlayRemainReward,
-            RoundClearRewardType.BossRound => PlayerMoneyManager.Instance.BossRoundReward,
-            RoundClearRewardType.MoneyInterest => PlayerMoneyManager.Instance.MoneyInterestReward,
+            RoundClearRewardType.RoundNum => MoneyManager.Instance.RoundClearReward,
+            RoundClearRewardType.PlayRemain => MoneyManager.Instance.PlayRemainReward,
+            RoundClearRewardType.BossRound => MoneyManager.Instance.BossRoundReward,
+            RoundClearRewardType.MoneyInterest => MoneyManager.Instance.MoneyInterestReward,
             _ => 0,
         };
     }

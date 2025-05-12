@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        PlayerDiceManager.Instance.OnFirstDiceGenerated += OnFirstDiceGenerated;
+        DiceManager.Instance.OnFirstDiceGenerated += OnFirstDiceGenerated;
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
         RoundManager.Instance.OnRoundFailed += OnRoundFailed;
         RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;

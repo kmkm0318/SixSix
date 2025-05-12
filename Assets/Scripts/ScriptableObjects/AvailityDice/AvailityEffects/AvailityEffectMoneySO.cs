@@ -9,7 +9,7 @@ public class AvailityEffectMoneySO : AvailityEffectSO
     {
         int money = GetCalculatedEffectValue(moneyAmount, context.availtiyDice.DiceValue);
 
-        PlayerMoneyManager.Instance.Money += money;
+        MoneyManager.Instance.Money += money;
         TriggerAnimationManager.Instance.PlayTriggerAnimation(context.availtiyDice.transform, Vector3.down, money);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

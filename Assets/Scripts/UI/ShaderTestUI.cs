@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ShaderTestUI : MonoBehaviour
 {
-    [SerializeField] private Image imagePrefab;
+    [SerializeField] private ShaderTest shaderTestPrefab;
     private void Start()
     {
         MakeAvailityDiceImages();
@@ -15,13 +15,10 @@ public class ShaderTestUI : MonoBehaviour
 
         foreach (var so in availityDiceList.availityDiceSOList)
         {
-            var newImage = Instantiate(imagePrefab, transform);
-            newImage.gameObject.SetActive(true);
+            var newShaderTest = Instantiate(shaderTestPrefab, transform);
+            newShaderTest.gameObject.SetActive(true);
 
-            var material = so.diceMaterialSO.uiMaterial;
-            newImage.material = material;
-
-            newImage.sprite = so.diceSpriteListSO.spriteList[^1];
+            newShaderTest.SetShader(so);
         }
     }
 }

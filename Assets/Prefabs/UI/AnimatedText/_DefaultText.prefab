@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 255090325320944164}
   - component: {fileID: 8268734447492139119}
   m_Layer: 5
-  m_Name: AnimatedText
+  m_Name: _DefaultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,9 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e671551e4261f94c8ae2dde9d256554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setAwake: 0
-  showAwake: 0
-  effectText: 
 --- !u!114 &255090325320944164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +166,7 @@ MonoBehaviour:
   typewriterStartsAutomatically: 1
   animationLoop: 0
   timeScale: 0
-  _text: '<bounce>bounce</bounce> / <dangle>dangle</dangle> / '
+  _text: AnimatedText
   useDynamicScaling: 0
   referenceFontSize: 24
   isResettingTimeOnNewText: 0
@@ -179,10 +176,8 @@ MonoBehaviour:
   useDefaultStyleSheet: 1
   styleSheet: {fileID: 0}
   databaseActions: {fileID: 11400000, guid: c436e922f9675624a96cd7a1c9137161, type: 2}
-  defaultAppearancesTags:
-  - size
-  defaultDisappearancesTags:
-  - fade
+  defaultAppearancesTags: []
+  defaultDisappearancesTags: []
   defaultBehaviorsTags: []
   defaultTagsMode: 0
 --- !u!114 &8268734447492139119
@@ -221,9 +216,9 @@ MonoBehaviour:
   onMessage:
     m_PersistentCalls:
       m_Calls: []
-  waitForNormalChars: 0.03
-  waitLong: 0.6
-  waitMiddle: 0.2
+  waitForNormalChars: 0.01
+  waitLong: 0.5
+  waitMiddle: 0.1
   avoidMultiplePunctuationWait: 0
   waitForNewLines: 1
   waitForLastCharacter: 1

@@ -113,7 +113,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void OnRollCompleted()
     {
-        var playDiceValues = PlayerDiceManager.Instance.GetOrderedPlayDiceValues();
+        var playDiceValues = DiceManager.Instance.GetOrderedPlayDiceValues();
         handScoreDictionary = HandCalculator.GetHandScorePairs(playDiceValues);
         OnHandScoreUpdated?.Invoke(handScoreDictionary);
     }

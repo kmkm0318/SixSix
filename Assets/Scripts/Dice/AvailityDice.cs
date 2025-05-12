@@ -19,7 +19,7 @@ public class AvailityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && PlayerDiceManager.Instance.IsAvailityDiceAutoKeep && PlayerDiceManager.Instance.IsKeepable)
+        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && DiceManager.Instance.IsAvailityDiceAutoKeep && DiceManager.Instance.IsKeepable)
         {
             if (availityDiceSO.autoKeepType == AbailityDiceAutoKeepType.High)
             {

@@ -5,11 +5,11 @@ public class BossRound_UnkeepableSO : BossRoundSO
 {
     public override void OnEnter()
     {
-        PlayerDiceManager.Instance.IsKeepable = false;
+        DiceManager.Instance.IsKeepable = false;
     }
 
     public override void OnExit()
     {
-        PlayerDiceManager.Instance.IsKeepable = true;
+        DiceManager.Instance.IsKeepable = true;
     }
 }

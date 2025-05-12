@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class DiceHighlight : Singleton<DiceHighlight>
@@ -52,7 +50,7 @@ public class DiceHighlight : Singleton<DiceHighlight>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        PlayerMouseManager.Instance.OnMouseExit += HideHighlight;
+        MouseManager.Instance.OnMouseExit += HideHighlight;
     }
     #endregion
 

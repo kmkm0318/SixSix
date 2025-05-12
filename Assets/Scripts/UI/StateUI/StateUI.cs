@@ -27,9 +27,10 @@ public class StateUI : Singleton<StateUI>
         RegisterEvents();
     }
 
+    #region RegisterEvents
     private void RegisterEvents()
     {
-        PlayerMoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
+        MoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
@@ -62,6 +63,7 @@ public class StateUI : Singleton<StateUI>
             StartCoroutine(AnimationFunction.PlayShakeAnimation(moneyText.transform));
         }
     }
+    #endregion
 
     private IEnumerator UpdateTextAndPlayAnimation(TMP_Text targetText, string targetString)
     {

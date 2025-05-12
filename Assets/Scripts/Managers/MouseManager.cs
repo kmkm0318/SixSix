@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMouseManager : Singleton<PlayerMouseManager>
+public class MouseManager : Singleton<MouseManager>
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask clickableLayerMask;

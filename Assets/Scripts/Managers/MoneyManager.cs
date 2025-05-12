@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
+public class MoneyManager : Singleton<MoneyManager>
 {
     [SerializeField] private int bonusMoney = 25;
     [SerializeField] private int roundclearReward = 3;
@@ -17,7 +17,7 @@ public class PlayerMoneyManager : Singleton<PlayerMoneyManager>
 
     public event Action<int> OnMoneyChanged;
 
-    private int money = 50;
+    private int money = 0;
     public int Money
     {
         get => money;

@@ -35,20 +35,20 @@ public class BossRound_LimitPlayDiceSO : BossRoundSO
         foreach (var playDice in disabledPlayDiceList)
         {
             if (playDice == null) continue;
-            PlayerDiceManager.Instance.EnablePlayDice(playDice);
+            DiceManager.Instance.EnablePlayDice(playDice);
         }
     }
 
     private void DisableDices()
     {
-        disabledPlayDiceList = PlayerDiceManager.Instance.GetRandomPlayDiceList(limitCount);
+        disabledPlayDiceList = DiceManager.Instance.GetRandomPlayDiceList(limitCount);
 
         if (disabledPlayDiceList == null) return;
 
         foreach (var playDice in disabledPlayDiceList)
         {
             if (playDice == null) continue;
-            PlayerDiceManager.Instance.DisablePlayDice(playDice);
+            DiceManager.Instance.DisablePlayDice(playDice);
         }
     }
 }

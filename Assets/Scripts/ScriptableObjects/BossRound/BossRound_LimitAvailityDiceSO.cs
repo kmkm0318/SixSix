@@ -30,14 +30,14 @@ public class BossRound_LimitAvailityDiceSO : BossRoundSO
 
     private void DisableDices()
     {
-        disabledAvailityDiceList = PlayerDiceManager.Instance.GetRandomAvailityDiceList(limitCount);
+        disabledAvailityDiceList = DiceManager.Instance.GetRandomAvailityDiceList(limitCount);
 
         if (disabledAvailityDiceList == null) return;
 
         foreach (var availityDice in disabledAvailityDiceList)
         {
             if (availityDice == null) continue;
-            PlayerDiceManager.Instance.DisableAvailityDice(availityDice);
+            DiceManager.Instance.DisableAvailityDice(availityDice);
         }
     }
 
@@ -48,7 +48,7 @@ public class BossRound_LimitAvailityDiceSO : BossRoundSO
         foreach (var availityDice in disabledAvailityDiceList)
         {
             if (availityDice == null) continue;
-            PlayerDiceManager.Instance.EnableAvailityDice(availityDice);
+            DiceManager.Instance.EnableAvailityDice(availityDice);
         }
     }
 }

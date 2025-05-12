@@ -8,11 +8,11 @@ public class BossRound_LimitDiceValueSO : BossRoundSO
 
     public override void OnEnter()
     {
-        PlayerDiceManager.Instance.UsableDiceValues = targetDiceValues;
+        DiceManager.Instance.UsableDiceValues = targetDiceValues;
     }
 
     public override void OnExit()
     {
-        PlayerDiceManager.Instance.UsableDiceValues = null;
+        DiceManager.Instance.UsableDiceValues = null;
     }
 }

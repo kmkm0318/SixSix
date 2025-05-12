@@ -1,5 +1,3 @@
-using Febucci.UI;
-using TMPro;
 using UnityEngine;
 
 public class ToolTipUI : Singleton<ToolTipUI>
@@ -25,7 +23,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         ShopUI.Instance.OnShopUIOpened += HideToolTip;
         RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
-        PlayerMouseManager.Instance.OnMouseExit += HideToolTip;
+        MouseManager.Instance.OnMouseExit += HideToolTip;
     }
     #endregion
 
@@ -52,8 +50,8 @@ public class ToolTipUI : Singleton<ToolTipUI>
         SetPanelAnchor(direction);
         targetTransform = transform;
         targetOffset = (transform.localScale.x / 2 + offset) * direction;
-        diceNameText.ShowText(name, true);
-        descriptionText.SetText(description, true);
+        diceNameText.ShowText(name);
+        descriptionText.SetText(description);
     }
 
     private void SetPanelAnchor(Vector3 direction)

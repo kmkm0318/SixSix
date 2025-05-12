@@ -21,8 +21,8 @@ public class AvailityDiceCountText : MonoBehaviour
 
     private void RegisterEvents()
     {
-        PlayerDiceManager.Instance.OnAvailityDiceCountChanged += OnAvailityDiceCountChanged;
-        PlayerDiceManager.Instance.OnCurrentAvailityDiceMaxChanged += OnCurrentAvailityDiceMaxChanged;
+        DiceManager.Instance.OnAvailityDiceCountChanged += OnAvailityDiceCountChanged;
+        DiceManager.Instance.OnCurrentAvailityDiceMaxChanged += OnCurrentAvailityDiceMaxChanged;
     }
 
     private void OnAvailityDiceCountChanged(int count)
@@ -41,8 +41,8 @@ public class AvailityDiceCountText : MonoBehaviour
 
     private void Init()
     {
-        currentCount = PlayerDiceManager.Instance.AvailityDiceList.Count;
-        maxCount = PlayerDiceManager.Instance.CurrentAvailityDiceMax;
+        currentCount = DiceManager.Instance.AvailityDiceList.Count;
+        maxCount = DiceManager.Instance.CurrentAvailityDiceMax;
         SetText();
     }
 

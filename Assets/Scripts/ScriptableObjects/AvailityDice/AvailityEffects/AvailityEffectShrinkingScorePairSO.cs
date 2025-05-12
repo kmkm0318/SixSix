@@ -33,7 +33,7 @@ public class AvailityEffectShrinkingScorePairSO : AvailityEffectSO
         {
             SequenceManager.Instance.AddCoroutine(() =>
             {
-                PlayerDiceManager.Instance.RemoveAvailityDice(dice);
+                DiceManager.Instance.RemoveAvailityDice(dice);
             });
         }
     }

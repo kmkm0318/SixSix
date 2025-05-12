@@ -12,10 +12,14 @@ public abstract class AvailityTriggerSO : ScriptableObject
 public enum AvailityTriggerType
 {
     None,
-    PlayDice,
-    Hand,
+    PlayDiceApplied,
+    HandApplied,
     RoundStarted,
     RoundCleared,
     ShopStarted,
     ShopEnded,
+    PlayStarted,
+    PlayEnded,
+    RollStarted,
+    RollEnded,
 }
