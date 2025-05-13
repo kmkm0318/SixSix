@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851a22df42c7ce74bb37d71c0bd04c8a, type: 3}
   m_Name: Shrink_(0, 3)_(0, 0.02)
   m_EditorClassIdentifier: 
-  calculateType: 0
+  calculateType: 1
   scorePair:
     baseScore: 0
     multiplier: 3

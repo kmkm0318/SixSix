@@ -24,7 +24,6 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     public event Action<bool> OnIsKeepedChanged;
     public event Action<bool> OnIsInteractableChanged;
-    public event Action OnMouseClicked;
 
     private bool isKeeped = false;
     public bool IsKeeped
@@ -221,11 +220,6 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
 
     }
-
-    public void ResetMouseClickEvent()
-    {
-        OnMouseClicked = null;
-    }
     #endregion
 
     #region Faces
@@ -256,7 +250,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
             }
         }
 
-        OnMouseClicked?.Invoke();
+        DiceManager.Instance.HandleDiceClick(this);
     }
 
     public virtual void HandleIsInteractable(bool isInteractable)
@@ -289,6 +283,11 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         faces[faceIndex].Enhance(scorePair);
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
         StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, false));
+    }
+
+    public virtual void EnhanceDice(int enhanceLevel)
+    {
+        EnhanceDice(DiceManager.Instance.GetEnhanceValue(enhanceLevel, false));
     }
 
     public abstract void ShowToolTip();

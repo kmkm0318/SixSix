@@ -9,7 +9,6 @@ public class SequenceManager : Singleton<SequenceManager>
     private List<IEnumerator> parallelCoroutineList = new();
 
     private bool isPlaying = false;
-    public bool IsPlaying => isPlaying;
 
     public void AddCoroutine(IEnumerator coroutine, bool isParallel = false)
     {
@@ -49,36 +48,10 @@ public class SequenceManager : Singleton<SequenceManager>
         AddCoroutine(ExecuteAction(action), isParallel);
     }
 
-    public void AddCoroutineOneFrameLater(IEnumerator coroutine, bool isParallel = false)
-    {
-        if (coroutine == null)
-        {
-            Debug.LogWarning("Coroutine is null. Cannot execute.");
-            return;
-        }
-        StartCoroutine(AddOneFrameLater(coroutine, isParallel));
-    }
-
-    public void AddCoroutineOneFrameLater(Action action, bool isParallel = false)
-    {
-        if (action == null)
-        {
-            Debug.LogWarning("Action is null. Cannot execute.");
-            return;
-        }
-        AddCoroutineOneFrameLater(ExecuteAction(action), isParallel);
-    }
-
     private IEnumerator ExecuteAction(Action action)
     {
         action.Invoke();
         yield break;
-    }
-
-    private IEnumerator AddOneFrameLater(IEnumerator coroutine, bool isParallel = false)
-    {
-        yield return null;
-        AddCoroutine(coroutine, isParallel);
     }
 
     public void ApplyParallelCoroutine()

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AvailityTriggerEventSO", menuName = "Scriptable Objects/AvailityTriggers/AvailityTriggerEventSO")]
 public class AvailityTriggerEventSO : AvailityTriggerSO
 {
-    public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
+    public override bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
     {
         return triggerType == TriggerType;
     }

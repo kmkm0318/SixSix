@@ -27,6 +27,8 @@ public class RoundClearManager : Singleton<RoundClearManager>
     private void OnRoundClearUIClosed()
     {
         OnRoundClearEnded?.Invoke();
+
+        GameManager.Instance.CurrentGameState = GameState.Shop;
     }
 
     public int GetRewardValue(RoundClearRewardType type)

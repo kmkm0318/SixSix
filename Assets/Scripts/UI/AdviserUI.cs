@@ -34,18 +34,7 @@ public class AdviserUI : Singleton<AdviserUI>
     {
         if (RollManager.Instance.RollRemain == 0 || !isAvailiable) return;
 
-        var handList = GetHandList();
-
-        var sortedHandList = handList
-        .OrderByDescending(x => x.Item2)
-        .ThenByDescending(x => x.Item3.baseScore)
-        .ToList();
-
-        var adviseString = GetAdviseString(sortedHandList);
-        if (adviseString == string.Empty) return;
-
-        adviseText.text = adviseString;
-        Show(() => DelayHide(showTime));
+        ShowAdvise();
     }
 
     private void OnDiceEnhanceStarted()
@@ -59,12 +48,33 @@ public class AdviserUI : Singleton<AdviserUI>
     }
     #endregion
 
-    #region GetAdviseString
+    #region ShowAdvise
+    private void ShowAdvise()
+    {
+        var handList = GetHandList();
+
+        var sortedHandList = handList
+        .OrderByDescending(x => x.Item2)
+        .ThenByDescending(x => x.Item3.baseScore)
+        .ToList();
+
+        foreach (var hand in sortedHandList)
+        {
+            Debug.Log($"{hand.Item1} : {hand.Item2:P2} : {hand.Item3.baseScore * hand.Item3.multiplier}");
+        }
+
+        var adviseString = GetAdviseString(sortedHandList);
+        if (adviseString == string.Empty) return;
+
+        adviseText.text = adviseString;
+        Show(() => DelayHide(showTime));
+    }
+
     private static List<(Hand, float, ScorePair)> GetHandList()
     {
         var diceValues = DiceManager.Instance.PlayDiceList.Select(dice => dice.DiceValue).ToList();
         var handProbabilities = HandCalculator.GetHandProbabilities(diceValues);
-        var handScorePairs = HandScoreUI.Instance.GetHandScorePairs();
+        var handScorePairs = HandManager.Instance.HandScores;
 
         List<(Hand, float, ScorePair)> res = new();
 
@@ -105,7 +115,6 @@ public class AdviserUI : Singleton<AdviserUI>
 
         return res;
     }
-    #endregion
 
     private void DelayHide(float delayTime)
     {
@@ -116,6 +125,7 @@ public class AdviserUI : Singleton<AdviserUI>
             Hide();
         });
     }
+    #endregion
 
     private void Show(Action onComplete = null)
     {

@@ -53,6 +53,7 @@ public enum DiceInteractType
     Unkeep,
     Enhance,
     Sell,
+    Use,
 }
 
 [Serializable]

@@ -23,7 +23,7 @@ public class RollManager : Singleton<RollManager>
     public int RollRemain
     {
         get => rollRemain;
-        private set
+        set
         {
             if (rollRemain == value) return;
             rollRemain = value;

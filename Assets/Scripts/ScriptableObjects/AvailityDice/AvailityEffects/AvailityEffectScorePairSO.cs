@@ -7,16 +7,13 @@ public class AvailityEffectScorePairSO : AvailityEffectSO
 
     public override void TriggerEffect(AvailityDiceContext context)
     {
-        float baseScore = GetCalculatedEffectValue(scorePair.baseScore, context.availtiyDice.DiceValue);
-        float multiplier = GetCalculatedEffectValue(scorePair.multiplier, context.availtiyDice.DiceValue);
-
-        ScorePair resultScorePair = new(baseScore, multiplier);
+        ScorePair resultScorePair = DiceEffectCalculator.GetCalculatedEffectValue(scorePair, context.availtiyDice.DiceValue, calculateType);
 
         TriggerManager.Instance.ApplyTriggerEffect(context.availtiyDice.transform, Vector3.down, resultScorePair);
     }
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"Get {scorePair}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        return $"Get {scorePair}" + DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
     }
 }

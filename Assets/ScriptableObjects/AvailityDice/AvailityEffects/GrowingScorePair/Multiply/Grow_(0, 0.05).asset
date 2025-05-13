@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e51cdc7e6cf3e4482e7d4db1a39095, type: 3}
   m_Name: Grow_(0, 0.05)
   m_EditorClassIdentifier: 
-  calculateType: 0
+  calculateType: 1
   scorePair:
     baseScore: 0
     multiplier: 1

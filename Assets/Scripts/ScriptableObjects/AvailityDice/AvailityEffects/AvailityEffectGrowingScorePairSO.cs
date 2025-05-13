@@ -15,11 +15,12 @@ public class AvailityEffectGrowingScorePairSO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"Get {scorePair} And\nGrow {growValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        return $"Get {scorePair} And\nGrow {growValue}" + DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
     }
 
     private void GrowScorePair(int diceValue)
     {
-        scorePair = new ScorePair(scorePair.baseScore + GetCalculatedEffectValue(growValue.baseScore, diceValue), scorePair.multiplier + GetCalculatedEffectValue(growValue.multiplier, diceValue));
+        var growingValue = DiceEffectCalculator.GetCalculatedEffectValue(growValue, diceValue, calculateType);
+        scorePair = new ScorePair(scorePair.baseScore + growingValue.baseScore, scorePair.multiplier + growingValue.multiplier);
     }
 }

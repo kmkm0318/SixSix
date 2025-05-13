@@ -13,67 +13,34 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] private Color focusedColor;
     [SerializeField] private Color unfocusedColor;
 
-    private ScorePair scorePair;
-    private HandSO handSO;
-    public HandSO HandSO => handSO;
-    private int enhanceLevel = 0;
-    public int EnhanceLevel => enhanceLevel;
-
-    private bool isActive = true;
-    private bool IsActive
-    {
-        get => isActive;
-        set
-        {
-            if (isActive == value) return;
-            isActive = value;
-
-            if (!value)
-            {
-                OnUnfocused();
-            }
-        }
-    }
-
     public void Init(HandSO handSO)
     {
-        this.handSO = handSO;
-
         nameText.text = handSO.handName;
 
-        UpdateScore(true);
+        ResetScoreText();
 
         OnUnfocused();
 
         button.onClick.AddListener(() =>
         {
-            if (scorePair.baseScore == 0 && scorePair.multiplier == 0) return;
-
-            HandScoreUI.Instance.SelectHand(handSO, scorePair);
+            HandScoreUI.Instance.HandleSelectHand(handSO);
         });
     }
 
-    public void UpdateScore(bool isZero)
+    public void UpdateScoreText(ScorePair scorePair)
     {
-        if (isZero)
-        {
-            scorePair = new();
-        }
-        else
-        {
-            scorePair = GetEnhancedSocrePair();
-        }
-
         baseScoreText.text = UtilityFunctions.FormatNumber(scorePair.baseScore);
         multiplierText.text = UtilityFunctions.FormatNumber(scorePair.multiplier);
     }
 
+    public void ResetScoreText()
+    {
+        UpdateScoreText(new(0, 0));
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsActive)
-        {
-            OnFocused();
-        }
+        OnFocused();
     }
 
     private void OnFocused()
@@ -84,10 +51,7 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (IsActive)
-        {
-            OnUnfocused();
-        }
+        OnUnfocused();
     }
 
     private void OnUnfocused()
@@ -96,20 +60,13 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         multiplierText.color = unfocusedColor;
     }
 
-    public void Enhance(int increaseAmount)
+    public void PlayTriggerAnimation(int enhanceLevel, ScorePair scorePair)
     {
-        enhanceLevel += increaseAmount;
-
         enhanceLevelText.text = enhanceLevel.ToString();
+        UpdateScoreText(scorePair);
+
         StartCoroutine(AnimationFunction.PlayShakeAnimation(enhanceLevelText.transform));
         StartCoroutine(AnimationFunction.PlayShakeAnimation(baseScoreText.transform));
         StartCoroutine(AnimationFunction.PlayShakeAnimation(multiplierText.transform));
-
-        UpdateScore(scorePair.baseScore == 0 && scorePair.multiplier == 0);
-    }
-
-    public ScorePair GetEnhancedSocrePair()
-    {
-        return handSO.GetEnhancedScorePair(enhanceLevel);
     }
 }

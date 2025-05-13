@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BossRound_LimitHandSO", menuName = "Scriptable Objects/BossRounds/BossRound_LimitHandSO")]
@@ -7,11 +8,11 @@ public class BossRound_LimitHandSO : BossRoundSO
 
     public override void OnEnter()
     {
-        HandScoreUI.Instance.UsableHandSO = targetHandSO;
+        HandManager.Instance.UsableHands = new List<Hand> { targetHandSO.hand };
     }
 
     public override void OnExit()
     {
-        HandScoreUI.Instance.UsableHandSO = null;
+        HandManager.Instance.UsableHands = null;
     }
 }

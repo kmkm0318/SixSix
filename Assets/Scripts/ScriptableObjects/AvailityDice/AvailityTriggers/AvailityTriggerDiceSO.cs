@@ -7,7 +7,7 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
     [SerializeField] private List<int> targetValues;
     public List<int> TargetValues => targetValues;
 
-    public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
+    public override bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
     {
         return triggerType == TriggerType && context.playDice != null && targetValues.Contains(context.playDice.DiceValue);
     }

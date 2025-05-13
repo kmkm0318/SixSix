@@ -2,11 +2,6 @@ using UnityEngine;
 
 public class PlayDice : Dice
 {
-    private void Start()
-    {
-        ChangeFace(0);
-    }
-
     #region Events
     protected override void OnDiceEnhanceStarted()
     {

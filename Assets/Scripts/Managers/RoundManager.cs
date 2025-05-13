@@ -68,10 +68,14 @@ public class RoundManager : Singleton<RoundManager>
     private void ClearCurrentRound()
     {
         OnRoundCleared?.Invoke(CurrentRound);
+
+        GameManager.Instance.CurrentGameState = CurrentRound == ClearRound ? GameState.GameClear : GameState.RoundClear;
     }
 
     private void FailCurrentRound()
     {
         OnRoundFailed?.Invoke(CurrentRound);
+
+        GameManager.Instance.CurrentGameState = GameState.GameOver;
     }
 }

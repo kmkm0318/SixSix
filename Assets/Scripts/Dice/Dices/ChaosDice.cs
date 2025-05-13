@@ -4,11 +4,6 @@ public class ChaosDice : Dice
 {
     private ScorePair scorePair = new();
 
-    private void Start()
-    {
-        ChangeFace(0);
-    }
-
     private void UpdateScorePair()
     {
         scorePair.baseScore = -DiceValue * 25;

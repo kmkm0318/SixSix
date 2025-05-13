@@ -89,7 +89,7 @@ public class AvailityDice : Dice
         }
     }
 
-    public bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
+    public bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
     {
         return IsEnabled && availityDiceSO.availityTrigger.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
     }

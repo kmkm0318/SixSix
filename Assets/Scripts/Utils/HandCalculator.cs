@@ -6,7 +6,7 @@ using UnityEngine;
 public static class HandCalculator
 {
     #region GetHandCheckResults
-    private static Dictionary<Hand, bool> GetHandCheckResults(List<int> diceValues)
+    public static Dictionary<Hand, bool> GetHandCheckResults(List<int> diceValues)
     {
         Dictionary<Hand, bool> res = new();
         foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)

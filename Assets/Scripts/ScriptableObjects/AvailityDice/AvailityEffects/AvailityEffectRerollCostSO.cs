@@ -12,9 +12,9 @@ public class AvailityEffectDiscountRerollCostSO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        string res = $"Reroll Cost -1";
+        string res = $"Reroll Cost -";
 
-        res += GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        res += DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
 
         return res;
     }

@@ -29,7 +29,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
     {
         base.Awake();
 
-        rewardPool = new ObjectPool<RoundClearRewardUI>(
+        rewardPool = new(
             () => Instantiate(roundClearRewardUI, roundClearRewardParent),
             rewardUI =>
             {

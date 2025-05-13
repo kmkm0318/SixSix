@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b855dfb92765c3f41a055b98ec8a5eb7, type: 3}
   m_Name: Money_Multiply_4
   m_EditorClassIdentifier: 
-  calculateType: 0
+  calculateType: 1
   moneyAmount: 4

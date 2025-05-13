@@ -7,7 +7,7 @@ public class BossRound_AddChaosDiceSO : BossRoundSO
 
     public override void OnEnter()
     {
-        DiceManager.Instance.GenerateChaosDices(chaosDiceCount);
+        DiceManager.Instance.StartGenerateChaosDice(chaosDiceCount);
     }
 
     public override void OnExit()

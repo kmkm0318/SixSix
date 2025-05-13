@@ -7,7 +7,7 @@ public class AvailityEffectMoneySO : AvailityEffectSO
 
     public override void TriggerEffect(AvailityDiceContext context)
     {
-        int money = GetCalculatedEffectValue(moneyAmount, context.availtiyDice.DiceValue);
+        int money = DiceEffectCalculator.GetCalculatedEffectValue(moneyAmount, context.availtiyDice.DiceValue, calculateType);
 
         MoneyManager.Instance.Money += money;
         TriggerAnimationManager.Instance.PlayTriggerAnimation(context.availtiyDice.transform, Vector3.down, money);
@@ -18,7 +18,7 @@ public class AvailityEffectMoneySO : AvailityEffectSO
     {
         string res = $"Get Money({moneyAmount})";
 
-        res += GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        res += DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
 
         return res;
     }

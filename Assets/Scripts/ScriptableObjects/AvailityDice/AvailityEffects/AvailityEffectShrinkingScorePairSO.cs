@@ -17,12 +17,13 @@ public class AvailityEffectShrinkingScorePairSO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        return $"Get {scorePair} And\nShrink {shrinkValue}" + GetCalculateDescription(availityDiceSO.MaxDiceValue);
+        return $"Get {scorePair} And\nShrink {shrinkValue}" + DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
     }
 
     private void ShrinkScorePair(int diceValue)
     {
-        scorePair = new ScorePair(scorePair.baseScore - GetCalculatedEffectValue(shrinkValue.baseScore, diceValue), scorePair.multiplier - GetCalculatedEffectValue(shrinkValue.multiplier, diceValue));
+        var shrinkingValue = DiceEffectCalculator.GetCalculatedEffectValue(shrinkValue, diceValue, calculateType);
+        scorePair = new ScorePair(scorePair.baseScore - shrinkingValue.baseScore, scorePair.multiplier - shrinkingValue.multiplier);
     }
 
     private void CheckThenRemove(AvailityDice dice)

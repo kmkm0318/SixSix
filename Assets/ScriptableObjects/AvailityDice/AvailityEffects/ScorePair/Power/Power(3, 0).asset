@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e91c5a8b40f00446afc1487c2c52cec, type: 3}
   m_Name: Power(3, 0)
   m_EditorClassIdentifier: 
-  calculateType: 1
+  calculateType: 2
   scorePair:
     baseScore: 3
     multiplier: 0

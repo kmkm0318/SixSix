@@ -40,7 +40,9 @@ public class GameResultUI : Singleton<GameResultUI>
 
     private void OnClickInfinityModeButton()
     {
-        Hide(() => OnInfinityModeButtonClicked?.Invoke());
+        Hide();
+        OnInfinityModeButtonClicked?.Invoke();
+        GameManager.Instance.CurrentGameState = GameState.RoundClear;
     }
 
     #region RegisterEvents

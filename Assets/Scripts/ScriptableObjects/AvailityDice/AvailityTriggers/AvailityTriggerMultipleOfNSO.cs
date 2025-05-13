@@ -5,7 +5,7 @@ public class AvailityTriggerMultipleOfNSO : AvailityTriggerSO
 {
     [SerializeField] private int multipleOfN = 7;
 
-    public override bool IsTriggered(AvailityTriggerType triggerType, AvailityDiceContext context)
+    public override bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
     {
         if (triggerType != TriggerType) return false;
 
@@ -20,6 +20,6 @@ public class AvailityTriggerMultipleOfNSO : AvailityTriggerSO
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        return "When the sum of play dice\nis a multiple of " + multipleOfN;
+        return "When the Sum of Play Dice\nis a Multiple of " + multipleOfN;
     }
 }

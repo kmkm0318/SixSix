@@ -51,7 +51,7 @@ public class ShopUI : Singleton<ShopUI>
 
     private void InitPool()
     {
-        availityDiceMerchantPool = new ObjectPool<AvailityDiceMerchantUI>(
+        availityDiceMerchantPool = new(
             () => Instantiate(availityDiceMerchantPrefab, availityDiceMerchantParent),
             merchantUI =>
             {
@@ -63,7 +63,7 @@ public class ShopUI : Singleton<ShopUI>
             maxSize: 10
         );
 
-        handEnhanceMerchantPool = new ObjectPool<HandEnhanceMerchantUI>(
+        handEnhanceMerchantPool = new(
             () => Instantiate(handEnhanceMerchantPrefab, handEnhanceMerchantParent),
             merchantUI =>
             {
@@ -75,7 +75,7 @@ public class ShopUI : Singleton<ShopUI>
             maxSize: 10
         );
 
-        playDiceEnhanceMerchantPool = new ObjectPool<PlayDiceEnhanceMerchantUI>(
+        playDiceEnhanceMerchantPool = new(
             () => Instantiate(playDiceEnhanceMerchantPrefab, playDiceEnhanceMerchantParent),
             merchantUI =>
             {

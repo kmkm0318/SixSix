@@ -56,19 +56,19 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void StartHandEnhance()
     {
-        HandScoreUI.Instance.OnHandSelected += OnHandSelected;
+        HandManager.Instance.OnHandSelected += OnHandSelected;
         OnHandEnhanceStarted?.Invoke();
     }
 
-    private void OnHandSelected(HandSO sO, ScorePair pair)
+    private void OnHandSelected(HandSO sO)
     {
-        HandScoreUI.Instance.EnhanceHand(sO, HandEnhanceLevel);
+        HandManager.Instance.EnhanceHand(sO, HandEnhanceLevel);
         CompleteHandEnhance();
     }
 
     private void CompleteHandEnhance()
     {
-        HandScoreUI.Instance.OnHandSelected -= OnHandSelected;
+        HandManager.Instance.OnHandSelected -= OnHandSelected;
         OnHandEnhanceCompleted?.Invoke();
     }
 }

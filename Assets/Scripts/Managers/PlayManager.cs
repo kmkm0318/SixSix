@@ -14,7 +14,7 @@ public class PlayManager : Singleton<PlayManager>
     public int PlayRemain
     {
         get => playRemain;
-        private set
+        set
         {
             if (playRemain == value) return;
             playRemain = value;

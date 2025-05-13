@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     public GameState CurrentGameState
     {
         get => currentGameState;
-        private set
+        set
         {
             if (currentGameState == value) return;
             currentGameState = value;
@@ -33,50 +33,7 @@ public class GameManager : Singleton<GameManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        DiceManager.Instance.OnFirstDiceGenerated += OnFirstDiceGenerated;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
-        RoundManager.Instance.OnRoundFailed += OnRoundFailed;
-        RoundClearManager.Instance.OnRoundClearEnded += OnRoundClearEnded;
-        ShopManager.Instance.OnShopEnded += OnShopEnded;
-        GameResultUI.Instance.OnInfinityModeButtonClicked += OnInfinityModeButtonClicked;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
-    }
-
-    private void OnRoundClearEnded()
-    {
-        ChangeGameStateOneFrameLater(GameState.Shop);
-    }
-
-    private void OnFirstDiceGenerated()
-    {
-        ChangeGameStateOneFrameLater(GameState.Round);
-    }
-
-    private void OnRoundCleared(int currentRound)
-    {
-        if (currentRound == RoundManager.Instance.ClearRound)
-        {
-            ChangeGameStateOneFrameLater(GameState.GameClear);
-        }
-        else
-        {
-            ChangeGameStateOneFrameLater(GameState.RoundClear);
-        }
-    }
-
-    private void OnRoundFailed(int currentRound)
-    {
-        ChangeGameStateOneFrameLater(GameState.GameOver);
-    }
-
-    private void OnShopEnded()
-    {
-        ChangeGameStateOneFrameLater(GameState.Round);
-    }
-
-    private void OnInfinityModeButtonClicked()
-    {
-        ChangeGameStateOneFrameLater(GameState.RoundClear);
     }
 
     private void OnGameSpeedChanged(int value)
@@ -84,11 +41,6 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1f + (value * 0.25f);
     }
     #endregion
-
-    private void ChangeGameStateOneFrameLater(GameState state)
-    {
-        SequenceManager.Instance.AddCoroutineOneFrameLater(() => CurrentGameState = state);
-    }
 
     private IEnumerator StartGame()
     {

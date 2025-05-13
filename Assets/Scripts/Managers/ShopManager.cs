@@ -58,6 +58,8 @@ public class ShopManager : Singleton<ShopManager>
     private void OnShopUIClosed()
     {
         OnShopEnded?.Invoke();
+
+        GameManager.Instance.CurrentGameState = GameState.Round;
     }
 
     private void OnAvailityDiceClicked(AvailityDice dice)
@@ -137,16 +139,10 @@ public class ShopManager : Singleton<ShopManager>
         for (int i = 0; i < count; i++)
         {
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
-            int price = enhanceLevel * 6 - (enhanceLevel - 1);
 
-            int totalEnhance = enhanceLevel * 5;
-            int baseScoreEnhance = UnityEngine.Random.Range(1, totalEnhance);
-            int multiplierEnhance = totalEnhance - baseScoreEnhance;
+            ScorePair scorePair = DiceManager.Instance.GetEnhanceValue(enhanceLevel, true);
 
-            float baseScore = baseScoreEnhance * 5f;
-            float multiplier = multiplierEnhance * 0.05f;
-
-            ScorePair scorePair = new(baseScore, multiplier);
+            int price = DiceManager.Instance.GetEnhancePrice(enhanceLevel);
 
             diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }

@@ -24,47 +24,55 @@ public class TriggerManager : Singleton<TriggerManager>
 
     private void OnRoundStarted(int obj)
     {
-        TriggerAvailityDice(AvailityTriggerType.RoundStarted);
+        TriggerAvailityDice(EffectTriggerType.RoundStarted);
     }
 
     private void OnRoundClearStarted()
     {
-        TriggerAvailityDice(AvailityTriggerType.RoundCleared);
+        TriggerAvailityDice(EffectTriggerType.RoundCleared);
     }
 
     private void OnShopStarted()
     {
-        TriggerAvailityDice(AvailityTriggerType.ShopStarted);
+        TriggerAvailityDice(EffectTriggerType.ShopStarted);
     }
 
     private void OnShopEnded()
     {
-        TriggerAvailityDice(AvailityTriggerType.ShopEnded);
+        TriggerAvailityDice(EffectTriggerType.ShopEnded);
     }
 
     private void OnPlayStarted(int obj)
     {
-        TriggerAvailityDice(AvailityTriggerType.PlayStarted);
+        TriggerAvailityDice(EffectTriggerType.PlayStarted);
     }
 
     private void OnPlayEnded(int obj)
     {
-        TriggerAvailityDice(AvailityTriggerType.PlayEnded);
+        TriggerAvailityDice(EffectTriggerType.PlayEnded);
     }
 
     private void OnRollStarted()
     {
-        TriggerAvailityDice(AvailityTriggerType.RollStarted);
+        TriggerAvailityDice(EffectTriggerType.RollStarted);
     }
 
     private void OnRollCompleted()
     {
-        TriggerAvailityDice(AvailityTriggerType.RollEnded);
+        TriggerAvailityDice(EffectTriggerType.RollEnded);
     }
     #endregion
 
     #region TriggerDice
-    public void TriggerPlayDices()
+    public void TriggerDices()
+    {
+        TriggerGambleDices();
+        TriggerPlayDices();
+        TriggerChaosDices();
+        TriggerAvailityDice(HandManager.Instance.LastSelectedHandSO);
+    }
+
+    private void TriggerPlayDices()
     {
         var playDiceList = DiceManager.Instance.GetOrderedPlayDiceList();
         var UsableDiceValues = DiceManager.Instance.UsableDiceValues;
@@ -78,7 +86,7 @@ public class TriggerManager : Singleton<TriggerManager>
         }
     }
 
-    private void TriggerAvailityDice(AvailityTriggerType triggerType, AvailityDiceContext context)
+    private void TriggerAvailityDice(EffectTriggerType triggerType, AvailityDiceContext context)
     {
         List<AvailityDice> triggeredAvailityDiceList = DiceManager.Instance.AvailityDiceList.FindAll(dice => dice.IsTriggered(triggerType, context));
 
@@ -88,26 +96,34 @@ public class TriggerManager : Singleton<TriggerManager>
         }
     }
 
-    private void TriggerAvailityDice(AvailityTriggerType triggerType)
+    private void TriggerAvailityDice(EffectTriggerType triggerType)
     {
         TriggerAvailityDice(triggerType, new());
     }
 
     private void TriggerAvailityDice(PlayDice playDice)
     {
-        TriggerAvailityDice(AvailityTriggerType.PlayDiceApplied, new(playDice: playDice));
+        TriggerAvailityDice(EffectTriggerType.PlayDiceApplied, new(playDice: playDice));
     }
 
-    public void TriggerAvailityDice(HandSO handSO)
+    private void TriggerAvailityDice(HandSO handSO)
     {
-        TriggerAvailityDice(AvailityTriggerType.HandApplied, new(handSO: handSO));
+        TriggerAvailityDice(EffectTriggerType.HandApplied, new(handSO: handSO));
     }
 
-    public void TriggerChaosDices()
+    private void TriggerChaosDices()
     {
         foreach (var chaosDice in DiceManager.Instance.ChaosDiceList)
         {
             chaosDice.ApplyScorePairs();
+        }
+    }
+
+    private void TriggerGambleDices()
+    {
+        foreach (var gambleDice in DiceManager.Instance.GambleDiceList)
+        {
+            gambleDice.TriggerEffect();
         }
     }
     #endregion

@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
     [SerializeField] private float initialTargetRoundScore;
-    public event Action<Dictionary<Hand, ScorePair>> OnHandScoreUpdated;
     public event Action<float> OnTargetRoundScoreUpdated;
     public event Action<float> OnCurrentRoundScoreUpdated;
     public event Action<float> OnTargetRoundScoreChanged;
@@ -15,7 +13,6 @@ public class ScoreManager : Singleton<ScoreManager>
     public event Action<float> OnBaseScoreChanged;
     public event Action<float> OnMultiplierChanged;
 
-    private Dictionary<Hand, ScorePair> handScoreDictionary = new();
     private float targetRoundScore = 0;
     public float TargetRoundScore
     {
@@ -95,8 +92,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         RoundManager.Instance.OnRoundStarted += OnRoundStarted;
         RoundManager.Instance.OnRoundCleared += OnRoundCleared;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-        HandScoreUI.Instance.OnHandSelected += OnHandSelected;
+        HandManager.Instance.OnHandScoreApplied += OnHandScoreApplied;
     }
 
     private void OnRoundStarted(int currentRound)
@@ -111,23 +107,14 @@ public class ScoreManager : Singleton<ScoreManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void OnRollCompleted()
-    {
-        var playDiceValues = DiceManager.Instance.GetOrderedPlayDiceValues();
-        handScoreDictionary = HandCalculator.GetHandScorePairs(playDiceValues);
-        OnHandScoreUpdated?.Invoke(handScoreDictionary);
-    }
-
-    private void OnHandSelected(HandSO handSO, ScorePair scorePair)
+    private void OnHandScoreApplied(ScorePair scorePair)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Round) return;
 
         ScorePair = scorePair;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
-        TriggerManager.Instance.TriggerPlayDices();
-        TriggerManager.Instance.TriggerChaosDices();
-        TriggerManager.Instance.TriggerAvailityDice(handSO);
+        TriggerManager.Instance.TriggerDices();
 
         PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
