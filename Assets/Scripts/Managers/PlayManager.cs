@@ -1,16 +1,12 @@
 using System;
-using UnityEngine;
+using System.Diagnostics;
 
 public class PlayManager : Singleton<PlayManager>
 {
-    [SerializeField] private int playMax;
-
-    public event Action<int> OnPlayStarted;
-    public event Action<int> OnPlayEnded;
-    public event Action<int> OnPlayRemainChanged;
-
+    private int playMax;
     private int currentPlayMax;
     private int playRemain = 0;
+
     public int PlayRemain
     {
         get => playRemain;
@@ -22,6 +18,8 @@ public class PlayManager : Singleton<PlayManager>
         }
     }
 
+    public event Action<int> OnPlayRemainChanged;
+
     private void Start()
     {
         Init();
@@ -30,64 +28,66 @@ public class PlayManager : Singleton<PlayManager>
 
     private void Init()
     {
-        playMax = DataContainer.Instance.CurrentDiceStat.defaultMaxPlay;
+        playMax = DataContainer.Instance.CurrentDiceStat.defaultPlayMax;
         currentPlayMax = playMax;
     }
 
     #region RegisterEvents
     private void RegisterEvents()
     {
-        ScoreManager.Instance.OnTargetRoundScoreUpdated += OnTargetRoundScoreUpdated;
         ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceCompleted += OnHandEnhanceCompleted;
-        BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
-    }
-
-    private void OnTargetRoundScoreUpdated(float score)
-    {
-        PlayRemain = currentPlayMax;
-        OnPlayStarted?.Invoke(PlayRemain);
     }
 
     private void OnCurrentRoundScoreUpdated(float score)
     {
-        PlayRemain--;
-
-        OnPlayEnded?.Invoke(PlayRemain);
-
-        if (PlayRemain > 0 && score < ScoreManager.Instance.TargetRoundScore)
-        {
-            OnPlayStarted?.Invoke(PlayRemain);
-        }
-    }
-
-    private void OnDiceEnhanceStarted()
-    {
-        PlayRemain = 0;
-    }
-
-    private void OnHandEnhanceStarted()
-    {
-        PlayRemain = 1;
-    }
-
-    private void OnHandEnhanceCompleted()
-    {
-        PlayRemain = 0;
-    }
-
-    private void OnBonusAchieved(BonusType type)
-    {
-        if (type == BonusType.PlayMax)
-        {
-            SetPlayMax(playMax + 1, false);
-        }
+        EndPlay();
     }
     #endregion
 
-    public void SetPlayMax(int value, bool resetPlayRemain = true)
+    public void StartPlay(bool isInit = false)
+    {
+        if (isInit)
+        {
+            PlayRemain = currentPlayMax;
+        }
+        GameManager.Instance.ChangeState(GameState.Play);
+    }
+
+    public void EndPlay()
+    {
+        PlayRemain--;
+        GameManager.Instance.ExitState(GameState.Play);
+    }
+
+    public void HandlePlayResult()
+    {
+        if (ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore)
+        {
+            if (RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound)
+            {
+                GameManager.Instance.HandleGameResult(true);
+            }
+            else
+            {
+                RoundClearManager.Instance.StartRoundClear();
+            }
+        }
+        else if (PlayRemain == 0)
+        {
+            GameManager.Instance.HandleGameResult(false);
+        }
+        else
+        {
+            StartPlay();
+        }
+    }
+
+    public void IncreasePlayMax()
+    {
+        SetPlayMax(playMax + 1, false);
+    }
+
+    private void SetPlayMax(int value, bool resetPlayRemain = true)
     {
         playMax = value;
         currentPlayMax = playMax;

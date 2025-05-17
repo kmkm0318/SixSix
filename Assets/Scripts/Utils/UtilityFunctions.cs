@@ -24,4 +24,40 @@ public static class UtilityFunctions
         }
         return value.ToString("N0");
     }
+
+    #region Arithmatic
+    public static float SafeAdd(float value1, float value2)
+    {
+        float res = value1 + value2;
+        if (float.IsInfinity(res) || float.IsNaN(res))
+        {
+            return float.PositiveInfinity;
+        }
+        else if (res < 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return res;
+        }
+    }
+
+    public static float SafeMultiply(float value1, float value2)
+    {
+        float res = value1 * value2;
+        if (float.IsInfinity(res) || float.IsNaN(res))
+        {
+            return float.PositiveInfinity;
+        }
+        else if (res < 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return res;
+        }
+    }
+    #endregion
 }

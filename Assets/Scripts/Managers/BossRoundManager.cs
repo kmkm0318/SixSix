@@ -18,11 +18,10 @@ public class BossRoundManager : Singleton<BossRoundManager>
 
     private void RegisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+        GameManager.Instance.RegisterEvent(GameState.Round, OnRoundStarted, OnRoundCleared);
     }
 
-    private void OnRoundStarted(int round)
+    private void OnRoundStarted()
     {
         if (RoundManager.Instance.IsBossRound)
         {
@@ -30,7 +29,7 @@ public class BossRoundManager : Singleton<BossRoundManager>
         }
     }
 
-    private void OnRoundCleared(int round)
+    private void OnRoundCleared()
     {
         if (currentBossRoundSO != null)
         {

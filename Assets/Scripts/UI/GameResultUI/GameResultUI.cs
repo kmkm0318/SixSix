@@ -17,11 +17,8 @@ public class GameResultUI : Singleton<GameResultUI>
     [SerializeField] private GameObject infinityModeButtonRow;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
 
-    public event Action OnInfinityModeButtonClicked;
-
     private void Start()
     {
-        RegisterEvents();
         mainMenuButton.onClick.AddListener(OnClickMainMenuButton);
         newGameButton.onClick.AddListener(OnClickNewGameButton);
         infinityModeButton.onClick.AddListener(OnClickInfinityModeButton);
@@ -41,34 +38,16 @@ public class GameResultUI : Singleton<GameResultUI>
     private void OnClickInfinityModeButton()
     {
         Hide();
-        OnInfinityModeButtonClicked?.Invoke();
-        GameManager.Instance.CurrentGameState = GameState.RoundClear;
+        RoundClearManager.Instance.StartRoundClear();
     }
 
-    #region RegisterEvents
-    private void RegisterEvents()
+    public void ShowGameResult(bool isGameClear)
     {
-        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        Show();
+        resultText.text = isGameClear ? "Game Clear" : "Game Over";
+        highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+        infinityModeButtonRow.SetActive(isGameClear);
     }
-
-    private void OnGameStateChanged(GameState state)
-    {
-        if (state == GameState.GameClear)
-        {
-            Show();
-            resultText.text = "Game Clear";
-            highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
-            infinityModeButtonRow.SetActive(true);
-        }
-        else if (state == GameState.GameOver)
-        {
-            Show();
-            resultText.text = "Game Over";
-            highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
-            infinityModeButtonRow.SetActive(false);
-        }
-    }
-    #endregion
 
     #region ShowHide
     private void Show()

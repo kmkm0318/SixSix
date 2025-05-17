@@ -8,16 +8,18 @@ public class BonusManager : Singleton<BonusManager>
 {
     [SerializeField] private List<BonusTypeScorePair> bonusTargetScoreList;
 
+    private Dictionary<BonusType, int> bonusTargetScoreDict = new();
+    private Dictionary<int, int> diceSumDict = new();
+    private Dictionary<BonusType, bool> bonusAchievedDict = new();
+    private List<BonusType> achievedBonusList = new();
+    private int totalDiceSum = 0;
+
+    public ReadOnlyDictionary<BonusType, int> BonusTargetScoreDict => new(bonusTargetScoreDict);
+
     public event Action<BonusType> OnBonusAchieved;
     public event Action OnAllBonusAchieved;
     public event Action<int, int> OnDiceSumChanged;
     public event Action<BonusType, int> OnTotalDiceSumChanged;
-
-    private Dictionary<BonusType, int> bonusTargetScoreDict = new();
-    public ReadOnlyDictionary<BonusType, int> BonusTargetScoreDict => new(bonusTargetScoreDict);
-    private Dictionary<int, int> diceSumDict = new();
-    private Dictionary<BonusType, bool> bonusAchievedDict = new();
-    private int totalDiceSum = 0;
 
     protected override void Awake()
     {
@@ -49,15 +51,31 @@ public class BonusManager : Singleton<BonusManager>
 
     private void RegisterEvents()
     {
-        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
+        GameManager.Instance.RegisterEvent(GameState.Play, null, OnPlayEnded);
     }
 
-    private void OnCurrentRoundScoreUpdated(float score)
+    private void OnPlayEnded()
+    {
+        UpdateBonusResults();
+        HandleAchievedBonusList();
+    }
+
+    #region UpdateBonusResults
+    private void UpdateBonusResults()
     {
         var diceValueList = DiceManager.Instance.GetOrderedPlayDiceValues();
+
+        if (CheckShouldUpdate(diceValueList))
+        {
+            UpdateTotalDiceSum();
+        }
+    }
+
+    private bool CheckShouldUpdate(List<int> diceValueList)
+    {
+        bool isUpdated = false;
         Dictionary<int, int> currentDiceSumDict = new();
 
-        bool isUpdated = false;
         foreach (var value in diceValueList)
         {
             if (currentDiceSumDict.ContainsKey(value))
@@ -83,22 +101,37 @@ public class BonusManager : Singleton<BonusManager>
             }
         }
 
-        if (isUpdated)
-        {
-            UpdateTotalDiceSum();
-        }
+        return isUpdated;
     }
 
     private void UpdateTotalDiceSum()
     {
-        totalDiceSum = diceSumDict.Values.Sum();
-        List<BonusType> achievedBonusList = new();
+        List<BonusType> currentAchievedBonusList = GetCurrentAchiedBonusList();
+        if (currentAchievedBonusList.Count == 0) return;
 
-        bool isChanged = false;
+        SequenceManager.Instance.ApplyParallelCoroutine();
+        foreach (var achievedBonus in currentAchievedBonusList)
+        {
+            bonusAchievedDict[achievedBonus] = true;
+            achievedBonusList.Add(achievedBonus);
+        }
+        SequenceManager.Instance.ApplyParallelCoroutine();
+
+        if (bonusAchievedDict.All(x => x.Value))
+        {
+            OnAllBonusAchieved?.Invoke();
+        }
+    }
+
+    private List<BonusType> GetCurrentAchiedBonusList()
+    {
+        List<BonusType> currentAchievedBonusList = new();
+
+        totalDiceSum = diceSumDict.Values.Sum();
+
         foreach (var bonusAchievedPair in bonusAchievedDict)
         {
             if (bonusAchievedPair.Value) continue;
-            isChanged = true;
 
             OnTotalDiceSumChanged?.Invoke(bonusAchievedPair.Key, totalDiceSum);
 
@@ -106,31 +139,52 @@ public class BonusManager : Singleton<BonusManager>
             {
                 if (totalDiceSum >= targetScore)
                 {
-                    achievedBonusList.Add(bonusAchievedPair.Key);
+                    currentAchievedBonusList.Add(bonusAchievedPair.Key);
                 }
             }
         }
 
-        if (isChanged)
-        {
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
-
-        if (achievedBonusList.Count > 0)
-        {
-            foreach (var achievedBonus in achievedBonusList)
-            {
-                bonusAchievedDict[achievedBonus] = true;
-                OnBonusAchieved?.Invoke(achievedBonus);
-            }
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
-
-        if (achievedBonusList.Count > 0 && bonusAchievedDict.All(x => x.Value))
-        {
-            OnAllBonusAchieved?.Invoke();
-        }
+        return currentAchievedBonusList;
     }
+
+    #endregion
+    #region HandleAchievedBonusList
+    private void HandleAchievedBonusList()
+    {
+        foreach (var bonusAchieved in achievedBonusList)
+        {
+            if (bonusAchievedDict.TryGetValue(bonusAchieved, out var isAchieved) && !isAchieved)
+            {
+                HandleAchievedBonus(bonusAchieved);
+            }
+        }
+
+        achievedBonusList.Clear();
+    }
+
+    private void HandleAchievedBonus(BonusType type)
+    {
+        switch (type)
+        {
+            case BonusType.Money:
+                MoneyManager.Instance.AddMoney(MoneyManager.Instance.BonusMoney);
+                break;
+            case BonusType.AvailityDiceCountMax:
+                DiceManager.Instance.IncreaseCurrentAvailityDiceMax();
+                break;
+            case BonusType.PlayDice:
+                DiceManager.Instance.StartAddBonusPlayDice();
+                break;
+            case BonusType.PlayMax:
+                PlayManager.Instance.IncreasePlayMax();
+                break;
+            case BonusType.RollMax:
+                RollManager.Instance.IncreaseRollMax();
+                break;
+        }
+        OnBonusAchieved?.Invoke(type);
+    }
+    #endregion
 }
 
 [Serializable]

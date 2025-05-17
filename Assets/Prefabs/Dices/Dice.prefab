@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 913672955282215222}
   - component: {fileID: 1642127778009038658}
-  - component: {fileID: 6224776796104731386}
   - component: {fileID: 2623982099466883439}
+  - component: {fileID: 6224776796104731386}
+  - component: {fileID: 7022917114168112552}
+  - component: {fileID: 3506805960920542916}
   m_Layer: 0
   m_Name: DiceVisual
   m_TagString: Untagged
@@ -57,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: d3ee07faa2774cc41b54d394b0a1c0ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,18 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6224776796104731386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6657018082328724502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d2009c0478350a4db3a5f4044975fdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &2623982099466883439
 Animator:
   serializedVersion: 7
@@ -123,6 +113,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6224776796104731386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657018082328724502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2009c0478350a4db3a5f4044975fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceRenderer: {fileID: 7022917114168112552}
+  fadeAnimator: {fileID: 3506805960920542916}
+--- !u!114 &7022917114168112552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657018082328724502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6abf7e51fa228740a7ca07037cf3472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3506805960920542916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657018082328724502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df85e25fa0c0dd48bb2fbcdd63b37d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2623982099466883439}
 --- !u!1 &7055470765296504697
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,9 +25,9 @@ public class AdviserUI : Singleton<AdviserUI>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
+        GameManager.Instance.RegisterEvent(GameState.Roll, null, OnRollCompleted);
+
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
     }
 
     private void OnRollCompleted()
@@ -37,12 +37,12 @@ public class AdviserUI : Singleton<AdviserUI>
         ShowAdvise();
     }
 
-    private void OnDiceEnhanceStarted()
+    private void OnEnhanceStarted()
     {
-        isAvailiable = false;
+        isAvailiable = EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand;
     }
 
-    private void OnDiceEnhanceCompleted()
+    private void OnEnhanceCompleted()
     {
         isAvailiable = true;
     }
@@ -60,7 +60,7 @@ public class AdviserUI : Singleton<AdviserUI>
 
         foreach (var hand in sortedHandList)
         {
-            Debug.Log($"{hand.Item1} : {hand.Item2:P2} : {hand.Item3.baseScore * hand.Item3.multiplier}");
+            // Debug.Log($"{hand.Item1} : {hand.Item2:P2} : {hand.Item3.baseScore * hand.Item3.multiplier}");
         }
 
         var adviseString = GetAdviseString(sortedHandList);

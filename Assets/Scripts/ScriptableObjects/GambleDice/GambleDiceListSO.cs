@@ -6,7 +6,7 @@ public class GambleDiceListSO : ScriptableObject
 {
     public List<GambleDiceSO> gambleDiceSOList;
 
-    public GambleDiceSO GetRandomAvailityDiceSO()
+    public GambleDiceSO GetRandomGambleDiceSO()
     {
         if (gambleDiceSOList == null || gambleDiceSOList.Count == 0)
         {

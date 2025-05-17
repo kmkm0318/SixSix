@@ -2,13 +2,14 @@ using System;
 
 public class EnhanceManager : Singleton<EnhanceManager>
 {
+    public EnhanceType CurrentEnhanceType { get; private set; }
+    public int HandEnhanceLevel { get; private set; }
+    public ScorePair DiceEnhanceValue { get; private set; }
+
     public event Action OnDiceEnhanceStarted;
     public event Action OnDiceEnhanceCompleted;
     public event Action OnHandEnhanceStarted;
     public event Action OnHandEnhanceCompleted;
-
-    public int HandEnhanceLevel { get; private set; }
-    public ScorePair DiceEnhanceValue { get; private set; }
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void StartDiceEnhance()
     {
+        CurrentEnhanceType = EnhanceType.Dice;
         DiceManager.Instance.OnPlayDiceClicked += OnPlayDiceClicked;
         OnDiceEnhanceStarted?.Invoke();
     }
@@ -56,6 +58,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void StartHandEnhance()
     {
+        CurrentEnhanceType = EnhanceType.Hand;
         HandManager.Instance.OnHandSelected += OnHandSelected;
         OnHandEnhanceStarted?.Invoke();
     }
@@ -71,4 +74,10 @@ public class EnhanceManager : Singleton<EnhanceManager>
         HandManager.Instance.OnHandSelected -= OnHandSelected;
         OnHandEnhanceCompleted?.Invoke();
     }
+}
+
+public enum EnhanceType
+{
+    Dice,
+    Hand
 }

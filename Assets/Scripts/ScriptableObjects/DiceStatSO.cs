@@ -6,6 +6,6 @@ public class DiceStatSO : ScriptableObject
     public DiceSpriteListSO defaultDiceSpriteListSO;
     public int defaultPlayDiceCount = 5;
     public int defaultAvailityDiceMax = 5;
-    public int defaultMaxPlay = 3;
-    public int defaultMaxRoll = 3;
+    public int defaultPlayMax = 3;
+    public int defaultRollMax = 3;
 }

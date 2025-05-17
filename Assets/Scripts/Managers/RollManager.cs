@@ -6,20 +6,16 @@ public class RollManager : Singleton<RollManager>
 {
     [SerializeField] private int rollMax;
     [SerializeField] private float rollPowerMax = 10f;
-    public float RollPowerMax => rollPowerMax;
     [SerializeField] private float rollPowerMin = 1f;
-    public float RollPowerMin => rollPowerMin;
-
-    public event Action<float> OnRollPowerChanged;
-    public event Action<float> OnRollPowerApplied;
-    public event Action OnRollStarted;
-    public event Action OnRollCompleted;
-    public event Action<int> OnRollRemainChanged;
-
-    public bool IsRolling { get; private set; } = false;
 
     private int currentRollMax;
     private int rollRemain = 0;
+    private float rollPower;
+    private float powerChangeSpeed;
+    private Coroutine ChangingRollPowerCoroutine;
+
+    public float RollPowerMax => rollPowerMax;
+    public float RollPowerMin => rollPowerMin;
     public int RollRemain
     {
         get => rollRemain;
@@ -30,9 +26,10 @@ public class RollManager : Singleton<RollManager>
             OnRollRemainChanged?.Invoke(rollRemain);
         }
     }
-    private float rollPower;
-    private float powerChangeSpeed;
-    private Coroutine ChangingRollPowerCoroutine;
+
+    public event Action<float> OnRollPowerChanged;
+    public event Action<float> OnRollPowerApplied;
+    public event Action<int> OnRollRemainChanged;
 
     private void Start()
     {
@@ -42,7 +39,7 @@ public class RollManager : Singleton<RollManager>
 
     private void Init()
     {
-        rollMax = DataContainer.Instance.CurrentDiceStat.defaultMaxRoll;
+        rollMax = DataContainer.Instance.CurrentDiceStat.defaultRollMax;
         currentRollMax = rollMax;
         powerChangeSpeed = rollPowerMax - rollPowerMin;
     }
@@ -50,18 +47,19 @@ public class RollManager : Singleton<RollManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted);
 
         RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
-
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
-
-        BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
     }
 
-    private void OnPlayStarted(int playRemain)
+    private void OnPlayStarted()
+    {
+        RollRemain = currentRollMax;
+    }
+
+    private void OnEnhanceStarted()
     {
         RollRemain = currentRollMax;
     }
@@ -79,24 +77,6 @@ public class RollManager : Singleton<RollManager>
         }
 
         RollDice();
-    }
-
-    private void OnDiceEnhanceStarted()
-    {
-        RollRemain = currentRollMax;
-    }
-
-    private void OnHandEnhanceStarted()
-    {
-        RollRemain = currentRollMax;
-    }
-
-    private void OnBonusAchieved(BonusType type)
-    {
-        if (type == BonusType.RollMax)
-        {
-            SetRollMax(rollMax + 1, false);
-        }
     }
     #endregion
 
@@ -125,21 +105,31 @@ public class RollManager : Singleton<RollManager>
 
     private void RollDice()
     {
+        GameManager.Instance.ChangeState(GameState.Roll);
         OnRollPowerApplied?.Invoke(rollPower);
-        OnRollStarted?.Invoke();
         RollRemain--;
 
-        StartCoroutine(WaitForAllDiceToStop());
+        StartCoroutine(WaitForAllDiceToStop(() =>
+        {
+            GameManager.Instance.ExitState(GameState.Roll);
+        }));
     }
 
-    private IEnumerator WaitForAllDiceToStop()
+    private IEnumerator WaitForAllDiceToStop(Action onComplete = null)
     {
         yield return null;
         yield return new WaitUntil(() => DiceManager.Instance.AreAllDiceStopped());
-        OnRollCompleted?.Invoke();
+
+        onComplete?.Invoke();
     }
 
-    public void SetRollMax(int value, bool resetRollRemain = true)
+
+    public void IncreaseRollMax()
+    {
+        SetRollMax(rollMax + 1, false);
+    }
+
+    private void SetRollMax(int value, bool resetRollRemain = true)
     {
         rollMax = value;
         currentRollMax = rollMax;

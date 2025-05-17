@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,17 +11,14 @@ public class TriggerManager : Singleton<TriggerManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        RoundClearManager.Instance.OnRoundClearStarted += OnRoundClearStarted;
-        ShopManager.Instance.OnShopStarted += OnShopStarted;
-        ShopManager.Instance.OnShopEnded += OnShopEnded;
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
-        RollManager.Instance.OnRollStarted += OnRollStarted;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
+        GameManager.Instance.RegisterEvent(GameState.Round, OnRoundStarted);
+        GameManager.Instance.RegisterEvent(GameState.RoundClear, OnRoundClearStarted);
+        GameManager.Instance.RegisterEvent(GameState.Shop, OnShopStarted, OnShopEnded);
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted, OnPlayEnded);
+        GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
     }
 
-    private void OnRoundStarted(int obj)
+    private void OnRoundStarted()
     {
         TriggerAvailityDice(EffectTriggerType.RoundStarted);
     }
@@ -42,12 +38,12 @@ public class TriggerManager : Singleton<TriggerManager>
         TriggerAvailityDice(EffectTriggerType.ShopEnded);
     }
 
-    private void OnPlayStarted(int obj)
+    private void OnPlayStarted()
     {
         TriggerAvailityDice(EffectTriggerType.PlayStarted);
     }
 
-    private void OnPlayEnded(int obj)
+    private void OnPlayEnded()
     {
         TriggerAvailityDice(EffectTriggerType.PlayEnded);
     }

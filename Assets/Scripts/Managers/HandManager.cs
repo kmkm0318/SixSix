@@ -26,15 +26,9 @@ public class HandManager : Singleton<HandManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RollManager.Instance.OnRollStarted += OnRollStarted;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
-        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceCompleted += OnHandEnhanceCompleted;
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
+        GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
     }
 
     private void OnRollStarted()
@@ -48,28 +42,18 @@ public class HandManager : Singleton<HandManager>
         isActive = true;
     }
 
-    private void OnPlayStarted(int playRemain)
+    private void OnPlayStarted()
     {
         isActive = false;
         HandScoreUI.Instance.ResetHandScoreUI();
     }
 
-    private void OnDiceEnhanceStarted()
+    private void OnEnhanceStarted()
     {
-        isActive = false;
+        isActive = EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand;
     }
 
-    private void OnDiceEnhanceCompleted()
-    {
-        isActive = false;
-    }
-
-    private void OnHandEnhanceStarted()
-    {
-        isActive = true;
-    }
-
-    private void OnHandEnhanceCompleted()
+    private void OnEnhanceCompleted()
     {
         isActive = false;
     }

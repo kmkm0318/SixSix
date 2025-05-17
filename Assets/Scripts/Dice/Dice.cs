@@ -3,9 +3,17 @@ using UnityEngine;
 
 public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 {
-    [SerializeField] private DiceVisual diceVisual;
     [SerializeField] private DiceMovement diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
+    [SerializeField] private DiceVisual diceVisual;
+
+    private DiceFace[] faces;
+    private bool isKeeped = false;
+    private bool isEnabled = true;
+    private int faceIndex;
+    private int diceValueMax;
+
+    public DiceFace[] Faces => faces;
     protected DiceInteractType DiceInteractType
     {
         get => diceInteraction.InteractType;
@@ -21,11 +29,6 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
             }
         }
     }
-
-    public event Action<bool> OnIsKeepedChanged;
-    public event Action<bool> OnIsInteractableChanged;
-
-    private bool isKeeped = false;
     public bool IsKeeped
     {
         get => isKeeped;
@@ -43,8 +46,6 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         get => diceInteraction.IsInteractable;
         protected set => diceInteraction.IsInteractable = value;
     }
-
-    private bool isEnabled = true;
     public bool IsEnabled
     {
         get => isEnabled;
@@ -56,18 +57,14 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
             diceVisual.SetAlpha(value ? 1 : 0.5f);
         }
     }
-
-    private DiceFace[] faces;
-    public DiceFace[] Faces => faces;
-
-    private int faceIndex;
     public int FaceIndex => faceIndex;
     public int DiceValue => faces[faceIndex].FaceValue;
-
-    private int diceValueMax;
     public int DiceValueMax => diceValueMax;
 
-    public virtual void Init(int maxValue, DiceSpriteListSO diceSpriteListSO, DiceMaterialSO diceMaterialSO, Playboard playboard)
+    public event Action<bool> OnIsKeepedChanged;
+    public event Action<bool> OnIsInteractableChanged;
+
+    public virtual void Init(int maxValue, DiceSpriteListSO diceSpriteListSO, ShaderDataSO shaderDataSO, Playboard playboard)
     {
         if (maxValue > diceSpriteListSO.DiceFaceCount)
         {
@@ -86,7 +83,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         faceIndex = 0;
         diceValueMax = maxValue;
 
-        diceVisual.SetSpriteMaterial(diceMaterialSO.defaultMaterial);
+        diceVisual.Initialize(shaderDataSO);
         SetFace(faceIndex);
         InitDiceInteractType();
 
@@ -106,9 +103,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void OnDisable()
     {
-        if (PlayManager.Instance == null) return;
-        if (RollManager.Instance == null) return;
-        if (ShopManager.Instance == null) return;
+        if (GameManager.Instance == null) return;
 
         UnregisterEvents();
     }
@@ -116,62 +111,43 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     #region Events
     protected virtual void RegisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
-        RoundManager.Instance.OnRoundFailed += OnRoundFailed;
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
-        PlayManager.Instance.OnPlayEnded += OnPlayEnded;
-        RollManager.Instance.OnRollStarted += OnRollStarted;
+        GameManager.Instance.RegisterEvent(GameState.Round, OnRoundStarted, OnRoundEnded);
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted, OnPlayEnded);
+        GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
+        GameManager.Instance.RegisterEvent(GameState.Shop, OnShopStarted, OnShopEnded);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
+
         RollManager.Instance.OnRollPowerApplied += OnRollPowerApplied;
-        RollManager.Instance.OnRollCompleted += OnRollCompleted;
-        ShopManager.Instance.OnShopStarted += OnShopStarted;
-        ShopManager.Instance.OnShopEnded += OnShopEnded;
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnDiceEnhanceCompleted;
-        EnhanceManager.Instance.OnHandEnhanceStarted += OnHandEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceCompleted += OnHandEnhanceCompleted;
     }
 
     protected virtual void UnregisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted -= OnRoundStarted;
-        RoundManager.Instance.OnRoundCleared -= OnRoundCleared;
-        RoundManager.Instance.OnRoundFailed -= OnRoundFailed;
-        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
-        PlayManager.Instance.OnPlayEnded -= OnPlayEnded;
-        RollManager.Instance.OnRollStarted -= OnRollStarted;
+        GameManager.Instance.UnregisterEvent(GameState.Round, OnRoundStarted, OnRoundEnded);
+        GameManager.Instance.UnregisterEvent(GameState.Play, OnPlayStarted, OnPlayEnded);
+        GameManager.Instance.UnregisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
+        GameManager.Instance.UnregisterEvent(GameState.Shop, OnShopStarted, OnShopEnded);
+        GameManager.Instance.UnregisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
+
         RollManager.Instance.OnRollPowerApplied -= OnRollPowerApplied;
-        RollManager.Instance.OnRollCompleted -= OnRollCompleted;
-        ShopManager.Instance.OnShopStarted -= OnShopStarted;
-        ShopManager.Instance.OnShopEnded -= OnShopEnded;
-        EnhanceManager.Instance.OnDiceEnhanceStarted -= OnDiceEnhanceStarted;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted -= OnDiceEnhanceCompleted;
-        EnhanceManager.Instance.OnHandEnhanceStarted -= OnHandEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceCompleted -= OnHandEnhanceCompleted;
     }
 
-    protected virtual void OnRoundStarted(int round)
+    protected virtual void OnRoundStarted()
     {
         DiceInteractType = DiceInteractType.Keep;
     }
 
-    protected virtual void OnRoundCleared(int round)
+    protected virtual void OnRoundEnded()
     {
 
     }
 
-    protected virtual void OnRoundFailed(int round)
-    {
-
-    }
-
-    protected virtual void OnPlayStarted(int playRemain)
+    protected virtual void OnPlayStarted()
     {
         IsKeeped = false;
         diceInteraction.IsInteractable = false;
     }
 
-    protected virtual void OnPlayEnded(int obj)
+    protected virtual void OnPlayEnded()
     {
         IsKeeped = false;
         diceInteraction.IsInteractable = false;
@@ -199,6 +175,30 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     protected virtual void OnShopEnded()
     {
 
+    }
+
+    protected virtual void OnEnhanceStarted()
+    {
+        if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Dice)
+        {
+            OnDiceEnhanceStarted();
+        }
+        else if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand)
+        {
+            OnHandEnhanceStarted();
+        }
+    }
+
+    protected virtual void OnEnhanceCompleted()
+    {
+        if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Dice)
+        {
+            OnDiceEnhanceCompleted();
+        }
+        else if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand)
+        {
+            OnHandEnhanceCompleted();
+        }
     }
 
     protected virtual void OnDiceEnhanceStarted()

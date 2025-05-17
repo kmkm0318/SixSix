@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class DiceVisual : MonoBehaviour
 {
-    private const string fadeOutTriggerName = "FadeOut";
-    private const string fadeInTriggerName = "FadeIn";
-
-    private readonly int enhanceColorMax = 20;
+    [SerializeField] private DiceRenderer diceRenderer;
+    [SerializeField] private FadeAnimator fadeAnimator;
 
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
-    private Action onFadeInComplete;
-    private Action onFadeOutComplete;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        spriteRenderer.material = new(spriteRenderer.material);
+    }
+
+    public void Initialize(ShaderDataSO shaderDataSO)
+    {
+        diceRenderer.Initialize(shaderDataSO, spriteRenderer.material);
     }
 
     public void SetSprite(Sprite sprite)
@@ -24,13 +24,10 @@ public class DiceVisual : MonoBehaviour
         spriteRenderer.sprite = sprite;
     }
 
-    public void SetSpriteMaterial(Material material)
-    {
-        spriteRenderer.material = material;
-    }
-
     public void SetColor(ScorePair enhancedValue)
     {
+        int enhanceColorMax = 20;
+
         float blueIntensity = Mathf.Clamp01(enhancedValue.baseScore / 10f / enhanceColorMax);
         float redIntensity = Mathf.Clamp01(enhancedValue.multiplier * 20f / enhanceColorMax);
 
@@ -45,7 +42,7 @@ public class DiceVisual : MonoBehaviour
             greenValue = 0;
         }
 
-        spriteRenderer.color = new Color(redValue, greenValue, blueValue, spriteRenderer.color.a);
+        spriteRenderer.color = new(redValue, greenValue, blueValue, spriteRenderer.color.a);
     }
 
     public void SetAlpha(float alpha)
@@ -57,25 +54,13 @@ public class DiceVisual : MonoBehaviour
 
     public void FadeIn(Action onComplete = null)
     {
-        onFadeInComplete = onComplete;
-        animator.SetTrigger(fadeInTriggerName);
+        diceRenderer.SetRandomFadeOffset();
+        fadeAnimator.FadeIn(onComplete);
     }
 
     public void FadeOut(Action onComplete = null)
     {
-        onFadeOutComplete = onComplete;
-        animator.SetTrigger(fadeOutTriggerName);
-    }
-
-    public void OnFadeInComplete()
-    {
-        onFadeInComplete?.Invoke();
-        onFadeInComplete = null;
-    }
-
-    public void OnFadeOutComplete()
-    {
-        onFadeOutComplete?.Invoke();
-        onFadeOutComplete = null;
+        diceRenderer.SetRandomFadeOffset();
+        fadeAnimator.FadeOut(onComplete);
     }
 }

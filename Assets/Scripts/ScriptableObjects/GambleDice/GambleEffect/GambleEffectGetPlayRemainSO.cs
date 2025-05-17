@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GambleEffectGetRollRemainSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectGetRollRemainSO")]
+[CreateAssetMenu(fileName = "GambleEffectGetPlayRemainSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectGetPlayRemainSO")]
 public class GambleEffectGetPlayRemainSO : GambleEffectSO
 {
     public override void TriggerEffect(GambleDice gambleDice)

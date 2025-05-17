@@ -8,7 +8,7 @@ public class AvailityDice : Dice
 
     public void Init(AvailityDiceSO availityDiceSO, Playboard playboard)
     {
-        base.Init(availityDiceSO.MaxDiceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.diceMaterialSO, playboard);
+        base.Init(availityDiceSO.MaxDiceValue, availityDiceSO.diceSpriteListSO, availityDiceSO.shaderDataSO, playboard);
 
         this.availityDiceSO = Instantiate(availityDiceSO);
         this.availityDiceSO.Init();
@@ -21,7 +21,7 @@ public class AvailityDice : Dice
 
         if (IsInteractable && DiceInteractType == DiceInteractType.Keep && DiceManager.Instance.IsAvailityDiceAutoKeep && DiceManager.Instance.IsKeepable)
         {
-            if (availityDiceSO.autoKeepType == AbailityDiceAutoKeepType.High)
+            if (availityDiceSO && availityDiceSO.autoKeepType == AbailityDiceAutoKeepType.High)
             {
                 if (DiceValue >= availityDiceSO.MaxDiceValue)
                 {
@@ -89,15 +89,15 @@ public class AvailityDice : Dice
         }
     }
 
-    public bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
+    public virtual bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
     {
-        return IsEnabled && availityDiceSO.availityTrigger.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
+        return IsEnabled && availityDiceSO.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
     }
 
-    public void TriggerEffect()
+    public virtual void TriggerEffect()
     {
         if (availityDiceSO == null || !IsEnabled) return;
 
-        availityDiceSO.availityEffect.TriggerEffect(new(this));
+        availityDiceSO.TriggerEffect(new(this));
     }
 }

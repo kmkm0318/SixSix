@@ -4,7 +4,6 @@ using UnityEngine;
 public class ScoreManager : Singleton<ScoreManager>
 {
     [SerializeField] private float initialTargetRoundScore;
-    public event Action<float> OnTargetRoundScoreUpdated;
     public event Action<float> OnCurrentRoundScoreUpdated;
     public event Action<float> OnTargetRoundScoreChanged;
     public event Action<float> OnCurrentRoundScoreChanged;
@@ -90,17 +89,11 @@ public class ScoreManager : Singleton<ScoreManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RoundManager.Instance.OnRoundStarted += OnRoundStarted;
-        RoundManager.Instance.OnRoundCleared += OnRoundCleared;
+        GameManager.Instance.RegisterEvent(GameState.Round, null, OnRoundCleared);
         HandManager.Instance.OnHandScoreApplied += OnHandScoreApplied;
     }
 
-    private void OnRoundStarted(int currentRound)
-    {
-        UpdateTargetRoundScore(currentRound);
-    }
-
-    private void OnRoundCleared(int currentRound)
+    private void OnRoundCleared()
     {
         previousRoundScore = CurrentRoundScore;
         CurrentRoundScore = 0;
@@ -116,11 +109,11 @@ public class ScoreManager : Singleton<ScoreManager>
 
         TriggerManager.Instance.TriggerDices();
 
-        PlayScore = SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
+        PlayScore = UtilityFunctions.SafeMultiply(ScorePair.baseScore, ScorePair.multiplier);
 
         ScorePair = new();
         SequenceManager.Instance.ApplyParallelCoroutine();
-        UpdateCurrentRoundScore(SafeAdd(CurrentRoundScore, PlayScore));
+        UpdateCurrentRoundScore(UtilityFunctions.SafeAdd(CurrentRoundScore, PlayScore));
     }
     #endregion
 
@@ -134,8 +127,10 @@ public class ScoreManager : Singleton<ScoreManager>
         OnCurrentRoundScoreUpdated?.Invoke(CurrentRoundScore);
     }
 
-    private void UpdateTargetRoundScore(int currentRound)
+    public void UpdateTargetRoundScore()
     {
+        int currentRound = RoundManager.Instance.CurrentRound;
+
         if (currentRound < 1) return;
 
         float baseScore = initialTargetRoundScore * Mathf.Pow(6, (currentRound - 1) / 6);
@@ -153,8 +148,6 @@ public class ScoreManager : Singleton<ScoreManager>
             TargetRoundScore = score;
         }
         SequenceManager.Instance.ApplyParallelCoroutine();
-
-        OnTargetRoundScoreUpdated?.Invoke(TargetRoundScore);
     }
     #endregion
 
@@ -181,7 +174,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         ScorePair tmp = ScorePair;
 
-        tmp.baseScore = SafeAdd(tmp.baseScore, value);
+        tmp.baseScore = UtilityFunctions.SafeAdd(tmp.baseScore, value);
 
         ScorePair = tmp;
     }
@@ -190,45 +183,9 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         ScorePair tmp = ScorePair;
 
-        tmp.multiplier = SafeMultiply(tmp.multiplier, value);
+        tmp.multiplier = UtilityFunctions.SafeMultiply(tmp.multiplier, value);
 
         ScorePair = tmp;
-    }
-    #endregion
-
-    #region Arithmatic
-    private float SafeAdd(float value1, float value2)
-    {
-        float res = value1 + value2;
-        if (float.IsInfinity(res) || float.IsNaN(res))
-        {
-            return float.PositiveInfinity;
-        }
-        else if (res < 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return res;
-        }
-    }
-
-    private float SafeMultiply(float value1, float value2)
-    {
-        float res = value1 * value2;
-        if (float.IsInfinity(res) || float.IsNaN(res))
-        {
-            return float.PositiveInfinity;
-        }
-        else if (res < 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return res;
-        }
     }
     #endregion
 }

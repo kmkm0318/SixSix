@@ -56,7 +56,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RoundClearManager.Instance.OnRoundClearStarted += OnRoundClearStarted;
+        GameManager.Instance.RegisterEvent(GameState.RoundClear, OnRoundClearStarted);
     }
 
     private void OnRoundClearStarted()

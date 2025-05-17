@@ -10,7 +10,7 @@ public class AvailityDiceSO : ScriptableObject
     public int price;
     public int SellPrice => price / 2;
     public DiceSpriteListSO diceSpriteListSO;
-    public DiceMaterialSO diceMaterialSO;
+    public ShaderDataSO shaderDataSO;
     public int maxDiceValue;
     public int MaxDiceValue => Mathf.Min(maxDiceValue, diceSpriteListSO.DiceFaceCount);
 
@@ -24,7 +24,17 @@ public class AvailityDiceSO : ScriptableObject
         availityEffect = Instantiate(availityEffect);
     }
 
-    public string GetDescriptionText()
+    public bool IsTriggered(EffectTriggerType triggerType, AvailityDiceContext context)
+    {
+        return availityTrigger.IsTriggered(triggerType, context);
+    }
+
+    public virtual void TriggerEffect(AvailityDiceContext context)
+    {
+        availityEffect.TriggerEffect(context);
+    }
+
+    public virtual string GetDescriptionText()
     {
         return availityTrigger.GetTriggerDescription(this) + "\n" + availityEffect.GetEffectDescription(this);
     }

@@ -86,34 +86,18 @@ public class DiceManager : Singleton<DiceManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-        BonusManager.Instance.OnBonusAchieved += OnBonusAchieved;
         OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AvailityDiceAutoKeep, OnAvailityDiceAutoKeepChanged);
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
     }
 
-    private void OnGameStateChanged(GameState state)
+    public void StartAddBonusPlayDice()
     {
-        if (state == GameState.Loading)
-        {
-            StartCoroutine(FirstPlayDiceGenerate());
-        }
+        StartCoroutine(AddBonusPlayDice());
     }
 
-
-    private void OnBonusAchieved(BonusType type)
+    public void IncreaseCurrentAvailityDiceMax()
     {
-        if (type == BonusType.PlayDice)
-        {
-            SequenceManager.Instance.AddCoroutine(AddBonusPlayDice());
-        }
-        else if (type == BonusType.AvailityDiceCountMax)
-        {
-            SequenceManager.Instance.AddCoroutine(() =>
-            {
-                CurrentAvailityDiceMax++;
-            });
-        }
+        CurrentAvailityDiceMax++;
     }
 
     private void OnAvailityDiceAutoKeepChanged(int value)
@@ -137,7 +121,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultDiceMaterial, playDicePlayboard);
+        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultShaderData, playDicePlayboard);
 
         AddPlayDice(playDice);
     }
@@ -170,7 +154,12 @@ public class DiceManager : Singleton<DiceManager>
         playDiceList.Remove(playDice);
     }
 
-    private IEnumerator FirstPlayDiceGenerate()
+    public void StartFirstPlayDiceGenerate(Action onComplete = null)
+    {
+        SequenceManager.Instance.AddCoroutine(FirstPlayDiceGenerate(onComplete));
+    }
+
+    private IEnumerator FirstPlayDiceGenerate(Action onComplete = null)
     {
         for (int i = 0; i < DataContainer.Instance.DefaultPlayDiceCount; i++)
         {
@@ -181,14 +170,16 @@ public class DiceManager : Singleton<DiceManager>
 
         yield return new WaitUntil(() => AreAllDiceStopped());
 
-        GameManager.Instance.CurrentGameState = GameState.Round;
+        onComplete?.Invoke();
     }
 
-    private IEnumerator AddBonusPlayDice()
+    private IEnumerator AddBonusPlayDice(Action onComplete = null)
     {
         GeneratePlayDice();
 
         yield return new WaitUntil(() => AreAllDiceStopped());
+
+        onComplete?.Invoke();
     }
 
     public List<PlayDice> GetOrderedPlayDiceList()
@@ -302,7 +293,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         var chaosDice = chaosDicePool.Get();
         chaosDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultDiceMaterial, availityDicePlayboard);
+        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, availityDicePlayboard);
 
         AddChaosDice(chaosDice);
     }
@@ -347,7 +338,7 @@ public class DiceManager : Singleton<DiceManager>
     #endregion
 
     #region Gamble Dice
-    private void GenerateGambleDice(GambleDiceSO gambleDiceSO)
+    public void GenerateGambleDice(GambleDiceSO gambleDiceSO)
     {
         if (gambleDiceList.Count >= gambleDiceNumMax) return;
 
@@ -363,7 +354,7 @@ public class DiceManager : Singleton<DiceManager>
         gambleDiceList.Add(gambleDice);
     }
 
-    private void RemoveGambleDice(GambleDice gambleDice)
+    public void RemoveGambleDice(GambleDice gambleDice)
     {
         gambleDiceList.Remove(gambleDice);
         gambleDice.FadeOut(() =>

@@ -9,17 +9,17 @@ public class BossRound_LimitAvailityDiceSO : BossRoundSO
 
     public override void OnEnter()
     {
-        PlayManager.Instance.OnPlayStarted += OnPlayStarted;
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
         DisableDices();
     }
 
     public override void OnExit()
     {
         EnableDices();
-        PlayManager.Instance.OnPlayStarted -= OnPlayStarted;
+        GameManager.Instance.UnregisterEvent(GameState.Play, OnPlayStarted);
     }
 
-    private void OnPlayStarted(int obj)
+    private void OnPlayStarted()
     {
         SequenceManager.Instance.AddCoroutine(() =>
         {

@@ -119,7 +119,7 @@ public class DiceHighlight : Singleton<DiceHighlight>
         {
             if (targetDice.TryGetComponent(out AvailityDice availityDice))
             {
-                text += $"(${availityDice.SellPrice})";
+                text = string.Format(text, availityDice.SellPrice);
             }
         }
 

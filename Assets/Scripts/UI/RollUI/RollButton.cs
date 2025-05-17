@@ -4,12 +4,13 @@ using UnityEngine.EventSystems;
 
 public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public event Action OnButtonPressed;
-    public event Action OnButtonReleased;
-
     private bool isActive = false;
     private bool isPressed = false;
 
+    public event Action OnButtonPressed;
+    public event Action OnButtonReleased;
+
+    #region RegisterEvents
     private void Start()
     {
         RegisterEvents();
@@ -17,17 +18,41 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void RegisterEvents()
     {
-        PlayManager.Instance.OnPlayStarted += (_) => SequenceManager.Instance.AddCoroutine(() => { isActive = true; });
-        PlayManager.Instance.OnPlayEnded += (_) => isActive = false;
-
-        RollManager.Instance.OnRollStarted += () => isActive = false;
-        RollManager.Instance.OnRollCompleted += () => isActive = RollManager.Instance.RollRemain > 0;
-
-        EnhanceManager.Instance.OnDiceEnhanceStarted += () => isActive = true;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted += () => isActive = false;
-        EnhanceManager.Instance.OnHandEnhanceStarted += () => isActive = true;
-        EnhanceManager.Instance.OnHandEnhanceCompleted += () => isActive = false;
+        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted, OnPlayEnded);
+        GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
     }
+
+    private void OnPlayStarted()
+    {
+        isActive = true;
+    }
+
+    private void OnPlayEnded()
+    {
+        isActive = false;
+    }
+
+    private void OnRollStarted()
+    {
+        isActive = false;
+    }
+
+    private void OnRollCompleted()
+    {
+        isActive = RollManager.Instance.RollRemain > 0;
+    }
+
+    private void OnEnhanceStarted()
+    {
+        isActive = true;
+    }
+
+    private void OnEnhanceCompleted()
+    {
+        isActive = false;
+    }
+    #endregion
 
     public void OnPointerDown(PointerEventData eventData)
     {

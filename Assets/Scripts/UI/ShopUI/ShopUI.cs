@@ -91,23 +91,11 @@ public class ShopUI : Singleton<ShopUI>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        ShopManager.Instance.OnShopStarted += OnShopStarted;
+        GameManager.Instance.RegisterEvent(GameState.Shop, OnShopStarted);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceEnded);
+
         ShopManager.Instance.OnRerollCompleted += OnRerollCompleted;
         ShopManager.Instance.OnRerollCostChanged += OnRerollCostChanged;
-        EnhanceManager.Instance.OnDiceEnhanceStarted += OnEnhanceStarted;
-        EnhanceManager.Instance.OnDiceEnhanceCompleted += OnEnhanceCompleted;
-        EnhanceManager.Instance.OnHandEnhanceStarted += OnEnhanceStarted;
-        EnhanceManager.Instance.OnHandEnhanceCompleted += OnEnhanceCompleted;
-    }
-
-    private void OnEnhanceStarted()
-    {
-        Hide(false);
-    }
-
-    private void OnEnhanceCompleted()
-    {
-        Show(false);
     }
 
     private void OnShopStarted()
@@ -116,26 +104,19 @@ public class ShopUI : Singleton<ShopUI>
         Show();
     }
 
+    private void OnEnhanceStarted()
+    {
+        Hide(false);
+    }
+
+    private void OnEnhanceEnded()
+    {
+        Show(false);
+    }
+
     private void OnRerollCompleted()
     {
         InitMerchantUI();
-    }
-
-    private void InitMerchantUI()
-    {
-        InitAvailityDiceMerchantUI();
-
-        var handEnhanceCount = ShopManager.Instance.EnhanceMerchantCountMax;
-
-        if (handEnhanceCount > 0)
-        {
-            int playDiceEnhanceCount = UnityEngine.Random.Range(1, handEnhanceCount);
-
-            InitPlayDiceEnhanceMerchantUI(playDiceEnhanceCount);
-            InitHandEnhanceMerchantUI(handEnhanceCount - playDiceEnhanceCount);
-        }
-
-        ScrollToTop();
     }
 
     private void OnRerollCostChanged(int obj)
@@ -155,6 +136,24 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
     #endregion
+
+    private void InitMerchantUI()
+    {
+        InitAvailityDiceMerchantUI();
+
+        var handEnhanceCount = ShopManager.Instance.EnhanceMerchantCountMax;
+
+        if (handEnhanceCount > 0)
+        {
+            int playDiceEnhanceCount = UnityEngine.Random.Range(1, handEnhanceCount);
+
+            InitPlayDiceEnhanceMerchantUI(playDiceEnhanceCount);
+            InitHandEnhanceMerchantUI(handEnhanceCount - playDiceEnhanceCount);
+        }
+
+        ScrollToTop();
+    }
+
     private void InitAvailityDiceMerchantUI()
     {
         foreach (Transform child in availityDiceMerchantParent)
@@ -170,6 +169,24 @@ public class ShopUI : Singleton<ShopUI>
         {
             AvailityDiceMerchantUI merchantUI = availityDiceMerchantPool.Get();
             merchantUI.Init(availityDiceList[i]);
+        }
+    }
+
+    private void InitPlayDiceEnhanceMerchantUI(int count)
+    {
+        foreach (Transform child in playDiceEnhanceMerchantParent)
+        {
+            if (child.gameObject.activeSelf && child.TryGetComponent(out PlayDiceEnhanceMerchantUI merchantUI))
+            {
+                playDiceEnhanceMerchantPool.Release(merchantUI);
+            }
+        }
+
+        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList(count);
+        for (int i = 0; i < scorePairs.Count; i++)
+        {
+            PlayDiceEnhanceMerchantUI merchantUI = playDiceEnhanceMerchantPool.Get();
+            merchantUI.Init(scorePairs[i].EnhanceLevel, scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
         }
     }
 
@@ -192,21 +209,11 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void InitPlayDiceEnhanceMerchantUI(int count)
+    private void ScrollToTop()
     {
-        foreach (Transform child in playDiceEnhanceMerchantParent)
+        foreach (var scrollRect in scrollRects)
         {
-            if (child.gameObject.activeSelf && child.TryGetComponent(out PlayDiceEnhanceMerchantUI merchantUI))
-            {
-                playDiceEnhanceMerchantPool.Release(merchantUI);
-            }
-        }
-
-        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList(count);
-        for (int i = 0; i < scorePairs.Count; i++)
-        {
-            PlayDiceEnhanceMerchantUI merchantUI = playDiceEnhanceMerchantPool.Get();
-            merchantUI.Init(scorePairs[i].EnhanceLevel, scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
+            scrollRect.verticalNormalizedPosition = 1f;
         }
     }
 
@@ -238,14 +245,6 @@ public class ShopUI : Singleton<ShopUI>
             }
             gameObject.SetActive(false);
         });
-    }
-
-    private void ScrollToTop()
-    {
-        foreach (var scrollRect in scrollRects)
-        {
-            scrollRect.verticalNormalizedPosition = 1f;
-        }
     }
 }
 

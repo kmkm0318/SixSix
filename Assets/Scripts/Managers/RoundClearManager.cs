@@ -2,9 +2,6 @@ using System;
 
 public class RoundClearManager : Singleton<RoundClearManager>
 {
-    public event Action OnRoundClearStarted;
-    public event Action OnRoundClearEnded;
-
     private void Start()
     {
         RegisterEvents();
@@ -12,23 +9,17 @@ public class RoundClearManager : Singleton<RoundClearManager>
 
     private void RegisterEvents()
     {
-        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
     }
 
-    private void OnGameStateChanged(GameState state)
+    public void StartRoundClear()
     {
-        if (state == GameState.RoundClear)
-        {
-            OnRoundClearStarted?.Invoke();
-        }
+        GameManager.Instance.ChangeState(GameState.RoundClear);
     }
 
     private void OnRoundClearUIClosed()
     {
-        OnRoundClearEnded?.Invoke();
-
-        GameManager.Instance.CurrentGameState = GameState.Shop;
+        ShopManager.Instance.StartShop();
     }
 
     public int GetRewardValue(RoundClearRewardType type)

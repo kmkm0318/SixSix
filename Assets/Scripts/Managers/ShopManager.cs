@@ -9,8 +9,6 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private int enhanceMerchantCountMax = 3;
     public int EnhanceMerchantCountMax => enhanceMerchantCountMax;
 
-    public event Action OnShopStarted;
-    public event Action OnShopEnded;
     public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
     public event Action<HandEnhancePurchaseContext, PurchaseResult> OnHandEnhancePurchaseAttempted;
     public event Action<DiceEnhancePurchaseContext, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
@@ -41,25 +39,13 @@ public class ShopManager : Singleton<ShopManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
         DiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
     }
 
-    private void OnGameStateChanged(GameState state)
-    {
-        if (state == GameState.Shop)
-        {
-            RerollCost = initialRerollCost;
-            OnShopStarted?.Invoke();
-        }
-    }
-
     private void OnShopUIClosed()
     {
-        OnShopEnded?.Invoke();
-
-        GameManager.Instance.CurrentGameState = GameState.Round;
+        EndShop();
     }
 
     private void OnAvailityDiceClicked(AvailityDice dice)
@@ -174,6 +160,17 @@ public class ShopManager : Singleton<ShopManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
         OnRerollCompleted?.Invoke();
         RerollCost++;
+    }
+
+    public void StartShop()
+    {
+        RerollCost = initialRerollCost;
+        GameManager.Instance.ChangeState(GameState.Shop);
+    }
+
+    public void EndShop()
+    {
+        GameManager.Instance.ChangeState(GameState.Round);
     }
 }
 

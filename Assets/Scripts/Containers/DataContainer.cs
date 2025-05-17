@@ -10,20 +10,25 @@ public class DataContainer : Singleton<DataContainer>
     public DiceSpriteListSO DefaultDiceSpriteList => currentDiceStat.defaultDiceSpriteListSO;
     public int DefaultPlayDiceCount => currentDiceStat.defaultPlayDiceCount;
     public int DefaultAvailityDiceMax => currentDiceStat.defaultAvailityDiceMax;
-    public int DefaultMaxPlay => currentDiceStat.defaultMaxPlay;
-    public int DefaultMaxRoll => currentDiceStat.defaultMaxRoll;
+    public int DefaultMaxPlay => currentDiceStat.defaultPlayMax;
+    public int DefaultMaxRoll => currentDiceStat.defaultRollMax;
     #endregion
 
-    #region DiceMaterialSO
-    [SerializeField] private DiceMaterialSO defaultDiceMaterial;
-    public DiceMaterialSO DefaultDiceMaterial => defaultDiceMaterial;
-    [SerializeField] private DiceMaterialSO chaosDiceMaterial;
-    public DiceMaterialSO ChaosDiceMaterial => chaosDiceMaterial;
+    #region ShaderDataSO
+    [SerializeField] private ShaderDataSO defaultShaderData;
+    public ShaderDataSO DefaultShaderData => defaultShaderData;
+    [SerializeField] private ShaderDataSO chaosShaderData;
+    public ShaderDataSO ChaosShaderData => chaosShaderData;
     #endregion
 
     #region AvailityDiceListSO
     [SerializeField] private AvailityDiceListSO shopAvailityDiceListSO;
     public AvailityDiceListSO ShopAvailityDiceListSO => shopAvailityDiceListSO;
+    #endregion
+
+    #region GambleDiceListSO
+    [SerializeField] private GambleDiceListSO shopGambleDiceListSO;
+    public GambleDiceListSO ShopGambleDiceListSO => shopGambleDiceListSO;
     #endregion
 
     #region HandListSO

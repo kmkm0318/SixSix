@@ -48,12 +48,6 @@ public class SequenceManager : Singleton<SequenceManager>
         AddCoroutine(ExecuteAction(action), isParallel);
     }
 
-    private IEnumerator ExecuteAction(Action action)
-    {
-        action.Invoke();
-        yield break;
-    }
-
     public void ApplyParallelCoroutine()
     {
         if (parallelCoroutineList.Count == 0)
@@ -64,6 +58,12 @@ public class SequenceManager : Singleton<SequenceManager>
         var parallelCoroutineArray = parallelCoroutineList.ToArray();
         parallelCoroutineList.Clear();
         AddCoroutine(PlayParallelCoroutines(parallelCoroutineArray));
+    }
+
+    private IEnumerator ExecuteAction(Action action)
+    {
+        action.Invoke();
+        yield break;
     }
 
     private IEnumerator PlaySequentialCoroutines()
