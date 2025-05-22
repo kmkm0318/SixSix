@@ -1,17 +1,15 @@
-using System;
-
-public class GameResultState : IState
+public class GameResultState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
+        base.Enter();
+
+        bool isClear = RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound && ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore;
+        GameResultUI.Instance.ShowGameResult(isClear);
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
+        base.Exit();
     }
 }

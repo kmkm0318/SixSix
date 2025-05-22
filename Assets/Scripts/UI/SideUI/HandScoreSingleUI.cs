@@ -65,8 +65,8 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         enhanceLevelText.text = enhanceLevel.ToString();
         UpdateScoreText(scorePair);
 
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(enhanceLevelText.transform));
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(baseScoreText.transform));
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(multiplierText.transform));
+        StartCoroutine(AnimationFunction.ShakeAnimation(enhanceLevelText.transform));
+        StartCoroutine(AnimationFunction.ShakeAnimation(baseScoreText.transform));
+        StartCoroutine(AnimationFunction.ShakeAnimation(multiplierText.transform));
     }
 }

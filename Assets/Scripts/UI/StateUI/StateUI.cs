@@ -1,30 +1,32 @@
 using System;
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StateUI : Singleton<StateUI>
 {
-    [SerializeField] private Button optionButton;
-    [SerializeField] private TMP_Text moneyText;
-    [SerializeField] private TMP_Text playRemainText;
-    [SerializeField] private TMP_Text rollRemainText;
+    [SerializeField] private ButtonPanel optionButton;
+    [SerializeField] private AnimatedText moneyText;
+    [SerializeField] private AnimatedText playRemainText;
+    [SerializeField] private AnimatedText rollRemainText;
 
     public event Action OnOptionButtonClicked;
 
     protected override void Awake()
     {
         base.Awake();
-        optionButton.onClick.AddListener(() =>
-        {
-            OnOptionButtonClicked?.Invoke();
-        });
+        optionButton.OnClick += () => OnOptionButtonClicked?.Invoke();
     }
 
     private void Start()
     {
+        ResetUI();
         RegisterEvents();
+    }
+
+    private void ResetUI()
+    {
+        moneyText.SetText("$" + MoneyManager.Instance.Money.ToString());
+        playRemainText.SetText(PlayManager.Instance.PlayRemain.ToString());
+        rollRemainText.SetText(RollManager.Instance.RollRemain.ToString());
     }
 
     #region RegisterEvents
@@ -38,37 +40,25 @@ public class StateUI : Singleton<StateUI>
 
     private void OnMoneyChanged(int money)
     {
-        StartCoroutine(UpdateTextAndPlayAnimation(moneyText, "$" + money.ToString()));
+        AnimationFunction.AddUpdateTextAndPlayAnimation(moneyText, $"${money}");
     }
 
     private void OnPlayRemainChanged(int playRemain)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(playRemainText, playRemain.ToString()), true);
-        if (playRemain == 0)
-        {
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
+        AnimationFunction.AddUpdateTextAndPlayAnimation(playRemainText, playRemain);
     }
 
     private void OnRollRemainChanged(int rollRemain)
     {
-        SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(rollRemainText, rollRemain.ToString()), true);
-        SequenceManager.Instance.ApplyParallelCoroutine();
+        AnimationFunction.AddUpdateTextAndPlayAnimation(rollRemainText, rollRemain);
     }
 
     private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
     {
         if (result == PurchaseResult.NotEnoughMoney)
         {
-            StartCoroutine(AnimationFunction.PlayShakeAnimation(moneyText.transform));
+            StartCoroutine(AnimationFunction.ShakeAnimation(moneyText.transform));
         }
     }
     #endregion
-
-    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text targetText, string targetString)
-    {
-        targetText.text = targetString;
-
-        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(targetText.transform, true));
-    }
 }

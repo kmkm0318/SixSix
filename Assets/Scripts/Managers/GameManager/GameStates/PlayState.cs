@@ -1,18 +1,14 @@
-using System;
-
-public class PlayState : IState
+public class PlayState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
+        base.Enter();
+        RollManager.Instance.ResetRollRemain();
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
-        PlayManager.Instance.HandlePlayResult();
+        base.Exit();
+        PlayManager.Instance.EndPlay();
     }
 }

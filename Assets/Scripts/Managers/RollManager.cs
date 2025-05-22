@@ -47,19 +47,11 @@ public class RollManager : Singleton<RollManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
-        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted);
-
         RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
     }
 
-    private void OnPlayStarted()
-    {
-        RollRemain = currentRollMax;
-    }
-
-    private void OnEnhanceStarted()
+    public void ResetRollRemain()
     {
         RollRemain = currentRollMax;
     }

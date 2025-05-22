@@ -4,17 +4,15 @@ using UnityEngine.UI;
 
 public class AvailityDiceMerchantUI : MonoBehaviour
 {
-    [SerializeField] private Image diceImage;
+    [SerializeField] private ShopDiceIcon diceImage;
     [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text descriptionText;
-    [SerializeField] private Button buyButton;
-    [SerializeField] private TMP_Text buttonText;
+    [SerializeField] private ButtonPanel buyButton;
 
     private AvailityDiceSO availityDiceSO;
 
     private void Start()
     {
-        buyButton.onClick.AddListener(OnBuyButtonClicked);
+        buyButton.OnClick += OnBuyButtonClicked;
         RegisterEvents();
     }
     private void OnBuyButtonClicked()
@@ -49,12 +47,9 @@ public class AvailityDiceMerchantUI : MonoBehaviour
     {
         if (availityDiceSO == null) return;
 
-        diceImage.material = new(diceImage.material);
-        availityDiceSO.shaderDataSO.SetMaterialProperties(diceImage.material);
-        diceImage.sprite = availityDiceSO.diceSpriteListSO.spriteList[availityDiceSO.MaxDiceValue - 1];
+        diceImage.Init(availityDiceSO);
 
         nameText.text = availityDiceSO.diceName;
-        descriptionText.text = availityDiceSO.GetDescriptionText();
-        buttonText.text = $"Buy(${availityDiceSO.price})";
+        buyButton.SetText($"Buy(${availityDiceSO.price})");
     }
 }

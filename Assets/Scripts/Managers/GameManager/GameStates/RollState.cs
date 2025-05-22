@@ -1,17 +1,12 @@
-using System;
-
-public class RollState : IState
+public class RollState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
+        base.Enter();
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
+        base.Exit();
     }
 }

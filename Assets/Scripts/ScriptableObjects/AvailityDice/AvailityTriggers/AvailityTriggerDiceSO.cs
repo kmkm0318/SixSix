@@ -20,11 +20,11 @@ public class AvailityTriggerDiceSO : AvailityTriggerSO
         }
         else if (targetValues.Count == 1)
         {
-            return $"When Dice Value is \"{targetValues[0]}\"";
+            return $"When Dice Value is <color={{3}}>{targetValues[0]}</color>";
         }
         else
         {
-            return $"When Dice Value is\nin ({string.Join(", ", targetValues)})";
+            return $"When Dice Value is\nin <color={{3}}>({string.Join(", ", targetValues)})</color>";
         }
     }
 }

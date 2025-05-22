@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class ToolTipUI : Singleton<ToolTipUI>
 {
-    [SerializeField] private RectTransform toolTipPanel;
-    [SerializeField] private AnimatedText diceNameText;
-    [SerializeField] private AnimatedText descriptionText;
+    [SerializeField] private LabeledValuePanel labelPanel;
+    [SerializeField] private RectTransform labelPanelRectTransform;
+    [SerializeField] private TextPanel tagPanel;
     [SerializeField] private float offset;
 
     private RectTransform rectTransform;
     private Transform targetTransform;
     private Vector3 targetOffset;
+    private Vector3 offsetDirection;
+    bool isUI = false;
 
     private void Start()
     {
@@ -35,53 +37,87 @@ public class ToolTipUI : Singleton<ToolTipUI>
     private void HandleTransform()
     {
         if (targetTransform == null) return;
-        var targetPos = Camera.main.WorldToScreenPoint(targetTransform.position + targetOffset);
-        rectTransform.position = targetPos;
+
+        Vector3 targetPos;
+        if (isUI)
+        {
+            targetPos = targetTransform.position + targetOffset;
+        }
+        else
+        {
+            targetPos = Camera.main.WorldToScreenPoint(targetTransform.position + targetOffset);
+        }
+
+        rectTransform.position = targetPos + offsetDirection * offset;
     }
 
-    public void ShowToolTip(IToolTipable toolTipable, Transform transform, Vector3 direction, string name, string description)
+    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None)
     {
-        if (toolTipable == null) return;
         if (transform == null) return;
-        if (UtilityFunctions.IsPointerOverUIElement()) return;
-
+        if (transform is RectTransform rect)
+        {
+            isUI = true;
+            targetOffset = rect.rect.width / 2 * direction;
+        }
+        else
+        {
+            if (UtilityFunctions.IsPointerOverUIElement()) return;
+            isUI = false;
+            targetOffset = transform.localScale.x / 2 * direction;
+        }
+        offsetDirection = direction.normalized;
         gameObject.SetActive(true);
-
         SetPanelAnchor(direction);
         targetTransform = transform;
-        targetOffset = (transform.localScale.x / 2 + offset) * direction;
-        diceNameText.ShowText(name);
-        descriptionText.SetText(description);
+
+
+
+        labelPanel.SetLabel(name, true);
+        labelPanel.SetValue(description);
+        HandleTag(tag);
     }
+
+    private void HandleTag(ToolTipTag tag)
+    {
+        if (tag == ToolTipTag.None)
+        {
+            tagPanel.gameObject.SetActive(false);
+            return;
+        }
+
+        tagPanel.gameObject.SetActive(true);
+        tagPanel.SetText(tag.ToString());
+    }
+
 
     private void SetPanelAnchor(Vector3 direction)
     {
         if (direction == Vector3.up)
         {
-            toolTipPanel.anchorMin = new Vector2(0.5f, 0);
-            toolTipPanel.anchorMax = new Vector2(0.5f, 0);
-            toolTipPanel.pivot = new Vector2(0.5f, 0);
+            labelPanelRectTransform.anchorMin = new Vector2(0.5f, 0);
+            labelPanelRectTransform.anchorMax = new Vector2(0.5f, 0);
+            labelPanelRectTransform.pivot = new Vector2(0.5f, 0);
         }
         else if (direction == Vector3.down)
         {
-            toolTipPanel.anchorMin = new Vector2(0.5f, 1);
-            toolTipPanel.anchorMax = new Vector2(0.5f, 1);
-            toolTipPanel.pivot = new Vector2(0.5f, 1);
+            labelPanelRectTransform.anchorMin = new Vector2(0.5f, 1);
+            labelPanelRectTransform.anchorMax = new Vector2(0.5f, 1);
+            labelPanelRectTransform.pivot = new Vector2(0.5f, 1);
         }
         else if (direction == Vector3.left)
         {
-            toolTipPanel.anchorMin = new Vector2(1, 0.5f);
-            toolTipPanel.anchorMax = new Vector2(1, 0.5f);
-            toolTipPanel.pivot = new Vector2(1, 0.5f);
+            labelPanelRectTransform.anchorMin = new Vector2(1, 0.5f);
+            labelPanelRectTransform.anchorMax = new Vector2(1, 0.5f);
+            labelPanelRectTransform.pivot = new Vector2(1, 0.5f);
         }
         else if (direction == Vector3.right)
         {
-            toolTipPanel.anchorMin = new Vector2(0, 0.5f);
-            toolTipPanel.anchorMax = new Vector2(0, 0.5f);
-            toolTipPanel.pivot = new Vector2(0, 0.5f);
+            labelPanelRectTransform.anchorMin = new Vector2(0, 0.5f);
+            labelPanelRectTransform.anchorMax = new Vector2(0, 0.5f);
+            labelPanelRectTransform.pivot = new Vector2(0, 0.5f);
         }
 
-        toolTipPanel.anchoredPosition = Vector2.zero;
+        labelPanelRectTransform.anchoredPosition = Vector2.zero;
     }
 
     public void HideToolTip()
@@ -91,3 +127,12 @@ public class ToolTipUI : Singleton<ToolTipUI>
     }
 }
 
+public enum ToolTipTag
+{
+    None,
+    Item,
+    Enemy,
+    Player,
+    Money,
+    Score
+}

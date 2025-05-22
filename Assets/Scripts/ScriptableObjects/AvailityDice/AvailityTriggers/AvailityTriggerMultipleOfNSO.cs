@@ -20,6 +20,6 @@ public class AvailityTriggerMultipleOfNSO : AvailityTriggerSO
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        return "When the Sum of Play Dice\nis a Multiple of " + multipleOfN;
+        return "When the Sum of Play Dice\nis a Multiple of <color={{3}}>" + multipleOfN + "</color>";
     }
 }

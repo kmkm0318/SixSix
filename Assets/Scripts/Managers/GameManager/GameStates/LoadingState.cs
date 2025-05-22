@@ -1,19 +1,20 @@
-using System;
-
-public class LoadingState : IState
+public class LoadingState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
-        DiceManager.Instance.StartFirstPlayDiceGenerate(RoundManager.Instance.StartNextRound);
+        base.Enter();
+        LoadingManager.Instance.StartLoading(() =>
+        {
+            DiceManager.Instance.StartFirstPlayDiceGenerate(() =>
+            {
+                GameManager.Instance.ChangeState(GameState.Round);
+            });
+        });
+
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
+        base.Exit();
     }
 }
-

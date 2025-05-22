@@ -11,33 +11,7 @@ public class BossRoundManager : Singleton<BossRoundManager>
     private BossRoundSO currentBossRoundSO = null;
     public BossRoundSO CurrentBossRoundSO => currentBossRoundSO;
 
-    private void Start()
-    {
-        RegisterEvents();
-    }
-
-    private void RegisterEvents()
-    {
-        GameManager.Instance.RegisterEvent(GameState.Round, OnRoundStarted, OnRoundCleared);
-    }
-
-    private void OnRoundStarted()
-    {
-        if (RoundManager.Instance.IsBossRound)
-        {
-            EnterBossRound();
-        }
-    }
-
-    private void OnRoundCleared()
-    {
-        if (currentBossRoundSO != null)
-        {
-            ExitBossRound();
-        }
-    }
-
-    private void EnterBossRound()
+    public void EnterBossRound()
     {
         if (currentBossRoundSO != null) return;
         SequenceManager.Instance.AddCoroutine(() =>
@@ -48,7 +22,7 @@ public class BossRoundManager : Singleton<BossRoundManager>
         });
     }
 
-    private void ExitBossRound()
+    public void ExitBossRound()
     {
         if (currentBossRoundSO == null) return;
         SequenceManager.Instance.AddCoroutine(() =>

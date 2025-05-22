@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -12,35 +11,15 @@ public class RoundClearUI : Singleton<RoundClearUI>
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
-    [SerializeField] private TMP_Text roundText;
-    [SerializeField] private TMP_Text targetRoundScoreText;
-    [SerializeField] private TMP_Text achievedRoundScoreText;
+    [SerializeField] private AnimatedText resultText;
     [SerializeField] private Transform roundClearRewardParent;
     [SerializeField] private RoundClearRewardUI roundClearRewardUI;
 
-    public event Action<int> OnRewardTriggered;
+    private bool isClosable = false;
+    private string resultTextValue = string.Empty;
+
     public event Action OnRoundClearUIOpened;
     public event Action OnRoundClearUIClosed;
-
-    private ObjectPool<RoundClearRewardUI> rewardPool;
-    private bool isClosable = false;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        rewardPool = new(
-            () => Instantiate(roundClearRewardUI, roundClearRewardParent),
-            rewardUI =>
-            {
-                rewardUI.gameObject.SetActive(true);
-                rewardUI.transform.SetAsLastSibling();
-            },
-            rewardUI => rewardUI.gameObject.SetActive(false),
-            rewardUI => Destroy(rewardUI.gameObject),
-            maxSize: 10
-        );
-    }
 
     private void Start()
     {
@@ -62,10 +41,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
     private void OnRoundClearStarted()
     {
         ClearTexts();
-        ClearRewardTexts();
         SequenceManager.Instance.AddCoroutine(Show());
-        SequenceManager.Instance.AddCoroutine(ShowTextAnimation());
-        CreateRewardUIs();
+        SequenceManager.Instance.AddCoroutine(ShowTextAnimations());
         SequenceManager.Instance.AddCoroutine(() => isClosable = true);
     }
     #endregion
@@ -77,14 +54,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
         roundClearPanel.anchoredPosition = hidePos;
 
         var myTween = roundClearPanel
-            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
+            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
 
         yield return myTween.WaitForCompletion();
         OnRoundClearUIOpened?.Invoke();
@@ -98,14 +75,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
         roundClearPanel.anchoredPosition = Vector3.zero;
 
         var myTween = roundClearPanel
-             .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
+             .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
              .SetEase(Ease.InOutBack)
              .OnComplete(() =>
              {
                  gameObject.SetActive(false);
              });
 
-        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
 
         yield return myTween.WaitForCompletion();
         OnRoundClearUIClosed?.Invoke();
@@ -115,61 +92,54 @@ public class RoundClearUI : Singleton<RoundClearUI>
     #region TextAnimation
     private void ClearTexts()
     {
-        roundText.text = string.Empty;
-        targetRoundScoreText.text = string.Empty;
-        achievedRoundScoreText.text = string.Empty;
+        resultTextValue = string.Empty;
+        resultText.ClearText();
     }
 
-    private void ClearRewardTexts()
+    private IEnumerator ShowTextAnimations()
     {
-        foreach (Transform child in roundClearRewardParent)
+        resultTextValue += $"<wave>Cleared Round</wave> : <bounce>{RoundManager.Instance.CurrentRound}</bounce>";
+        resultTextValue += $"\n<wave>Target Score</wave> : <bounce>{UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore)}</bounce>";
+        resultTextValue += $"\n<wave>Your Score</wave> : <bounce>{UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore)}</bounce>";
+
+        ApplyReward();
+
+        yield return resultText.ShowTextCoroutine(resultTextValue);
+    }
+
+    private void ApplyReward()
+    {
+        foreach (var type in RoundClearManager.Instance.DefaultRewardList)
         {
-            if (child.TryGetComponent<RoundClearRewardUI>(out var rewardUI))
-            {
-                rewardPool.Release(rewardUI);
-            }
+            int rewardValue = RoundClearManager.Instance.GetRewardValue(type);
+            if (rewardValue <= 0) continue;
+            string left = $"<wave>{GetRewardName(type)}</wave>";
+            string right = $"<bounce>{GetRewardValueText(rewardValue)}</bounce>";
+            resultTextValue += $"\n{left} : {right}";
+            MoneyManager.Instance.AddMoney(rewardValue, true);
         }
     }
 
-    private IEnumerator ShowTextAnimation()
+    private string GetRewardName(RoundClearRewardType type)
     {
-        SetTexts();
-
-        string roundTextValue = roundText.text;
-        string targetRoundScoreTextValue = targetRoundScoreText.text;
-        string achievedRoundScoreTextValue = achievedRoundScoreText.text;
-
-        roundText.text = string.Empty;
-        targetRoundScoreText.text = string.Empty;
-        achievedRoundScoreText.text = string.Empty;
-
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(roundText, roundTextValue));
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(targetRoundScoreText, targetRoundScoreTextValue));
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(achievedRoundScoreText, achievedRoundScoreTextValue));
+        return type switch
+        {
+            RoundClearRewardType.RoundClear => "Round Clear",
+            RoundClearRewardType.PlayRemain => "Play Remain",
+            RoundClearRewardType.MoneyInterest => "Money Interest",
+            RoundClearRewardType.BossRoundClear => "Boss Round Clear",
+            _ => string.Empty,
+        };
     }
 
-    private void SetTexts()
+    private string GetRewardValueText(int value)
     {
-        roundText.text = "Cleared Round : " + RoundManager.Instance.CurrentRound.ToString();
-        targetRoundScoreText.text = "Target Score : " + UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore);
-        achievedRoundScoreText.text = "Achieved Score : " + UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore);
+        string text = string.Empty;
+        for (int i = 0; i < value; i++)
+        {
+            text += "$";
+        }
+        return text;
     }
     #endregion
-
-    private void CreateRewardUIs()
-    {
-        foreach (var type in Enum.GetValues(typeof(RoundClearRewardType)))
-        {
-            if (type is RoundClearRewardType rewardType && rewardType != RoundClearRewardType.None)
-            {
-                var rewardUI = rewardPool.Get();
-                rewardUI.Show(rewardType);
-            }
-        }
-    }
-
-    public void TriggerReward(int value)
-    {
-        OnRewardTriggered?.Invoke(value);
-    }
 }

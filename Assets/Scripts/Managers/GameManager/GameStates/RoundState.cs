@@ -1,19 +1,24 @@
-using System;
-
-public class RoundState : IState
+public class RoundState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
+        base.Enter();
+        RoundManager.Instance.StartNextRound();
+        if (RoundManager.Instance.IsBossRound)
+        {
+            BossRoundManager.Instance.EnterBossRound();
+        }
         ScoreManager.Instance.UpdateTargetRoundScore();
-        PlayManager.Instance.StartPlay(true);
+        PlayManager.Instance.ResetPlayRemain();
+        GameManager.Instance.ChangeState(GameState.Play);
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
+        if (RoundManager.Instance.IsBossRound)
+        {
+            BossRoundManager.Instance.ExitBossRound();
+        }
+        base.Exit();
     }
 }

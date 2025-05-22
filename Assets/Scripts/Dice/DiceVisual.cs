@@ -28,8 +28,8 @@ public class DiceVisual : MonoBehaviour
     {
         int enhanceColorMax = 20;
 
-        float blueIntensity = Mathf.Clamp01(enhancedValue.baseScore / 10f / enhanceColorMax);
-        float redIntensity = Mathf.Clamp01(enhancedValue.multiplier * 20f / enhanceColorMax);
+        float blueIntensity = Mathf.Clamp01((float)enhancedValue.baseScore / 10f / enhanceColorMax);
+        float redIntensity = Mathf.Clamp01((float)enhancedValue.multiplier * 20f / enhanceColorMax);
 
         float redValue = 1 - blueIntensity;
         float greenValue = 1 - redIntensity - blueIntensity;

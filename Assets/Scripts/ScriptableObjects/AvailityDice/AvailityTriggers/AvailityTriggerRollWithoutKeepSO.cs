@@ -17,6 +17,6 @@ public class AvailityTriggerRollWithoutKeepSO : AvailityTriggerSO
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        return "When Roll Without Keep";
+        return "When Roll Without <color={3}>Keep</color>";
     }
 }

@@ -6,10 +6,7 @@ using UnityEngine;
 public class TriggerContextUI : Singleton<TriggerContextUI>
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private Color baseScoreColor;
-    [SerializeField] private Color multiplierColor;
-    [SerializeField] private Color moneyColor;
+    [SerializeField] private AnimatedText scoreText;
     [SerializeField] private float offsetDistance;
 
     private RectTransform rectTransform;
@@ -28,7 +25,7 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
         setupAction();
         SetPosition(targetTransform, offset);
 
-        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(scoreText.transform));
+        yield return StartCoroutine(AnimationFunction.ShakeAnimation(scoreText.transform));
 
         Hide();
     }
@@ -54,21 +51,22 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
 
         if (isBaseScore)
         {
-            scoreText.color = baseScoreColor;
-            scoreText.text = pair.baseScore.ToString("+0;-0;0");
+            scoreText.TMP_Text.color = DataContainer.Instance.DefaultColorSO.blue;
+            scoreText.SetText(pair.baseScore.ToString("+0;-0;0"));
         }
         else if (isMultiplier)
         {
-            scoreText.color = multiplierColor;
-            scoreText.text = "x" + pair.multiplier.ToString("0.##");
+            scoreText.TMP_Text.color = DataContainer.Instance.DefaultColorSO.red;
+            scoreText.SetText("x" + pair.multiplier.ToString("0.##"));
         }
     }
 
     private void SetupUI(int money)
     {
-        scoreText.color = moneyColor;
-        scoreText.text = money > 0 ? "+$" : "-$";
-        scoreText.text += Math.Abs(money).ToString();
+        scoreText.TMP_Text.color = DataContainer.Instance.DefaultColorSO.yellow;
+        string sign = money > 0 ? "+" : "-";
+        int absMoney = Mathf.Abs(money);
+        scoreText.SetText($"{sign}${absMoney}");
     }
     #endregion
 

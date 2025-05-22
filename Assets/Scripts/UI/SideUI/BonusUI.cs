@@ -3,20 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BonusUI : Singleton<BonusUI>
 {
-    [SerializeField] private List<TMP_Text> diceCountTextList;
+    [SerializeField] private List<Image> diceImage;
+    [SerializeField] private List<AnimatedText> diceCountTextList;
     [SerializeField] private Transform bonusTargetTextParent;
-    [SerializeField] private BonusTargetText bonusTargetTextPrefab;
+    [SerializeField] private DiceTotalSum bonusTargetTextPrefab;
 
     private Dictionary<BonusType, TMP_Text> bonusTargetTextDict = new();
 
     private void Start()
     {
+        InitDiceImages();
         InitBonusData();
         InitTexts();
         RegisterEvents();
+    }
+
+    private void InitDiceImages()
+    {
+        var diceSprite = DataContainer.Instance.DefaultDiceSpriteList.spriteList;
+        for (int i = 0; i < diceImage.Count; i++)
+        {
+            if (i < diceSprite.Count)
+            {
+                diceImage[i].sprite = diceSprite[i];
+            }
+            else
+            {
+                Debug.LogError($"Dice image index {i} is out of range. Please check the sprite list.");
+            }
+        }
     }
 
     private void InitBonusData()
@@ -34,7 +53,7 @@ public class BonusUI : Singleton<BonusUI>
     {
         for (int i = 0; i < diceCountTextList.Count; i++)
         {
-            diceCountTextList[i].text = "0";
+            diceCountTextList[i].SetText("0");
         }
 
         foreach (var bonusTargetTextPair in bonusTargetTextDict)
@@ -56,7 +75,7 @@ public class BonusUI : Singleton<BonusUI>
     {
         if (diceValue <= 0 || diceValue > diceCountTextList.Count) return;
 
-        SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(diceCountTextList[diceValue - 1], sumValue.ToString()), true);
+        AddTextAnimation(diceCountTextList[diceValue - 1].TMP_Text, sumValue.ToString());
     }
 
     private void OnTotalDiceSumChanged(BonusType type, int score)
@@ -68,8 +87,7 @@ public class BonusUI : Singleton<BonusUI>
             string targetString;
 
             targetString = score.ToString() + "/" + targetScore.ToString();
-
-            SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(targetText, targetString), true);
+            AddTextAnimation(targetText, targetString);
         }
     }
 
@@ -78,14 +96,20 @@ public class BonusUI : Singleton<BonusUI>
         if (bonusTargetTextDict.TryGetValue(type, out var targetText))
         {
             SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(targetText, "Successed"), true);
+            AddTextAnimation(targetText, "Successed");
         }
     }
+
+    private void AddTextAnimation(TMP_Text text, string targetString)
+    {
+        SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(text, targetString), true);
+    }
+
 
     private IEnumerator SetTextAndPlayAnimation(TMP_Text targetText, string targetString)
     {
         targetText.text = targetString;
-
-        yield return StartCoroutine(AnimationFunction.PlayShakeAnimation(targetText.transform));
+        yield return StartCoroutine(AnimationFunction.ShakeAnimation(targetText.transform));
     }
 }
 

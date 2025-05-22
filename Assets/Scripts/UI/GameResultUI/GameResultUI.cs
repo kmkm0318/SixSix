@@ -1,27 +1,26 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameResultUI : Singleton<GameResultUI>
 {
-    [SerializeField] private RectTransform gameOverPanel;
+    [SerializeField] private RectTransform gameResultPanel;
     [SerializeField] private Vector3 hidePos;
-    [SerializeField] private TMP_Text resultText;
-    [SerializeField] private TMP_Text highScoreText;
-    [SerializeField] private Button mainMenuButton;
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private Button infinityModeButton;
+    [SerializeField] private AnimatedText resultText;
+    [SerializeField] private List<GameResultUIPair> gameResultUIPairs;
+    [SerializeField] private ButtonPanel mainMenuButton;
+    [SerializeField] private ButtonPanel newGameButton;
+    [SerializeField] private ButtonPanel infinityModeButton;
     [SerializeField] private GameObject infinityModeButtonRow;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
 
     private void Start()
     {
-        mainMenuButton.onClick.AddListener(OnClickMainMenuButton);
-        newGameButton.onClick.AddListener(OnClickNewGameButton);
-        infinityModeButton.onClick.AddListener(OnClickInfinityModeButton);
+        mainMenuButton.OnClick += OnClickMainMenuButton;
+        newGameButton.OnClick += OnClickNewGameButton;
+        infinityModeButton.OnClick += OnClickInfinityModeButton;
         gameObject.SetActive(false);
     }
 
@@ -38,38 +37,48 @@ public class GameResultUI : Singleton<GameResultUI>
     private void OnClickInfinityModeButton()
     {
         Hide();
-        RoundClearManager.Instance.StartRoundClear();
+        GameManager.Instance.ChangeState(GameState.RoundClear);
     }
 
     public void ShowGameResult(bool isGameClear)
     {
-        Show();
-        resultText.text = isGameClear ? "Game Clear" : "Game Over";
-        highScoreText.text = "Highest Round Score: " + UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore);
+        SequenceManager.Instance.AddCoroutine(Show);
+        resultText.SetText(isGameClear ? "Game Clear" : "Game Over");
+
+        Color color = isGameClear ?
+        DataContainer.Instance.DefaultColorSO.blue : DataContainer.Instance.DefaultColorSO.red;
+
+        resultText.TMP_Text.color = color;
         infinityModeButtonRow.SetActive(isGameClear);
+
+        foreach (var pair in gameResultUIPairs)
+        {
+            string res = GameResultManager.Instance.GetResultValue(pair.type);
+            pair.panel.SetValue(res);
+        }
     }
 
     #region ShowHide
     private void Show()
     {
         gameObject.SetActive(true);
-        gameOverPanel.anchoredPosition = hidePos;
-        gameOverPanel
-            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
+        gameResultPanel.anchoredPosition = hidePos;
+        gameResultPanel
+            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
     }
 
     private void Hide(Action onComplete = null)
     {
-        gameOverPanel.anchoredPosition = Vector3.zero;
-        gameOverPanel
-            .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
+        gameResultPanel.anchoredPosition = Vector3.zero;
+        gameResultPanel
+            .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
@@ -77,7 +86,14 @@ public class GameResultUI : Singleton<GameResultUI>
                 gameObject.SetActive(false);
             });
 
-        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
     }
     #endregion
+}
+
+[Serializable]
+public class GameResultUIPair
+{
+    public GameResultValueType type;
+    public LabeledValuePanel panel;
 }

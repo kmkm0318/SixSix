@@ -16,9 +16,8 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
     [SerializeField] private HandEnhanceMerchantUI handEnhanceMerchantPrefab;
     [SerializeField] private PlayDiceEnhanceMerchantUI playDiceEnhanceMerchantPrefab;
-    [SerializeField] private Button rerollButton;
-    [SerializeField] private Button closeButton;
-    [SerializeField] private TMP_Text rerollButtonText;
+    [SerializeField] private ButtonPanel rerollButton;
+    [SerializeField] private ButtonPanel closeButton;
     [SerializeField] private List<ScrollRect> scrollRects;
 
     public event Action OnShopUIOpened;
@@ -34,8 +33,8 @@ public class ShopUI : Singleton<ShopUI>
     {
         InitPool();
         RegisterEvents();
-        rerollButton.onClick.AddListener(OnclickRerollButton);
-        closeButton.onClick.AddListener(OnClickCloseButton);
+        rerollButton.OnClick += OnclickRerollButton;
+        closeButton.OnClick += OnClickCloseButton;
         gameObject.SetActive(false);
     }
 
@@ -46,7 +45,10 @@ public class ShopUI : Singleton<ShopUI>
 
     private void OnClickCloseButton()
     {
-        SequenceManager.Instance.AddCoroutine(() => Hide(true));
+        SequenceManager.Instance.AddCoroutine(() => Hide(() =>
+        {
+            OnShopUIClosed?.Invoke();
+        }));
     }
 
     private void InitPool()
@@ -100,18 +102,21 @@ public class ShopUI : Singleton<ShopUI>
 
     private void OnShopStarted()
     {
+        Show(() =>
+        {
+            OnShopUIOpened?.Invoke();
+        });
         InitMerchantUI();
-        Show();
     }
 
     private void OnEnhanceStarted()
     {
-        Hide(false);
+        Hide();
     }
 
     private void OnEnhanceEnded()
     {
-        Show(false);
+        Show();
     }
 
     private void OnRerollCompleted()
@@ -123,16 +128,16 @@ public class ShopUI : Singleton<ShopUI>
     {
         if (obj > 0)
         {
-            rerollButtonText.text = $"Reroll({obj})";
+            rerollButton.SetText($"Reroll(${obj})");
         }
         else
         {
-            rerollButtonText.text = "Reroll";
+            rerollButton.SetText("Reroll");
         }
 
         if (gameObject.activeSelf)
         {
-            StartCoroutine(AnimationFunction.PlayShakeAnimation(rerollButtonText.transform));
+            StartCoroutine(AnimationFunction.ShakeAnimation(rerollButton.Text.transform, true));
         }
     }
     #endregion
@@ -217,32 +222,26 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void Show(bool isInvoke = true)
+    private void Show(Action onComplete = null)
     {
         currentTween?.Kill(true);
         shopPanel.anchoredPosition = hidePos;
         gameObject.SetActive(true);
-        currentTween = shopPanel.DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
-            if (isInvoke)
-            {
-                OnShopUIOpened?.Invoke();
-            }
+            onComplete?.Invoke();
         });
     }
 
-    private void Hide(bool isInvoke = true)
+    private void Hide(Action onComplete = null)
     {
         if (!gameObject.activeSelf) return;
 
         currentTween?.Kill(true);
         shopPanel.anchoredPosition = Vector3.zero;
-        currentTween = shopPanel.DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
+        currentTween = shopPanel.DOAnchorPos(hidePos, AnimationFunction.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
         {
-            if (isInvoke)
-            {
-                OnShopUIClosed?.Invoke();
-            }
+            onComplete?.Invoke();
             gameObject.SetActive(false);
         });
     }

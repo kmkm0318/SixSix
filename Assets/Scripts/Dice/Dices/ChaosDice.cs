@@ -23,6 +23,6 @@ public class ChaosDice : Dice
         string name = $"Chaos Dice({DiceValue})";
         string description = $"Get {scorePair}";
 
-        ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description);
     }
 }

@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 
 public class AdviserUI : Singleton<AdviserUI>
 {
-    [SerializeField] private RectTransform advisePanel;
-    [SerializeField] private TMP_Text adviseText;
+    [SerializeField] private LabeledValuePanel advisePanel;
+    [SerializeField] private RectTransform advisePanelRectTransform;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private float showTime;
     [SerializeField] private float adviseMinProbability;
@@ -19,7 +18,7 @@ public class AdviserUI : Singleton<AdviserUI>
     private void Start()
     {
         RegisterEvents();
-        advisePanel.gameObject.SetActive(false);
+        advisePanelRectTransform.gameObject.SetActive(false);
     }
 
     #region RegisterEvents
@@ -66,7 +65,8 @@ public class AdviserUI : Singleton<AdviserUI>
         var adviseString = GetAdviseString(sortedHandList);
         if (adviseString == string.Empty) return;
 
-        adviseText.text = adviseString;
+        advisePanel.SetLabel("Advise");
+        advisePanel.SetValue(adviseString);
         Show(() => DelayHide(showTime));
     }
 
@@ -131,11 +131,11 @@ public class AdviserUI : Singleton<AdviserUI>
     {
         currentTween?.Kill();
 
-        advisePanel.gameObject.SetActive(true);
-        advisePanel.anchoredPosition = hidePos;
+        advisePanelRectTransform.gameObject.SetActive(true);
+        advisePanelRectTransform.anchoredPosition = hidePos;
 
-        currentTween = advisePanel
-        .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
+        currentTween = advisePanelRectTransform
+        .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {
@@ -147,14 +147,14 @@ public class AdviserUI : Singleton<AdviserUI>
     {
         currentTween?.Kill();
 
-        advisePanel.anchoredPosition = Vector3.zero;
+        advisePanelRectTransform.anchoredPosition = Vector3.zero;
 
-        currentTween = advisePanel
-        .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
+        currentTween = advisePanelRectTransform
+        .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
         .SetEase(Ease.InOutBack)
         .OnComplete(() =>
         {
-            advisePanel.gameObject.SetActive(false);
+            advisePanelRectTransform.gameObject.SetActive(false);
             onComplete?.Invoke();
         });
     }

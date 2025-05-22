@@ -282,7 +282,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
         faces[faceIndex].Enhance(scorePair);
         diceVisual.SetColor(faces[faceIndex].EnhanceValue);
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, false));
+        AnimationFunction.AddShakeAnimation(transform, false);
     }
 
     public virtual void EnhanceDice(int enhanceLevel)

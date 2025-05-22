@@ -1,33 +1,35 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class RoundClearRewardUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text rewardNameText;
-    [SerializeField] private TMP_Text rewardValueText;
+    [SerializeField] private AnimatedText rewardNameText;
+    [SerializeField] private AnimatedText rewardValueText;
+    [SerializeField] private float showDelay = 0.25f;
 
     private RoundClearRewardType type;
-    private int rewardValue = 0;
 
-    public void Show(RoundClearRewardType type)
+    private void Start()
+    {
+        RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
+    }
+
+    private void OnRoundClearUIClosed()
+    {
+        rewardNameText.ClearText();
+        rewardValueText.ClearText();
+    }
+
+    public void ShowReward(RoundClearRewardType type)
     {
         this.type = type;
-
-        Init();
 
         SequenceManager.Instance.AddCoroutine(ShowRewardTextAnimation());
     }
 
-    private void Init()
-    {
-        rewardNameText.text = string.Empty;
-        rewardValueText.text = string.Empty;
-    }
-
     private IEnumerator ShowRewardTextAnimation()
     {
-        SetRewardText();
+        int rewardValue = RoundClearManager.Instance.GetRewardValue(type);
 
         if (rewardValue == 0)
         {
@@ -35,43 +37,27 @@ public class RoundClearRewardUI : MonoBehaviour
             yield break;
         }
 
-        string rewardName = rewardNameText.text;
-        string rewardValueTextContent = rewardValueText.text;
+        string rewardName = GetRewardName();
+        string rewardValueTextContent = GetRewardValueText(rewardValue);
 
-        rewardNameText.text = string.Empty;
-        rewardValueText.text = string.Empty;
+        yield return new WaitForSeconds(showDelay);
+        yield return StartCoroutine(rewardNameText.ShowTextCoroutine(rewardName));
+        yield return new WaitForSeconds(showDelay);
+        yield return StartCoroutine(rewardValueText.ShowTextCoroutine(rewardValueTextContent));
 
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(rewardNameText, rewardName));
-        yield return StartCoroutine(AnimationFunction.PlayTextAnimation(rewardValueText, rewardValueTextContent));
-
-        RoundClearUI.Instance.TriggerReward(rewardValue);
+        MoneyManager.Instance.AddMoney(rewardValue, true);
     }
 
-    private void SetRewardText()
+    private string GetRewardName()
     {
-        rewardValue = RoundClearManager.Instance.GetRewardValue(type);
-
-        switch (type)
+        return type switch
         {
-            case RoundClearRewardType.RoundNum:
-                rewardNameText.text = "Round Clear";
-                rewardValueText.text = GetRewardValueText(rewardValue);
-                break;
-            case RoundClearRewardType.PlayRemain:
-                rewardNameText.text = "Play Remain";
-                rewardValueText.text = GetRewardValueText(rewardValue);
-                break;
-            case RoundClearRewardType.MoneyInterest:
-                rewardNameText.text = "Money Interest";
-                rewardValueText.text = GetRewardValueText(rewardValue);
-                break;
-            case RoundClearRewardType.BossRound:
-                rewardNameText.text = "Boss Round Clear";
-                rewardValueText.text = GetRewardValueText(rewardValue);
-                break;
-            default:
-                break;
-        }
+            RoundClearRewardType.RoundClear => "Round Clear",
+            RoundClearRewardType.PlayRemain => "Play Remain",
+            RoundClearRewardType.MoneyInterest => "Money Interest",
+            RoundClearRewardType.BossRoundClear => "Boss Round Clear",
+            _ => string.Empty,
+        };
     }
 
     private string GetRewardValueText(int value)

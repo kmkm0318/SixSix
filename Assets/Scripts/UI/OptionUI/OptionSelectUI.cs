@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class OptionSelectUI : MonoBehaviour
 {
     [SerializeField] private OptionTypeDataSO optionTypeDataSO;
     public OptionTypeDataSO OptionTypeDataSO => optionTypeDataSO;
-    [SerializeField] private TMP_Text optionNameText;
-    [SerializeField] private TMP_Text optionValueText;
-    [SerializeField] private Button leftArrowButton;
-    [SerializeField] private Button rightArrowButton;
+    [SerializeField] private AnimatedText optionNameText;
+    [SerializeField] private ArrowButtonPanel arrowButtonPanel;
 
     public event Action<int> OnOptionValueChanged;
 
@@ -31,13 +27,13 @@ public class OptionSelectUI : MonoBehaviour
         SetOptionValues(optionTypeDataSO.optionValues);
         SetCurrentIndex();
 
-        leftArrowButton.onClick.AddListener(OnLeftArrowClicked);
-        rightArrowButton.onClick.AddListener(OnRightArrowClicked);
+        arrowButtonPanel.OnLeftButtonClick += OnLeftArrowClicked;
+        arrowButtonPanel.OnRightButtonClick += OnRightArrowClicked;
     }
 
     private void SetOptionName(string optionName)
     {
-        optionNameText.text = optionName;
+        optionNameText.SetText(optionName);
     }
 
     private void SetOptionValues(string[] optionValues)
@@ -50,7 +46,7 @@ public class OptionSelectUI : MonoBehaviour
         }
         else
         {
-            optionValueText.text = string.Empty;
+            arrowButtonPanel.SetText(string.Empty);
         }
     }
 
@@ -106,6 +102,6 @@ public class OptionSelectUI : MonoBehaviour
 
     private void UpdateOptionValueText()
     {
-        optionValueText.text = optionValues[currentIndex];
+        arrowButtonPanel.SetText(optionValues[currentIndex]);
     }
 }

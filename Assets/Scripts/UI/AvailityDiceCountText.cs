@@ -29,14 +29,14 @@ public class AvailityDiceCountText : MonoBehaviour
     {
         currentCount = count;
         SetText();
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, true));
+        StartCoroutine(AnimationFunction.ShakeAnimation(transform, true));
     }
 
     private void OnCurrentAvailityDiceMaxChanged(int count)
     {
         maxCount = count;
         SetText();
-        StartCoroutine(AnimationFunction.PlayShakeAnimation(transform, true));
+        StartCoroutine(AnimationFunction.ShakeAnimation(transform, true));
     }
 
     private void Init()

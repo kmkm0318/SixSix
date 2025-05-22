@@ -17,10 +17,26 @@ public class HandManager : Singleton<HandManager>
     public event Action<HandSO> OnHandSelected;
     public event Action<ScorePair> OnHandScoreApplied;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Init();
+    }
+
+    private void Init()
+    {
+        foreach (var handSO in DataContainer.Instance.TotalHandListSO.handList)
+        {
+            handEnhanceLevels[handSO.hand] = 0;
+            handSelectionCounts[handSO.hand] = 0;
+            handAvailabilities[handSO.hand] = false;
+            handScores[handSO.hand] = handSO.scorePair;
+        }
+    }
+
     private void Start()
     {
         RegisterEvents();
-        Init();
     }
 
     #region RegisterEvents
@@ -28,7 +44,7 @@ public class HandManager : Singleton<HandManager>
     {
         GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
         GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollCompleted);
-        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceCompleted);
+        GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceEnded);
     }
 
     private void OnRollStarted()
@@ -50,12 +66,27 @@ public class HandManager : Singleton<HandManager>
 
     private void OnEnhanceStarted()
     {
-        isActive = EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand;
+        if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand)
+        {
+            GameManager.Instance.UnregisterEvent(GameState.Play, OnPlayStarted);
+            isActive = true;
+        }
+        else
+        {
+            GameManager.Instance.UnregisterEvent(GameState.Roll, null, OnRollCompleted);
+        }
     }
 
-    private void OnEnhanceCompleted()
+    private void OnEnhanceEnded()
     {
-        isActive = false;
+        if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand)
+        {
+            GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
+        }
+        else
+        {
+            GameManager.Instance.RegisterEvent(GameState.Roll, null, OnRollCompleted);
+        }
     }
     #endregion
 
@@ -80,17 +111,6 @@ public class HandManager : Singleton<HandManager>
         HandScoreUI.Instance.UpdateHandScores(handScoreDict);
     }
 
-    private void Init()
-    {
-        foreach (var handSO in DataContainer.Instance.TotalHandListSO.handList)
-        {
-            handEnhanceLevels[handSO.hand] = 0;
-            handSelectionCounts[handSO.hand] = 0;
-            handAvailabilities[handSO.hand] = false;
-            handScores[handSO.hand] = handSO.scorePair;
-        }
-    }
-
     public void HandleSelectHand(HandSO handSO)
     {
         if (!handAvailabilities.TryGetValue(handSO.hand, out var isAvailiable) || !isAvailiable) return;
@@ -110,14 +130,13 @@ public class HandManager : Singleton<HandManager>
         }
         OnHandSelected?.Invoke(handSO);
 
-        if (handScores.TryGetValue(handSO.hand, out var scorePair))
+        if (!handScores.TryGetValue(handSO.hand, out var scorePair))
         {
-            OnHandScoreApplied?.Invoke(scorePair);
+            scorePair = handSO.scorePair;
+            handScores[handSO.hand] = scorePair;
         }
-        else
-        {
-            handScores[handSO.hand] = handSO.scorePair;
-        }
+
+        OnHandScoreApplied?.Invoke(scorePair);
     }
 
     public void EnhanceHand(HandSO handSO, int enhanceLevel)
@@ -134,5 +153,23 @@ public class HandManager : Singleton<HandManager>
         }
 
         HandScoreUI.Instance.PlayHandTriggerAnimation(handSO, handEnhanceLevels[handSO.hand], handScores[handSO.hand]);
+    }
+
+    public void GetMostPlayedHand(out Hand handName, out int count)
+    {
+        Hand mostPlayedHand = Hand.Choice;
+        int maxCount = 0;
+
+        foreach (var hand in handSelectionCounts)
+        {
+            if (hand.Value > maxCount)
+            {
+                maxCount = hand.Value;
+                mostPlayedHand = hand.Key;
+            }
+        }
+
+        handName = mostPlayedHand;
+        count = maxCount;
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DataContainer : Singleton<DataContainer>
 {
-    public readonly float DefaultDuration = 0.5f;
 
     #region DiceStatSO
     [SerializeField] private DiceStatSO currentDiceStat;
@@ -44,5 +43,10 @@ public class DataContainer : Singleton<DataContainer>
     #region LayerMask
     [SerializeField] private LayerMask playergroundLayerMask;
     public LayerMask PlayergroundLayerMask => playergroundLayerMask;
+    #endregion
+
+    #region DefaultColorSO
+    [SerializeField] private DefaultColorSO defaultColorSO;
+    public DefaultColorSO DefaultColorSO => defaultColorSO;
     #endregion
 }

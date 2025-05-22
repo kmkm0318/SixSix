@@ -1,17 +1,22 @@
-using System;
-
-public class EnhanceState : IState
+public class EnhanceState : BaseGameState
 {
-    public event Action OnStateEnter;
-    public event Action OnStateExit;
-
-    public void Enter()
+    public override void Enter()
     {
-        OnStateEnter?.Invoke();
+        base.Enter();
+        if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Dice)
+        {
+            PlayManager.Instance.PlayRemain = 0;
+        }
+        else if (EnhanceManager.Instance.CurrentEnhanceType == EnhanceType.Hand)
+        {
+            PlayManager.Instance.PlayRemain = 1;
+        }
+
+        GameManager.Instance.ChangeState(GameState.Play);
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        OnStateExit?.Invoke();
+        base.Exit();
     }
 }

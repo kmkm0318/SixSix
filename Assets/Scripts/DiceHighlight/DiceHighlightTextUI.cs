@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DiceHighlightTextUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private AnimatedText text;
     [SerializeField] private float offset;
     [SerializeField] private Camera targetCamera;
 
@@ -38,6 +38,6 @@ public class DiceHighlightTextUI : MonoBehaviour
 
     public void SetText(string text)
     {
-        this.text.text = text;
+        this.text.SetText(text);
     }
 }

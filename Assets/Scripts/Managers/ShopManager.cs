@@ -51,6 +51,7 @@ public class ShopManager : Singleton<ShopManager>
     private void OnAvailityDiceClicked(AvailityDice dice)
     {
         if (dice == null || GameManager.Instance.CurrentGameState != GameState.Shop) return;
+        if (!DiceManager.Instance.AvailityDiceList.Contains(dice)) return;
         var diceSO = dice.AvailityDiceSO;
 
         DiceManager.Instance.RemoveAvailityDice(dice);

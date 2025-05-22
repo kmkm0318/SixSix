@@ -5,24 +5,19 @@ public class PlayDice : Dice
     #region Events
     protected override void OnDiceEnhanceStarted()
     {
-        IsInteractable = true;
         DiceInteractType = DiceInteractType.Enhance;
+        GameManager.Instance.RegisterEvent(GameState.Play, EnableInteraction);
     }
 
     protected override void OnDiceEnhanceCompleted()
     {
-        IsInteractable = false;
-    }
-
-    protected override void OnHandEnhanceStarted()
-    {
-        IsInteractable = false;
         DiceInteractType = DiceInteractType.Keep;
+        GameManager.Instance.UnregisterEvent(GameState.Play, EnableInteraction);
     }
 
-    protected override void OnHandEnhanceCompleted()
+    private void EnableInteraction()
     {
-        IsInteractable = false;
+        IsInteractable = true;
     }
     #endregion
 
@@ -43,6 +38,6 @@ public class PlayDice : Dice
         ScorePair scorePair = new(DiceValue, 1);
         string description = $"Get {scorePair}" + Faces[FaceIndex].GetDescriptionText();
 
-        ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description);
     }
 }

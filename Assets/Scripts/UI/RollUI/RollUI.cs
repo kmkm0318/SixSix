@@ -12,8 +12,8 @@ public class RollUI : Singleton<RollUI>
 
     private void Start()
     {
-        rollButton.OnButtonPressed += OnButtonPressed;
-        rollButton.OnButtonReleased += OnButtonReleased;
+        rollButton.OnButtonDown += OnButtonPressed;
+        rollButton.OnButtonUp += OnButtonReleased;
 
         RollManager.Instance.OnRollPowerChanged += OnRollPowerChanged;
 

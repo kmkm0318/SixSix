@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class RoundUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text currentRoundText;
-    [SerializeField] private TMP_Text targetRoundScoreText;
-    [SerializeField] private TMP_Text currentRoundScoreText;
-    [SerializeField] private TMP_Text playScoreText;
-    [SerializeField] private TMP_Text baseScoreText;
-    [SerializeField] private TMP_Text multiplierText;
+    [SerializeField] private AnimatedText currentRoundText;
+    [SerializeField] private AnimatedText targetRoundScoreText;
+    [SerializeField] private AnimatedText currentRoundScoreText;
+    [SerializeField] private AnimatedText playScoreText;
+    [SerializeField] private AnimatedText baseScoreText;
+    [SerializeField] private AnimatedText multiplierText;
 
     private void Start()
     {
@@ -19,12 +19,12 @@ public class RoundUI : MonoBehaviour
 
     private void ResetUI()
     {
-        currentRoundText.text = $"0/{RoundManager.Instance.ClearRound}";
-        targetRoundScoreText.text = "0";
-        currentRoundScoreText.text = "0";
-        playScoreText.text = "0";
-        baseScoreText.text = "0";
-        multiplierText.text = "0";
+        currentRoundText.SetText($"0/{RoundManager.Instance.ClearRound}");
+        targetRoundScoreText.SetText("0");
+        currentRoundScoreText.SetText("0");
+        playScoreText.SetText("0");
+        baseScoreText.SetText("0");
+        multiplierText.SetText("0");
     }
 
     private void RegisterEvents()
@@ -45,17 +45,17 @@ public class RoundUI : MonoBehaviour
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText), true);
     }
 
-    private void OnTargetRoundScoreChanged(float score)
+    private void OnTargetRoundScoreChanged(double score)
     {
         UpdateScoreText(targetRoundScoreText, score);
     }
 
-    private void OnCurrentRoundScoreChanged(float score)
+    private void OnCurrentRoundScoreChanged(double score)
     {
         UpdateScoreText(currentRoundScoreText, score);
     }
 
-    private void OnPlayScoreChanged(float score)
+    private void OnPlayScoreChanged(double score)
     {
         UpdateScoreText(playScoreText, score);
     }
@@ -67,25 +67,25 @@ public class RoundUI : MonoBehaviour
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void OnBaseScoreChanged(float score)
+    private void OnBaseScoreChanged(double score)
     {
         UpdateScoreText(baseScoreText, score);
     }
 
-    private void OnMultiplierChanged(float score)
+    private void OnMultiplierChanged(double score)
     {
         UpdateScoreText(multiplierText, score);
     }
 
-    private void UpdateScoreText(TMP_Text textComponent, float score)
+    private void UpdateScoreText(AnimatedText textComponent, double score)
     {
         string newText = UtilityFunctions.FormatNumber(score);
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(textComponent, newText), true);
     }
 
-    private IEnumerator UpdateTextAndPlayAnimation(TMP_Text textComponent, string newText)
+    private IEnumerator UpdateTextAndPlayAnimation(AnimatedText textComponent, string newText)
     {
-        textComponent.text = newText;
-        yield return AnimationFunction.PlayShakeAnimation(textComponent.transform);
+        textComponent.SetText(newText);
+        yield return AnimationFunction.ShakeAnimation(textComponent.transform);
     }
 }

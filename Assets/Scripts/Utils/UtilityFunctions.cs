@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,9 +16,9 @@ public static class UtilityFunctions
         return results.Count > 0;
     }
 
-    public static string FormatNumber(float value)
+    public static string FormatNumber(double value)
     {
-        value = Mathf.Floor(value);
+        value = Math.Floor((float)value);
         if (value >= 1e12f)
         {
             return value.ToString("0.00e0");
@@ -26,12 +27,12 @@ public static class UtilityFunctions
     }
 
     #region Arithmatic
-    public static float SafeAdd(float value1, float value2)
+    public static double SafeAdd(double value1, double value2)
     {
-        float res = value1 + value2;
-        if (float.IsInfinity(res) || float.IsNaN(res))
+        double res = value1 + value2;
+        if (double.IsInfinity(res) || double.IsNaN(res))
         {
-            return float.PositiveInfinity;
+            return double.PositiveInfinity;
         }
         else if (res < 0)
         {
@@ -43,12 +44,12 @@ public static class UtilityFunctions
         }
     }
 
-    public static float SafeMultiply(float value1, float value2)
+    public static double SafeMultiply(double value1, double value2)
     {
-        float res = value1 * value2;
-        if (float.IsInfinity(res) || float.IsNaN(res))
+        double res = value1 * value2;
+        if (double.IsInfinity(res) || double.IsNaN(res))
         {
-            return float.PositiveInfinity;
+            return double.PositiveInfinity;
         }
         else if (res < 0)
         {

@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,13 +10,21 @@ public class FadeCanvasGroup : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void FadeIn(float duration)
+    public void FadeIn(float duration, Action onComplete = null)
     {
-        canvasGroup.DOFade(1f, duration);
+        canvasGroup.alpha = 0f;
+        canvasGroup.DOFade(1f, duration).OnComplete(() =>
+        {
+            onComplete?.Invoke();
+        });
     }
 
-    public void FadeOut(float duration)
+    public void FadeOut(float duration, Action onComplete = null)
     {
-        canvasGroup.DOFade(0f, duration);
+        canvasGroup.alpha = 1f;
+        canvasGroup.DOFade(0f, duration).OnComplete(() =>
+        {
+            onComplete?.Invoke();
+        });
     }
 }

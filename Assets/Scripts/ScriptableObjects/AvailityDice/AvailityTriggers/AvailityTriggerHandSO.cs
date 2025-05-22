@@ -15,11 +15,11 @@ public class AvailityTriggerHandSO : AvailityTriggerSO
     {
         if (targetHand == null)
         {
-            return "When Play With Any Hand";
+            return "When Play With <color={3}>Any Hand</color>";
         }
         else
         {
-            return $"When Play With\n\"{targetHand.handName}\"";
+            return $"When Play With\n<color={{3}}>{targetHand.handName}</color>";
         }
     }
 }

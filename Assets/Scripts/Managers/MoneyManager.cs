@@ -18,6 +18,14 @@ public class MoneyManager : Singleton<MoneyManager>
         set
         {
             if (money == value) return;
+            if (value > money)
+            {
+                OnMoneyAdded?.Invoke(value - money);
+            }
+            else
+            {
+                OnMoneyRemoved?.Invoke(money - value);
+            }
             money = Mathf.Clamp(value, 0, int.MaxValue);
             OnMoneyChanged?.Invoke(money);
         }
@@ -29,6 +37,8 @@ public class MoneyManager : Singleton<MoneyManager>
     public int BossRoundReward => RoundManager.Instance.IsBossRound ? bossRoundReward : 0;
 
     public event Action<int> OnMoneyChanged;
+    public event Action<int> OnMoneyAdded;
+    public event Action<int> OnMoneyRemoved;
 
     private void Start()
     {
@@ -38,17 +48,10 @@ public class MoneyManager : Singleton<MoneyManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        RoundClearUI.Instance.OnRewardTriggered += OnRoundClearRewardTriggered;
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
         ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
         ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
-    }
-
-    private void OnRoundClearRewardTriggered(int value)
-    {
-        Money += value;
-        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
@@ -89,8 +92,13 @@ public class MoneyManager : Singleton<MoneyManager>
     }
     #endregion
 
-    public void AddMoney(int value)
+    public void AddMoney(int value, bool apply = false)
     {
         Money += value;
+
+        if (apply)
+        {
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
     }
 }

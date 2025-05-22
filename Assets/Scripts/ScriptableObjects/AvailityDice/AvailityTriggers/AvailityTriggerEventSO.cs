@@ -11,7 +11,7 @@ public class AvailityTriggerEventSO : AvailityTriggerSO
 
     public override string GetTriggerDescription(AvailityDiceSO availityDiceSO)
     {
-        string res = "When " + SplitString(TriggerType.ToString());
+        string res = "When <color={3}>" + SplitString(TriggerType.ToString()) + "</color>";
 
         return res;
     }

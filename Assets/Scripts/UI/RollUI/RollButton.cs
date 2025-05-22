@@ -1,14 +1,8 @@
-using System;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class RollButton : ButtonPanel, IPointerDownHandler, IPointerUpHandler
 {
     private bool isActive = false;
-    private bool isPressed = false;
-
-    public event Action OnButtonPressed;
-    public event Action OnButtonReleased;
 
     #region RegisterEvents
     private void Start()
@@ -54,17 +48,15 @@ public class RollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     #endregion
 
-    public void OnPointerDown(PointerEventData eventData)
+    public override void OnPointerDown(PointerEventData eventData)
     {
-        if (!isActive || isPressed || eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = true;
-        OnButtonPressed?.Invoke();
+        if (!isActive) return;
+        base.OnPointerDown(eventData);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public override void OnPointerUp(PointerEventData eventData)
     {
-        if (!isActive || !isPressed || eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = false;
-        OnButtonReleased?.Invoke();
+        if (!isActive) return;
+        base.OnPointerUp(eventData);
     }
 }

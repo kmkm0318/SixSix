@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    [SerializeField] private float initialTargetRoundScore;
-    public event Action<float> OnCurrentRoundScoreUpdated;
-    public event Action<float> OnTargetRoundScoreChanged;
-    public event Action<float> OnCurrentRoundScoreChanged;
-    public event Action<float> OnPlayScoreChanged;
+    [SerializeField] private double initialTargetRoundScore;
+    public event Action OnCurrentRoundScoreUpdated;
+    public event Action<double> OnTargetRoundScoreChanged;
+    public event Action<double> OnCurrentRoundScoreChanged;
+    public event Action<double> OnPlayScoreChanged;
     public event Action<ScorePair> OnScorePairChanged;
-    public event Action<float> OnBaseScoreChanged;
-    public event Action<float> OnMultiplierChanged;
+    public event Action<double> OnBaseScoreChanged;
+    public event Action<double> OnMultiplierChanged;
 
-    private float targetRoundScore = 0;
-    public float TargetRoundScore
+    private double targetRoundScore = 0;
+    public double TargetRoundScore
     {
         get => targetRoundScore;
         private set
@@ -23,8 +23,8 @@ public class ScoreManager : Singleton<ScoreManager>
             OnTargetRoundScoreChanged?.Invoke(targetRoundScore);
         }
     }
-    private float currentRoundScore = 0;
-    public float CurrentRoundScore
+    private double currentRoundScore = 0;
+    public double CurrentRoundScore
     {
         get => currentRoundScore;
         private set
@@ -38,12 +38,12 @@ public class ScoreManager : Singleton<ScoreManager>
             OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
-    private float previousRoundScore = 0;
-    public float PreviousRoundScore => previousRoundScore;
-    private float highestRoundScore = 0;
-    public float HighestRoundScore => highestRoundScore;
-    private float playScore = 0;
-    public float PlayScore
+    private double previousRoundScore = 0;
+    public double PreviousRoundScore => previousRoundScore;
+    private double highestRoundScore = 0;
+    public double HighestRoundScore => highestRoundScore;
+    private double playScore = 0;
+    public double PlayScore
     {
         get => playScore;
         private set
@@ -118,13 +118,13 @@ public class ScoreManager : Singleton<ScoreManager>
     #endregion
 
     #region UpdateScore
-    private void UpdateCurrentRoundScore(float score)
+    private void UpdateCurrentRoundScore(double score)
     {
         CurrentRoundScore = score;
         PlayScore = 0;
         SequenceManager.Instance.ApplyParallelCoroutine();
 
-        OnCurrentRoundScoreUpdated?.Invoke(CurrentRoundScore);
+        OnCurrentRoundScoreUpdated?.Invoke();
     }
 
     public void UpdateTargetRoundScore()
@@ -133,15 +133,15 @@ public class ScoreManager : Singleton<ScoreManager>
 
         if (currentRound < 1) return;
 
-        float baseScore = initialTargetRoundScore * Mathf.Pow(6, (currentRound - 1) / 6);
-        float multiplier = 1f + (currentRound - 1) % 6 * 0.5f;
-        float score = baseScore * multiplier;
+        double baseScore = initialTargetRoundScore * Mathf.Pow(6, (currentRound - 1) / 6);
+        double multiplier = 1f + (currentRound - 1) % 6 * 0.5f;
+        double score = baseScore * multiplier;
 
         int digits = score.ToString("F0").Length;
         if (digits > 3)
         {
-            float divisor = Mathf.Pow(10, digits - 3);
-            TargetRoundScore = Mathf.Floor(score / divisor) * divisor;
+            double divisor = Mathf.Pow(10, digits - 3);
+            TargetRoundScore = Math.Floor(score / divisor) * divisor;
         }
         else
         {
@@ -170,7 +170,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    private void ApplyBaseScore(float value)
+    private void ApplyBaseScore(double value)
     {
         ScorePair tmp = ScorePair;
 
@@ -179,7 +179,7 @@ public class ScoreManager : Singleton<ScoreManager>
         ScorePair = tmp;
     }
 
-    private void ApplyMultiplier(float value)
+    private void ApplyMultiplier(double value)
     {
         ScorePair tmp = ScorePair;
 

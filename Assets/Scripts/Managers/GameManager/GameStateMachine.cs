@@ -17,14 +17,14 @@ public class GameStateMachine : IStateMachine<GameState>
             { GameState.Round, new RoundState() },
             { GameState.RoundClear, new RoundClearState() },
             { GameState.Shop, new ShopState() },
-            { GameState.Enhance, new EnhanceState() },
-            { GameState.GameResult, new GameResultState() }
+            { GameState.GameResult, new GameResultState() },
         };
 
         innerStates = new()
         {
             { GameState.Play, new PlayState() },
-            { GameState.Roll, new RollState() }
+            { GameState.Roll, new RollState() },
+            { GameState.Enhance, new EnhanceState() },
         };
     }
 
@@ -50,11 +50,6 @@ public class GameStateMachine : IStateMachine<GameState>
         currentState?.Enter();
     }
 
-    private void EnterInnerState(IState newState)
-    {
-        newState?.Enter();
-    }
-
     public void ExitInnerState(GameState state)
     {
         if (innerStates.TryGetValue(state, out var innerState))
@@ -65,6 +60,11 @@ public class GameStateMachine : IStateMachine<GameState>
         {
             UnityEngine.Debug.LogWarning($"Attempting to exit a non-inner state: {state}");
         }
+    }
+
+    private void EnterInnerState(IState newState)
+    {
+        newState?.Enter();
     }
 
     public IState GetState(GameState state)

@@ -36,28 +36,28 @@ public class OptionUI : Singleton<OptionUI>
         gameObject.SetActive(true);
         optionPanel.anchoredPosition = hidePos;
         optionPanel
-            .DOAnchorPos(Vector3.zero, DataContainer.Instance.DefaultDuration)
+            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
 
             });
 
-        fadeCanvasGroup.FadeIn(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
     }
 
     private void Hide()
     {
         optionPanel.anchoredPosition = Vector3.zero;
         optionPanel
-            .DOAnchorPos(hidePos, DataContainer.Instance.DefaultDuration)
+            .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
             .SetEase(Ease.InOutBack)
             .OnComplete(() =>
             {
                 gameObject.SetActive(false);
             });
 
-        fadeCanvasGroup.FadeOut(DataContainer.Instance.DefaultDuration);
+        fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
     }
     #endregion
 

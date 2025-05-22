@@ -106,24 +106,17 @@ public class BonusManager : Singleton<BonusManager>
 
     private void UpdateTotalDiceSum()
     {
-        List<BonusType> currentAchievedBonusList = GetCurrentAchiedBonusList();
+        List<BonusType> currentAchievedBonusList = GetCurrentAchievedBonusList();
         if (currentAchievedBonusList.Count == 0) return;
 
-        SequenceManager.Instance.ApplyParallelCoroutine();
         foreach (var achievedBonus in currentAchievedBonusList)
         {
-            bonusAchievedDict[achievedBonus] = true;
+            if (bonusAchievedDict[achievedBonus]) continue;
             achievedBonusList.Add(achievedBonus);
-        }
-        SequenceManager.Instance.ApplyParallelCoroutine();
-
-        if (bonusAchievedDict.All(x => x.Value))
-        {
-            OnAllBonusAchieved?.Invoke();
         }
     }
 
-    private List<BonusType> GetCurrentAchiedBonusList()
+    private List<BonusType> GetCurrentAchievedBonusList()
     {
         List<BonusType> currentAchievedBonusList = new();
 
@@ -164,10 +157,13 @@ public class BonusManager : Singleton<BonusManager>
 
     private void HandleAchievedBonus(BonusType type)
     {
+        OnBonusAchieved?.Invoke(type);
+        SequenceManager.Instance.ApplyParallelCoroutine();
+
         switch (type)
         {
             case BonusType.Money:
-                MoneyManager.Instance.AddMoney(MoneyManager.Instance.BonusMoney);
+                MoneyManager.Instance.AddMoney(MoneyManager.Instance.BonusMoney, true);
                 break;
             case BonusType.AvailityDiceCountMax:
                 DiceManager.Instance.IncreaseCurrentAvailityDiceMax();
@@ -182,7 +178,14 @@ public class BonusManager : Singleton<BonusManager>
                 RollManager.Instance.IncreaseRollMax();
                 break;
         }
-        OnBonusAchieved?.Invoke(type);
+        SequenceManager.Instance.ApplyParallelCoroutine();
+
+        bonusAchievedDict[type] = true;
+
+        if (bonusAchievedDict.All(x => x.Value))
+        {
+            OnAllBonusAchieved?.Invoke();
+        }
     }
     #endregion
 }

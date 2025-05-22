@@ -16,7 +16,7 @@ public class AvailityEffectMoneySO : AvailityEffectSO
 
     public override string GetEffectDescription(AvailityDiceSO availityDiceSO)
     {
-        string res = $"Get Money({moneyAmount})";
+        string res = $"Get Money(<color={{3}}>{moneyAmount}</color>)";
 
         res += DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, calculateType);
 

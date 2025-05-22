@@ -25,6 +25,5 @@ public class RoundManager : Singleton<RoundManager>
     public void StartNextRound()
     {
         CurrentRound++;
-        GameManager.Instance.ChangeState(GameState.Round);
     }
 }

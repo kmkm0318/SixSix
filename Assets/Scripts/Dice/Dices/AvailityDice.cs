@@ -52,23 +52,27 @@ public class AvailityDice : Dice
 
     protected override void OnDiceEnhanceStarted()
     {
-        IsInteractable = false;
+        GameManager.Instance.RegisterEvent(GameState.Roll, null, DisableDiceInteraction);
     }
 
     protected override void OnDiceEnhanceCompleted()
     {
-        IsInteractable = true;
-        DiceInteractType = DiceInteractType.Sell;
+        GameManager.Instance.UnregisterEvent(GameState.Roll, null, DisableDiceInteraction);
     }
 
     protected override void OnHandEnhanceStarted()
     {
-        IsInteractable = false;
+        GameManager.Instance.RegisterEvent(GameState.Roll, null, DisableDiceInteraction);
     }
 
     protected override void OnHandEnhanceCompleted()
     {
-        IsInteractable = true;
+        GameManager.Instance.UnregisterEvent(GameState.Roll, null, DisableDiceInteraction);
+    }
+
+    private void DisableDiceInteraction()
+    {
+        IsInteractable = false;
     }
     #endregion
 
@@ -76,7 +80,7 @@ public class AvailityDice : Dice
     {
         string name = availityDiceSO.diceName;
         string description = availityDiceSO.GetDescriptionText();
-        ToolTipUI.Instance.ShowToolTip(this, transform, Vector3.down, name, description);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description);
     }
 
     protected override void InitDiceInteractType()

@@ -38,47 +38,43 @@ public class PlayManager : Singleton<PlayManager>
         ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
     }
 
-    private void OnCurrentRoundScoreUpdated(float score)
+    private void OnCurrentRoundScoreUpdated()
     {
-        EndPlay();
+        GameManager.Instance.ExitState(GameState.Play);
     }
     #endregion
 
-    public void StartPlay(bool isInit = false)
+    public void ResetPlayRemain()
     {
-        if (isInit)
-        {
-            PlayRemain = currentPlayMax;
-        }
-        GameManager.Instance.ChangeState(GameState.Play);
+        PlayRemain = currentPlayMax;
     }
 
     public void EndPlay()
     {
         PlayRemain--;
-        GameManager.Instance.ExitState(GameState.Play);
+        HandlePlayResult();
     }
 
-    public void HandlePlayResult()
+    private void HandlePlayResult()
     {
         if (ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore)
         {
             if (RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound)
             {
-                GameManager.Instance.HandleGameResult(true);
+                GameManager.Instance.ChangeState(GameState.GameResult);
             }
             else
             {
-                RoundClearManager.Instance.StartRoundClear();
+                GameManager.Instance.ChangeState(GameState.RoundClear);
             }
         }
         else if (PlayRemain == 0)
         {
-            GameManager.Instance.HandleGameResult(false);
+            GameManager.Instance.ChangeState(GameState.GameResult);
         }
         else
         {
-            StartPlay();
+            GameManager.Instance.ChangeState(GameState.Play);
         }
     }
 

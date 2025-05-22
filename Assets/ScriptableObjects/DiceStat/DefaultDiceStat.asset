@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: DefaultDiceStat
   m_EditorClassIdentifier: 
   defaultDiceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  defaultMaxPlay: 3
-  defaultMaxRoll: 3
+  defaultPlayDiceCount: 5
+  defaultAvailityDiceMax: 5
+  defaultPlayMax: 3
+  defaultRollMax: 3

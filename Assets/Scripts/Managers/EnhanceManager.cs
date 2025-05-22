@@ -1,15 +1,8 @@
-using System;
-
 public class EnhanceManager : Singleton<EnhanceManager>
 {
     public EnhanceType CurrentEnhanceType { get; private set; }
     public int HandEnhanceLevel { get; private set; }
     public ScorePair DiceEnhanceValue { get; private set; }
-
-    public event Action OnDiceEnhanceStarted;
-    public event Action OnDiceEnhanceCompleted;
-    public event Action OnHandEnhanceStarted;
-    public event Action OnHandEnhanceCompleted;
 
     private void Start()
     {
@@ -31,7 +24,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     {
         CurrentEnhanceType = EnhanceType.Dice;
         DiceManager.Instance.OnPlayDiceClicked += OnPlayDiceClicked;
-        OnDiceEnhanceStarted?.Invoke();
+        GameManager.Instance.ChangeState(GameState.Enhance);
     }
 
     private void OnPlayDiceClicked(PlayDice dice)
@@ -42,8 +35,8 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void CompleteDiceEnhance()
     {
-        OnDiceEnhanceCompleted?.Invoke();
         DiceManager.Instance.OnPlayDiceClicked -= OnPlayDiceClicked;
+        GameManager.Instance.ExitState(GameState.Enhance);
     }
     #endregion
 
@@ -60,7 +53,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     {
         CurrentEnhanceType = EnhanceType.Hand;
         HandManager.Instance.OnHandSelected += OnHandSelected;
-        OnHandEnhanceStarted?.Invoke();
+        GameManager.Instance.ChangeState(GameState.Enhance);
     }
 
     private void OnHandSelected(HandSO sO)
@@ -72,7 +65,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void CompleteHandEnhance()
     {
         HandManager.Instance.OnHandSelected -= OnHandSelected;
-        OnHandEnhanceCompleted?.Invoke();
+        GameManager.Instance.ExitState(GameState.Enhance);
     }
 }
 

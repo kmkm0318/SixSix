@@ -1,7 +1,12 @@
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class RoundClearManager : Singleton<RoundClearManager>
 {
+    [SerializeField] private List<RoundClearRewardType> defaultRewardList;
+
+    public List<RoundClearRewardType> DefaultRewardList => defaultRewardList;
+
     private void Start()
     {
         RegisterEvents();
@@ -10,11 +15,6 @@ public class RoundClearManager : Singleton<RoundClearManager>
     private void RegisterEvents()
     {
         RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
-    }
-
-    public void StartRoundClear()
-    {
-        GameManager.Instance.ChangeState(GameState.RoundClear);
     }
 
     private void OnRoundClearUIClosed()
@@ -26,9 +26,9 @@ public class RoundClearManager : Singleton<RoundClearManager>
     {
         return type switch
         {
-            RoundClearRewardType.RoundNum => MoneyManager.Instance.RoundClearReward,
+            RoundClearRewardType.RoundClear => MoneyManager.Instance.RoundClearReward,
+            RoundClearRewardType.BossRoundClear => MoneyManager.Instance.BossRoundReward,
             RoundClearRewardType.PlayRemain => MoneyManager.Instance.PlayRemainReward,
-            RoundClearRewardType.BossRound => MoneyManager.Instance.BossRoundReward,
             RoundClearRewardType.MoneyInterest => MoneyManager.Instance.MoneyInterestReward,
             _ => 0,
         };
@@ -38,8 +38,8 @@ public class RoundClearManager : Singleton<RoundClearManager>
 public enum RoundClearRewardType
 {
     None,
-    RoundNum,
+    RoundClear,
+    BossRoundClear,
     PlayRemain,
-    BossRound,
     MoneyInterest,
 }

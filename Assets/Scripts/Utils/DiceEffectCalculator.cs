@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class DiceEffectCalculator
@@ -23,19 +24,20 @@ public static class DiceEffectCalculator
         };
     }
 
-    public static float GetCalculatedEffectValue(float value, int diceValue, EffectCalculateType calculateType)
+    public static double GetCalculatedEffectValue(double value, int diceValue, EffectCalculateType calculateType)
     {
         return calculateType switch
         {
             EffectCalculateType.Multiply => value * diceValue,
-            EffectCalculateType.Power => Mathf.Pow(value, diceValue),
+            EffectCalculateType.Power => Math.Pow(value, diceValue),
             _ => diceValue,
         };
     }
 
     public static string GetCalculateDescription(int maxDiceValue, EffectCalculateType calculateType)
     {
-        string range = maxDiceValue > 1 ? $"(1~{maxDiceValue})" : "(1)";
+        string range = maxDiceValue > 1 ? $"1~{maxDiceValue}" : "1";
+        range = $"(<color={{2}}>{range}</color>)";
 
         return calculateType switch
         {
