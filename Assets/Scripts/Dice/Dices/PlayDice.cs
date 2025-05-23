@@ -38,6 +38,6 @@ public class PlayDice : Dice
         ScorePair scorePair = new(DiceValue, 1);
         string description = $"Get {scorePair}" + Faces[FaceIndex].GetDescriptionText();
 
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Play_Dice);
     }
 }

@@ -55,9 +55,9 @@ public class HandScoreUI : Singleton<HandScoreUI>
         }
     }
 
-    public void PlayHandTriggerAnimation(HandSO sO, int enhanceLevel, ScorePair scorePair)
+    public void PlayHandTriggerAnimation(Hand hand, int enhanceLevel, ScorePair scorePair)
     {
-        if (handScoreSingleUIDict.TryGetValue(sO.hand, out var handScoreSingleUI))
+        if (handScoreSingleUIDict.TryGetValue(hand, out var handScoreSingleUI))
         {
             handScoreSingleUI.PlayTriggerAnimation(enhanceLevel, scorePair);
         }

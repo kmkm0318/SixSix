@@ -43,6 +43,7 @@ public class MoneyManager : Singleton<MoneyManager>
     private void Start()
     {
         RegisterEvents();
+        Money = DataContainer.Instance.CurrentDiceStat.defaultStartMoney;
     }
 
     #region RegisterEvents
@@ -50,6 +51,7 @@ public class MoneyManager : Singleton<MoneyManager>
     {
         ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
         ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
+        ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
         ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
         ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
     }
@@ -71,6 +73,17 @@ public class MoneyManager : Singleton<MoneyManager>
 
         Money += sO.SellPrice;
         SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void OnGambleDicePurchaseAttempted(GambleDiceSO sO, PurchaseResult result)
+    {
+        if (sO == null) return;
+
+        if (result == PurchaseResult.Success)
+        {
+            Money -= sO.price;
+            SequenceManager.Instance.ApplyParallelCoroutine();
+        }
     }
 
     private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)

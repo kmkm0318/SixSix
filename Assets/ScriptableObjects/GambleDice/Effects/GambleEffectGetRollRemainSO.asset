@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1e828f72171d940bca6c0052c68ea8, type: 3}
   m_Name: GambleEffectGetRollRemainSO
   m_EditorClassIdentifier: 
+  description: Get Roll Remain <color={{0}}>+{0}</color>
+  value: 1

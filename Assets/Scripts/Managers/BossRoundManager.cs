@@ -5,11 +5,11 @@ public class BossRoundManager : Singleton<BossRoundManager>
 {
     [SerializeField] private BossRoundListSO bossRoundListSO;
 
-    public event Action OnBossRoundEntered;
-    public event Action OnBossRoundExited;
-
     private BossRoundSO currentBossRoundSO = null;
     public BossRoundSO CurrentBossRoundSO => currentBossRoundSO;
+
+    public event Action OnBossRoundEntered;
+    public event Action OnBossRoundExited;
 
     public void EnterBossRound()
     {

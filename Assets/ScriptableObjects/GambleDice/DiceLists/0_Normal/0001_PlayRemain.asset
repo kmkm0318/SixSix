@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: 0001_PlayRemain
   m_EditorClassIdentifier: 
   diceName: PlayRemain
-  rarity: 0
-  autoKeepType: 0
   price: 5
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   shaderDataSO: {fileID: 11400000, guid: cbcae74c082b67c49b85142522d5d91c, type: 2}
-  maxDiceValue: 3
-  availityTrigger: {fileID: 0}
-  availityEffect: {fileID: 0}
+  maxDiceValue: 6
+  gambleTriggerSO: {fileID: 11400000, guid: 475ae3919649aa94490638703595e432, type: 2}
   gambleEffectSO: {fileID: 11400000, guid: bcb8372f2f04cf747851b907f2c6399c, type: 2}

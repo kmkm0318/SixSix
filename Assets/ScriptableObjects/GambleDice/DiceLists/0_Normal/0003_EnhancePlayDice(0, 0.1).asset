@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd2df094cdbdee4b8e5889dd2acfdd9, type: 3}
+  m_Name: 0003_EnhancePlayDice(0, 0.1)
+  m_EditorClassIdentifier: 
+  diceName: Enhance Multiplier
+  price: 6
+  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 0eced463442f53c49801b0c891bf8c95, type: 2}
+  maxDiceValue: 6
+  gambleTriggerSO: {fileID: 11400000, guid: 475ae3919649aa94490638703595e432, type: 2}
+  gambleEffectSO: {fileID: 11400000, guid: 87b0effd0034b6548b80617b9b88b7be, type: 2}

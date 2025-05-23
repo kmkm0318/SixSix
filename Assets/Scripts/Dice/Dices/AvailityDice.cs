@@ -80,7 +80,7 @@ public class AvailityDice : Dice
     {
         string name = availityDiceSO.diceName;
         string description = availityDiceSO.GetDescriptionText();
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Availity_Dice, availityDiceSO.rarity);
     }
 
     protected override void InitDiceInteractType()

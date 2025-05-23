@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIMouseEnterExit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private RectTransform rectTransform;
     private Image image;
@@ -14,6 +14,7 @@ public class UIMouseEnterExit : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public event Action OnPointerExited;
     public event Action OnPointerEntered;
+    public event Action OnPointerClicked;
 
     private void Awake()
     {
@@ -35,5 +36,13 @@ public class UIMouseEnterExit : MonoBehaviour, IPointerEnterHandler, IPointerExi
         isEntered = false;
 
         OnPointerExited?.Invoke();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        if (eventData.clickCount > 1) return;
+
+        OnPointerClicked?.Invoke();
     }
 }

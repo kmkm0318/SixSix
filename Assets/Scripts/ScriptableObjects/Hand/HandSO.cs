@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HandSO", menuName = "Scriptable Objects/HandSO")]

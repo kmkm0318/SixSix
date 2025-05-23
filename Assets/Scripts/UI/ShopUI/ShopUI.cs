@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -11,9 +10,11 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform availityDiceMerchantParent;
+    [SerializeField] private Transform gambleDiceMerchantParent;
     [SerializeField] private Transform handEnhanceMerchantParent;
     [SerializeField] private Transform playDiceEnhanceMerchantParent;
     [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
+    [SerializeField] private GambleDiceMerchantUI gambleDiceMerchantPrefab;
     [SerializeField] private HandEnhanceMerchantUI handEnhanceMerchantPrefab;
     [SerializeField] private PlayDiceEnhanceMerchantUI playDiceEnhanceMerchantPrefab;
     [SerializeField] private ButtonPanel rerollButton;
@@ -24,6 +25,7 @@ public class ShopUI : Singleton<ShopUI>
     public event Action OnShopUIClosed;
 
     private ObjectPool<AvailityDiceMerchantUI> availityDiceMerchantPool;
+    private ObjectPool<GambleDiceMerchantUI> gambleDiceMerchantPool;
     private ObjectPool<HandEnhanceMerchantUI> handEnhanceMerchantPool;
     private ObjectPool<PlayDiceEnhanceMerchantUI> playDiceEnhanceMerchantPool;
 
@@ -55,6 +57,18 @@ public class ShopUI : Singleton<ShopUI>
     {
         availityDiceMerchantPool = new(
             () => Instantiate(availityDiceMerchantPrefab, availityDiceMerchantParent),
+            merchantUI =>
+            {
+                merchantUI.gameObject.SetActive(true);
+                merchantUI.transform.SetAsLastSibling();
+            },
+            merchantUI => merchantUI.gameObject.SetActive(false),
+            merchantUI => Destroy(merchantUI.gameObject),
+            maxSize: 10
+        );
+
+        gambleDiceMerchantPool = new(
+            () => Instantiate(gambleDiceMerchantPrefab, gambleDiceMerchantParent),
             merchantUI =>
             {
                 merchantUI.gameObject.SetActive(true);
@@ -145,8 +159,9 @@ public class ShopUI : Singleton<ShopUI>
     private void InitMerchantUI()
     {
         InitAvailityDiceMerchantUI();
+        InitGambleDiceMerchantUI();
 
-        var handEnhanceCount = ShopManager.Instance.EnhanceMerchantCountMax;
+        var handEnhanceCount = ShopManager.Instance.MerchantItemCountMax;
 
         if (handEnhanceCount > 0)
         {
@@ -174,6 +189,24 @@ public class ShopUI : Singleton<ShopUI>
         {
             AvailityDiceMerchantUI merchantUI = availityDiceMerchantPool.Get();
             merchantUI.Init(availityDiceList[i]);
+        }
+    }
+
+    private void InitGambleDiceMerchantUI()
+    {
+        foreach (Transform child in gambleDiceMerchantParent)
+        {
+            if (child.gameObject.activeSelf && child.TryGetComponent(out GambleDiceMerchantUI merchantUI))
+            {
+                gambleDiceMerchantPool.Release(merchantUI);
+            }
+        }
+
+        List<GambleDiceSO> gambleDiceList = ShopManager.Instance.GetRandomGambleDiceList();
+        for (int i = 0; i < gambleDiceList.Count; i++)
+        {
+            GambleDiceMerchantUI merchantUI = gambleDiceMerchantPool.Get();
+            merchantUI.Init(gambleDiceList[i]);
         }
     }
 

@@ -52,11 +52,12 @@ public class PlayManager : Singleton<PlayManager>
     public void EndPlay()
     {
         PlayRemain--;
-        HandlePlayResult();
     }
 
-    private void HandlePlayResult()
+    public void HandlePlayResult()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.Round) return;
+
         if (ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore)
         {
             if (RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound)

@@ -24,18 +24,26 @@ public class StateUI : Singleton<StateUI>
 
     private void ResetUI()
     {
-        moneyText.SetText("$" + MoneyManager.Instance.Money.ToString());
-        playRemainText.SetText(PlayManager.Instance.PlayRemain.ToString());
-        rollRemainText.SetText(RollManager.Instance.RollRemain.ToString());
+        moneyText.SetText("$0");
+        playRemainText.SetText("0");
+        rollRemainText.SetText("0");
     }
 
     #region RegisterEvents
     private void RegisterEvents()
     {
+        GameManager.Instance.RegisterEvent(GameState.Loading, null, () =>
+        {
+            if (MoneyManager.Instance.Money != 0)
+            {
+                OnMoneyChanged(MoneyManager.Instance.Money);
+            }
+        });
         MoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
-        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnAvailityDicePurchaseAttempted;
+        ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
     }
 
     private void OnMoneyChanged(int money)
@@ -53,7 +61,15 @@ public class StateUI : Singleton<StateUI>
         AnimationFunction.AddUpdateTextAndPlayAnimation(rollRemainText, rollRemain);
     }
 
-    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    private void OnAvailityDicePurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    {
+        if (result == PurchaseResult.NotEnoughMoney)
+        {
+            StartCoroutine(AnimationFunction.ShakeAnimation(moneyText.transform));
+        }
+    }
+
+    private void OnGambleDicePurchaseAttempted(GambleDiceSO sO, PurchaseResult result)
     {
         if (result == PurchaseResult.NotEnoughMoney)
         {

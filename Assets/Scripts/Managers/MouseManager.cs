@@ -56,8 +56,7 @@ public class MouseManager : Singleton<MouseManager>
                 }
             }
         }
-        else
-        if (lastHoveredObject != null)
+        else if (lastHoveredObject != null)
         {
             OnMouseExit?.Invoke();
             lastHoveredObject = null;

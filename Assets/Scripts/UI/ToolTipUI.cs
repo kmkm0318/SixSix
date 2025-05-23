@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 
 public class ToolTipUI : Singleton<ToolTipUI>
@@ -25,7 +27,13 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         ShopUI.Instance.OnShopUIOpened += HideToolTip;
         RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
-        MouseManager.Instance.OnMouseExit += HideToolTip;
+        MouseManager.Instance.OnMouseExit += OnMouseExit;
+    }
+
+    private void OnMouseExit()
+    {
+        if (isUI) return;
+        HideToolTip();
     }
     #endregion
 
@@ -51,7 +59,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
         rectTransform.position = targetPos + offsetDirection * offset;
     }
 
-    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None)
+    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None, AvailityDiceRarity rarity = AvailityDiceRarity.Normal)
     {
         if (transform == null) return;
         if (transform is RectTransform rect)
@@ -70,14 +78,13 @@ public class ToolTipUI : Singleton<ToolTipUI>
         SetPanelAnchor(direction);
         targetTransform = transform;
 
-
-
         labelPanel.SetLabel(name, true);
         labelPanel.SetValue(description);
-        HandleTag(tag);
+        HandleTag(tag, rarity);
     }
 
-    private void HandleTag(ToolTipTag tag)
+    #region HandleTag
+    private void HandleTag(ToolTipTag tag, AvailityDiceRarity rarity)
     {
         if (tag == ToolTipTag.None)
         {
@@ -86,9 +93,53 @@ public class ToolTipUI : Singleton<ToolTipUI>
         }
 
         tagPanel.gameObject.SetActive(true);
-        tagPanel.SetText(tag.ToString());
+
+        string tagText = string.Empty;
+        if (tag == ToolTipTag.Availity_Dice)
+        {
+            HandleTagColor(rarity);
+            tagText = rarity.ToString();
+        }
+        else
+        {
+            HandleTagColor(tag);
+            tagText = tag.ToString();
+        }
+        tagText = tagText.ToUpper().Replace("_", " ");
+        tagPanel.SetText(tagText);
     }
 
+    private void HandleTagColor(ToolTipTag tag)
+    {
+        Color color = tag switch
+        {
+            ToolTipTag.Play_Dice => Color.white,
+            ToolTipTag.Chaos_Dice => Color.black,
+            ToolTipTag.Gamble_Dice => Color.yellow,
+            _ => Color.white,
+        };
+        SetTagPanelColor(color);
+    }
+
+    private void HandleTagColor(AvailityDiceRarity rarity)
+    {
+        Color color = rarity switch
+        {
+            AvailityDiceRarity.Normal => Color.gray,
+            AvailityDiceRarity.Rare => Color.blue,
+            AvailityDiceRarity.Epic => Color.red,
+            AvailityDiceRarity.Legendary => Color.magenta,
+            _ => Color.white,
+        };
+        SetTagPanelColor(color);
+    }
+
+    private void SetTagPanelColor(Color color)
+    {
+        color.a = 0.75f;
+        tagPanel.SetColor(color);
+    }
+    #endregion
 
     private void SetPanelAnchor(Vector3 direction)
     {
@@ -124,15 +175,16 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         targetTransform = null;
         gameObject.SetActive(false);
+        labelPanel.SetLabel(string.Empty, false);
+        labelPanel.SetValue(string.Empty);
     }
 }
 
 public enum ToolTipTag
 {
     None,
-    Item,
-    Enemy,
-    Player,
-    Money,
-    Score
+    Play_Dice,
+    Chaos_Dice,
+    Availity_Dice,
+    Gamble_Dice,
 }

@@ -36,8 +36,7 @@ public static class DiceEffectCalculator
 
     public static string GetCalculateDescription(int maxDiceValue, EffectCalculateType calculateType)
     {
-        string range = maxDiceValue > 1 ? $"1~{maxDiceValue}" : "1";
-        range = $"(<color={{2}}>{range}</color>)";
+        string range = GetRange(maxDiceValue);
 
         return calculateType switch
         {
@@ -45,6 +44,12 @@ public static class DiceEffectCalculator
             EffectCalculateType.Power => $"^{range}",
             _ => range
         };
+    }
+
+    public static string GetRange(int maxDiceValue)
+    {
+        string range = maxDiceValue > 1 ? $"1~{maxDiceValue}" : "1";
+        return $"(<color={{2}}>{range}</color>)";
     }
 }
 

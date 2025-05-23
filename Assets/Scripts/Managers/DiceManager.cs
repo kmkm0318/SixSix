@@ -15,7 +15,6 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] private float diceGenerateDelay = 0.25f;
     [SerializeField] private int defaultPlayDiceValueMax = 6;
     [SerializeField] private int defaultChaosDiceValueMax = 4;
-    [SerializeField] private int gambleDiceNumMax = 3;
 
     private List<PlayDice> playDiceList = new();
     private List<AvailityDice> availityDiceList = new();
@@ -27,6 +26,7 @@ public class DiceManager : Singleton<DiceManager>
     private ObjectPool<GambleDice> gambleDicePool;
     private bool isAvailityDiceAutoKeep = false;
     private int currentAvailityDiceMax = 0;
+    private int currentGambleDiceMax = 0;
 
     public List<PlayDice> PlayDiceList => playDiceList;
     public List<AvailityDice> AvailityDiceList => availityDiceList;
@@ -54,6 +54,16 @@ public class DiceManager : Singleton<DiceManager>
             OnCurrentAvailityDiceMaxChanged?.Invoke(currentAvailityDiceMax);
         }
     }
+    public int CurrentGambleDiceMax
+    {
+        get => currentGambleDiceMax;
+        set
+        {
+            if (currentGambleDiceMax == value) return;
+            currentGambleDiceMax = value;
+            OnCurrentGambleDiceMaxChanged?.Invoke(currentGambleDiceMax);
+        }
+    }
     public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
     public List<int> UsableDiceValues { get; set; }
     public bool IsKeepable { get; set; } = true;
@@ -64,6 +74,8 @@ public class DiceManager : Singleton<DiceManager>
     public event Action<GambleDice> OnGambleDiceClicked;
     public event Action<int> OnAvailityDiceCountChanged;
     public event Action<int> OnCurrentAvailityDiceMaxChanged;
+    public event Action<int> OnGambleDiceCountChanged;
+    public event Action<int> OnCurrentGambleDiceMaxChanged;
 
     private void Start()
     {
@@ -80,7 +92,8 @@ public class DiceManager : Singleton<DiceManager>
         chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { chaosDice.gameObject.SetActive(true); }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
         gambleDicePool = new(() => Instantiate(gambleDicePrefab), gambleDice => { gambleDice.gameObject.SetActive(true); }, gambleDice => gambleDice.gameObject.SetActive(false), gambleDice => Destroy(gambleDice.gameObject), false);
 
-        CurrentAvailityDiceMax = DataContainer.Instance.DefaultAvailityDiceMax;
+        CurrentAvailityDiceMax = DataContainer.Instance.CurrentDiceStat.defaultAvailityDiceMax;
+        CurrentGambleDiceMax = DataContainer.Instance.CurrentDiceStat.defaultGambleDiceMax;
     }
 
     #region RegisterEvents
@@ -161,7 +174,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private IEnumerator FirstPlayDiceGenerate(Action onComplete = null)
     {
-        for (int i = 0; i < DataContainer.Instance.DefaultPlayDiceCount; i++)
+        for (int i = 0; i < DataContainer.Instance.CurrentDiceStat.defaultPlayDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
 
@@ -243,12 +256,12 @@ public class DiceManager : Singleton<DiceManager>
     public void RemoveAvailityDice(AvailityDice availityDice)
     {
         availityDiceList.Remove(availityDice);
+        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
+
         availityDice.FadeOut(() =>
         {
             availityDicePool.Release(availityDice);
         });
-
-        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
     }
 
     public void EnableAvailityDice(AvailityDice availityDice)
@@ -340,7 +353,7 @@ public class DiceManager : Singleton<DiceManager>
     #region Gamble Dice
     public void GenerateGambleDice(GambleDiceSO gambleDiceSO)
     {
-        if (gambleDiceList.Count >= gambleDiceNumMax) return;
+        if (gambleDiceList.Count >= currentGambleDiceMax) return;
 
         var gambleDice = gambleDicePool.Get();
         gambleDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
@@ -352,34 +365,26 @@ public class DiceManager : Singleton<DiceManager>
     private void AddGambleDice(GambleDice gambleDice)
     {
         gambleDiceList.Add(gambleDice);
+        OnGambleDiceCountChanged?.Invoke(gambleDiceList.Count);
     }
 
-    public void RemoveGambleDice(GambleDice gambleDice)
+    private void RemoveGambleDice(GambleDice gambleDice)
     {
         gambleDiceList.Remove(gambleDice);
+        OnGambleDiceCountChanged?.Invoke(gambleDiceList.Count);
+
         gambleDice.FadeOut(() =>
         {
             gambleDicePool.Release(gambleDice);
         });
     }
-    #endregion
 
-    #region Enhance
-    public int GetEnhancePrice(int enhanceLevel)
+    public void ClearGambleDices()
     {
-        return enhanceLevel * 6 - (enhanceLevel - 1);
-    }
-
-    public ScorePair GetEnhanceValue(int enhanceLevel, bool isRandom)
-    {
-        int totalEnhance = enhanceLevel * 5;
-        int baseScoreEnhance = isRandom ? UnityEngine.Random.Range(1, totalEnhance) : totalEnhance / 2;
-        int multiplierEnhance = totalEnhance - baseScoreEnhance;
-
-        float baseScore = baseScoreEnhance * 5f;
-        float multiplier = multiplierEnhance * 0.05f;
-
-        return new ScorePair(baseScore, multiplier);
+        while (gambleDiceList.Count > 0)
+        {
+            RemoveGambleDice(gambleDiceList[0]);
+        }
     }
     #endregion
 

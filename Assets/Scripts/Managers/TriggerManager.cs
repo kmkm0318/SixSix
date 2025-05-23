@@ -62,7 +62,6 @@ public class TriggerManager : Singleton<TriggerManager>
     #region TriggerDice
     public void TriggerDices()
     {
-        TriggerGambleDices();
         TriggerPlayDices();
         TriggerChaosDices();
         TriggerAvailityDice(HandManager.Instance.LastSelectedHandSO);
@@ -115,7 +114,7 @@ public class TriggerManager : Singleton<TriggerManager>
         }
     }
 
-    private void TriggerGambleDices()
+    public void TriggerGambleDices()
     {
         foreach (var gambleDice in DiceManager.Instance.GambleDiceList)
         {

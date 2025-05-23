@@ -3,16 +3,14 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    [SerializeField] private double initialTargetRoundScore;
-    public event Action OnCurrentRoundScoreUpdated;
-    public event Action<double> OnTargetRoundScoreChanged;
-    public event Action<double> OnCurrentRoundScoreChanged;
-    public event Action<double> OnPlayScoreChanged;
-    public event Action<ScorePair> OnScorePairChanged;
-    public event Action<double> OnBaseScoreChanged;
-    public event Action<double> OnMultiplierChanged;
-
+    private double initialTargetRoundScore = 0;
     private double targetRoundScore = 0;
+    private double currentRoundScore = 0;
+    private double previousRoundScore = 0;
+    private double highestRoundScore = 0;
+    private double playScore = 0;
+    private ScorePair scorePair = new();
+
     public double TargetRoundScore
     {
         get => targetRoundScore;
@@ -23,7 +21,6 @@ public class ScoreManager : Singleton<ScoreManager>
             OnTargetRoundScoreChanged?.Invoke(targetRoundScore);
         }
     }
-    private double currentRoundScore = 0;
     public double CurrentRoundScore
     {
         get => currentRoundScore;
@@ -38,11 +35,8 @@ public class ScoreManager : Singleton<ScoreManager>
             OnCurrentRoundScoreChanged?.Invoke(currentRoundScore);
         }
     }
-    private double previousRoundScore = 0;
     public double PreviousRoundScore => previousRoundScore;
-    private double highestRoundScore = 0;
     public double HighestRoundScore => highestRoundScore;
-    private double playScore = 0;
     public double PlayScore
     {
         get => playScore;
@@ -53,7 +47,6 @@ public class ScoreManager : Singleton<ScoreManager>
             OnPlayScoreChanged?.Invoke(playScore);
         }
     }
-    private ScorePair scorePair = new();
     public ScorePair ScorePair
     {
         get => scorePair;
@@ -81,9 +74,18 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
+    public event Action OnCurrentRoundScoreUpdated;
+    public event Action<double> OnTargetRoundScoreChanged;
+    public event Action<double> OnCurrentRoundScoreChanged;
+    public event Action<double> OnPlayScoreChanged;
+    public event Action<ScorePair> OnScorePairChanged;
+    public event Action<double> OnBaseScoreChanged;
+    public event Action<double> OnMultiplierChanged;
+
     private void Start()
     {
         RegisterEvents();
+        initialTargetRoundScore = DataContainer.Instance.CurrentDiceStat.defaultInitialTargetRoundScore;
     }
 
     #region RegisterEvents

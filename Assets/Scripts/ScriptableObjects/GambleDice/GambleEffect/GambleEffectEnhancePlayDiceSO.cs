@@ -3,21 +3,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GambleEffectEnhancePlayDiceSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectEnhancePlayDiceSO")]
 public class GambleEffectEnhancePlayDiceSO : GambleEffectSO
 {
+    [SerializeField] private ScorePair value = new(0, 0);
+
     public override void TriggerEffect(GambleDice gambleDice)
     {
-        var enhanceLevel = DiceEffectCalculator.GetCalculatedEffectValue(gambleDice.DiceValue, gambleDice.DiceValue, EffectCalculateType.None);
+        TriggerAnimationManager.Instance.PlayTriggerAnimation(gambleDice.transform);
+        SequenceManager.Instance.ApplyParallelCoroutine();
 
         var playDiceList = DiceManager.Instance.PlayDiceList;
         foreach (var playDice in playDiceList)
         {
-            playDice.EnhanceDice(enhanceLevel);
+            playDice.EnhanceDice(value);
         }
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(gambleDice.transform);
-        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     public override string GetEffectDescription(GambleDiceSO availityDiceSO)
     {
-        return $"Enhance Every Play Dice Lv.{DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, EffectCalculateType.None)}";
+        return string.Format(description, value);
     }
 }

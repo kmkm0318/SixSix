@@ -281,13 +281,9 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     public virtual void EnhanceDice(ScorePair scorePair)
     {
         faces[faceIndex].Enhance(scorePair);
-        diceVisual.SetColor(faces[faceIndex].EnhanceValue);
-        AnimationFunction.AddShakeAnimation(transform, false);
-    }
-
-    public virtual void EnhanceDice(int enhanceLevel)
-    {
-        EnhanceDice(DiceManager.Instance.GetEnhanceValue(enhanceLevel, false));
+        SequenceManager.Instance.AddCoroutine(() => diceVisual.SetColor(faces[faceIndex].EnhanceValue), true);
+        AnimationFunction.AddShakeAnimation(transform, false, true);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     public abstract void ShowToolTip();

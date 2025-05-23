@@ -1,17 +1,47 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GambleDiceSO", menuName = "Scriptable Objects/GambleDiceSO")]
-public class GambleDiceSO : AvailityDiceSO
+public class GambleDiceSO : ScriptableObject
 {
+    [Header("Dice Info")]
+    public string diceName;
+    public int price;
+    public int SellPrice => price / 2;
+    public DiceSpriteListSO diceSpriteListSO;
+    public ShaderDataSO shaderDataSO;
+    public int maxDiceValue;
+    public int MaxDiceValue => Mathf.Min(maxDiceValue, diceSpriteListSO.DiceFaceCount);
+
+
+    [Header("Dice Trigger, Effect")]
+    public GambleTriggerSO gambleTriggerSO;
     public GambleEffectSO gambleEffectSO;
+
+    public bool IsTriggered(GambleDice gambleDice)
+    {
+        return gambleTriggerSO.IsTriggered(gambleDice);
+    }
 
     public void TriggerEffect(GambleDice gambleDice)
     {
         gambleEffectSO.TriggerEffect(gambleDice);
     }
 
-    public override string GetDescriptionText()
+    public string GetDescriptionText()
     {
-        return gambleEffectSO.GetEffectDescription(this);
+        string description = string.Empty;
+        if (gambleTriggerSO != null)
+        {
+            description += gambleTriggerSO.GetTriggerDescription(this);
+        }
+        if (description != string.Empty)
+        {
+            description += "\n";
+        }
+        if (gambleEffectSO != null)
+        {
+            description += gambleEffectSO.GetEffectDescription(this);
+        }
+        return description;
     }
 }

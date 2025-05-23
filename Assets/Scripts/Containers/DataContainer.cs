@@ -7,10 +7,6 @@ public class DataContainer : Singleton<DataContainer>
     [SerializeField] private DiceStatSO currentDiceStat;
     public DiceStatSO CurrentDiceStat => currentDiceStat;
     public DiceSpriteListSO DefaultDiceSpriteList => currentDiceStat.defaultDiceSpriteListSO;
-    public int DefaultPlayDiceCount => currentDiceStat.defaultPlayDiceCount;
-    public int DefaultAvailityDiceMax => currentDiceStat.defaultAvailityDiceMax;
-    public int DefaultMaxPlay => currentDiceStat.defaultPlayMax;
-    public int DefaultMaxRoll => currentDiceStat.defaultRollMax;
     #endregion
 
     #region ShaderDataSO
@@ -28,6 +24,8 @@ public class DataContainer : Singleton<DataContainer>
     #region GambleDiceListSO
     [SerializeField] private GambleDiceListSO shopGambleDiceListSO;
     public GambleDiceListSO ShopGambleDiceListSO => shopGambleDiceListSO;
+    [SerializeField] private GambleDiceListSO bossGambleDiceListSO;
+    public GambleDiceListSO BossGambleDiceListSO => bossGambleDiceListSO;
     #endregion
 
     #region HandListSO

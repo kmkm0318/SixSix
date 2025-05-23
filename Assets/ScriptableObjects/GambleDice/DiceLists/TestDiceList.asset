@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0592f4f024c174342ad1c1b6c1aa8963, type: 3}
   m_Name: TestDiceList
   m_EditorClassIdentifier: 
-  gambleDiceSOList: []
+  gambleDiceSOList:
+  - {fileID: 11400000, guid: 16258ec5a0e243f40b58d48013c41253, type: 2}
+  - {fileID: 11400000, guid: 24c691bd5759ca24983c4a1fb7844265, type: 2}

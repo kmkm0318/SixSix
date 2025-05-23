@@ -5,19 +5,13 @@ using UnityEngine;
 public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] private int initialRerollCost = 5;
-    [SerializeField] private int availityDiceMerchantCountMax = 3;
-    [SerializeField] private int enhanceMerchantCountMax = 3;
-    public int EnhanceMerchantCountMax => enhanceMerchantCountMax;
-
-    public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
-    public event Action<HandEnhancePurchaseContext, PurchaseResult> OnHandEnhancePurchaseAttempted;
-    public event Action<DiceEnhancePurchaseContext, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
-    public event Action<AvailityDiceSO> OnAvailityDiceSelled;
-    public event Action<int> OnRerollCostChanged;
-    public event Action OnRerollCompleted;
+    [SerializeField] private int merchantItemCountMax = 3;
 
     private AvailityDiceListSO availityDiceListSO;
+    private GambleDiceListSO gambleDiceListSO;
     private int rerollCost = 0;
+
+    public int MerchantItemCountMax => merchantItemCountMax;
     public int RerollCost
     {
         get => rerollCost;
@@ -30,9 +24,19 @@ public class ShopManager : Singleton<ShopManager>
         }
     }
 
+    public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
+    public event Action<GambleDiceSO, PurchaseResult> OnGambleDicePurchaseAttempted;
+    public event Action<HandEnhancePurchaseContext, PurchaseResult> OnHandEnhancePurchaseAttempted;
+    public event Action<DiceEnhancePurchaseContext, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
+    public event Action<AvailityDiceSO> OnAvailityDiceSelled;
+    public event Action<int> OnRerollCostChanged;
+    public event Action OnRerollCompleted;
+
     private void Start()
     {
         availityDiceListSO = DataContainer.Instance.ShopAvailityDiceListSO;
+        gambleDiceListSO = DataContainer.Instance.ShopGambleDiceListSO;
+
         RegisterEvents();
     }
 
@@ -83,6 +87,35 @@ public class ShopManager : Singleton<ShopManager>
         OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
     }
 
+    public void TryPurchaseGambleDice(GambleDiceSO gambleDiceSO)
+    {
+        if (gambleDiceSO == null)
+        {
+            OnGambleDicePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            return;
+        }
+
+        if (GambleDiceSaveManager.Instance.IsFull)
+        {
+            OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.NotEnoughDiceSlot);
+            return;
+        }
+
+        if (MoneyManager.Instance.Money < gambleDiceSO.price)
+        {
+            OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.NotEnoughMoney);
+            return;
+        }
+
+        if (DiceManager.Instance.GambleDiceList.Count >= DiceManager.Instance.CurrentGambleDiceMax)
+        {
+            OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.NotEnoughDiceSlot);
+            return;
+        }
+
+        OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.Success);
+    }
+
     public void TryPurchaseHandEnhance(HandEnhancePurchaseContext context)
     {
         if (MoneyManager.Instance.Money < context.Price)
@@ -110,14 +143,31 @@ public class ShopManager : Singleton<ShopManager>
     public List<AvailityDiceSO> GetRandomAvailityDiceList()
     {
         List<AvailityDiceSO> randomAvailityDiceList = new();
-        while (randomAvailityDiceList.Count < availityDiceMerchantCountMax)
+        while (randomAvailityDiceList.Count < merchantItemCountMax)
         {
+            if (randomAvailityDiceList.Count >= availityDiceListSO.availityDiceSOList.Count) break;
+
             AvailityDiceSO randomAvailityDice = availityDiceListSO.GetRandomAvailityDiceSO();
             if (randomAvailityDice == null) continue;
             if (randomAvailityDiceList.Contains(randomAvailityDice)) continue;
             randomAvailityDiceList.Add(randomAvailityDice);
         }
         return randomAvailityDiceList;
+    }
+
+    public List<GambleDiceSO> GetRandomGambleDiceList()
+    {
+        List<GambleDiceSO> randomGambleDiceList = new();
+        while (randomGambleDiceList.Count < merchantItemCountMax)
+        {
+            if (randomGambleDiceList.Count >= gambleDiceListSO.gambleDiceSOList.Count) break;
+
+            GambleDiceSO randomGambleDice = gambleDiceListSO.GetRandomGambleDiceSO();
+            if (randomGambleDice == null) continue;
+            if (randomGambleDiceList.Contains(randomGambleDice)) continue;
+            randomGambleDiceList.Add(randomGambleDice);
+        }
+        return randomGambleDiceList;
     }
 
     public List<DiceEnhancePurchaseContext> GetRandomDiceEnhanceList(int count)
@@ -127,9 +177,9 @@ public class ShopManager : Singleton<ShopManager>
         {
             int enhanceLevel = UnityEngine.Random.Range(1, 4);
 
-            ScorePair scorePair = DiceManager.Instance.GetEnhanceValue(enhanceLevel, true);
+            ScorePair scorePair = EnhanceManager.Instance.GetEnhanceValue(enhanceLevel, true);
 
-            int price = DiceManager.Instance.GetEnhancePrice(enhanceLevel);
+            int price = EnhanceManager.Instance.GetEnhancePrice(enhanceLevel);
 
             diceEnhanceList.Add(new(enhanceLevel, scorePair, price, i));
         }

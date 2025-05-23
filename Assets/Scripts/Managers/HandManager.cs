@@ -5,13 +5,28 @@ public class HandManager : Singleton<HandManager>
 {
     private Dictionary<Hand, int> handSelectionCounts = new();
     private Dictionary<Hand, int> handEnhanceLevels = new();
-    private Dictionary<Hand, bool> handAvailabilities = new();
+    private Dictionary<Hand, bool> handCompletions = new();
     private Dictionary<Hand, ScorePair> handScores = new();
     private HandSO lastSelectedHandSO = null;
     private bool isActive = false;
 
     public Dictionary<Hand, ScorePair> HandScores => handScores;
     public List<Hand> UsableHands { get; set; } = null;
+    public List<Hand> CompletedHands
+    {
+        get
+        {
+            var completedHands = new List<Hand>();
+            foreach (var hand in handCompletions)
+            {
+                if (hand.Value)
+                {
+                    completedHands.Add(hand.Key);
+                }
+            }
+            return completedHands;
+        }
+    }
     public HandSO LastSelectedHandSO => lastSelectedHandSO;
 
     public event Action<HandSO> OnHandSelected;
@@ -29,7 +44,7 @@ public class HandManager : Singleton<HandManager>
         {
             handEnhanceLevels[handSO.hand] = 0;
             handSelectionCounts[handSO.hand] = 0;
-            handAvailabilities[handSO.hand] = false;
+            handCompletions[handSO.hand] = false;
             handScores[handSO.hand] = handSO.scorePair;
         }
     }
@@ -54,7 +69,6 @@ public class HandManager : Singleton<HandManager>
 
     private void OnRollCompleted()
     {
-        UpdateHands();
         isActive = true;
     }
 
@@ -90,13 +104,13 @@ public class HandManager : Singleton<HandManager>
     }
     #endregion
 
-    private void UpdateHands()
+    public void UpdateHands()
     {
         var playDiceValues = DiceManager.Instance.GetOrderedPlayDiceValues();
-        handAvailabilities = HandCalculator.GetHandCheckResults(playDiceValues);
+        handCompletions = HandCalculator.GetHandCheckResults(playDiceValues);
 
         var handScoreDict = new Dictionary<Hand, ScorePair>();
-        foreach (var hand in handAvailabilities)
+        foreach (var hand in handCompletions)
         {
             if (hand.Value)
             {
@@ -113,7 +127,7 @@ public class HandManager : Singleton<HandManager>
 
     public void HandleSelectHand(HandSO handSO)
     {
-        if (!handAvailabilities.TryGetValue(handSO.hand, out var isAvailiable) || !isAvailiable) return;
+        if (!handCompletions.TryGetValue(handSO.hand, out var isAvailiable) || !isAvailiable) return;
         if (UsableHands != null && !UsableHands.Contains(handSO.hand)) return;
         if (!isActive) return;
         isActive = false;
@@ -139,20 +153,22 @@ public class HandManager : Singleton<HandManager>
         OnHandScoreApplied?.Invoke(scorePair);
     }
 
-    public void EnhanceHand(HandSO handSO, int enhanceLevel)
+    public void EnhanceHand(Hand hand, int enhanceLevel)
     {
-        if (handEnhanceLevels.TryGetValue(handSO.hand, out int level))
+        var handSO = DataContainer.Instance.GetHandSO(hand);
+
+        if (handEnhanceLevels.TryGetValue(hand, out int level))
         {
-            handEnhanceLevels[handSO.hand] = level + enhanceLevel;
-            handScores[handSO.hand] = handSO.GetEnhancedScorePair(level + enhanceLevel);
+            handEnhanceLevels[hand] = level + enhanceLevel;
+            handScores[hand] = handSO.GetEnhancedScorePair(level + enhanceLevel);
         }
         else
         {
-            handEnhanceLevels[handSO.hand] = enhanceLevel;
-            handScores[handSO.hand] = handSO.GetEnhancedScorePair(enhanceLevel);
+            handEnhanceLevels[hand] = enhanceLevel;
+            handScores[hand] = handSO.GetEnhancedScorePair(enhanceLevel);
         }
 
-        HandScoreUI.Instance.PlayHandTriggerAnimation(handSO, handEnhanceLevels[handSO.hand], handScores[handSO.hand]);
+        HandScoreUI.Instance.PlayHandTriggerAnimation(hand, handEnhanceLevels[hand], handScores[hand]);
     }
 
     public void GetMostPlayedHand(out Hand handName, out int count)

@@ -3,15 +3,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GambleEffectGetPlayRemainSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectGetPlayRemainSO")]
 public class GambleEffectGetPlayRemainSO : GambleEffectSO
 {
+    [SerializeField] private int value = 1;
+
     public override void TriggerEffect(GambleDice gambleDice)
     {
-        PlayManager.Instance.PlayRemain += gambleDice.DiceValue;
         TriggerAnimationManager.Instance.PlayTriggerAnimation(gambleDice.transform);
+        PlayManager.Instance.PlayRemain += value;
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     public override string GetEffectDescription(GambleDiceSO availityDiceSO)
     {
-        return $"Get Play Remain {DiceEffectCalculator.GetCalculateDescription(availityDiceSO.MaxDiceValue, EffectCalculateType.None)}";
+        return string.Format(description, value);
     }
 }

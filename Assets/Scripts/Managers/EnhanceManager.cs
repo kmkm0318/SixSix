@@ -58,7 +58,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void OnHandSelected(HandSO sO)
     {
-        HandManager.Instance.EnhanceHand(sO, HandEnhanceLevel);
+        HandManager.Instance.EnhanceHand(sO.hand, HandEnhanceLevel);
         CompleteHandEnhance();
     }
 
@@ -67,6 +67,25 @@ public class EnhanceManager : Singleton<EnhanceManager>
         HandManager.Instance.OnHandSelected -= OnHandSelected;
         GameManager.Instance.ExitState(GameState.Enhance);
     }
+
+    #region EnhanceValues
+    public int GetEnhancePrice(int enhanceLevel)
+    {
+        return enhanceLevel * 3 - (enhanceLevel - 1);
+    }
+
+    public ScorePair GetEnhanceValue(int enhanceLevel, bool isRandom)
+    {
+        int totalEnhance = enhanceLevel * 5;
+        int baseScoreEnhance = isRandom ? UnityEngine.Random.Range(1, totalEnhance) : totalEnhance / 2;
+        int multiplierEnhance = totalEnhance - baseScoreEnhance;
+
+        float baseScore = baseScoreEnhance * 5f;
+        float multiplier = multiplierEnhance * 0.05f;
+
+        return new ScorePair(baseScore, multiplier);
+    }
+    #endregion
 }
 
 public enum EnhanceType

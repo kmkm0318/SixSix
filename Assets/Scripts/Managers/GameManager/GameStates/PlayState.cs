@@ -8,7 +8,8 @@ public class PlayState : BaseGameState
 
     public override void Exit()
     {
-        base.Exit();
         PlayManager.Instance.EndPlay();
+        base.Exit();
+        PlayManager.Instance.HandlePlayResult();
     }
 }
