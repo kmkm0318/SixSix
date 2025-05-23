@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: GameSpeed
   m_EditorClassIdentifier: 
   optionType: 0
+  isLocalizedName: 1
   optionName: Game Speed
+  optionNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 19979474182144
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  isLocalizedValue: 0
   optionValues:
   - x1
   - x1.25
   - x1.5
   - x1.75
   - x2
+  optionValuesLocalized: []
+  references:
+    version: 2
+    RefIds: []

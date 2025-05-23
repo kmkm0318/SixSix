@@ -57,15 +57,9 @@ public class AdviserUI : Singleton<AdviserUI>
         .ThenByDescending(x => x.Item3.baseScore)
         .ToList();
 
-        foreach (var hand in sortedHandList)
-        {
-            // Debug.Log($"{hand.Item1} : {hand.Item2:P2} : {hand.Item3.baseScore * hand.Item3.multiplier}");
-        }
-
         var adviseString = GetAdviseString(sortedHandList);
         if (adviseString == string.Empty) return;
 
-        advisePanel.SetLabel("Advise");
         advisePanel.SetValue(adviseString);
         Show(() => DelayHide(showTime));
     }
@@ -108,7 +102,7 @@ public class AdviserUI : Singleton<AdviserUI>
             if (scorePair.baseScore > sortedHandList.First().Item3.baseScore)
             {
                 if (res.Length != 0) res += "\n";
-                string handName = DataContainer.Instance.GetHandSO(hand.Item1).handName;
+                string handName = DataContainer.Instance.GetHandSO(hand.Item1).HandName;
                 res += $"{handName} : {probability:P2}";
             }
         }

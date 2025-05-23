@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: FullStraight
   m_EditorClassIdentifier: 
   hand: 7
-  handName: Full Straight
+  handNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
+    m_TableEntryReference:
+      m_KeyId: 20735895937024
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   scorePair:
     baseScore: 36
     multiplier: 36
   enhanceAmount:
     baseScore: 12
     multiplier: 12
+  references:
+    version: 2
+    RefIds: []

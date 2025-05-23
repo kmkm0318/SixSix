@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private LocalizeStringEvent nameLocalizedText;
     [SerializeField] private TMP_Text enhanceLevelText;
     [SerializeField] private TMP_Text baseScoreText;
     [SerializeField] private TMP_Text multiplierText;
@@ -15,7 +16,7 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void Init(HandSO handSO)
     {
-        nameText.text = handSO.handName;
+        nameLocalizedText.StringReference = handSO.handNameLocalized;
 
         ResetScoreText();
 

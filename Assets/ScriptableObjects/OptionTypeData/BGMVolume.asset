@@ -13,7 +13,18 @@ MonoBehaviour:
   m_Name: BGMVolume
   m_EditorClassIdentifier: 
   optionType: 5
+  isLocalizedName: 1
   optionName: BGM
+  optionNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 19571775250432
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  isLocalizedValue: 0
   optionValues:
   - 0
   - 1
@@ -26,3 +37,7 @@ MonoBehaviour:
   - 8
   - 9
   - 10
+  optionValuesLocalized: []
+  references:
+    version: 2
+    RefIds: []

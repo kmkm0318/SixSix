@@ -1,16 +1,18 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "HandSO", menuName = "Scriptable Objects/HandSO")]
 public class HandSO : ScriptableObject
 {
     public Hand hand;
-    public string handName;
+    public LocalizedString handNameLocalized;
+    public string HandName => handNameLocalized.GetLocalizedString();
     public ScorePair scorePair;
     public ScorePair enhanceAmount;
 
     public string GetDescriptionText()
     {
-        string description = $"Enhance {handName}\nScore(+{enhanceAmount.baseScore}, x{enhanceAmount.multiplier})";
+        string description = $"Enhance {HandName}\nScore(+{enhanceAmount.baseScore}, x{enhanceAmount.multiplier})";
         return description;
     }
 

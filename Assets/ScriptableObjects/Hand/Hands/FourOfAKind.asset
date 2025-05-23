@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: FourOfAKind
   m_EditorClassIdentifier: 
   hand: 1
-  handName: Four Of A Kind
+  handNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
+    m_TableEntryReference:
+      m_KeyId: 20278968459264
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   scorePair:
     baseScore: 16
     multiplier: 16
   enhanceAmount:
     baseScore: 4
     multiplier: 4
+  references:
+    version: 2
+    RefIds: []

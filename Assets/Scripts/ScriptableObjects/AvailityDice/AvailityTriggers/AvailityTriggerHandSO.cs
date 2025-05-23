@@ -19,7 +19,7 @@ public class AvailityTriggerHandSO : AvailityTriggerSO
         }
         else
         {
-            return $"When Play With\n<color={{3}}>{targetHand.handName}</color>";
+            return $"When Play With\n<color={{3}}>{targetHand.HandName}</color>";
         }
     }
 }

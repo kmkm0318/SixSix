@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UIString Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UIString
+  m_TableCollectionNameGuidString: b42d05c8298834447a192c01a058061a
+  m_Entries:
+  - m_Id: 1957996929024
+    m_Key: GameResult_HighestRoundScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123957149696
+    m_Key: 'GameResult_Clear
+
+      Round'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2859105394688
+    m_Key: GameResult_MainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2369051303936
+    m_Key: GameResult_MoneyGain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2743728480256
+    m_Key: GameResult_MoneyLost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2049915101184
+    m_Key: GameResult_MostPlayedHand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2923290828800
+    m_Key: GameResult_NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2186334838784
+    m_Key: GameResult_PlayCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2796861923328
+    m_Key: GameResult_RerollCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2303523692544
+    m_Key: GameResult_RollCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2966534103040
+    m_Key: GameResult_StartInfinityMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10536128749568
+    m_Key: AdviseUI_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1412716437504
+    m_Key: Option_Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 664058339328
+    m_Key: Option_GamePlay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1053625294848
+    m_Key: Option_Video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3760033505280
+    m_Key: RoundResult_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3153805582336
+    m_Key: Shop_AvailityDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3287507410944
+    m_Key: Shop_Enhance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3220805394432
+    m_Key: Shop_GambleDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3350489079808
+    m_Key: Shop_Reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4305498546176
+    m_Key: StateUI_Option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3473642233856
+    m_Key: UI_Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18826900414464
+    m_Key: Option_AvailityDiceAutoKeep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19129821437952
+    m_Key: Option_OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19168564224000
+    m_Key: Option_ON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19571775250432
+    m_Key: Option_BGM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19633163083776
+    m_Key: Option_FullScreenMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19979474182144
+    m_Key: Option_GameSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20076043837440
+    m_Key: Option_Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20173787897856
+    m_Key: Option_English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20233363791872
+    m_Key: Option_Korean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20337172815872
+    m_Key: Option_Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20419997736960
+    m_Key: Option_SFX
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4204753995697750490
+  references:
+    version: 2
+    RefIds:
+    - rid: 4204753995697750490
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1748007446221

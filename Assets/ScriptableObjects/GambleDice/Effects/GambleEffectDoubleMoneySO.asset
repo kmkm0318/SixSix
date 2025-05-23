@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879e1d2c60334144ab223ad41e5307ca, type: 3}
   m_Name: GambleEffectDoubleMoneySO
   m_EditorClassIdentifier: 
-  description: 'Make Money Double
+  description: 'Make Money <color={{3}}>Double</color>
 
-    <size=75%><color=#888888>(Maximum is {0})</color></size>'
+    <size=75%><color=#888888>(Maximum
+    is {0})</color></size>'
   value: 25

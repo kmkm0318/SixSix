@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DefaultString_ko
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: dadd668eab285e844a43e03bad854ca2, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4516618240
+    m_Localized: "\uACE8\uB4DC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26230530048
+    m_Localized: "\uD50C\uB808\uC774"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40239505408
+    m_Localized: "\uB864"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74263699456
+    m_Localized: "\uD578\uB4DC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 110867390464
+    m_Localized: "\uB9AC\uB864"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20189092913152
+    m_Localized: "\uCD08\uC774\uC2A4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20278968459264
+    m_Localized: "\uD3EC \uC624\uBE0C \uC5B4 \uCE74\uC778\uB4DC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20347411111936
+    m_Localized: "\uD480 \uD558\uC6B0\uC2A4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20403757391872
+    m_Localized: "\uC2A4\uBAB0 \uC2A4\uD2B8\uB808\uC774\uD2B8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20456551096320
+    m_Localized: "\uB77C\uC9C0 \uC2A4\uD2B8\uB808\uC774\uD2B8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20529322270720
+    m_Localized: "\uC57C\uCD94"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20607357296640
+    m_Localized: "\uB354\uBE14 \uC4F0\uB9AC \uC624\uBE0C \uC5B4 \uCE74\uC778\uB4DC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20735895937024
+    m_Localized: "\uD480 \uC2A4\uD2B8\uB808\uC774\uD2B8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20813964517376
+    m_Localized: "\uC2DD\uC2A4 \uC2DD\uC2A4"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: Yacht
   m_EditorClassIdentifier: 
   hand: 5
-  handName: Yacht
+  handNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
+    m_TableEntryReference:
+      m_KeyId: 20529322270720
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   scorePair:
     baseScore: 50
     multiplier: 50
   enhanceAmount:
     baseScore: 10
     multiplier: 10
+  references:
+    version: 2
+    RefIds: []

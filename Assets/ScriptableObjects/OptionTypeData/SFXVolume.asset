@@ -13,7 +13,18 @@ MonoBehaviour:
   m_Name: SFXVolume
   m_EditorClassIdentifier: 
   optionType: 6
+  isLocalizedName: 1
   optionName: SFX
+  optionNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 20419997736960
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  isLocalizedValue: 0
   optionValues:
   - 0
   - 1
@@ -26,3 +37,7 @@ MonoBehaviour:
   - 8
   - 9
   - 10
+  optionValuesLocalized: []
+  references:
+    version: 2
+    RefIds: []

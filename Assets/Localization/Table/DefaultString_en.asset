@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DefaultString_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: dadd668eab285e844a43e03bad854ca2, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4516618240
+    m_Localized: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26230530048
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40239505408
+    m_Localized: Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74263699456
+    m_Localized: Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 110867390464
+    m_Localized: Reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20189092913152
+    m_Localized: Choice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20278968459264
+    m_Localized: Four Of A Kind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20347411111936
+    m_Localized: Full House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20403757391872
+    m_Localized: Small Straight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20456551096320
+    m_Localized: Large Straight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20529322270720
+    m_Localized: Yacht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20607357296640
+    m_Localized: Double Three Of A Kind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20735895937024
+    m_Localized: Full Straight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20813964517376
+    m_Localized: Six Six
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

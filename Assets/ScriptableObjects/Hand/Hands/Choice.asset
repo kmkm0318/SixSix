@@ -13,11 +13,21 @@ MonoBehaviour:
   m_Name: Choice
   m_EditorClassIdentifier: 
   hand: 0
-  handName: Choice
+  handNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
+    m_TableEntryReference:
+      m_KeyId: 20189092913152
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   scorePair:
     baseScore: 5
     multiplier: 5
   enhanceAmount:
     baseScore: 1
     multiplier: 1
-  purchasePrice: 0
+  references:
+    version: 2
+    RefIds: []

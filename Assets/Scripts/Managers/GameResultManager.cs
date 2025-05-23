@@ -1,5 +1,3 @@
-using System;
-
 public class GameResultManager : Singleton<GameResultManager>
 {
     private int playCount = 0;
@@ -8,12 +6,7 @@ public class GameResultManager : Singleton<GameResultManager>
     private int moneyLost = 0;
     private int rerollCount = 0;
 
-    public int LastRound => RoundManager.Instance.CurrentRound - 1;
-    public int PlayCount => playCount;
-    public int RollCount => rollCount;
-    public int MoneyGained => moneyGained;
-    public int MoneyLost => moneyLost;
-    public int RerollCount => rerollCount;
+    public int ClearRound => RoundManager.Instance.CurrentRound - 1;
 
     private void Start()
     {
@@ -87,7 +80,7 @@ public class GameResultManager : Singleton<GameResultManager>
         {
             GameResultValueType.HighestRoundScore => UtilityFunctions.FormatNumber(ScoreManager.Instance.HighestRoundScore),
             GameResultValueType.MostPlayedHand => GetMostPlayedHandString(),
-            GameResultValueType.LastRound => LastRound.ToString(),
+            GameResultValueType.ClearRound => ClearRound.ToString(),
             GameResultValueType.PlayCount => playCount.ToString(),
             GameResultValueType.RollCount => rollCount.ToString(),
             GameResultValueType.MoneyGained => "$" + moneyGained.ToString(),
@@ -100,7 +93,7 @@ public class GameResultManager : Singleton<GameResultManager>
     private string GetMostPlayedHandString()
     {
         HandManager.Instance.GetMostPlayedHand(out var hand, out var playCount);
-        string handName = DataContainer.Instance.GetHandSO(hand).handName;
+        string handName = DataContainer.Instance.GetHandSO(hand).HandName;
         return $"{handName}<size=75%><color=#888888>({playCount})</color></size>";
     }
 }
@@ -109,7 +102,7 @@ public enum GameResultValueType
 {
     HighestRoundScore,
     MostPlayedHand,
-    LastRound,
+    ClearRound,
     PlayCount,
     RollCount,
     MoneyGained,

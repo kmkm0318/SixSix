@@ -13,9 +13,24 @@ MonoBehaviour:
   m_Name: Resolution
   m_EditorClassIdentifier: 
   optionType: 4
+  isLocalizedName: 1
   optionName: Resolution
+  optionNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 20337172815872
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  isLocalizedValue: 0
   optionValues:
   - 1280x720
   - 1920x1080
   - 2560x1440
   - 3840x2160
+  optionValuesLocalized: []
+  references:
+    version: 2
+    RefIds: []

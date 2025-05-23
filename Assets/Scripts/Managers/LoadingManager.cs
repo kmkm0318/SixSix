@@ -7,12 +7,6 @@ public class LoadingManager : Singleton<LoadingManager>
     [SerializeField] private float waitDuration = 2f;
     [SerializeField] private float loadingDuration = 2f;
 
-    protected override void Awake()
-    {
-        dontDestroyOnLoad = true;
-        base.Awake();
-    }
-
     public void StartLoading(Action onComplete = null)
     {
         StartCoroutine(LoadingCoroutine(onComplete));

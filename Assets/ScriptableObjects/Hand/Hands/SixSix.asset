@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: SixSix
   m_EditorClassIdentifier: 
   hand: 8
-  handName: Six Six
+  handNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
+    m_TableEntryReference:
+      m_KeyId: 20813964517376
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   scorePair:
     baseScore: 666
     multiplier: 666
   enhanceAmount:
     baseScore: 111
     multiplier: 111
+  references:
+    version: 2
+    RefIds: []
