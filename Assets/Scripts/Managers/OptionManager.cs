@@ -38,8 +38,8 @@ public class OptionManager : Singleton<OptionManager>
             case OptionType.GameSpeed:
                 optionData.gameSpeed = value;
                 break;
-            case OptionType.AvailityDiceAutoKeep:
-                optionData.availityDiceAutoKeep = value;
+            case OptionType.AbilityDiceAutoKeep:
+                optionData.abilityDiceAutoKeep = value;
                 break;
             case OptionType.Language:
                 optionData.language = value;
@@ -77,7 +77,7 @@ public class OptionManager : Singleton<OptionManager>
             optionData = new()
             {
                 gameSpeed = 0,
-                availityDiceAutoKeep = 0,
+                abilityDiceAutoKeep = 0,
                 language = 0,
                 fullscreen = 0,
                 resolution = 0,
@@ -97,7 +97,7 @@ public class OptionManager : Singleton<OptionManager>
 public struct OptionData
 {
     public int gameSpeed;
-    public int availityDiceAutoKeep;
+    public int abilityDiceAutoKeep;
     public int language;
     public int fullscreen;
     public int resolution;

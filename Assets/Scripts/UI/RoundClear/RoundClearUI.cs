@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 using UnityEngine;
-using UnityEngine.Pool;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class RoundClearUI : Singleton<RoundClearUI>
@@ -12,8 +15,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
     [SerializeField] private AnimatedText resultText;
-    [SerializeField] private Transform roundClearRewardParent;
-    [SerializeField] private RoundClearRewardUI roundClearRewardUI;
+    [SerializeField] private LocalizedString resultString;
+    [SerializeField] private List<RewardTextPair> rewardTexts;
 
     private bool isClosable = false;
     private string resultTextValue = string.Empty;
@@ -98,9 +101,14 @@ public class RoundClearUI : Singleton<RoundClearUI>
 
     private IEnumerator ShowTextAnimations()
     {
-        resultTextValue += $"<wave>Cleared Round</wave> : <bounce>{RoundManager.Instance.CurrentRound}</bounce>";
-        resultTextValue += $"\n<wave>Target Score</wave> : <bounce>{UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore)}</bounce>";
-        resultTextValue += $"\n<wave>Your Score</wave> : <bounce>{UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore)}</bounce>";
+        resultString.Arguments = new object[]
+        {
+            RoundManager.Instance.CurrentRound,
+            UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore),
+            UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore),
+        };
+        resultString.RefreshString();
+        resultTextValue = resultString.GetLocalizedString();
 
         ApplyReward();
 
@@ -113,23 +121,21 @@ public class RoundClearUI : Singleton<RoundClearUI>
         {
             int rewardValue = RoundClearManager.Instance.GetRewardValue(type);
             if (rewardValue <= 0) continue;
-            string left = $"<wave>{GetRewardName(type)}</wave>";
-            string right = $"<bounce>{GetRewardValueText(rewardValue)}</bounce>";
-            resultTextValue += $"\n{left} : {right}";
+
+            var rewardUI = rewardTexts.Find(pair => pair.RewardType == type);
+            if (rewardUI == null) continue;
+
+            var args = type == RoundClearRewardType.MoneyInterest ?
+            new object[] { GetRewardValueText(rewardValue), MoneyManager.Instance.InterestMax } :
+            new object[] { GetRewardValueText(rewardValue) };
+
+            rewardUI.RewardText.Arguments = args;
+            rewardUI.RewardText.RefreshString();
+
+            resultTextValue += "\n\n" + rewardUI.RewardText.GetLocalizedString();
+
             MoneyManager.Instance.AddMoney(rewardValue, true);
         }
-    }
-
-    private string GetRewardName(RoundClearRewardType type)
-    {
-        return type switch
-        {
-            RoundClearRewardType.RoundClear => "Round Clear",
-            RoundClearRewardType.PlayRemain => "Play Remain",
-            RoundClearRewardType.MoneyInterest => "Money Interest",
-            RoundClearRewardType.BossRoundClear => "Boss Round Clear",
-            _ => string.Empty,
-        };
     }
 
     private string GetRewardValueText(int value)
@@ -142,4 +148,17 @@ public class RoundClearUI : Singleton<RoundClearUI>
         return text;
     }
     #endregion
+}
+
+[Serializable]
+public class RewardTextPair
+{
+    public RoundClearRewardType RewardType;
+    public LocalizedString RewardText;
+
+    public RewardTextPair(RoundClearRewardType rewardType, LocalizedString rewardText)
+    {
+        RewardType = rewardType;
+        RewardText = rewardText;
+    }
 }

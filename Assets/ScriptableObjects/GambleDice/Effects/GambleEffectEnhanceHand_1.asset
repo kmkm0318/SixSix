@@ -12,5 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8efad80dc42ef14eb05a1c19b7a7606, type: 3}
   m_Name: GambleEffectEnhanceHand_1
   m_EditorClassIdentifier: 
-  description: Enhance All Completed Hand \n<color={{3}}>{0} Level</color>
+  effectDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 1159825072128
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   enhanceValue: 1
+  references:
+    version: 2
+    RefIds: []

@@ -1,19 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShaderTestUI : MonoBehaviour
 {
     [SerializeField] private ShaderTest shaderTestPrefab;
     private void Start()
     {
-        MakeAvailityDiceImages();
+        MakeAbilityDiceImages();
     }
 
-    private void MakeAvailityDiceImages()
+    private void MakeAbilityDiceImages()
     {
-        var availityDiceList = DataContainer.Instance.ShopAvailityDiceListSO;
+        var abilityDiceList = DataContainer.Instance.ShopAbilityDiceListSO;
 
-        foreach (var so in availityDiceList.availityDiceSOList)
+        foreach (var so in abilityDiceList.abilityDiceSOList)
         {
             var newShaderTest = Instantiate(shaderTestPrefab, transform);
             newShaderTest.gameObject.SetActive(true);

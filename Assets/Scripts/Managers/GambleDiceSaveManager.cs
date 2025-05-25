@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
 {
@@ -35,6 +36,7 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
         GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted, OnPlayEnded);
         GameManager.Instance.RegisterEvent(GameState.Roll, OnRollStarted, OnRollEnded);
+        GameManager.Instance.RegisterEvent(GameState.Shop, OnShopStarted, OnShopEnded);
         GameManager.Instance.RegisterEvent(GameState.Enhance, OnEnhanceStarted, OnEnhanceEnded);
     }
 
@@ -65,6 +67,16 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
     private void OnRollEnded()
     {
         isActive = RollManager.Instance.RollRemain != 0;
+    }
+
+    private void OnShopStarted()
+    {
+        isActive = true;
+    }
+
+    private void OnShopEnded()
+    {
+        isActive = false;
     }
 
     private void OnEnhanceStarted()
@@ -114,7 +126,21 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         return randomGambleDiceSO != null && TryAddGambleDiceIcon(randomGambleDiceSO);
     }
 
-    public bool TryGenerateGambleDice(int idx)
+    public bool TryHandleGambleDiceClicked(int idx)
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Round)
+        {
+            return TryGenerateGambleDice(idx);
+        }
+        else if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            return TrySellGambleDice(idx);
+        }
+
+        return false;
+    }
+
+    private bool TryGenerateGambleDice(int idx)
     {
         if (!isActive) return false;
         if (idx < 0 || idx >= savedGambleDiceSOs.Count) return false;
@@ -132,6 +158,20 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         if (gambleDiceSO == null) return false;
 
         DiceManager.Instance.GenerateGambleDice(gambleDiceSO);
+        return true;
+    }
+
+    private bool TrySellGambleDice(int idx)
+    {
+        if (!isActive) return false;
+        if (idx < 0 || idx >= savedGambleDiceSOs.Count) return false;
+
+        var gambleDiceSO = savedGambleDiceSOs[idx];
+        if (gambleDiceSO == null) return false;
+
+        ShopManager.Instance.SellGambleDice(gambleDiceSO);
+        TryRemoveGambleDiceIcon(idx);
+
         return true;
     }
 }

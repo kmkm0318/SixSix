@@ -49,7 +49,7 @@ public static class DiceEffectCalculator
     public static string GetRange(int maxDiceValue)
     {
         string range = maxDiceValue > 1 ? $"1~{maxDiceValue}" : "1";
-        return $"(<color={{2}}>{range}</color>)";
+        return $"<color={{2}}>({range})</color>";
     }
 }
 

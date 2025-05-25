@@ -82,7 +82,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3153805582336
-    m_Key: Shop_AvailityDice
+    m_Key: Shop_AbilityDice
     m_Metadata:
       m_Items: []
   - m_Id: 3287507410944
@@ -106,7 +106,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18826900414464
-    m_Key: Option_AvailityDiceAutoKeep
+    m_Key: Option_AbilityDiceAutoKeep
     m_Metadata:
       m_Items: []
   - m_Id: 19129821437952
@@ -147,6 +147,82 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 20419997736960
     m_Key: Option_SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 303731186212864
+    m_Key: RoundResult_ResultString
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304136016240640
+    m_Key: RoundResult_RoundClear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306144316104704
+    m_Key: RoundResult_PlayRemain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306266085138432
+    m_Key: RoundResult_BossRoundClear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306342689906688
+    m_Key: RoundResult_MoneyInterest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338977495588864
+    m_Key: UI_Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339112480874496
+    m_Key: UI_Sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583845589426176
+    m_Key: Tag_PlayDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583909003108352
+    m_Key: Tag_ChaosDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583958852411392
+    m_Key: Tag_GambleDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584024421965824
+    m_Key: Tag_AbilityDice_Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584182777913344
+    m_Key: Tag_AbilityDice_Rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584235538063360
+    m_Key: Tag_AbilityDice_Epic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584276432527360
+    m_Key: Tag_AbilityDice_Legendary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654107471126528
+    m_Key: Highlight_Keep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654170293411840
+    m_Key: Highlight_Unkeep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654271086731264
+    m_Key: Highlight_Enhance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654347351760896
+    m_Key: Highlight_Sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654425944629248
+    m_Key: Highlight_Use
     m_Metadata:
       m_Items: []
   m_Metadata:

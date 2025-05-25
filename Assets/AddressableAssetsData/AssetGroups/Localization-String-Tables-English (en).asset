@@ -15,17 +15,33 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: f17ff9afb5f76f242aa4213bf6bdd4d5
   m_SerializeEntries:
+  - m_GUID: 5300238d70989744481408f25ae6788a
+    m_Address: GambleDice_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a252681ab4a9d8459b9ea45225d61c7
     m_Address: DefaultString_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c99227a5c95dae04e8b6c927dee5c601
     m_Address: UIString_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf169ea8a2142ed458bb64ba3e0a969f
+    m_Address: AbilityDice_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 067f46a40f73d33488c4cd81ee4aaa82, type: 2}

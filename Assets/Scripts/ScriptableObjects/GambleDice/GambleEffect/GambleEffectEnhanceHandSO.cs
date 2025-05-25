@@ -1,10 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GambleEffectEnhanceHandSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectEnhanceHandSO")]
 public class GambleEffectEnhanceHandSO : GambleEffectSO
 {
-    [SerializeField] private int value = 1;
+    [SerializeField] private int enhanceValue = 1;
 
     public override void TriggerEffect(GambleDice gambleDice)
     {
@@ -14,12 +13,19 @@ public class GambleEffectEnhanceHandSO : GambleEffectSO
         var hands = HandManager.Instance.CompletedHands;
         foreach (var hand in hands)
         {
-            HandManager.Instance.EnhanceHand(hand, value);
+            HandManager.Instance.EnhanceHand(hand, enhanceValue);
         }
     }
 
-    public override string GetEffectDescription(GambleDiceSO availityDiceSO)
+    public override string GetEffectDescription(GambleDiceSO gambleDiceSO)
     {
-        return string.Format(description, value);
+        if (effectDescription == null)
+        {
+            Debug.LogError("Effect description is not set for " + name);
+            return string.Empty;
+        }
+        effectDescription.Arguments = new object[] { enhanceValue };
+        effectDescription.RefreshString();
+        return effectDescription.GetLocalizedString();
     }
 }

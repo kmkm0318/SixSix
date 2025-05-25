@@ -15,17 +15,33 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Korean (ko)
   m_GUID: 6e7b3c479d25e2f419ef4ea296174106
   m_SerializeEntries:
+  - m_GUID: 1986844c28404de449dd654908a27bb1
+    m_Address: AbilityDice_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3834ed2c03cc61647a36d6b3a769c876
+    m_Address: GambleDice_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c866995837896a48b57b1f74b885ea6
     m_Address: DefaultString_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cda757d6e5a2c4049805c77e44f960f6
     m_Address: UIString_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 067f46a40f73d33488c4cd81ee4aaa82, type: 2}

@@ -36,6 +36,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void CompleteDiceEnhance()
     {
         DiceManager.Instance.OnPlayDiceClicked -= OnPlayDiceClicked;
+        GameManager.Instance.ExitState(GameState.Play);
         GameManager.Instance.ExitState(GameState.Enhance);
     }
     #endregion
@@ -65,6 +66,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void CompleteHandEnhance()
     {
         HandManager.Instance.OnHandSelected -= OnHandSelected;
+        GameManager.Instance.ExitState(GameState.Play);
         GameManager.Instance.ExitState(GameState.Enhance);
     }
 

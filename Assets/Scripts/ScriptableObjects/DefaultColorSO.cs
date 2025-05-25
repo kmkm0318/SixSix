@@ -7,6 +7,8 @@ public class DefaultColorSO : ScriptableObject
     public Color red;
     public Color green;
     public Color yellow;
+    public Color cyan;
+    public Color magenta;
     public Color green_dark;
 
     public string FormatColor(string value)

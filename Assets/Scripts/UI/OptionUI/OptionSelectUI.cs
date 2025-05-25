@@ -96,8 +96,8 @@ public class OptionSelectUI : MonoBehaviour
             case OptionType.GameSpeed:
                 index = OptionManager.Instance.OptionData.gameSpeed;
                 break;
-            case OptionType.AvailityDiceAutoKeep:
-                index = OptionManager.Instance.OptionData.availityDiceAutoKeep;
+            case OptionType.AbilityDiceAutoKeep:
+                index = OptionManager.Instance.OptionData.abilityDiceAutoKeep;
                 break;
             case OptionType.Language:
                 index = OptionManager.Instance.OptionData.language;

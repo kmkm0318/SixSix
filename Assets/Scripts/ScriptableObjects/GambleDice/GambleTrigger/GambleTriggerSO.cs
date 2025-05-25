@@ -1,13 +1,13 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public abstract class GambleTriggerSO : ScriptableObject
 {
-    [TextArea(3, 10)]
-    [SerializeField] private string description;
+    [SerializeField] protected LocalizedString triggerDescription;
 
     public abstract bool IsTriggered(GambleDice gambleDice);
     public virtual string GetTriggerDescription(GambleDiceSO gambleDiceSO)
     {
-        return description;
+        return triggerDescription.GetLocalizedString();
     }
 }

@@ -74,6 +74,18 @@ MonoBehaviour:
     m_Localized: Six Six
     m_Metadata:
       m_Items: []
+  - m_Id: 672424449679360
+    m_Localized: Play Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 672595912826880
+    m_Localized: Chaos Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 672646961700864
+    m_Localized: Get {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

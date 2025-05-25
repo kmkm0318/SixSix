@@ -33,10 +33,18 @@ public class PlayDice : Dice
 
     public override void ShowToolTip()
     {
-        string name = $"PlayDice({DiceValue})";
+        var name = DiceManager.Instance.PlayDiceName.GetLocalizedString();
 
         ScorePair scorePair = new(DiceValue, 1);
-        string description = $"Get {scorePair}" + Faces[FaceIndex].GetDescriptionText();
+        var descriptionString = DiceManager.Instance.GetScoreDescription;
+        descriptionString.Arguments = new object[] { scorePair };
+        descriptionString.RefreshString();
+        string description = descriptionString.GetLocalizedString();
+        string faceDescription = Faces[FaceIndex].GetDescriptionText();
+        if (!string.IsNullOrEmpty(faceDescription))
+        {
+            description += "\n" + faceDescription;
+        }
 
         ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Play_Dice);
     }

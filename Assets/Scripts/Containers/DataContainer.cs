@@ -16,9 +16,9 @@ public class DataContainer : Singleton<DataContainer>
     public ShaderDataSO ChaosShaderData => chaosShaderData;
     #endregion
 
-    #region AvailityDiceListSO
-    [SerializeField] private AvailityDiceListSO shopAvailityDiceListSO;
-    public AvailityDiceListSO ShopAvailityDiceListSO => shopAvailityDiceListSO;
+    #region AbilityDiceListSO
+    [SerializeField] private AbilityDiceListSO shopAbilityDiceListSO;
+    public AbilityDiceListSO ShopAbilityDiceListSO => shopAbilityDiceListSO;
     #endregion
 
     #region GambleDiceListSO

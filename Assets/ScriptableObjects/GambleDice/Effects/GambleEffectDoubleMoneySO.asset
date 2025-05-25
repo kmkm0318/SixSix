@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879e1d2c60334144ab223ad41e5307ca, type: 3}
   m_Name: GambleEffectDoubleMoneySO
   m_EditorClassIdentifier: 
-  description: 'Make Money <color={{3}}>Double</color>
-
-    <size=75%><color=#888888>(Maximum
-    is {0})</color></size>'
-  value: 25
+  effectDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 847450087424
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  maximum: 20
+  references:
+    version: 2
+    RefIds: []

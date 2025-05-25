@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
@@ -9,23 +11,22 @@ public class ShopUI : Singleton<ShopUI>
 {
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private Vector3 hidePos;
-    [SerializeField] private Transform availityDiceMerchantParent;
+    [SerializeField] private Transform abilityDiceMerchantParent;
     [SerializeField] private Transform gambleDiceMerchantParent;
     [SerializeField] private Transform handEnhanceMerchantParent;
     [SerializeField] private Transform playDiceEnhanceMerchantParent;
-    [SerializeField] private AvailityDiceMerchantUI availityDiceMerchantPrefab;
-    [SerializeField] private GambleDiceMerchantUI gambleDiceMerchantPrefab;
+    [SerializeField] private DiceMerchantUI diceMerchantPrefab;
     [SerializeField] private HandEnhanceMerchantUI handEnhanceMerchantPrefab;
     [SerializeField] private PlayDiceEnhanceMerchantUI playDiceEnhanceMerchantPrefab;
     [SerializeField] private ButtonPanel rerollButton;
+    [SerializeField] private LocalizedString rerollButtonText;
     [SerializeField] private ButtonPanel closeButton;
     [SerializeField] private List<ScrollRect> scrollRects;
 
     public event Action OnShopUIOpened;
     public event Action OnShopUIClosed;
 
-    private ObjectPool<AvailityDiceMerchantUI> availityDiceMerchantPool;
-    private ObjectPool<GambleDiceMerchantUI> gambleDiceMerchantPool;
+    private ObjectPool<DiceMerchantUI> diceMerchantPool;
     private ObjectPool<HandEnhanceMerchantUI> handEnhanceMerchantPool;
     private ObjectPool<PlayDiceEnhanceMerchantUI> playDiceEnhanceMerchantPool;
 
@@ -36,6 +37,10 @@ public class ShopUI : Singleton<ShopUI>
         InitPool();
         RegisterEvents();
         rerollButton.OnClick += OnclickRerollButton;
+        LocalizationSettings.SelectedLocaleChanged += (locale) =>
+        {
+            UpdateRerollButtonText();
+        };
         closeButton.OnClick += OnClickCloseButton;
         gameObject.SetActive(false);
     }
@@ -55,20 +60,8 @@ public class ShopUI : Singleton<ShopUI>
 
     private void InitPool()
     {
-        availityDiceMerchantPool = new(
-            () => Instantiate(availityDiceMerchantPrefab, availityDiceMerchantParent),
-            merchantUI =>
-            {
-                merchantUI.gameObject.SetActive(true);
-                merchantUI.transform.SetAsLastSibling();
-            },
-            merchantUI => merchantUI.gameObject.SetActive(false),
-            merchantUI => Destroy(merchantUI.gameObject),
-            maxSize: 10
-        );
-
-        gambleDiceMerchantPool = new(
-            () => Instantiate(gambleDiceMerchantPrefab, gambleDiceMerchantParent),
+        diceMerchantPool = new(
+            () => Instantiate(diceMerchantPrefab, abilityDiceMerchantParent),
             merchantUI =>
             {
                 merchantUI.gameObject.SetActive(true);
@@ -140,14 +133,7 @@ public class ShopUI : Singleton<ShopUI>
 
     private void OnRerollCostChanged(int obj)
     {
-        if (obj > 0)
-        {
-            rerollButton.SetText($"Reroll(${obj})");
-        }
-        else
-        {
-            rerollButton.SetText("Reroll");
-        }
+        UpdateRerollButtonText();
 
         if (gameObject.activeSelf)
         {
@@ -158,7 +144,7 @@ public class ShopUI : Singleton<ShopUI>
 
     private void InitMerchantUI()
     {
-        InitAvailityDiceMerchantUI();
+        InitAbilityDiceMerchantUI();
         InitGambleDiceMerchantUI();
 
         var handEnhanceCount = ShopManager.Instance.MerchantItemCountMax;
@@ -174,21 +160,22 @@ public class ShopUI : Singleton<ShopUI>
         ScrollToTop();
     }
 
-    private void InitAvailityDiceMerchantUI()
+    private void InitAbilityDiceMerchantUI()
     {
-        foreach (Transform child in availityDiceMerchantParent)
+        foreach (Transform child in abilityDiceMerchantParent)
         {
-            if (child.gameObject.activeSelf && child.TryGetComponent(out AvailityDiceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out DiceMerchantUI merchantUI))
             {
-                availityDiceMerchantPool.Release(merchantUI);
+                diceMerchantPool.Release(merchantUI);
             }
         }
 
-        List<AvailityDiceSO> availityDiceList = ShopManager.Instance.GetRandomAvailityDiceList();
-        for (int i = 0; i < availityDiceList.Count; i++)
+        List<AbilityDiceSO> abilityDiceList = ShopManager.Instance.GetRandomAbilityDiceList();
+        for (int i = 0; i < abilityDiceList.Count; i++)
         {
-            AvailityDiceMerchantUI merchantUI = availityDiceMerchantPool.Get();
-            merchantUI.Init(availityDiceList[i]);
+            var merchantUI = diceMerchantPool.Get();
+            merchantUI.transform.SetParent(abilityDiceMerchantParent);
+            merchantUI.Init(abilityDiceList[i]);
         }
     }
 
@@ -196,16 +183,17 @@ public class ShopUI : Singleton<ShopUI>
     {
         foreach (Transform child in gambleDiceMerchantParent)
         {
-            if (child.gameObject.activeSelf && child.TryGetComponent(out GambleDiceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out DiceMerchantUI merchantUI))
             {
-                gambleDiceMerchantPool.Release(merchantUI);
+                diceMerchantPool.Release(merchantUI);
             }
         }
 
         List<GambleDiceSO> gambleDiceList = ShopManager.Instance.GetRandomGambleDiceList();
         for (int i = 0; i < gambleDiceList.Count; i++)
         {
-            GambleDiceMerchantUI merchantUI = gambleDiceMerchantPool.Get();
+            var merchantUI = diceMerchantPool.Get();
+            merchantUI.transform.SetParent(gambleDiceMerchantParent);
             merchantUI.Init(gambleDiceList[i]);
         }
     }
@@ -253,6 +241,13 @@ public class ShopUI : Singleton<ShopUI>
         {
             scrollRect.verticalNormalizedPosition = 1f;
         }
+    }
+
+    private void UpdateRerollButtonText()
+    {
+        rerollButtonText.Arguments = new object[] { ShopManager.Instance.RerollCost };
+        rerollButtonText.RefreshString();
+        rerollButton.SetText(rerollButtonText.GetLocalizedString());
     }
 
     private void Show(Action onComplete = null)

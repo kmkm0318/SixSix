@@ -12,12 +12,12 @@ public class ShaderTest : MonoBehaviour
         diceImage.material = new(diceImage.material);
     }
 
-    public void SetShader(AvailityDiceSO so)
+    public void SetShader(AbilityDiceSO so)
     {
         if (so == null) return;
 
         diceImage.sprite = so.diceSpriteListSO.spriteList[^1];
         so.shaderDataSO.SetMaterialProperties(diceImage.material);
-        diceNameText.SetText(so.diceName);
+        diceNameText.SetText(so.DiceName);
     }
 }

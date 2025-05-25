@@ -20,8 +20,11 @@ public class ChaosDice : Dice
     {
         UpdateScorePair();
 
-        string name = $"Chaos Dice({DiceValue})";
-        string description = $"Get {scorePair}";
+        string name = DiceManager.Instance.ChaosDiceName.GetLocalizedString();
+        var descriptionString = DiceManager.Instance.GetScoreDescription;
+        descriptionString.Arguments = new object[] { scorePair };
+        descriptionString.RefreshString();
+        string description = descriptionString.GetLocalizedString();
 
         ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Chaos_Dice);
     }

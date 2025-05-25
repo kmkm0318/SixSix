@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: AbilityDice_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b20a225e51e76ad48ab00b9ad829b69d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 41002868736
+    m_Localized: 'When Play Dice shows
+
+      <color=#FCEFAF>"{0}"</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1975462010880
+    m_Localized: 'When Play With
+
+      <color=#FCEFAF>"{0}"</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2728654151680
+    m_Localized: 'When Play Dice shows
+
+      Multiple of <color=#FCEFAF>"{0}"</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3133177995264
+    m_Localized: When Roll Without <color=#FCEFAF>"KEEP"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3459352240128
+    m_Localized: When <color=#FCEFAF>"Round Cleared"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7289464823808
+    m_Localized: When <color=#FCEFAF>"Round Started"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7382175719424
+    m_Localized: When <color=#FCEFAF>"Shop Opened"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7607502118912
+    m_Localized: When <color=#FCEFAF>"Shop Ended"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9168710148096
+    m_Localized: Get {0}{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9413904965632
+    m_Localized: Get <color=#FCEFAF>(${0})</color>{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10823719591936
+    m_Localized: 'Get {0} And
+
+      Grow {1}{2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11168948559872
+    m_Localized: 'Get {0} And
+
+      Shrink {1}{2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284220616704
+    m_Localized: Reduce Reroll Cost By {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12829939081216
+    m_Localized: Single
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12861283115008
+    m_Localized: Double
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12903351984128
+    m_Localized: Triple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12916761174016
+    m_Localized: Quad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12923128127488
+    m_Localized: Quint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12928962404352
+    m_Localized: Hex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12933760688128
+    m_Localized: Unus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12938114375680
+    m_Localized: Duo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12942635835392
+    m_Localized: Tres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12947195043840
+    m_Localized: Quattuor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12961040441344
+    m_Localized: Quinque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12967680024576
+    m_Localized: Sex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12971635253248
+    m_Localized: Wild Card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12975926026240
+    m_Localized: Loser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12978799124480
+    m_Localized: Feastival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12990534787072
+    m_Localized: Short Wave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12996037713920
+    m_Localized: Long Wave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13000894717952
+    m_Localized: Winner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13006024351744
+    m_Localized: Last Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13013767036928
+    m_Localized: Challenger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13026400280576
+    m_Localized: Festa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13028379992064
+    m_Localized: Little Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13029516648448
+    m_Localized: Big Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13040618971136
+    m_Localized: Conqueror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13041617215488
+    m_Localized: Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042154086400
+    m_Localized: Reroll Mania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042657402880
+    m_Localized: Raise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043127164928
+    m_Localized: Lower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043626287104
+    m_Localized: Prosperity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13044100243456
+    m_Localized: Decline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18026581073920
+    m_Localized: When Play <color=#FCEFAF>"Any Hand"</color>
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

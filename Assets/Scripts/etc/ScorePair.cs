@@ -16,21 +16,37 @@ public struct ScorePair
     public override readonly string ToString()
     {
         List<string> parts = new();
-        if (baseScore != 0)
+        bool hasBaseScore = baseScore != 0;
+        bool hasMultiplier = multiplier != 0 && multiplier != 1;
+
+        if (!hasBaseScore && !hasMultiplier)
         {
-            parts.Add("<color={0}>" + $"{baseScore:+0;-0;0}" + "</color>");
+            return "<color=#888888>(0)</color>";
         }
 
-        if (multiplier != 0 && multiplier != 1)
+        if (hasBaseScore)
         {
-            parts.Add("<color={1}>" + $"x{multiplier:0.##}" + "</color>");
+            parts.Add($"<color={{0}}>{baseScore:+0;-0;0}</color>");
         }
 
-        if (parts.Count == 0)
+        if (hasMultiplier)
         {
-            parts.Add("<color=#888888>0</color>");
+            parts.Add($"<color={{1}}>x{multiplier:0.##}</color>");
         }
 
-        return $"Score({string.Join(", ", parts)})";
+        string res = string.Join(", ", parts);
+
+        if (hasBaseScore && !hasMultiplier)
+        {
+            return "<color={0}>(" + res + ")</color>";
+        }
+        else if (!hasBaseScore && hasMultiplier)
+        {
+            return "<color={1}>(" + res + ")</color>";
+        }
+        else
+        {
+            return "<color={0}>(</color>" + res + "<color={1}>)</color>";
+        }
     }
 }

@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "GambleDiceSO", menuName = "Scriptable Objects/GambleDiceSO")]
 public class GambleDiceSO : ScriptableObject
 {
     [Header("Dice Info")]
-    public string diceName;
+    public LocalizedString diceNameLocalized;
+    public string DiceName => diceNameLocalized.GetLocalizedString();
     public int price;
     public int SellPrice => price / 2;
     public DiceSpriteListSO diceSpriteListSO;

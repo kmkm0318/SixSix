@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShopDiceIcon : UIMouseHandler
 {
-    private AvailityDiceSO availityDiceSO;
+    private AbilityDiceSO abilityDiceSO;
     private GambleDiceSO gambleDiceSO;
 
     private bool isShowToolTip = false;
@@ -13,9 +13,9 @@ public class ShopDiceIcon : UIMouseHandler
         OnPointerExited += HideToolTip;
     }
 
-    public void Init(AvailityDiceSO availityDiceSO)
+    public void Init(AbilityDiceSO abilityDiceSO)
     {
-        this.availityDiceSO = availityDiceSO;
+        this.abilityDiceSO = abilityDiceSO;
         SetImage();
     }
 
@@ -27,11 +27,11 @@ public class ShopDiceIcon : UIMouseHandler
 
     public void SetImage()
     {
-        if (availityDiceSO != null)
+        if (abilityDiceSO != null)
         {
             Image.material = new(Image.material);
-            availityDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
-            Image.sprite = availityDiceSO.diceSpriteListSO.spriteList[availityDiceSO.MaxDiceValue - 1];
+            abilityDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
+            Image.sprite = abilityDiceSO.diceSpriteListSO.spriteList[abilityDiceSO.MaxDiceValue - 1];
         }
         else if (gambleDiceSO != null)
         {
@@ -45,15 +45,15 @@ public class ShopDiceIcon : UIMouseHandler
     {
         if (ToolTipUI.Instance == null) return;
         if (isShowToolTip) return;
-        if (availityDiceSO != null)
+        if (abilityDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, availityDiceSO.diceName, availityDiceSO.GetDescriptionText(), ToolTipTag.Availity_Dice, availityDiceSO.rarity);
+            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.Ability_Dice, abilityDiceSO.rarity);
         }
         else if (gambleDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, gambleDiceSO.diceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.Gamble_Dice);
+            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.Gamble_Dice);
         }
     }
 

@@ -42,7 +42,7 @@ public class StateUI : Singleton<StateUI>
         MoneyManager.Instance.OnMoneyChanged += OnMoneyChanged;
         PlayManager.Instance.OnPlayRemainChanged += OnPlayRemainChanged;
         RollManager.Instance.OnRollRemainChanged += OnRollRemainChanged;
-        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnAvailityDicePurchaseAttempted;
+        ShopManager.Instance.OnAbilityDicePurchaseAttempted += OnAbilityDicePurchaseAttempted;
         ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
     }
 
@@ -61,7 +61,7 @@ public class StateUI : Singleton<StateUI>
         AnimationFunction.AddUpdateTextAndPlayAnimation(rollRemainText, rollRemain);
     }
 
-    private void OnAvailityDicePurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    private void OnAbilityDicePurchaseAttempted(AbilityDiceSO sO, PurchaseResult result)
     {
         if (result == PurchaseResult.NotEnoughMoney)
         {

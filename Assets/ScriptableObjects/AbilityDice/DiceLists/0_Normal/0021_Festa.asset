@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
+  m_Name: 0021_Festa
+  m_EditorClassIdentifier: 
+  diceNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
+    m_TableEntryReference:
+      m_KeyId: 13026400280576
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  rarity: 0
+  autoKeepType: 0
+  price: 4
+  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: b57cb4a0a64125f45831f5bb7a6fa042, type: 2}
+  maxDiceValue: 5
+  abilityTrigger: {fileID: 11400000, guid: 7b4b1d65f69ee3a4590644d70c9aa060, type: 2}
+  abilityEffect: {fileID: 11400000, guid: b6a5562b7a236c64fb90ca275e668709, type: 2}
+  references:
+    version: 2
+    RefIds: []

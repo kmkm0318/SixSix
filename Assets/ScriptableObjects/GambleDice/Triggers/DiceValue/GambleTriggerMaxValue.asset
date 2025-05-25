@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6717438744caf52438aaf4f7af920cf9, type: 3}
+  m_Name: GambleTriggerMaxValue
+  m_EditorClassIdentifier: 
+  triggerDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 54198149120
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

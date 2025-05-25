@@ -10,7 +10,7 @@ public class GambleDiceListSO : ScriptableObject
     {
         if (gambleDiceSOList == null || gambleDiceSOList.Count == 0)
         {
-            Debug.LogWarning("AvailityDiceSO list is empty or null.");
+            Debug.LogWarning("AbilityDiceSO list is empty or null.");
             return null;
         }
 

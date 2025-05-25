@@ -23,7 +23,6 @@ public class PlayManager : Singleton<PlayManager>
     private void Start()
     {
         Init();
-        RegisterEvents();
     }
 
     private void Init()
@@ -31,18 +30,6 @@ public class PlayManager : Singleton<PlayManager>
         playMax = DataContainer.Instance.CurrentDiceStat.defaultPlayMax;
         currentPlayMax = playMax;
     }
-
-    #region RegisterEvents
-    private void RegisterEvents()
-    {
-        ScoreManager.Instance.OnCurrentRoundScoreUpdated += OnCurrentRoundScoreUpdated;
-    }
-
-    private void OnCurrentRoundScoreUpdated()
-    {
-        GameManager.Instance.ExitState(GameState.Play);
-    }
-    #endregion
 
     public void ResetPlayRemain()
     {
@@ -79,21 +66,10 @@ public class PlayManager : Singleton<PlayManager>
         }
     }
 
-    public void IncreasePlayMax()
+    public void IncreasePlayMaxAndRemain(int value = 1)
     {
-        SetPlayMax(playMax + 1, false);
-    }
-
-    private void SetPlayMax(int value, bool resetPlayRemain = true)
-    {
-        playMax = value;
-        currentPlayMax = playMax;
-
-        if (resetPlayRemain)
-        {
-            PlayRemain = playMax;
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
+        playMax += value;
+        PlayRemain += value;
     }
 
     public void SetCurrentPlayMax(int value = -1, bool resetPlayRemain = true)

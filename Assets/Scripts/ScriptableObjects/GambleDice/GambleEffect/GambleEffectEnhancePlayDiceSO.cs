@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GambleEffectEnhancePlayDiceSO", menuName = "Scriptable Objects/GambleEffects/GambleEffectEnhancePlayDiceSO")]
 public class GambleEffectEnhancePlayDiceSO : GambleEffectSO
 {
-    [SerializeField] private ScorePair value = new(0, 0);
+    [SerializeField] private ScorePair enhanceValue = new(0, 0);
 
     public override void TriggerEffect(GambleDice gambleDice)
     {
@@ -13,12 +13,19 @@ public class GambleEffectEnhancePlayDiceSO : GambleEffectSO
         var playDiceList = DiceManager.Instance.PlayDiceList;
         foreach (var playDice in playDiceList)
         {
-            playDice.EnhanceDice(value);
+            playDice.EnhanceDice(enhanceValue);
         }
     }
 
-    public override string GetEffectDescription(GambleDiceSO availityDiceSO)
+    public override string GetEffectDescription(GambleDiceSO gambleDiceSO)
     {
-        return string.Format(description, value);
+        if (effectDescription == null)
+        {
+            Debug.LogError("Effect description is not set for " + name);
+            return string.Empty;
+        }
+        effectDescription.Arguments = new object[] { enhanceValue };
+        effectDescription.RefreshString();
+        return effectDescription.GetLocalizedString();
     }
 }

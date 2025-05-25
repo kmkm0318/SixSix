@@ -27,9 +27,9 @@ public class DiceFace
         enhanceValue.multiplier += value.multiplier;
     }
 
-    public void ApplyFaceValue(Dice dice, bool isAvailityDice)
+    public void ApplyFaceValue(Dice dice, bool isAbilityDice)
     {
-        TriggerManager.Instance.ApplyTriggerEffect(dice.transform, isAvailityDice ? Vector3.down : Vector3.up, ApplyValue);
+        TriggerManager.Instance.ApplyTriggerEffect(dice.transform, isAbilityDice ? Vector3.down : Vector3.up, ApplyValue);
     }
 
     public string GetDescriptionText()
@@ -40,7 +40,10 @@ public class DiceFace
         }
         else
         {
-            return $"\nGet {ApplyValue}";
+            var getScoreDescription = DiceManager.Instance.GetScoreDescription;
+            getScoreDescription.Arguments = new object[] { ApplyValue };
+            getScoreDescription.RefreshString();
+            return getScoreDescription.GetLocalizedString();
         }
     }
 }

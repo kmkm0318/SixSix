@@ -34,6 +34,7 @@ public class MoneyManager : Singleton<MoneyManager>
     public int RoundClearReward => roundclearReward;
     public int PlayRemainReward => playRemainReward * PlayManager.Instance.PlayRemain;
     public int MoneyInterestReward => Mathf.Min(interestMax, Money / interestUnit * interestPerUnit);
+    public int InterestMax => interestMax;
     public int BossRoundReward => RoundManager.Instance.IsBossRound ? bossRoundReward : 0;
 
     public event Action<int> OnMoneyChanged;
@@ -49,14 +50,15 @@ public class MoneyManager : Singleton<MoneyManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
-        ShopManager.Instance.OnAvailityDiceSelled += OnAvailityDiceSelled;
+        ShopManager.Instance.OnAbilityDicePurchaseAttempted += OnPurchaseAttempted;
+        ShopManager.Instance.OnAbilityDiceSelled += OnAbilityDiceSelled;
+        ShopManager.Instance.OnGambleDiceSelled += OnGambleDiceSelled;
         ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
         ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
         ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
     }
 
-    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    private void OnPurchaseAttempted(AbilityDiceSO sO, PurchaseResult result)
     {
         if (sO == null) return;
 
@@ -67,7 +69,15 @@ public class MoneyManager : Singleton<MoneyManager>
         }
     }
 
-    private void OnAvailityDiceSelled(AvailityDiceSO sO)
+    private void OnAbilityDiceSelled(AbilityDiceSO sO)
+    {
+        if (sO == null) return;
+
+        Money += sO.SellPrice;
+        SequenceManager.Instance.ApplyParallelCoroutine();
+    }
+
+    private void OnGambleDiceSelled(GambleDiceSO sO)
     {
         if (sO == null) return;
 

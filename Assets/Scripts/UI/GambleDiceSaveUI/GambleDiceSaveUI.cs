@@ -15,6 +15,7 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
 
     private Vector3 showPos;
     private List<Slot> slots = new();
+    private bool isAlwaysShow = false;
 
     private void Start()
     {
@@ -26,13 +27,24 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
     {
         showPos = panelRectTransform.anchoredPosition;
         panelRectTransform.anchoredPosition = hidePos;
-        panel.OnPointerEntered += () => Show();
-        panel.OnPointerExited += () => Hide();
+        panel.OnPointerEntered += OnPointerEntered;
+        panel.OnPointerExited += OnPointerExited;
 
         for (int i = 0; i < DataContainer.Instance.CurrentDiceStat.defaultGambleDiceSaveMax; i++)
         {
             AddSlot();
         }
+    }
+
+    private void OnPointerEntered()
+    {
+        Show();
+    }
+
+    private void OnPointerExited()
+    {
+        if (isAlwaysShow) return;
+        Hide();
     }
 
     #region Slots
@@ -52,11 +64,14 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
     }
     #endregion
 
+    #region RegisterEvents
     private void RegisterEvents()
     {
         GambleDiceSaveManager.Instance.OnGambleDiceSaveMaxChanged += OnGambleDiceSaveMaxChanged;
         GambleDiceSaveManager.Instance.OnGambleDiceAdded += OnGambleDiceAdded;
         GambleDiceSaveManager.Instance.OnGambleDiceRemoved += OnGambleDiceRemoved;
+
+        GameManager.Instance.RegisterEvent(GameState.Shop, OnShopStarted, OnShopEnded);
     }
 
     private void OnGambleDiceSaveMaxChanged(int count)
@@ -81,6 +96,19 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
     {
         RemoveGambleDiceIcon(idx);
     }
+
+    private void OnShopStarted()
+    {
+        isAlwaysShow = true;
+        Show();
+    }
+
+    private void OnShopEnded()
+    {
+        isAlwaysShow = false;
+        Hide();
+    }
+    #endregion
 
     #region GambleDiceIcon
     public void AddGambleDiceIcon(GambleDiceSO gambleDiceSO)
@@ -142,7 +170,7 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
 
         if (idx == -1) return;
 
-        GambleDiceSaveManager.Instance.TryGenerateGambleDice(idx);
+        GambleDiceSaveManager.Instance.TryHandleGambleDiceClicked(idx);
     }
 
     #region Show/Hide

@@ -7,6 +7,8 @@ public class GameManager : Singleton<GameManager>
 
     public GameState CurrentGameState => gameStateManager.CurrentGameState;
 
+    public event Action OnGameStateChanged;
+
     protected override void Awake()
     {
         base.Awake();
@@ -122,11 +124,13 @@ public class GameManager : Singleton<GameManager>
     public void ChangeState(GameState newState)
     {
         gameStateManager.ChangeState(newState);
+        OnGameStateChanged?.Invoke();
     }
 
     public void ExitState(GameState state)
     {
         gameStateManager.ExitInnerState(state);
+        OnGameStateChanged?.Invoke();
     }
 
     public void RegisterEvent(GameState state, Action onEnter = null, Action onExit = null)

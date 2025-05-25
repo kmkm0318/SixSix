@@ -71,6 +71,18 @@ MonoBehaviour:
     m_Key: SixSix
     m_Metadata:
       m_Items: []
+  - m_Id: 672424449679360
+    m_Key: PlayDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 672595912826880
+    m_Key: ChaosDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 672646961700864
+    m_Key: GetScore
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

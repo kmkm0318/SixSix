@@ -16,7 +16,7 @@ public class OptionTypeDataSO : ScriptableObject
 public enum OptionType
 {
     GameSpeed,
-    AvailityDiceAutoKeep,
+    AbilityDiceAutoKeep,
     Language,
     Fullscreen,
     Resolution,

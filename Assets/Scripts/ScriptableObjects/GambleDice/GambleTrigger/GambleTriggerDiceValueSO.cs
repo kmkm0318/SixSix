@@ -10,4 +10,16 @@ public class GambleTriggerDiceValueSO : GambleTriggerSO
     {
         return targetValues.Contains(gambleDice.DiceValue);
     }
+
+    public override string GetTriggerDescription(GambleDiceSO gambleDiceSO)
+    {
+        if (triggerDescription == null)
+        {
+            Debug.LogError("Trigger description is not set for " + name);
+            return string.Empty;
+        }
+        triggerDescription.Arguments = new object[] { string.Join(", ", targetValues) };
+        triggerDescription.RefreshString();
+        return triggerDescription.GetLocalizedString();
+    }
 }

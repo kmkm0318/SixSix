@@ -270,7 +270,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     public void ShowHighlight()
     {
         if (UtilityFunctions.IsPointerOverUIElement()) return;
-        DiceHighlight.Instance.ShowHighlight(this);
+        DiceHighlightManager.Instance.ShowHighlight(this);
     }
 
     public virtual DiceInteractType GetHighlightType()

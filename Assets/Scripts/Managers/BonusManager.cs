@@ -165,17 +165,17 @@ public class BonusManager : Singleton<BonusManager>
             case BonusType.Money:
                 MoneyManager.Instance.AddMoney(MoneyManager.Instance.BonusMoney, true);
                 break;
-            case BonusType.AvailityDiceCountMax:
-                DiceManager.Instance.IncreaseCurrentAvailityDiceMax();
+            case BonusType.AbilityDiceCountMax:
+                DiceManager.Instance.IncreaseCurrentAbilityDiceMax();
                 break;
             case BonusType.PlayDice:
                 DiceManager.Instance.StartAddBonusPlayDice();
                 break;
             case BonusType.PlayMax:
-                PlayManager.Instance.IncreasePlayMax();
+                PlayManager.Instance.IncreasePlayMaxAndRemain();
                 break;
             case BonusType.RollMax:
-                RollManager.Instance.IncreaseRollMax();
+                RollManager.Instance.IncreaseRollMaxAndRemain();
                 break;
         }
         SequenceManager.Instance.ApplyParallelCoroutine();
@@ -194,7 +194,7 @@ public class BonusManager : Singleton<BonusManager>
 public enum BonusType
 {
     Money,
-    AvailityDiceCountMax,
+    AbilityDiceCountMax,
     PlayDice,
     PlayMax,
     RollMax,

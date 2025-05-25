@@ -7,7 +7,7 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private int initialRerollCost = 5;
     [SerializeField] private int merchantItemCountMax = 3;
 
-    private AvailityDiceListSO availityDiceListSO;
+    private AbilityDiceListSO abilityDiceListSO;
     private GambleDiceListSO gambleDiceListSO;
     private int rerollCost = 0;
 
@@ -24,17 +24,18 @@ public class ShopManager : Singleton<ShopManager>
         }
     }
 
-    public event Action<AvailityDiceSO, PurchaseResult> OnAvailityDicePurchaseAttempted;
+    public event Action<AbilityDiceSO, PurchaseResult> OnAbilityDicePurchaseAttempted;
     public event Action<GambleDiceSO, PurchaseResult> OnGambleDicePurchaseAttempted;
     public event Action<HandEnhancePurchaseContext, PurchaseResult> OnHandEnhancePurchaseAttempted;
     public event Action<DiceEnhancePurchaseContext, PurchaseResult> OnPlayDiceEnhancePurchaseAttempted;
-    public event Action<AvailityDiceSO> OnAvailityDiceSelled;
+    public event Action<AbilityDiceSO> OnAbilityDiceSelled;
+    public event Action<GambleDiceSO> OnGambleDiceSelled;
     public event Action<int> OnRerollCostChanged;
     public event Action OnRerollCompleted;
 
     private void Start()
     {
-        availityDiceListSO = DataContainer.Instance.ShopAvailityDiceListSO;
+        abilityDiceListSO = DataContainer.Instance.ShopAbilityDiceListSO;
         gambleDiceListSO = DataContainer.Instance.ShopGambleDiceListSO;
 
         RegisterEvents();
@@ -44,7 +45,7 @@ public class ShopManager : Singleton<ShopManager>
     private void RegisterEvents()
     {
         ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
-        DiceManager.Instance.OnAvailityDiceClicked += OnAvailityDiceClicked;
+        DiceManager.Instance.OnAbilityDiceClicked += OnAbilityDiceClicked;
     }
 
     private void OnShopUIClosed()
@@ -52,39 +53,39 @@ public class ShopManager : Singleton<ShopManager>
         EndShop();
     }
 
-    private void OnAvailityDiceClicked(AvailityDice dice)
+    private void OnAbilityDiceClicked(AbilityDice dice)
     {
         if (dice == null || GameManager.Instance.CurrentGameState != GameState.Shop) return;
-        if (!DiceManager.Instance.AvailityDiceList.Contains(dice)) return;
-        var diceSO = dice.AvailityDiceSO;
+        if (!DiceManager.Instance.AbilityDiceList.Contains(dice)) return;
+        var diceSO = dice.AbilityDiceSO;
 
-        DiceManager.Instance.RemoveAvailityDice(dice);
+        DiceManager.Instance.RemoveAbilityDice(dice);
 
-        OnAvailityDiceSelled?.Invoke(diceSO);
+        OnAbilityDiceSelled?.Invoke(diceSO);
     }
     #endregion
 
-    public void TryPurchaseAvailityDice(AvailityDiceSO availityDiceSO)
+    public void TryPurchaseAbilityDice(AbilityDiceSO abilityDiceSO)
     {
-        if (availityDiceSO == null)
+        if (abilityDiceSO == null)
         {
-            OnAvailityDicePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
+            OnAbilityDicePurchaseAttempted?.Invoke(null, PurchaseResult.Failed);
             return;
         }
 
-        if (MoneyManager.Instance.Money < availityDiceSO.price)
+        if (MoneyManager.Instance.Money < abilityDiceSO.price)
         {
-            OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughMoney);
+            OnAbilityDicePurchaseAttempted?.Invoke(abilityDiceSO, PurchaseResult.NotEnoughMoney);
             return;
         }
 
-        if (DiceManager.Instance.AvailityDiceList.Count >= DiceManager.Instance.CurrentAvailityDiceMax)
+        if (DiceManager.Instance.AbilityDiceList.Count >= DiceManager.Instance.CurrentAbilityDiceMax)
         {
-            OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.NotEnoughDiceSlot);
+            OnAbilityDicePurchaseAttempted?.Invoke(abilityDiceSO, PurchaseResult.NotEnoughDiceSlot);
             return;
         }
 
-        OnAvailityDicePurchaseAttempted?.Invoke(availityDiceSO, PurchaseResult.Success);
+        OnAbilityDicePurchaseAttempted?.Invoke(abilityDiceSO, PurchaseResult.Success);
     }
 
     public void TryPurchaseGambleDice(GambleDiceSO gambleDiceSO)
@@ -140,19 +141,26 @@ public class ShopManager : Singleton<ShopManager>
         }
     }
 
-    public List<AvailityDiceSO> GetRandomAvailityDiceList()
+    public void SellGambleDice(GambleDiceSO gambleDiceSO)
     {
-        List<AvailityDiceSO> randomAvailityDiceList = new();
-        while (randomAvailityDiceList.Count < merchantItemCountMax)
-        {
-            if (randomAvailityDiceList.Count >= availityDiceListSO.availityDiceSOList.Count) break;
+        if (gambleDiceSO == null) return;
 
-            AvailityDiceSO randomAvailityDice = availityDiceListSO.GetRandomAvailityDiceSO();
-            if (randomAvailityDice == null) continue;
-            if (randomAvailityDiceList.Contains(randomAvailityDice)) continue;
-            randomAvailityDiceList.Add(randomAvailityDice);
+        OnGambleDiceSelled?.Invoke(gambleDiceSO);
+    }
+
+    public List<AbilityDiceSO> GetRandomAbilityDiceList()
+    {
+        List<AbilityDiceSO> randomAbilityDiceList = new();
+        while (randomAbilityDiceList.Count < merchantItemCountMax)
+        {
+            if (randomAbilityDiceList.Count >= abilityDiceListSO.abilityDiceSOList.Count) break;
+
+            AbilityDiceSO randomAbilityDice = abilityDiceListSO.GetRandomAbilityDiceSO();
+            if (randomAbilityDice == null) continue;
+            if (randomAbilityDiceList.Contains(randomAbilityDice)) continue;
+            randomAbilityDiceList.Add(randomAbilityDice);
         }
-        return randomAvailityDiceList;
+        return randomAbilityDiceList;
     }
 
     public List<GambleDiceSO> GetRandomGambleDiceList()
@@ -203,7 +211,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (MoneyManager.Instance.Money < RerollCost)
         {
-            OnAvailityDicePurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
+            OnAbilityDicePurchaseAttempted?.Invoke(null, PurchaseResult.NotEnoughMoney);
             return;
         }
 

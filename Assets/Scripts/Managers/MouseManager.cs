@@ -7,9 +7,10 @@ public class MouseManager : Singleton<MouseManager>
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private LayerMask mouseOverLayerMask;
 
-    public event Action OnMouseExit;
-
     private GameObject lastHoveredObject;
+
+    public event Action OnMouseExited;
+    public event Action OnMouseClicked;
 
     private void Update()
     {
@@ -28,6 +29,8 @@ public class MouseManager : Singleton<MouseManager>
             {
                 clickable.OnClick();
             }
+
+            OnMouseClicked?.Invoke();
         }
     }
 
@@ -43,7 +46,7 @@ public class MouseManager : Singleton<MouseManager>
             if (hoveredObject != lastHoveredObject)
             {
                 lastHoveredObject = hoveredObject;
-                OnMouseExit?.Invoke();
+                OnMouseExited?.Invoke();
 
                 if (hoveredObject.TryGetComponent(out IHighlightable highlightable))
                 {
@@ -58,8 +61,8 @@ public class MouseManager : Singleton<MouseManager>
         }
         else if (lastHoveredObject != null)
         {
-            OnMouseExit?.Invoke();
             lastHoveredObject = null;
+            OnMouseExited?.Invoke();
         }
     }
 }

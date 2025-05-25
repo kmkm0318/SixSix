@@ -15,8 +15,18 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 746ceb8ee23b5c74389389554d5b2e8f
   m_SerializeEntries:
+  - m_GUID: b20a225e51e76ad48ab00b9ad829b69d
+    m_Address: Assets/Localization/Table/AbilityDiceTrigger Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b42d05c8298834447a192c01a058061a
     m_Address: Assets/Localization/Table/UIString Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1c1b7cd50819b44aae257bea624d264
+    m_Address: Assets/Localization/Table/GambleDice Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

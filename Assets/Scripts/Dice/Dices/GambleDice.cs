@@ -76,7 +76,7 @@ public class GambleDice : Dice
 
     public override void ShowToolTip()
     {
-        string name = gambleDiceSO.diceName;
+        string name = gambleDiceSO.DiceName;
         string description = gambleDiceSO.GetDescriptionText();
         ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Gamble_Dice);
     }

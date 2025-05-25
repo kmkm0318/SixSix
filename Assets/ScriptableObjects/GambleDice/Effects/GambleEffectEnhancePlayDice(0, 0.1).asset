@@ -12,7 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f04e736644430a419d63512d5c64db8, type: 3}
   m_Name: GambleEffectEnhancePlayDice(0, 0.1)
   m_EditorClassIdentifier: 
-  description: Enhance All Play Dice\n{0}
-  value:
+  effectDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 1552873299968
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  enhanceValue:
     baseScore: 0
-    multiplier: 0.25
+    multiplier: 0.1
+  references:
+    version: 2
+    RefIds: []

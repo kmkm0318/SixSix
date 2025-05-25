@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: AbilityDice Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: AbilityDice
+  m_TableCollectionNameGuidString: b20a225e51e76ad48ab00b9ad829b69d
+  m_Entries:
+  - m_Id: 41002868736
+    m_Key: Trigger_PlayDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1975462010880
+    m_Key: Trigger_Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2728654151680
+    m_Key: Trigger_MultipleOfN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3133177995264
+    m_Key: Trigger_WithoutKeep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3459352240128
+    m_Key: Trigger_RoundCleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7289464823808
+    m_Key: Trigger_RoundStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7382175719424
+    m_Key: Trigger_ShopStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7607502118912
+    m_Key: Trigger_ShopEnded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9168710148096
+    m_Key: Effect_Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9413904965632
+    m_Key: Effect_Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10823719591936
+    m_Key: Effect_Grow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11168948559872
+    m_Key: Effect_Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284220616704
+    m_Key: Effect_RerollCost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12829939081216
+    m_Key: Name_0001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12861283115008
+    m_Key: Name_0002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12903351984128
+    m_Key: Name_0003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12916761174016
+    m_Key: Name_0004
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12923128127488
+    m_Key: Name_0005
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12928962404352
+    m_Key: Name_0006
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12933760688128
+    m_Key: Name_0007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12938114375680
+    m_Key: Name_0008
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12942635835392
+    m_Key: Name_0009
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12947195043840
+    m_Key: Name_0010
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12961040441344
+    m_Key: Name_0011
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12967680024576
+    m_Key: Name_0012
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12971635253248
+    m_Key: Name_0013
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12975926026240
+    m_Key: Name_0014
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12978799124480
+    m_Key: Name_0015
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12990534787072
+    m_Key: Name_0016
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12996037713920
+    m_Key: Name_0017
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13000894717952
+    m_Key: Name_0018
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13006024351744
+    m_Key: Name_0019
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13013767036928
+    m_Key: Name_0020
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13026400280576
+    m_Key: Name_0021
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13028379992064
+    m_Key: Name_0022
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13029516648448
+    m_Key: Name_0023
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13040618971136
+    m_Key: Name_0024
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13041617215488
+    m_Key: Name_0025
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042154086400
+    m_Key: Name_0026
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042657402880
+    m_Key: Name_0027
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043127164928
+    m_Key: Name_0028
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043626287104
+    m_Key: Name_0029
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13044100243456
+    m_Key: Name_0030
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18026581073920
+    m_Key: Trigger_HandPlayed
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4204754036361527393
+  references:
+    version: 2
+    RefIds:
+    - rid: 4204754036361527393
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1748148101403

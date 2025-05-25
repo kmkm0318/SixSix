@@ -9,7 +9,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private double previousRoundScore = 0;
     private double highestRoundScore = 0;
     private double playScore = 0;
-    private ScorePair scorePair = new();
+    private ScorePair scorePair = new(0, 0);
 
     public double TargetRoundScore
     {
@@ -74,7 +74,6 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    public event Action OnCurrentRoundScoreUpdated;
     public event Action<double> OnTargetRoundScoreChanged;
     public event Action<double> OnCurrentRoundScoreChanged;
     public event Action<double> OnPlayScoreChanged;
@@ -116,6 +115,8 @@ public class ScoreManager : Singleton<ScoreManager>
         ScorePair = new();
         SequenceManager.Instance.ApplyParallelCoroutine();
         UpdateCurrentRoundScore(UtilityFunctions.SafeAdd(CurrentRoundScore, PlayScore));
+
+        GameManager.Instance.ExitState(GameState.Play);
     }
     #endregion
 
@@ -125,8 +126,6 @@ public class ScoreManager : Singleton<ScoreManager>
         CurrentRoundScore = score;
         PlayScore = 0;
         SequenceManager.Instance.ApplyParallelCoroutine();
-
-        OnCurrentRoundScoreUpdated?.Invoke();
     }
 
     public void UpdateTargetRoundScore()

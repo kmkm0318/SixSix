@@ -12,5 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0d412d86e67e84d8de3ab973ad28fb, type: 3}
   m_Name: GambleEffectGetPlayRemainSO
   m_EditorClassIdentifier: 
-  description: Get Play Remain <color={{0}}>+{0}</color>
+  effectDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 1945023946752
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   value: 1
+  references:
+    version: 2
+    RefIds: []

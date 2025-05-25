@@ -1,12 +1,16 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class ToolTipUI : Singleton<ToolTipUI>
 {
     [SerializeField] private LabeledValuePanel labelPanel;
     [SerializeField] private RectTransform labelPanelRectTransform;
     [SerializeField] private TextPanel tagPanel;
+    [SerializeField] private LocalizeStringEvent tagTextEvent;
+    [SerializeField] private List<TagData> tagDataList;
     [SerializeField] private float offset;
 
     private RectTransform rectTransform;
@@ -27,7 +31,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
     {
         ShopUI.Instance.OnShopUIOpened += HideToolTip;
         RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
-        MouseManager.Instance.OnMouseExit += OnMouseExit;
+        MouseManager.Instance.OnMouseExited += OnMouseExit;
     }
 
     private void OnMouseExit()
@@ -59,7 +63,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
         rectTransform.position = targetPos + offsetDirection * offset;
     }
 
-    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None, AvailityDiceRarity rarity = AvailityDiceRarity.Normal)
+    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None, AbilityDiceRarity rarity = AbilityDiceRarity.Normal)
     {
         if (transform == null) return;
         if (transform is RectTransform rect)
@@ -84,7 +88,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
     }
 
     #region HandleTag
-    private void HandleTag(ToolTipTag tag, AvailityDiceRarity rarity)
+    private void HandleTag(ToolTipTag tag, AbilityDiceRarity rarity)
     {
         if (tag == ToolTipTag.None)
         {
@@ -94,50 +98,17 @@ public class ToolTipUI : Singleton<ToolTipUI>
 
         tagPanel.gameObject.SetActive(true);
 
-        string tagText = string.Empty;
-        if (tag == ToolTipTag.Availity_Dice)
+        TagData tagData = tagDataList.Find(data => data.Tag == tag);
+        if (tagData != null)
         {
-            HandleTagColor(rarity);
-            tagText = rarity.ToString();
+            tagTextEvent.StringReference = tagData.LocalizedString;
+            tagPanel.SetColor(tagData.color);
         }
         else
         {
-            HandleTagColor(tag);
-            tagText = tag.ToString();
+            Debug.LogWarning($"TagData for {tag} not found.");
+            tagPanel.gameObject.SetActive(false);
         }
-        tagText = tagText.ToUpper().Replace("_", " ");
-        tagPanel.SetText(tagText);
-    }
-
-    private void HandleTagColor(ToolTipTag tag)
-    {
-        Color color = tag switch
-        {
-            ToolTipTag.Play_Dice => Color.white,
-            ToolTipTag.Chaos_Dice => Color.black,
-            ToolTipTag.Gamble_Dice => Color.yellow,
-            _ => Color.white,
-        };
-        SetTagPanelColor(color);
-    }
-
-    private void HandleTagColor(AvailityDiceRarity rarity)
-    {
-        Color color = rarity switch
-        {
-            AvailityDiceRarity.Normal => Color.gray,
-            AvailityDiceRarity.Rare => Color.blue,
-            AvailityDiceRarity.Epic => Color.red,
-            AvailityDiceRarity.Legendary => Color.magenta,
-            _ => Color.white,
-        };
-        SetTagPanelColor(color);
-    }
-
-    private void SetTagPanelColor(Color color)
-    {
-        color.a = 0.75f;
-        tagPanel.SetColor(color);
     }
     #endregion
 
@@ -185,6 +156,15 @@ public enum ToolTipTag
     None,
     Play_Dice,
     Chaos_Dice,
-    Availity_Dice,
+    Ability_Dice,
     Gamble_Dice,
+}
+
+[Serializable]
+public class TagData
+{
+    public ToolTipTag Tag;
+    public AbilityDiceRarity Rarity;
+    public Color color;
+    public LocalizedString LocalizedString;
 }

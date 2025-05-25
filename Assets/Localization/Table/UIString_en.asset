@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3350489079808
-    m_Localized: Reroll
+    m_Localized: Reroll<color=#FCEFAF>(${0})</color>
     m_Metadata:
       m_Items: []
   - m_Id: 1957996929024
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10536128749568
-    m_Localized: Advise
+    m_Localized: Advice
     m_Metadata:
       m_Items: []
   - m_Id: 1412716437504
@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3153805582336
-    m_Localized: Availity Dice
+    m_Localized: Ability Dice
     m_Metadata:
       m_Items: []
   - m_Id: 3287507410944
@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18826900414464
-    m_Localized: Availity Dice Auto Keep
+    m_Localized: Ability Dice Auto Keep
     m_Metadata:
       m_Items: []
   - m_Id: 19129821437952
@@ -148,6 +148,92 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 20419997736960
     m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 303731186212864
+    m_Localized: '<wave>Cleared Round</wave> : <bounce>{0}</bounce>
+
+
+      <wave>Target
+      Score</wave> : <bounce>{1}</bounce>
+
+
+      <wave>Your Score</wave> : <bounce>{2}</bounce>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304136016240640
+    m_Localized: '<wave>Round Clear</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306144316104704
+    m_Localized: '<wave>Play Remain</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306266085138432
+    m_Localized: '<wave>Boss Round Clear</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306342689906688
+    m_Localized: '<wave>Money Interest</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>
+
+      <wave><color=#888888><size=75%>($1
+      Per $10, Maximum : ${1})</size></color><wave>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338977495588864
+    m_Localized: Buy<color=#FCEFAF>(${0})</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339112480874496
+    m_Localized: Sell{<color=#FCEFAF>({0})</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583845589426176
+    m_Localized: Play Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583909003108352
+    m_Localized: Chaos Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583958852411392
+    m_Localized: Gamble Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584024421965824
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584182777913344
+    m_Localized: Rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584235538063360
+    m_Localized: Epic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584276432527360
+    m_Localized: Legendary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654107471126528
+    m_Localized: Keep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654170293411840
+    m_Localized: Unkeep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654271086731264
+    m_Localized: Enhance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654347351760896
+    m_Localized: Sell(${0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 654425944629248
+    m_Localized: Use
     m_Metadata:
       m_Items: []
   references:

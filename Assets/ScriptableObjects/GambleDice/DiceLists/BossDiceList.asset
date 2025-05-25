@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: BossDiceList
   m_EditorClassIdentifier: 
   gambleDiceSOList:
-  - {fileID: 11400000, guid: a07afa362d4fc814a814b418dbc4ce0b, type: 2}
+  - {fileID: 11400000, guid: 1d4ea33cb814abd41ba58774de09268b, type: 2}
+  - {fileID: 11400000, guid: c989386392a3ce84585bccf04fd53f2f, type: 2}

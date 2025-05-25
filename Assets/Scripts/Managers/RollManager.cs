@@ -116,21 +116,11 @@ public class RollManager : Singleton<RollManager>
     }
 
 
-    public void IncreaseRollMax()
+    public void IncreaseRollMaxAndRemain(int value = 1)
     {
-        SetRollMax(rollMax + 1, false);
-    }
-
-    private void SetRollMax(int value, bool resetRollRemain = true)
-    {
-        rollMax = value;
+        rollMax += value;
         currentRollMax = rollMax;
-
-        if (resetRollRemain)
-        {
-            RollRemain = rollMax;
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
+        RollRemain += value;
     }
 
     public void SetCurrentRollMax(int value = -1, bool resetRollRemain = true)

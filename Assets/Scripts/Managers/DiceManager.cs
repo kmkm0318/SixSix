@@ -2,34 +2,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Pool;
 
 public class DiceManager : Singleton<DiceManager>
 {
     [SerializeField] private PlayDice playDicePrefab;
-    [SerializeField] private AvailityDice availityDicePrefab;
+    [SerializeField] private AbilityDice abilityDicePrefab;
     [SerializeField] private ChaosDice chaosDicePrefab;
     [SerializeField] private GambleDice gambleDicePrefab;
     [SerializeField] private Playboard playDicePlayboard;
-    [SerializeField] private Playboard availityDicePlayboard;
+    [SerializeField] private Playboard abilityDicePlayboard;
     [SerializeField] private float diceGenerateDelay = 0.25f;
     [SerializeField] private int defaultPlayDiceValueMax = 6;
     [SerializeField] private int defaultChaosDiceValueMax = 4;
+    [SerializeField] private LocalizedString playDiceName;
+    [SerializeField] private LocalizedString chaosDiceName;
+    [SerializeField] private LocalizedString getScoreDescription;
 
     private List<PlayDice> playDiceList = new();
-    private List<AvailityDice> availityDiceList = new();
+    private List<AbilityDice> abilityDiceList = new();
     private List<ChaosDice> chaosDiceList = new();
     private List<GambleDice> gambleDiceList = new();
     private ObjectPool<PlayDice> playDicePool;
-    private ObjectPool<AvailityDice> availityDicePool;
+    private ObjectPool<AbilityDice> abilityDicePool;
     private ObjectPool<ChaosDice> chaosDicePool;
     private ObjectPool<GambleDice> gambleDicePool;
-    private bool isAvailityDiceAutoKeep = false;
-    private int currentAvailityDiceMax = 0;
+    private bool isAbilityDiceAutoKeep = false;
+    private int currentAbilityDiceMax = 0;
     private int currentGambleDiceMax = 0;
 
     public List<PlayDice> PlayDiceList => playDiceList;
-    public List<AvailityDice> AvailityDiceList => availityDiceList;
+    public List<AbilityDice> AbilityDiceList => abilityDiceList;
     public List<ChaosDice> ChaosDiceList => chaosDiceList;
     public List<GambleDice> GambleDiceList => gambleDiceList;
     public List<Dice> AllDiceList
@@ -38,20 +42,20 @@ public class DiceManager : Singleton<DiceManager>
         {
             List<Dice> allDiceList = new();
             allDiceList.AddRange(playDiceList);
-            allDiceList.AddRange(availityDiceList);
+            allDiceList.AddRange(abilityDiceList);
             allDiceList.AddRange(chaosDiceList);
             allDiceList.AddRange(gambleDiceList);
             return allDiceList;
         }
     }
-    public int CurrentAvailityDiceMax
+    public int CurrentAbilityDiceMax
     {
-        get => currentAvailityDiceMax;
+        get => currentAbilityDiceMax;
         set
         {
-            if (currentAvailityDiceMax == value) return;
-            currentAvailityDiceMax = value;
-            OnCurrentAvailityDiceMaxChanged?.Invoke(currentAvailityDiceMax);
+            if (currentAbilityDiceMax == value) return;
+            currentAbilityDiceMax = value;
+            OnCurrentAbilityDiceMaxChanged?.Invoke(currentAbilityDiceMax);
         }
     }
     public int CurrentGambleDiceMax
@@ -64,16 +68,19 @@ public class DiceManager : Singleton<DiceManager>
             OnCurrentGambleDiceMaxChanged?.Invoke(currentGambleDiceMax);
         }
     }
-    public bool IsAvailityDiceAutoKeep => isAvailityDiceAutoKeep;
+    public bool IsAbilityDiceAutoKeep => isAbilityDiceAutoKeep;
     public List<int> UsableDiceValues { get; set; }
     public bool IsKeepable { get; set; } = true;
+    public LocalizedString PlayDiceName => playDiceName;
+    public LocalizedString ChaosDiceName => chaosDiceName;
+    public LocalizedString GetScoreDescription => getScoreDescription;
 
     public event Action<PlayDice> OnPlayDiceClicked;
-    public event Action<AvailityDice> OnAvailityDiceClicked;
+    public event Action<AbilityDice> OnAbilityDiceClicked;
     public event Action<ChaosDice> OnChaosDiceClicked;
     public event Action<GambleDice> OnGambleDiceClicked;
-    public event Action<int> OnAvailityDiceCountChanged;
-    public event Action<int> OnCurrentAvailityDiceMaxChanged;
+    public event Action<int> OnAbilityDiceCountChanged;
+    public event Action<int> OnCurrentAbilityDiceMaxChanged;
     public event Action<int> OnGambleDiceCountChanged;
     public event Action<int> OnCurrentGambleDiceMaxChanged;
 
@@ -85,22 +92,22 @@ public class DiceManager : Singleton<DiceManager>
 
     private void Init()
     {
-        OnAvailityDiceAutoKeepChanged(OptionManager.Instance.OptionData.availityDiceAutoKeep);
+        OnAbilityDiceAutoKeepChanged(OptionManager.Instance.OptionData.abilityDiceAutoKeep);
 
         playDicePool = new(() => Instantiate(playDicePrefab), playDice => { playDice.gameObject.SetActive(true); }, playDice => playDice.gameObject.SetActive(false), playDice => Destroy(playDice.gameObject), false);
-        availityDicePool = new(() => Instantiate(availityDicePrefab), availityDice => { availityDice.gameObject.SetActive(true); }, availityDice => availityDice.gameObject.SetActive(false), availityDice => Destroy(availityDice.gameObject), false);
+        abilityDicePool = new(() => Instantiate(abilityDicePrefab), abilityDice => { abilityDice.gameObject.SetActive(true); }, abilityDice => abilityDice.gameObject.SetActive(false), abilityDice => Destroy(abilityDice.gameObject), false);
         chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { chaosDice.gameObject.SetActive(true); }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
         gambleDicePool = new(() => Instantiate(gambleDicePrefab), gambleDice => { gambleDice.gameObject.SetActive(true); }, gambleDice => gambleDice.gameObject.SetActive(false), gambleDice => Destroy(gambleDice.gameObject), false);
 
-        CurrentAvailityDiceMax = DataContainer.Instance.CurrentDiceStat.defaultAvailityDiceMax;
+        CurrentAbilityDiceMax = DataContainer.Instance.CurrentDiceStat.defaultAbilityDiceMax;
         CurrentGambleDiceMax = DataContainer.Instance.CurrentDiceStat.defaultGambleDiceMax;
     }
 
     #region RegisterEvents
     private void RegisterEvents()
     {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AvailityDiceAutoKeep, OnAvailityDiceAutoKeepChanged);
-        ShopManager.Instance.OnAvailityDicePurchaseAttempted += OnPurchaseAttempted;
+        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AbilityDiceAutoKeep, OnAbilityDiceAutoKeepChanged);
+        ShopManager.Instance.OnAbilityDicePurchaseAttempted += OnPurchaseAttempted;
     }
 
     public void StartAddBonusPlayDice()
@@ -108,23 +115,23 @@ public class DiceManager : Singleton<DiceManager>
         StartCoroutine(AddBonusPlayDice());
     }
 
-    public void IncreaseCurrentAvailityDiceMax()
+    public void IncreaseCurrentAbilityDiceMax()
     {
-        CurrentAvailityDiceMax++;
+        CurrentAbilityDiceMax++;
     }
 
-    private void OnAvailityDiceAutoKeepChanged(int value)
+    private void OnAbilityDiceAutoKeepChanged(int value)
     {
-        isAvailityDiceAutoKeep = value == 1;
+        isAbilityDiceAutoKeep = value == 1;
     }
 
-    private void OnPurchaseAttempted(AvailityDiceSO sO, PurchaseResult result)
+    private void OnPurchaseAttempted(AbilityDiceSO sO, PurchaseResult result)
     {
         if (sO == null) return;
 
         if (result == PurchaseResult.Success)
         {
-            GenerateAvailityDice(sO);
+            GenerateAbilityDice(sO);
         }
     }
     #endregion
@@ -236,60 +243,60 @@ public class DiceManager : Singleton<DiceManager>
     }
     #endregion
 
-    #region Availity Dice
-    private void GenerateAvailityDice(AvailityDiceSO sO)
+    #region Ability Dice
+    private void GenerateAbilityDice(AbilityDiceSO sO)
     {
-        var availityDice = availityDicePool.Get();
-        availityDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        availityDice.Init(sO, availityDicePlayboard);
+        var abilityDice = abilityDicePool.Get();
+        abilityDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        abilityDice.Init(sO, abilityDicePlayboard);
 
-        AddAvailityDice(availityDice);
+        AddAbilityDice(abilityDice);
     }
 
-    private void AddAvailityDice(AvailityDice availityDice)
+    private void AddAbilityDice(AbilityDice abilityDice)
     {
-        availityDiceList.Add(availityDice);
+        abilityDiceList.Add(abilityDice);
 
-        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
+        OnAbilityDiceCountChanged?.Invoke(abilityDiceList.Count);
     }
 
-    public void RemoveAvailityDice(AvailityDice availityDice)
+    public void RemoveAbilityDice(AbilityDice abilityDice)
     {
-        availityDiceList.Remove(availityDice);
-        OnAvailityDiceCountChanged?.Invoke(availityDiceList.Count);
+        abilityDiceList.Remove(abilityDice);
+        OnAbilityDiceCountChanged?.Invoke(abilityDiceList.Count);
 
-        availityDice.FadeOut(() =>
+        abilityDice.FadeOut(() =>
         {
-            availityDicePool.Release(availityDice);
+            abilityDicePool.Release(abilityDice);
         });
     }
 
-    public void EnableAvailityDice(AvailityDice availityDice)
+    public void EnableAbilityDice(AbilityDice abilityDice)
     {
-        availityDice.IsEnabled = true;
+        abilityDice.IsEnabled = true;
 
-        availityDiceList.Add(availityDice);
+        abilityDiceList.Add(abilityDice);
     }
 
-    public void DisableAvailityDice(AvailityDice availityDice)
+    public void DisableAbilityDice(AbilityDice abilityDice)
     {
-        availityDice.IsEnabled = false;
+        abilityDice.IsEnabled = false;
 
-        availityDiceList.Remove(availityDice);
+        abilityDiceList.Remove(abilityDice);
     }
 
-    public List<AvailityDice> GetRandomAvailityDiceList(int count)
+    public List<AbilityDice> GetRandomAbilityDiceList(int count)
     {
-        List<AvailityDice> res = new();
+        List<AbilityDice> res = new();
 
-        if (AvailityDiceList.Count <= count)
+        if (AbilityDiceList.Count <= count)
         {
-            res.AddRange(AvailityDiceList);
+            res.AddRange(AbilityDiceList);
             return res;
         }
         else
         {
-            var cloneList = new List<AvailityDice>(availityDiceList);
+            var cloneList = new List<AbilityDice>(abilityDiceList);
             for (int i = 0; i < count; i++)
             {
                 int randomIndex = UnityEngine.Random.Range(0, cloneList.Count);
@@ -305,8 +312,8 @@ public class DiceManager : Singleton<DiceManager>
     private void GenerateChaosDice()
     {
         var chaosDice = chaosDicePool.Get();
-        chaosDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, availityDicePlayboard);
+        chaosDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, abilityDicePlayboard);
 
         AddChaosDice(chaosDice);
     }
@@ -356,8 +363,8 @@ public class DiceManager : Singleton<DiceManager>
         if (gambleDiceList.Count >= currentGambleDiceMax) return;
 
         var gambleDice = gambleDicePool.Get();
-        gambleDice.transform.SetPositionAndRotation(availityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        gambleDice.Init(gambleDiceSO, availityDicePlayboard);
+        gambleDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        gambleDice.Init(gambleDiceSO, abilityDicePlayboard);
 
         AddGambleDice(gambleDice);
     }
@@ -399,9 +406,9 @@ public class DiceManager : Singleton<DiceManager>
         {
             OnPlayDiceClicked?.Invoke(playDice);
         }
-        else if (dice is AvailityDice availityDice)
+        else if (dice is AbilityDice abilityDice)
         {
-            OnAvailityDiceClicked?.Invoke(availityDice);
+            OnAbilityDiceClicked?.Invoke(abilityDice);
         }
         else if (dice is ChaosDice chaosDice)
         {

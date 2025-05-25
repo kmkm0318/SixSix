@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: GambleDice_ko
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: d1c1b7cd50819b44aae257bea624d264, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 54198149120
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4\uC758 \uAC12\uC774\n<color=#FCEFAF>\"{0}\"</color>\uC77C
+      \uB54C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 847450087424
+    m_Localized: "\uB3C8\uC744 \uB450 \uBC30\uB85C \uB9CC\uB4ED\uB2C8\uB2E4\n<size=75%><color=#888888>(\uCD5C\uB300
+      ${0})</color></size>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1159825072128
+    m_Localized: "\uBAA8\uB4E0 \uAC00\uB2A5\uD55C \uD578\uB4DC\uB97C\n<color=#C3E6C3>{0}</color>
+      \uB808\uBCA8 \uAC15\uD654\uD569\uB2C8\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1552873299968
+    m_Localized: "\uBAA8\uB4E0 \uD50C\uB808\uC774 \uB2E4\uC774\uC2A4\uB97C\n<color=#C3E6C3>{0}</color>\uB9CC\uD07C
+      \uAC15\uD654\uD569\uB2C8\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1945023946752
+    m_Localized: "\uD50C\uB808\uC774 \uD69F\uC218 <color=#C3E6C3>+{0}</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637021192192
+    m_Localized: "\uB864 \uD69F\uC218 <color=#C3E6C3>+{0}</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5362224078848
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0001"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5392049774592
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5412060798976
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0003"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5415814701056
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0004"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5426178826240
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0005"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5430670925824
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 0006"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5447959846912
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 1001"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5467568218112
+    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4 1002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7238457892864
+    m_Localized: "\uCD5C\uB300 \uD50C\uB808\uC774 \uD69F\uC218 <color=#C3E6C3>+{0}</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7349871190016
+    m_Localized: "\uCD5C\uB300 \uB864 \uD69F\uC218 <color=#C3E6C3>+{0}</color>"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
