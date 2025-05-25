@@ -170,7 +170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 306342689906688
-    m_Localized: "<wave>\uACE8\uB4DC \uC774\uC790</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>\n<wave><color=#888888><size=75%>($10\uB2F9
+    m_Localized: "<wave>\uACE8\uB4DC \uC774\uC790</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>\n<wave><color=#bbbbbb><size=85%>($10\uB2F9
       $1, \uCD5C\uB300 : ${1})</size></color><wave>"
     m_Metadata:
       m_Items: []
@@ -183,15 +183,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 583845589426176
-    m_Localized: "\uD50C\uB808\uC774 \uB2E4\uC774\uC2A4"
+    m_Localized: "\uD50C\uB808\uC774"
     m_Metadata:
       m_Items: []
   - m_Id: 583909003108352
-    m_Localized: "\uCE74\uC624\uC2A4 \uB2E4\uC774\uC2A4"
+    m_Localized: "\uCE74\uC624\uC2A4"
     m_Metadata:
       m_Items: []
   - m_Id: 583958852411392
-    m_Localized: "\uAC2C\uBE14 \uB2E4\uC774\uC2A4"
+    m_Localized: "\uAC2C\uBE14"
     m_Metadata:
       m_Items: []
   - m_Id: 584024421965824

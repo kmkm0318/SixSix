@@ -26,6 +26,6 @@ public class ChaosDice : Dice
         descriptionString.RefreshString();
         string description = descriptionString.GetLocalizedString();
 
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Chaos_Dice);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.ChaosDice);
     }
 }

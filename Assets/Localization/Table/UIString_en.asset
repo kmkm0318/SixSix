@@ -176,7 +176,7 @@ MonoBehaviour:
   - m_Id: 306342689906688
     m_Localized: '<wave>Money Interest</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>
 
-      <wave><color=#888888><size=75%>($1
+      <wave><color=#bbbbbb><size=85%>($1
       Per $10, Maximum : ${1})</size></color><wave>'
     m_Metadata:
       m_Items: []
@@ -189,15 +189,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 583845589426176
-    m_Localized: Play Dice
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 583909003108352
-    m_Localized: Chaos Dice
+    m_Localized: Chaos
     m_Metadata:
       m_Items: []
   - m_Id: 583958852411392
-    m_Localized: Gamble Dice
+    m_Localized: Gamble
     m_Metadata:
       m_Items: []
   - m_Id: 584024421965824

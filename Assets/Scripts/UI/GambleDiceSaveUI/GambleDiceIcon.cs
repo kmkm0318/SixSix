@@ -129,7 +129,7 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
         if (gambleDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(RectTransform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.Gamble_Dice);
+            ToolTipUI.Instance.ShowToolTip(RectTransform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 

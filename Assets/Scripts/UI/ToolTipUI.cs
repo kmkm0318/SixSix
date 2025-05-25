@@ -98,7 +98,17 @@ public class ToolTipUI : Singleton<ToolTipUI>
 
         tagPanel.gameObject.SetActive(true);
 
-        TagData tagData = tagDataList.Find(data => data.Tag == tag);
+        TagData tagData;
+
+        if (tag == ToolTipTag.AbilityDice)
+        {
+            tagData = tagDataList.Find(data => data.Tag == tag && data.Rarity == rarity);
+        }
+        else
+        {
+            tagData = tagDataList.Find(data => data.Tag == tag);
+        }
+
         if (tagData != null)
         {
             tagTextEvent.StringReference = tagData.LocalizedString;
@@ -106,7 +116,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
         }
         else
         {
-            Debug.LogWarning($"TagData for {tag} not found.");
+            Debug.LogWarning($"Tag data not found for tag: {tag} with rarity: {rarity}");
             tagPanel.gameObject.SetActive(false);
         }
     }
@@ -154,10 +164,10 @@ public class ToolTipUI : Singleton<ToolTipUI>
 public enum ToolTipTag
 {
     None,
-    Play_Dice,
-    Chaos_Dice,
-    Ability_Dice,
-    Gamble_Dice,
+    PlayDice,
+    ChaosDice,
+    AbilityDice,
+    GambleDice,
 }
 
 [Serializable]

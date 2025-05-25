@@ -46,6 +46,6 @@ public class PlayDice : Dice
             description += "\n" + faceDescription;
         }
 
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Play_Dice);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.PlayDice);
     }
 }

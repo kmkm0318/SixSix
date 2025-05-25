@@ -27,7 +27,7 @@ MonoBehaviour:
   - m_Id: 847450087424
     m_Localized: 'Make Money Double
 
-      <size=75%><color=#888888>(Maximum is ${0})</color></size>'
+      <size=85%><color=#bbbbbb>(Maximum is ${0})</color></size>'
     m_Metadata:
       m_Items: []
   - m_Id: 1159825072128

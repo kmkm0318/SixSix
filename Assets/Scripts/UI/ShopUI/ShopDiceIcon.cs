@@ -48,12 +48,12 @@ public class ShopDiceIcon : UIMouseHandler
         if (abilityDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.Ability_Dice, abilityDiceSO.rarity);
+            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.AbilityDice, abilityDiceSO.rarity);
         }
         else if (gambleDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.Gamble_Dice);
+            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 

@@ -78,6 +78,6 @@ public class GambleDice : Dice
     {
         string name = gambleDiceSO.DiceName;
         string description = gambleDiceSO.GetDescriptionText();
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.Gamble_Dice);
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.GambleDice);
     }
 }

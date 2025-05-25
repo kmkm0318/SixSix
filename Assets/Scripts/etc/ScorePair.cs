@@ -21,7 +21,7 @@ public struct ScorePair
 
         if (!hasBaseScore && !hasMultiplier)
         {
-            return "<color=#888888>(0)</color>";
+            return "<color=#bbbbbb>(0)</color>";
         }
 
         if (hasBaseScore)
