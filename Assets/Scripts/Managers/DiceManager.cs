@@ -312,8 +312,8 @@ public class DiceManager : Singleton<DiceManager>
     private void GenerateChaosDice()
     {
         var chaosDice = chaosDicePool.Get();
-        chaosDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, abilityDicePlayboard);
+        chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
+        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, playDicePlayboard);
 
         AddChaosDice(chaosDice);
     }

@@ -9,27 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0630e8fb6fc1046898ddb7ffff776b, type: 3}
-  m_Name: BossRound_RollOnceSO
+  m_Script: {fileID: 11500000, guid: 06fde48df38b2b645b41c40c0fe79a36, type: 3}
+  m_Name: KeywordDataSO
   m_EditorClassIdentifier: 
-  bossName:
+  keyword: PlayDice
+  sprite: {fileID: 0}
+  localizedName:
     m_TableReference:
-      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+      m_TableCollectionName: GUID:dadd668eab285e844a43e03bad854ca2
     m_TableEntryReference:
-      m_KeyId: 16562265661440
+      m_KeyId: 0
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  bossDescription:
-    m_TableReference:
-      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
-    m_TableEntryReference:
-      m_KeyId: 16577956552704
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
+  color: {r: 0, g: 0, b: 0, a: 0}
   references:
     version: 2
     RefIds: []

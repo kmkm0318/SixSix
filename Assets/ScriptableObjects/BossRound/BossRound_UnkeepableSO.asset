@@ -12,5 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7205e6802b4374b409a984bd5d63ebb0, type: 3}
   m_Name: BossRound_UnkeepableSO
   m_EditorClassIdentifier: 
-  bossName: Unkeepable
-  bossDescription: Disable Dice Keep
+  bossName:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 16595824287744
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  bossDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 16622458118144
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

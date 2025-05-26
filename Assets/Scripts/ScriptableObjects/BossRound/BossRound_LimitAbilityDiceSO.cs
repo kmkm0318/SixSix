@@ -51,4 +51,17 @@ public class BossRound_LimitAbilityDiceSO : BossRoundSO
             DiceManager.Instance.EnableAbilityDice(abilityDice);
         }
     }
+
+    public override string GetBossDescription()
+    {
+        if (bossDescription == null)
+        {
+            Debug.LogError("Boss description is not set for " + name);
+            return "Error: No description available.";
+        }
+
+        bossDescription.Arguments = new object[] { limitCount };
+        bossDescription.RefreshString();
+        return bossDescription.GetLocalizedString();
+    }
 }

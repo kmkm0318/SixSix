@@ -15,4 +15,17 @@ public class BossRound_LimitDiceValueSO : BossRoundSO
     {
         DiceManager.Instance.UsableDiceValues = null;
     }
+
+    public override string GetBossDescription()
+    {
+        if (bossDescription == null)
+        {
+            Debug.LogError("Boss description is not set for " + name);
+            return "Error: No description available.";
+        }
+
+        bossDescription.Arguments = new object[] { string.Join(", ", targetDiceValues) };
+        bossDescription.RefreshString();
+        return bossDescription.GetLocalizedString();
+    }
 }

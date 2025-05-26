@@ -12,5 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f58fffb7a389ed499e01b128fca8d25, type: 3}
   m_Name: BossRound_PlayOnceSO
   m_EditorClassIdentifier: 
-  bossName: Play Once
-  bossDescription: Only Play One Time
+  bossName:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 16519634755584
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  bossDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 16545677189120
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 
 public class ToolTipUI : Singleton<ToolTipUI>
 {
     [SerializeField] private LabeledValuePanel labelPanel;
     [SerializeField] private RectTransform labelPanelRectTransform;
     [SerializeField] private TextPanel tagPanel;
-    [SerializeField] private LocalizeStringEvent tagTextEvent;
     [SerializeField] private List<TagData> tagDataList;
     [SerializeField] private float offset;
 
@@ -111,7 +109,7 @@ public class ToolTipUI : Singleton<ToolTipUI>
 
         if (tagData != null)
         {
-            tagTextEvent.StringReference = tagData.LocalizedString;
+            tagPanel.SetText(tagData.LocalizedString.GetLocalizedString());
             tagPanel.SetColor(tagData.color);
         }
         else

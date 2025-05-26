@@ -12,6 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b16ba16e8bf2fe4d861ce493f5ce264, type: 3}
   m_Name: BossRound_DisablePlayDiceSO
   m_EditorClassIdentifier: 
-  bossName: Disable Play Dice
-  bossDescription: Disable 1 Play Dice
+  bossName:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 14670319984640
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  bossDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 14719938600960
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   limitCount: 1
+  references:
+    version: 2
+    RefIds: []

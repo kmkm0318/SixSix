@@ -15,4 +15,17 @@ public class BossRound_LimitHandSO : BossRoundSO
     {
         HandManager.Instance.UsableHands = null;
     }
+
+    public override string GetBossDescription()
+    {
+        if (bossDescription == null)
+        {
+            Debug.LogError("Boss description is not set for " + name);
+            return "Error: No description available.";
+        }
+
+        bossDescription.Arguments = new object[] { targetHandSO.HandName };
+        bossDescription.RefreshString();
+        return bossDescription.GetLocalizedString();
+    }
 }

@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: BossRound Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: BossRound
+  m_TableCollectionNameGuidString: b26f6db3a9e842b40a4bf5c6ba97a229
+  m_Entries:
+  - m_Id: 56693760000
+    m_Key: AddChaodDice_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94786428928
+    m_Key: AddChaodDice_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3633017397248
+    m_Key: DisableAbilityDice_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3671244283904
+    m_Key: DisableAbilityDice_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14670319984640
+    m_Key: DisablePlayDice_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14719938600960
+    m_Key: DisablePlayDice_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15321603121152
+    m_Key: LimitFaceValue135_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15401563332608
+    m_Key: LimitFaceValue135_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15421544996864
+    m_Key: LimitFaceValue246_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15460354891776
+    m_Key: LimitFaceValue246_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16439007649792
+    m_Key: LimitHand_Choice_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16491751022592
+    m_Key: LimitHand_Choice_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16519634755584
+    m_Key: PlayOnce_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16545677189120
+    m_Key: PlayOnce_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16562265661440
+    m_Key: RollOnce_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16577956552704
+    m_Key: RollOnce_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16595824287744
+    m_Key: Unkeepable_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16622458118144
+    m_Key: Unkeepable_Description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4204754066212651086
+  references:
+    version: 2
+    RefIds:
+    - rid: 4204754066212651086
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1748259553982

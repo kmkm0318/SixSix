@@ -1,5 +1,8 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class BossRoundUI : Singleton<BossRoundUI>
 {
@@ -14,6 +17,21 @@ public class BossRoundUI : Singleton<BossRoundUI>
     {
         RegisterEvents();
         bossRoundPanelRectTransform.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
+    }
+
+    private void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
+    }
+
+    private void SelectedLocaleChanged(Locale locale)
+    {
+        RefreshLocalizedText();
     }
 
     #region RegisterEvents
@@ -39,7 +57,15 @@ public class BossRoundUI : Singleton<BossRoundUI>
     {
         currentBossRoundSO = bossRoundSO;
         bossRoundPanel.SetLabel(currentBossRoundSO.BossName);
-        bossRoundPanel.SetValue(currentBossRoundSO.BossDescription);
+        bossRoundPanel.SetValue(currentBossRoundSO.GetBossDescription());
+    }
+
+    private void RefreshLocalizedText()
+    {
+        if (currentBossRoundSO == null) return;
+
+        bossRoundPanel.SetLabel(currentBossRoundSO.BossName);
+        bossRoundPanel.SetValue(currentBossRoundSO.GetBossDescription());
     }
 
     private void Show()

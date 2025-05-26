@@ -5,7 +5,10 @@ public class RoundClearState : BaseGameState
         base.Enter();
         if (RoundManager.Instance.IsBossRound)
         {
-            GambleDiceSaveManager.Instance.TryAddRandomBossGambleDiceIcon();
+            SequenceManager.Instance.AddCoroutine(() =>
+            {
+                GambleDiceSaveManager.Instance.TryAddRandomBossGambleDiceIcon();
+            });
         }
     }
 

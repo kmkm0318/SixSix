@@ -12,6 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2364aba9b422e5042a248dec489895a0, type: 3}
   m_Name: BossRound_AddChaosDiceSO
   m_EditorClassIdentifier: 
-  bossName: Chaos
-  bossDescription: Add 1 Chaos Dices
+  bossName:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 56693760000
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  bossDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:b26f6db3a9e842b40a4bf5c6ba97a229
+    m_TableEntryReference:
+      m_KeyId: 94786428928
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   chaosDiceCount: 1
+  references:
+    version: 2
+    RefIds: []

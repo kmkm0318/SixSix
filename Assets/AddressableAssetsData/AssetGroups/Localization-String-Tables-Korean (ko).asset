@@ -29,6 +29,13 @@ MonoBehaviour:
     - Locale-ko
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51eb4e1adde4f034aa3c8d827840db27
+    m_Address: BossRound_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c866995837896a48b57b1f74b885ea6
     m_Address: DefaultString_ko
     m_ReadOnly: 1
