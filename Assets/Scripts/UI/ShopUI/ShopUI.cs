@@ -13,11 +13,9 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform abilityDiceMerchantParent;
     [SerializeField] private Transform gambleDiceMerchantParent;
-    [SerializeField] private Transform handEnhanceMerchantParent;
-    [SerializeField] private Transform playDiceEnhanceMerchantParent;
+    [SerializeField] private Transform enhanceMerchantParent;
     [SerializeField] private DiceMerchantUI diceMerchantPrefab;
-    [SerializeField] private HandEnhanceMerchantUI handEnhanceMerchantPrefab;
-    [SerializeField] private PlayDiceEnhanceMerchantUI playDiceEnhanceMerchantPrefab;
+    [SerializeField] private EnhanceMerchantUI enhanceMerchantPrefab;
     [SerializeField] private ButtonPanel rerollButton;
     [SerializeField] private LocalizedString rerollButtonText;
     [SerializeField] private ButtonPanel closeButton;
@@ -27,8 +25,7 @@ public class ShopUI : Singleton<ShopUI>
     public event Action OnShopUIClosed;
 
     private ObjectPool<DiceMerchantUI> diceMerchantPool;
-    private ObjectPool<HandEnhanceMerchantUI> handEnhanceMerchantPool;
-    private ObjectPool<PlayDiceEnhanceMerchantUI> playDiceEnhanceMerchantPool;
+    private ObjectPool<EnhanceMerchantUI> enhanceMerchantPool;
 
     private Tween currentTween;
 
@@ -72,20 +69,8 @@ public class ShopUI : Singleton<ShopUI>
             maxSize: 10
         );
 
-        handEnhanceMerchantPool = new(
-            () => Instantiate(handEnhanceMerchantPrefab, handEnhanceMerchantParent),
-            merchantUI =>
-            {
-                merchantUI.gameObject.SetActive(true);
-                merchantUI.transform.SetAsLastSibling();
-            },
-            merchantUI => merchantUI.gameObject.SetActive(false),
-            merchantUI => Destroy(merchantUI.gameObject),
-            maxSize: 10
-        );
-
-        playDiceEnhanceMerchantPool = new(
-            () => Instantiate(playDiceEnhanceMerchantPrefab, playDiceEnhanceMerchantParent),
+        enhanceMerchantPool = new(
+            () => Instantiate(enhanceMerchantPrefab, enhanceMerchantParent),
             merchantUI =>
             {
                 merchantUI.gameObject.SetActive(true);
@@ -146,16 +131,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         InitAbilityDiceMerchantUI();
         InitGambleDiceMerchantUI();
-
-        var handEnhanceCount = ShopManager.Instance.MerchantItemCountMax;
-
-        if (handEnhanceCount > 0)
-        {
-            int playDiceEnhanceCount = UnityEngine.Random.Range(1, handEnhanceCount);
-
-            InitPlayDiceEnhanceMerchantUI(playDiceEnhanceCount);
-            InitHandEnhanceMerchantUI(handEnhanceCount - playDiceEnhanceCount);
-        }
+        InitEnhanceMerchantUI();
 
         ScrollToTop();
     }
@@ -198,40 +174,21 @@ public class ShopUI : Singleton<ShopUI>
         }
     }
 
-    private void InitPlayDiceEnhanceMerchantUI(int count)
+    private void InitEnhanceMerchantUI()
     {
-        foreach (Transform child in playDiceEnhanceMerchantParent)
+        foreach (Transform child in enhanceMerchantParent)
         {
-            if (child.gameObject.activeSelf && child.TryGetComponent(out PlayDiceEnhanceMerchantUI merchantUI))
+            if (child.gameObject.activeSelf && child.TryGetComponent(out EnhanceMerchantUI merchantUI))
             {
-                playDiceEnhanceMerchantPool.Release(merchantUI);
+                enhanceMerchantPool.Release(merchantUI);
             }
         }
 
-        var scorePairs = ShopManager.Instance.GetRandomDiceEnhanceList(count);
-        for (int i = 0; i < scorePairs.Count; i++)
+        var enhanceContext = ShopManager.Instance.GetRandomEnhanceList();
+        foreach (var context in enhanceContext)
         {
-            PlayDiceEnhanceMerchantUI merchantUI = playDiceEnhanceMerchantPool.Get();
-            merchantUI.Init(scorePairs[i].EnhanceLevel, scorePairs[i].EnhanceValue, scorePairs[i].Price, scorePairs[i].Index);
-        }
-    }
-
-    private void InitHandEnhanceMerchantUI(int count)
-    {
-        foreach (Transform child in handEnhanceMerchantParent)
-        {
-            if (child.gameObject.activeSelf && child.TryGetComponent(out HandEnhanceMerchantUI merchantUI))
-            {
-                handEnhanceMerchantPool.Release(merchantUI);
-            }
-        }
-
-        List<HandEnhancePurchaseContext> handEnhanceList = ShopManager.Instance.GetRandomHandEnhanceList(count);
-
-        for (int i = 0; i < handEnhanceList.Count; i++)
-        {
-            HandEnhanceMerchantUI merchantUI = handEnhanceMerchantPool.Get();
-            merchantUI.Init(handEnhanceList[i].EnhanceLevel, handEnhanceList[i].Price, handEnhanceList[i].Index);
+            var merchantUI = enhanceMerchantPool.Get();
+            merchantUI.Init(context.EnhanceType, context.EnhanceLevel, context.EnhanceValue, context.Price, context.Index);
         }
     }
 

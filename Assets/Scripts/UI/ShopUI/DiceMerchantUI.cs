@@ -107,7 +107,6 @@ public class DiceMerchantUI : MonoBehaviour
             Debug.LogWarning("Neither AbilityDiceSO nor GambleDiceSO is initialized.");
         }
 
-        buyButtonText.RefreshString();
         buyButton.SetText(buyButtonText.GetLocalizedString());
     }
 }

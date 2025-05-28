@@ -12,6 +12,7 @@ public class PlayManager : Singleton<PlayManager>
         get => playRemain;
         set
         {
+            if (value < 0) value = 0;
             if (playRemain == value) return;
             playRemain = value;
             OnPlayRemainChanged?.Invoke(playRemain);

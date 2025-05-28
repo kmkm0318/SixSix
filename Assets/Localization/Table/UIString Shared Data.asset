@@ -225,6 +225,22 @@ MonoBehaviour:
     m_Key: Highlight_Use
     m_Metadata:
       m_Items: []
+  - m_Id: 1388789473091584
+    m_Key: Shop_Dice_Enhance_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388848004603904
+    m_Key: Shop_Dice_Enhance_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388863221538816
+    m_Key: Shop_Hand_Enhance_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388898575327232
+    m_Key: Shop_Hand_Enhance_Description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

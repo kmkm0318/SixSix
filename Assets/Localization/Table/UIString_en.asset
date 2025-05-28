@@ -236,6 +236,26 @@ MonoBehaviour:
     m_Localized: Use
     m_Metadata:
       m_Items: []
+  - m_Id: 1388789473091584
+    m_Localized: Enhance Dice {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388848004603904
+    m_Localized: 'Enhance Selected
+
+      Play Dice {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388863221538816
+    m_Localized: Enhance Hand <color=#FCEFAF>Lv.{0}</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1388898575327232
+    m_Localized: 'Enhance Selected
+
+      Hand <color=#FCEFAF>Lv.{0}</color>'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

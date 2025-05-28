@@ -54,8 +54,7 @@ public class MoneyManager : Singleton<MoneyManager>
         ShopManager.Instance.OnAbilityDiceSelled += OnAbilityDiceSelled;
         ShopManager.Instance.OnGambleDiceSelled += OnGambleDiceSelled;
         ShopManager.Instance.OnGambleDicePurchaseAttempted += OnGambleDicePurchaseAttempted;
-        ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
-        ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
+        ShopManager.Instance.OnEnhancePurchaseAttempted += OnEnhancePurchaseAttempted;
     }
 
     private void OnPurchaseAttempted(AbilityDiceSO sO, PurchaseResult result)
@@ -96,16 +95,7 @@ public class MoneyManager : Singleton<MoneyManager>
         }
     }
 
-    private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
-    {
-        if (result == PurchaseResult.Success)
-        {
-            Money -= context.Price;
-            SequenceManager.Instance.ApplyParallelCoroutine();
-        }
-    }
-
-    private void OnPlayDiceEnhancePurchaseAttempted(DiceEnhancePurchaseContext context, PurchaseResult result)
+    private void OnEnhancePurchaseAttempted(EnhancePurchaseContext context, PurchaseResult result)
     {
         if (result == PurchaseResult.Success)
         {

@@ -6,17 +6,23 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void Start()
     {
-        ShopManager.Instance.OnPlayDiceEnhancePurchaseAttempted += OnPlayDiceEnhancePurchaseAttempted;
-        ShopManager.Instance.OnHandEnhancePurchaseAttempted += OnHandEnhancePurchaseAttempted;
+        ShopManager.Instance.OnEnhancePurchaseAttempted += OnEnhancePurchaseAttempted;
     }
 
-    #region Play Dice Enhancement
-    private void OnPlayDiceEnhancePurchaseAttempted(DiceEnhancePurchaseContext context, PurchaseResult result)
+    #region Enhancement
+    private void OnEnhancePurchaseAttempted(EnhancePurchaseContext context, PurchaseResult result)
     {
-        if (result == PurchaseResult.Success)
+        if (result != PurchaseResult.Success) return;
+
+        if (context.EnhanceType == EnhanceType.Dice)
         {
             DiceEnhanceValue = context.EnhanceValue;
             StartDiceEnhance();
+        }
+        else
+        {
+            HandEnhanceLevel = context.EnhanceLevel;
+            StartHandEnhance();
         }
     }
 
@@ -39,16 +45,6 @@ public class EnhanceManager : Singleton<EnhanceManager>
         GameManager.Instance.ExitState(GameState.Play);
         GameManager.Instance.ExitState(GameState.Enhance);
     }
-    #endregion
-
-    private void OnHandEnhancePurchaseAttempted(HandEnhancePurchaseContext context, PurchaseResult result)
-    {
-        if (result == PurchaseResult.Success)
-        {
-            HandEnhanceLevel = context.EnhanceLevel;
-            StartHandEnhance();
-        }
-    }
 
     private void StartHandEnhance()
     {
@@ -69,6 +65,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
         GameManager.Instance.ExitState(GameState.Play);
         GameManager.Instance.ExitState(GameState.Enhance);
     }
+    #endregion
 
     #region EnhanceValues
     public int GetEnhancePrice(int enhanceLevel)
