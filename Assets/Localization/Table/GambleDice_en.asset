@@ -19,35 +19,35 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 54198149120
-    m_Localized: 'When Gamble Dice shows
+    m_Localized: 'When Gamble Dice is
 
-      <color=#FCEFAF>"{0}"</color>'
+      <color=yellow>"{0}"</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 847450087424
     m_Localized: 'Make Money Double
 
-      <size=85%><color=#bbbbbb>(Maximum is ${0})</color></size>'
+      <size=85%><color=gray>(Maximum is ${0})</color></size>'
     m_Metadata:
       m_Items: []
   - m_Id: 1159825072128
     m_Localized: 'Enhance Availiable Hands
 
-      <color=#C3E6C3>{0}</color> Levels'
+      <color=green>{0}</color> Levels'
     m_Metadata:
       m_Items: []
   - m_Id: 1552873299968
     m_Localized: 'Enhance Every Play Dice
 
-      <color=#C3E6C3>{0}</color>'
+      <color=green>{0}</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 1945023946752
-    m_Localized: Play Chance <color=#C3E6C3>+{0}</color>
+    m_Localized: Play Chance <color=green>+{0}</color>
     m_Metadata:
       m_Items: []
   - m_Id: 2637021192192
-    m_Localized: Roll Chance <color=#C3E6C3>+{0}</color>
+    m_Localized: Roll Chance <color=green>+{0}</color>
     m_Metadata:
       m_Items: []
   - m_Id: 5362224078848
@@ -83,11 +83,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7238457892864
-    m_Localized: Maximum Play Chance<color=#C3E6C3>+{0}</color>
+    m_Localized: Maximum Play Chance<color=green>+{0}</color>
     m_Metadata:
       m_Items: []
   - m_Id: 7349871190016
-    m_Localized: Maximum Roll Chance <color=#C3E6C3>+{0}</color>
+    m_Localized: Maximum Roll Chance <color=green>+{0}</color>
     m_Metadata:
       m_Items: []
   references:

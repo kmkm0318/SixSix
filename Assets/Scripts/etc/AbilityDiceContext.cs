@@ -1,13 +1,19 @@
-public readonly struct AbilityDiceContext
+public class AbilityDiceContext
 {
-    public readonly AbilityDice abilityDice;
-    public readonly PlayDice playDice;
-    public readonly HandSO handSO;
+    public AbilityDice currentAbilityDice;
+    public PlayDice playDice;
+    public AbilityDice abilityDice;
+    public GambleDice gambleDice;
+    public HandSO handSO;
+    public bool isRetriggered;
 
-    public AbilityDiceContext(AbilityDice availtiyDice = null, PlayDice playDice = null, HandSO handSO = null)
+    public AbilityDiceContext(AbilityDice currentAbilityDice = null, PlayDice playDice = null, AbilityDice abilityDice = null, GambleDice gambleDice = null, HandSO handSO = null, bool isRetriggered = false)
     {
-        this.abilityDice = availtiyDice;
+        this.currentAbilityDice = currentAbilityDice;
         this.playDice = playDice;
+        this.abilityDice = abilityDice;
+        this.gambleDice = gambleDice;
         this.handSO = handSO;
+        this.isRetriggered = isRetriggered;
     }
 }

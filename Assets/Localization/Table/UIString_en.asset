@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3350489079808
-    m_Localized: Reroll<color=#FCEFAF>(${0})</color>
+    m_Localized: Reroll<color=yellow>(${0})</color>
     m_Metadata:
       m_Items: []
   - m_Id: 1957996929024
@@ -162,30 +162,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 304136016240640
-    m_Localized: '<wave>Round Clear</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Localized: '<wave>Round Clear</wave> : <bounce><color=yellow>{0}</color></bounce>'
     m_Metadata:
       m_Items: []
   - m_Id: 306144316104704
-    m_Localized: '<wave>Play Remain</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Localized: '<wave>Play Remain</wave> : <bounce><color=yellow>{0}</color></bounce>'
     m_Metadata:
       m_Items: []
   - m_Id: 306266085138432
-    m_Localized: '<wave>Boss Round Clear</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>'
+    m_Localized: '<wave>Boss Round Clear</wave> : <bounce><color=yellow>{0}</color></bounce>'
     m_Metadata:
       m_Items: []
   - m_Id: 306342689906688
-    m_Localized: '<wave>Money Interest</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>
+    m_Localized: '<wave>Money Interest</wave> : <bounce><color=yellow>{0}</color></bounce>
 
-      <wave><color=#bbbbbb><size=85%>($1
+      <wave><color=gray><size=small>($1
       Per $10, Maximum : ${1})</size></color><wave>'
     m_Metadata:
       m_Items: []
   - m_Id: 338977495588864
-    m_Localized: Buy<color=#FCEFAF>(${0})</color>
+    m_Localized: Buy<color=yellow>(${0})</color>
     m_Metadata:
       m_Items: []
   - m_Id: 339112480874496
-    m_Localized: Sell{<color=#FCEFAF>({0})</color>
+    m_Localized: Sell{<color=yellow>({0})</color>
     m_Metadata:
       m_Items: []
   - m_Id: 583845589426176
@@ -247,13 +247,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1388863221538816
-    m_Localized: Enhance Hand <color=#FCEFAF>Lv.{0}</color>
+    m_Localized: Enhance Hand <color=yellow>Lv.{0}</color>
     m_Metadata:
       m_Items: []
   - m_Id: 1388898575327232
     m_Localized: 'Enhance Selected
 
-      Hand <color=#FCEFAF>Lv.{0}</color>'
+      Hand <color=yellow>Lv.{0}</color>'
     m_Metadata:
       m_Items: []
   references:

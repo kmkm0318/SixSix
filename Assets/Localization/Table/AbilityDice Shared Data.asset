@@ -191,6 +191,74 @@ MonoBehaviour:
     m_Key: Trigger_HandPlayed
     m_Metadata:
       m_Items: []
+  - m_Id: 2256803848396800
+    m_Key: Trigger_AllEven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259076095811584
+    m_Key: Trigger_AllOdd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259151119327232
+    m_Key: Trigger_BuzzerBeater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2260010070843392
+    m_Key: Trigger_SameHand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2308538411393024
+    m_Key: Trigger_Probability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575458016567296
+    m_Key: Effect_GenerateAbilityDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575524546617344
+    m_Key: Effect_GenerateGambleDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590520861138944
+    m_Key: Trigger_PlayDiceTriggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590704659734528
+    m_Key: Trigger_AbilityDiceTriggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590732539273216
+    m_Key: Trigger_GambleDiceTriggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591526680403968
+    m_Key: Trigger_PlayStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591656762548224
+    m_Key: Trigger_PlayEnded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591671962705920
+    m_Key: Trigger_RollStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591693705977856
+    m_Key: Trigger_RollEnded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2654583448281088
+    m_Key: Effect_RetriggerPlayDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2654648032174080
+    m_Key: Effect_RetriggerGambleDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2668336663371776
+    m_Key: Effect_RetriggerAbilityDice
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

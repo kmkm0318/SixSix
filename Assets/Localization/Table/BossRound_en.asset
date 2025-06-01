@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 94786428928
-    m_Localized: 'Add <color=#C3E6C3>{0}</color>
+    m_Localized: 'Add <color=green>{0}</color>
 
       Chaos Dice'
     m_Metadata:
@@ -33,7 +33,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3671244283904
-    m_Localized: 'Disable <color=#C3E6C3>{0}</color>
+    m_Localized: 'Disable <color=green>{0}</color>
 
       Ability Dice'
     m_Metadata:
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14719938600960
-    m_Localized: 'Disable <color=#C3E6C3>{0}</color>
+    m_Localized: 'Disable <color=green>{0}</color>
 
       Play Dice'
     m_Metadata:
@@ -55,7 +55,7 @@ MonoBehaviour:
   - m_Id: 15401563332608
     m_Localized: 'Can Only Score
 
-      With <color=#C3E6C3>"{0}"</color>'
+      With <color=green>"{0}"</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 15421544996864
@@ -78,32 +78,26 @@ MonoBehaviour:
     m_Localized: Freedom
     m_Metadata:
       m_Items: []
-  - m_Id: 15460354891776
-    m_Localized: 'Can Only Score
-
-      With <color=#C3E6C3>"{0}"</color>'
-    m_Metadata:
-      m_Items: []
   - m_Id: 16491751022592
     m_Localized: 'Can Only Score
 
-      With <color=#C3E6C3>"{0}"</color>'
+      With <color=green>"{0}"</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 16545677189120
     m_Localized: 'Play Only
 
-      <color=#C3E6C3>One</color> Time'
+      <color=green>One</color> Time'
     m_Metadata:
       m_Items: []
   - m_Id: 16577956552704
     m_Localized: 'Roll Only
 
-      <color=#C3E6C3>One</color> Time'
+      <color=green>One</color> Time'
     m_Metadata:
       m_Items: []
   - m_Id: 16622458118144
-    m_Localized: Disable <color=#C3E6C3>Dice Keep</color>
+    m_Localized: Disable <color=green>Dice Keep</color>
     m_Metadata:
       m_Items: []
   references:

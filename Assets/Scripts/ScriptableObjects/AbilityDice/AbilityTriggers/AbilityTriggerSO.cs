@@ -17,8 +17,10 @@ public abstract class AbilityTriggerSO : ScriptableObject
 public enum EffectTriggerType
 {
     None,
-    PlayDiceApplied,
-    HandApplied,
+    PlayDiceTriggered,
+    AbilityDiceTriggered,
+    GambleDiceTriggered,
+    HandPlayed,
     RoundStarted,
     RoundCleared,
     ShopStarted,

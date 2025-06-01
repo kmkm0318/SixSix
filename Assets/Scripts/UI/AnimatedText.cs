@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AnimatedText : MonoBehaviour
 {
+    [SerializeField] private DefaultColorSO textColorSO;
+
     private TMP_Text tmp_text;
     private TextAnimator_TMP setText;
     private TypewriterByCharacter showText;
@@ -27,38 +29,20 @@ public class AnimatedText : MonoBehaviour
     public void SetText(string text)
     {
         CheckThenStopShowing();
-
-        if (DataContainer.Instance != null && DataContainer.Instance.DefaultColorSO != null)
-        {
-            text = DataContainer.Instance.DefaultColorSO.FormatColor(text);
-        }
-
+        text = textColorSO.FormatColor(text);
         setText.SetText(text);
     }
 
     public void ShowText(string text)
     {
         CheckThenStopShowing();
-
-        if (DataContainer.Instance != null && DataContainer.Instance.DefaultColorSO != null)
-        {
-            text = DataContainer.Instance.DefaultColorSO.FormatColor(text);
-        }
-
+        text = textColorSO.FormatColor(text);
         showText.ShowText(text);
     }
 
     public IEnumerator ShowTextCoroutine(string text)
     {
-        CheckThenStopShowing();
-
-        if (DataContainer.Instance != null && DataContainer.Instance.DefaultColorSO != null)
-        {
-            text = DataContainer.Instance.DefaultColorSO.FormatColor(text);
-        }
-
-        showText.ShowText(text);
-
+        ShowText(text);
         yield return new WaitUntil(() => !showText.isShowingText);
     }
     #endregion

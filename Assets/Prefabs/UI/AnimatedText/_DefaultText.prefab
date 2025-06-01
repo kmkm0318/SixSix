@@ -95,7 +95,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0
+  m_fontSize: 23.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e671551e4261f94c8ae2dde9d256554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textColorSO: {fileID: 11400000, guid: 756e0eca105305c4aaa6995d145183d4, type: 2}
 --- !u!114 &255090325320944164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ MonoBehaviour:
   typewriterStartsAutomatically: 1
   animationLoop: 0
   timeScale: 0
-  _text: <incr>AnimatedText</>
+  _text: AnimatedText
   useDynamicScaling: 0
   referenceFontSize: 24
   isResettingTimeOnNewText: 0

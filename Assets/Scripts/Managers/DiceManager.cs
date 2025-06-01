@@ -246,6 +246,8 @@ public class DiceManager : Singleton<DiceManager>
     #region Ability Dice
     private void GenerateAbilityDice(AbilityDiceSO sO)
     {
+        if (abilityDiceList.Count >= currentAbilityDiceMax) return;
+
         var abilityDice = abilityDicePool.Get();
         abilityDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         abilityDice.Init(sO, abilityDicePlayboard);
@@ -283,6 +285,22 @@ public class DiceManager : Singleton<DiceManager>
         abilityDice.IsEnabled = false;
 
         abilityDiceList.Remove(abilityDice);
+    }
+
+    public void StartGenerateAbilityDice(int abilityDiceCount)
+    {
+        SequenceManager.Instance.AddCoroutine(GenerateAbilityDiceCoroutine(abilityDiceCount));
+    }
+
+    private IEnumerator GenerateAbilityDiceCoroutine(int abilityDiceCount)
+    {
+        for (int i = 0; i < abilityDiceCount; i++)
+        {
+            if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
+            GenerateAbilityDice(DataContainer.Instance.ShopAbilityDiceListSO.GetRandomAbilityDiceSO());
+        }
+
+        yield return new WaitUntil(() => AreAllDiceStopped());
     }
 
     public List<AbilityDice> GetRandomAbilityDiceList(int count)
@@ -392,6 +410,22 @@ public class DiceManager : Singleton<DiceManager>
         {
             RemoveGambleDice(gambleDiceList[0]);
         }
+    }
+
+    public void StartGenerateGambleDice(int gambleDiceCount)
+    {
+        SequenceManager.Instance.AddCoroutine(GenerateGambleDiceCoroutine(gambleDiceCount));
+    }
+
+    private IEnumerator GenerateGambleDiceCoroutine(int gambleDiceCount)
+    {
+        for (int i = 0; i < gambleDiceCount; i++)
+        {
+            if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
+            GenerateGambleDice(DataContainer.Instance.ShopGambleDiceListSO.GetRandomGambleDiceSO());
+        }
+
+        yield return new WaitUntil(() => AreAllDiceStopped());
     }
     #endregion
 

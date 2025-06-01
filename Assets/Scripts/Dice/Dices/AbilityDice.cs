@@ -3,6 +3,8 @@ using UnityEngine;
 public class AbilityDice : Dice
 {
     private AbilityDiceSO abilityDiceSO;
+    private AbilityDiceContext previousContext;
+
     public AbilityDiceSO AbilityDiceSO => abilityDiceSO;
     public int SellPrice => abilityDiceSO.SellPrice;
 
@@ -95,13 +97,17 @@ public class AbilityDice : Dice
 
     public virtual bool IsTriggered(EffectTriggerType triggerType, AbilityDiceContext context)
     {
-        return IsEnabled && abilityDiceSO.IsTriggered(triggerType, new(this, context.playDice, context.handSO));
+        context ??= new();
+        context.currentAbilityDice = this;
+        return IsEnabled && context.currentAbilityDice != context.abilityDice && abilityDiceSO.IsTriggered(triggerType, context);
     }
 
-    public virtual void TriggerEffect()
+    public virtual void TriggerEffect(AbilityDiceContext context = null)
     {
         if (abilityDiceSO == null || !IsEnabled) return;
-
-        abilityDiceSO.TriggerEffect(new(this));
+        context ??= previousContext ?? new();
+        context.currentAbilityDice = this;
+        previousContext = context;
+        abilityDiceSO.TriggerEffect(context);
     }
 }

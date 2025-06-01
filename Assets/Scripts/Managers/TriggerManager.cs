@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,45 +21,45 @@ public class TriggerManager : Singleton<TriggerManager>
 
     private void OnRoundStarted()
     {
-        TriggerAbilityDice(EffectTriggerType.RoundStarted);
+        TriggerAbilityDices(EffectTriggerType.RoundStarted);
     }
 
     private void OnRoundClearStarted()
     {
-        TriggerAbilityDice(EffectTriggerType.RoundCleared);
+        TriggerAbilityDices(EffectTriggerType.RoundCleared);
     }
 
     private void OnShopStarted()
     {
-        TriggerAbilityDice(EffectTriggerType.ShopStarted);
+        TriggerAbilityDices(EffectTriggerType.ShopStarted);
     }
 
     private void OnShopEnded()
     {
-        TriggerAbilityDice(EffectTriggerType.ShopEnded);
+        TriggerAbilityDices(EffectTriggerType.ShopEnded);
     }
 
     private void OnPlayStarted()
     {
-        TriggerAbilityDice(EffectTriggerType.PlayStarted);
+        TriggerAbilityDices(EffectTriggerType.PlayStarted);
     }
 
     private void OnPlayEnded()
     {
-        TriggerAbilityDice(EffectTriggerType.PlayEnded);
+        TriggerAbilityDices(EffectTriggerType.PlayEnded);
     }
 
     private void OnRollStarted()
     {
-        TriggerAbilityDice(EffectTriggerType.RollStarted);
+        TriggerAbilityDices(EffectTriggerType.RollStarted);
     }
 
     public void TriggerOnRollCompleted()
     {
-        TriggerAbilityDice(EffectTriggerType.RollEnded);
+        TriggerAbilityDices(EffectTriggerType.RollEnded);
         if (GameManager.Instance.CurrentGameState == GameState.Round)
         {
-            Instance.TriggerGambleDices();
+            TriggerGambleDices();
             SequenceManager.Instance.AddCoroutine(DiceManager.Instance.ClearGambleDices);
         }
     }
@@ -69,46 +70,64 @@ public class TriggerManager : Singleton<TriggerManager>
     {
         TriggerPlayDices();
         TriggerChaosDices();
-        TriggerAbilityDice(HandManager.Instance.LastSelectedHandSO);
+        TriggerAbilityDices(HandManager.Instance.LastSelectedHandSO);
     }
 
     private void TriggerPlayDices()
     {
-        var playDiceList = DiceManager.Instance.GetOrderedPlayDiceList();
-        var UsableDiceValues = DiceManager.Instance.UsableDiceValues;
-
-        foreach (var playDice in playDiceList)
+        foreach (var playDice in DiceManager.Instance.GetOrderedPlayDiceList())
         {
-            if (UsableDiceValues != null && !UsableDiceValues.Contains(playDice.DiceValue)) continue;
-
-            playDice.ApplyScorePairs();
-            TriggerAbilityDice(playDice);
+            TriggerPlayDice(playDice);
         }
     }
 
-    private void TriggerAbilityDice(EffectTriggerType triggerType, AbilityDiceContext context)
+    public void TriggerPlayDice(PlayDice playDice, bool isRetriggered = false)
+    {
+        if (DiceManager.Instance.UsableDiceValues != null && !DiceManager.Instance.UsableDiceValues.Contains(playDice.DiceValue)) return;
+
+        playDice.ApplyScorePairs();
+        TriggerAbilityDices(playDice, isRetriggered);
+    }
+
+    private void TriggerAbilityDices(EffectTriggerType triggerType, AbilityDiceContext context)
     {
         List<AbilityDice> triggeredAbilityDiceList = DiceManager.Instance.AbilityDiceList.FindAll(dice => dice.IsTriggered(triggerType, context));
 
         foreach (var abilityDice in triggeredAbilityDiceList)
         {
-            abilityDice.TriggerEffect();
+            TriggerAbilityDice(abilityDice, context);
         }
     }
 
-    private void TriggerAbilityDice(EffectTriggerType triggerType)
+    public void TriggerAbilityDice(AbilityDice abilityDice, AbilityDiceContext context = null, bool isRetriggered = false)
     {
-        TriggerAbilityDice(triggerType, new());
+        abilityDice.TriggerEffect(context);
+        TriggerAbilityDices(abilityDice, isRetriggered);
     }
 
-    private void TriggerAbilityDice(PlayDice playDice)
+    private void TriggerAbilityDices(EffectTriggerType triggerType)
     {
-        TriggerAbilityDice(EffectTriggerType.PlayDiceApplied, new(playDice: playDice));
+        TriggerAbilityDices(triggerType, new());
     }
 
-    private void TriggerAbilityDice(HandSO handSO)
+    private void TriggerAbilityDices(PlayDice playDice, bool isRetriggered = false)
     {
-        TriggerAbilityDice(EffectTriggerType.HandApplied, new(handSO: handSO));
+        TriggerAbilityDices(EffectTriggerType.PlayDiceTriggered, new(playDice: playDice, isRetriggered: isRetriggered));
+    }
+
+    private void TriggerAbilityDices(AbilityDice abilityDice, bool isRetriggered = false)
+    {
+        TriggerAbilityDices(EffectTriggerType.AbilityDiceTriggered, new(abilityDice: abilityDice, isRetriggered: isRetriggered));
+    }
+
+    private void TriggerAbilityDices(GambleDice gambleDice, bool isRetriggered = false)
+    {
+        TriggerAbilityDices(EffectTriggerType.GambleDiceTriggered, new(gambleDice: gambleDice, isRetriggered: isRetriggered));
+    }
+
+    private void TriggerAbilityDices(HandSO handSO)
+    {
+        TriggerAbilityDices(EffectTriggerType.HandPlayed, new(handSO: handSO));
     }
 
     private void TriggerChaosDices()
@@ -121,10 +140,17 @@ public class TriggerManager : Singleton<TriggerManager>
 
     public void TriggerGambleDices()
     {
-        foreach (var gambleDice in DiceManager.Instance.GambleDiceList)
+        var gambleDices = DiceManager.Instance.GambleDiceList.FindAll(dice => dice.IsTriggered());
+        foreach (var gambleDice in gambleDices)
         {
-            gambleDice.TriggerEffect();
+            TriggerGambleDice(gambleDice);
         }
+    }
+
+    public void TriggerGambleDice(GambleDice gambleDice, bool isRetriggered = false)
+    {
+        gambleDice.TriggerEffect();
+        TriggerAbilityDices(gambleDice, isRetriggered);
     }
     #endregion
 

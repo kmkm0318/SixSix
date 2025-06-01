@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3350489079808
-    m_Localized: "\uB9AC\uB864(<color=#FCEFAF>${0}</color>)"
+    m_Localized: "\uB9AC\uB864(<color=yellow>${0}</color>)"
     m_Metadata:
       m_Items: []
   - m_Id: 1957996929024
@@ -157,29 +157,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 304136016240640
-    m_Localized: "<wave>\uB77C\uC6B4\uB4DC \uD074\uB9AC\uC5B4</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>"
+    m_Localized: "<wave>\uB77C\uC6B4\uB4DC \uD074\uB9AC\uC5B4</wave> : <bounce><color=yellow>{0}</color></bounce>"
     m_Metadata:
       m_Items: []
   - m_Id: 306144316104704
-    m_Localized: "<wave>\uB0A8\uC740 \uD50C\uB808\uC774</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>"
+    m_Localized: "<wave>\uB0A8\uC740 \uD50C\uB808\uC774</wave> : <bounce><color=yellow>{0}</color></bounce>"
     m_Metadata:
       m_Items: []
   - m_Id: 306266085138432
     m_Localized: "<wave>\uBCF4\uC2A4 \uB77C\uC6B4\uB4DC \uD074\uB9AC\uC5B4</wave>
-      : <bounce><color=#FCEFAF>{0}</color></bounce>"
+      : <bounce><color=yellow>{0}</color></bounce>"
     m_Metadata:
       m_Items: []
   - m_Id: 306342689906688
-    m_Localized: "<wave>\uACE8\uB4DC \uC774\uC790</wave> : <bounce><color=#FCEFAF>{0}</color></bounce>\n<wave><color=#bbbbbb><size=85%>($10\uB2F9
+    m_Localized: "<wave>\uACE8\uB4DC \uC774\uC790</wave> : <bounce><color=yellow>{0}</color></bounce>\n<wave><color=gray><size=85%>($10\uB2F9
       $1, \uCD5C\uB300 : ${1})</size></color><wave>"
     m_Metadata:
       m_Items: []
   - m_Id: 338977495588864
-    m_Localized: "\uAD6C\uB9E4<color=#FCEFAF>(${0})</color>"
+    m_Localized: "\uAD6C\uB9E4<color=yellow>(${0})</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 339112480874496
-    m_Localized: "\uD310\uB9E4{<color=#FCEFAF>({0})</color>"
+    m_Localized: "\uD310\uB9E4{<color=yellow>({0})</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 583845589426176
@@ -240,11 +240,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1388863221538816
-    m_Localized: "\uD578\uB4DC \uAC15\uD654 <color=#FCEFAF>Lv.{0}</color>"
+    m_Localized: "\uD578\uB4DC \uAC15\uD654 <color=yellow>Lv.{0}</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 1388898575327232
-    m_Localized: "\uC120\uD0DD\uB41C \uD578\uB4DC\uB97C\n<color=#FCEFAF>Lv.{0}</color>
+    m_Localized: "\uC120\uD0DD\uB41C \uD578\uB4DC\uB97C\n<color=yellow>Lv.{0}</color>
       \uAC15\uD654\uD569\uB2C8\uB2E4"
     m_Metadata:
       m_Items: []

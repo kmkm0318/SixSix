@@ -604,15 +604,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3411444654799960011, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_Color.b
-      value: 0.7647059
+      value: 0.9490196
       objectReference: {fileID: 0}
     - target: {fileID: 3411444654799960011, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_Color.g
-      value: 0.9019608
+      value: 0.75686276
       objectReference: {fileID: 0}
     - target: {fileID: 3411444654799960011, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_Color.r
-      value: 0.7647059
+      value: 0.70980394
       objectReference: {fileID: 0}
     - target: {fileID: 5089406213682473610, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_Pivot.x

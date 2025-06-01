@@ -107,12 +107,6 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
-        if (DiceManager.Instance.GambleDiceList.Count >= DiceManager.Instance.CurrentGambleDiceMax)
-        {
-            OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.NotEnoughDiceSlot);
-            return;
-        }
-
         OnGambleDicePurchaseAttempted?.Invoke(gambleDiceSO, PurchaseResult.Success);
     }
 

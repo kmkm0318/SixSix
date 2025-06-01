@@ -19,41 +19,39 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 41002868736
-    m_Localized: 'When Play Dice shows
+    m_Localized: 'When Play Dice is
 
-      <color=#FCEFAF>"{0}"</color>'
+      <color=yellow>"{0}"</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 1975462010880
-    m_Localized: 'When Play With
-
-      <color=#FCEFAF>"{0}"</color>'
+    m_Localized: When Play <color=yellow>"{0}"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 2728654151680
-    m_Localized: 'When Play Dice shows
+    m_Localized: 'When Play Dice is
 
-      Multiple of <color=#FCEFAF>"{0}"</color>'
+      Multiple of <color=yellow>"{0}"</color>'
     m_Metadata:
       m_Items: []
   - m_Id: 3133177995264
-    m_Localized: When Roll Without <color=#FCEFAF>"KEEP"</color>
+    m_Localized: When Roll Without <color=yellow>"KEEP"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 3459352240128
-    m_Localized: When <color=#FCEFAF>"Round Cleared"</color>
+    m_Localized: When <color=yellow>"Round Cleared"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 7289464823808
-    m_Localized: When <color=#FCEFAF>"Round Started"</color>
+    m_Localized: When <color=yellow>"Round Started"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 7382175719424
-    m_Localized: When <color=#FCEFAF>"Shop Opened"</color>
+    m_Localized: When <color=yellow>"Shop Opened"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 7607502118912
-    m_Localized: When <color=#FCEFAF>"Shop Ended"</color>
+    m_Localized: When <color=yellow>"Shop Ended"</color>
     m_Metadata:
       m_Items: []
   - m_Id: 9168710148096
@@ -61,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9413904965632
-    m_Localized: Get <color=#FCEFAF>(${0})</color>{1}
+    m_Localized: Get <color=yellow>(${0})</color>{1}
     m_Metadata:
       m_Items: []
   - m_Id: 10823719591936
@@ -201,7 +199,91 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18026581073920
-    m_Localized: When Play <color=#FCEFAF>"Any Hand"</color>
+    m_Localized: When Play <color=yellow>"Any Hand"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256803848396800
+    m_Localized: 'When Play Dices are
+
+      <color=yellow>"All Even"</color> Values'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259076095811584
+    m_Localized: 'When Play Dices are
+
+      <color=yellow>"All Odd"</color> Values'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259151119327232
+    m_Localized: 'When <color=yellow>"Last Play"</color>
+
+      Roll Remain is <color=yellow>"0"</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2260010070843392
+    m_Localized: When Play <color=yellow>"Same Hand"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2308538411393024
+    m_Localized: With a Probability of <color=green>{0}</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575458016567296
+    m_Localized: 'Generate {0}
+
+      Normal Ability Dice'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575524546617344
+    m_Localized: 'Generate {0}
+
+      Normal Gamble Dice'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590520861138944
+    m_Localized: When <color=yellow>"Play Dice"</color> Triggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590704659734528
+    m_Localized: When <color=yellow>"Ability Dice"</color> Triggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590732539273216
+    m_Localized: When <color=yellow>"Gamble Dice"</color> Triggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591526680403968
+    m_Localized: When <color=yellow>"Play Started"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591656762548224
+    m_Localized: When <color=yellow>"Play Ended"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591671962705920
+    m_Localized: When <color=yellow>"Roll Started"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591693705977856
+    m_Localized: When <color=yellow>"Roll Ended"</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2654583448281088
+    m_Localized: 'Trigger Play Dice
+
+      {0} Times'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2654648032174080
+    m_Localized: 'Trigger Gamble Dice
+
+      {0} Times'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2668336663371776
+    m_Localized: 'Trigger Ability Dice
+
+      {0} Times'
     m_Metadata:
       m_Items: []
   references:

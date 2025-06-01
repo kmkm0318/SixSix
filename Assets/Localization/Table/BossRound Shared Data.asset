@@ -44,15 +44,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 15401563332608
-    m_Key: LimitFaceValue135_Description
+    m_Key: LimitDiceValue_Description
     m_Metadata:
       m_Items: []
   - m_Id: 15421544996864
     m_Key: LimitFaceValue246_Name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15460354891776
-    m_Key: LimitFaceValue246_Description
     m_Metadata:
       m_Items: []
   - m_Id: 16439007649792
@@ -60,7 +56,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 16491751022592
-    m_Key: LimitHand_Choice_Description
+    m_Key: LimitHand_Description
     m_Metadata:
       m_Items: []
   - m_Id: 16519634755584

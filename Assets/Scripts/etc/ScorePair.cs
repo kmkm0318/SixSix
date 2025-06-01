@@ -21,32 +21,32 @@ public struct ScorePair
 
         if (!hasBaseScore && !hasMultiplier)
         {
-            return "<color=#bbbbbb>(0)</color>";
+            return "<color=gray>(0)</color>";
         }
 
         if (hasBaseScore)
         {
-            parts.Add($"<color={{0}}>{baseScore:+0;-0;0}</color>");
+            parts.Add($"<color=blue>{baseScore:+0;-0;0}</color>");
         }
 
         if (hasMultiplier)
         {
-            parts.Add($"<color={{1}}>x{multiplier:0.##}</color>");
+            parts.Add($"<color=red>x{multiplier:0.##}</color>");
         }
 
         string res = string.Join(", ", parts);
 
         if (hasBaseScore && !hasMultiplier)
         {
-            return "<color={0}>(" + res + ")</color>";
+            return "<color=blue>(" + res + ")</color>";
         }
         else if (!hasBaseScore && hasMultiplier)
         {
-            return "<color={1}>(" + res + ")</color>";
+            return "<color=red>(" + res + ")</color>";
         }
         else
         {
-            return "<color={0}>(</color>" + res + "<color={1}>)</color>";
+            return "<color=blue>(</color>" + res + "<color=red>)</color>";
         }
     }
 }

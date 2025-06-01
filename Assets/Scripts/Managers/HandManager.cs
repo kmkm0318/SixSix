@@ -28,6 +28,7 @@ public class HandManager : Singleton<HandManager>
         }
     }
     public HandSO LastSelectedHandSO => lastSelectedHandSO;
+    public bool IsSameHand { get; private set; } = false;
 
     public event Action<HandSO> OnHandSelected;
     public event Action<ScorePair> OnHandScoreApplied;
@@ -132,6 +133,7 @@ public class HandManager : Singleton<HandManager>
         if (!isActive) return;
         isActive = false;
 
+        IsSameHand = lastSelectedHandSO != null && lastSelectedHandSO.hand == handSO.hand;
         lastSelectedHandSO = handSO;
 
         if (handSelectionCounts.TryGetValue(handSO.hand, out int count))

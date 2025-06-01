@@ -66,12 +66,14 @@ public class GambleDice : Dice
         IsInteractable = false;
     }
 
+    public bool IsTriggered()
+    {
+        return gambleDiceSO.IsTriggered(this);
+    }
+
     public void TriggerEffect()
     {
-        if (gambleDiceSO.IsTriggered(this))
-        {
-            gambleDiceSO.TriggerEffect(this);
-        }
+        gambleDiceSO.TriggerEffect(this);
     }
 
     public override void ShowToolTip()
