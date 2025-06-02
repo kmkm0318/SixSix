@@ -10,6 +10,9 @@ public class SequenceManager : Singleton<SequenceManager>
 
     private bool isPlaying = false;
 
+    public event Action OnAnimationStarted;
+    public event Action OnAnimationFinished;
+
     public void AddCoroutine(IEnumerator coroutine, bool isParallel = false)
     {
         if (coroutine == null)
@@ -69,6 +72,7 @@ public class SequenceManager : Singleton<SequenceManager>
     private IEnumerator PlaySequentialCoroutines()
     {
         isPlaying = true;
+        OnAnimationStarted?.Invoke();
 
         yield return null;
 
@@ -80,6 +84,7 @@ public class SequenceManager : Singleton<SequenceManager>
         }
 
         isPlaying = false;
+        OnAnimationFinished?.Invoke();
     }
 
     private IEnumerator PlayParallelCoroutines(params IEnumerator[] coroutines)

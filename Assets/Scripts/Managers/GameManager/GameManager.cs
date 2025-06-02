@@ -18,30 +18,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        Init();
         RegisterEvents();
-        RegisterDebugEvents();
-
         ChangeState(GameState.Loading);
-    }
-
-    private void Init()
-    {
-        OnGameSpeedChanged(OptionManager.Instance.OptionData.gameSpeed);
     }
 
     #region RegisterEvents
     private void RegisterEvents()
-    {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
-    }
-
-    private void OnGameSpeedChanged(int value)
-    {
-        Time.timeScale = 1f + (value * 0.25f);
-    }
-
-    private void RegisterDebugEvents()
     {
         RegisterEvent(GameState.Loading, () =>
         {
@@ -113,12 +95,6 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(message);
     }
     #endregion
-
-    public void HandleGameResult(bool isClear)
-    {
-        GameResultUI.Instance.ShowGameResult(isClear);
-        ChangeState(GameState.GameResult);
-    }
 
     #region Game State
     public void ChangeState(GameState newState)
