@@ -51,11 +51,6 @@ public class RollManager : Singleton<RollManager>
         RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
     }
 
-    public void ResetRollRemain()
-    {
-        RollRemain = currentRollMax;
-    }
-
     private void OnRollButtonPressed()
     {
         ChangingRollPowerCoroutine = StartCoroutine(ChangingRollPower());
@@ -71,6 +66,11 @@ public class RollManager : Singleton<RollManager>
         RollDice();
     }
     #endregion
+
+    public void StartRoll()
+    {
+        RollRemain = currentRollMax;
+    }
 
     IEnumerator ChangingRollPower()
     {

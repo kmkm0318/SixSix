@@ -10,7 +10,7 @@ public class AbilityEffectMoneySO : AbilityEffectSO
         int money = DiceEffectCalculator.GetCalculatedEffectValue(moneyAmount, context.currentAbilityDice.DiceValue, calculateType);
 
         MoneyManager.Instance.Money += money;
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(context.currentAbilityDice.transform, Vector3.down, money);
+        TriggerAnimationManager.Instance.PlayTriggerMoneyAnimation(context.currentAbilityDice.transform, Vector3.down, money);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 

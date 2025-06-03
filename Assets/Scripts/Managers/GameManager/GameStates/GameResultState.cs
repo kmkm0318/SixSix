@@ -1,10 +1,12 @@
+using UnityEngine;
+
 public class GameResultState : BaseGameState
 {
     public override void Enter()
     {
         base.Enter();
 
-        bool isClear = RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound && ScoreManager.Instance.CurrentRoundScore >= ScoreManager.Instance.TargetRoundScore;
+        bool isClear = GameResultManager.Instance.IsClear;
         GameResultUI.Instance.ShowGameResult(isClear);
     }
 

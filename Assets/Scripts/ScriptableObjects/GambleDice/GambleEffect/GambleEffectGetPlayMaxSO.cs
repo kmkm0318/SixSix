@@ -7,7 +7,7 @@ public class GambleEffectGetPlayMaxSO : GambleEffectSO
 
     public override void TriggerEffect(GambleDice gambleDice)
     {
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(gambleDice.transform);
+        TriggerAnimationManager.Instance.PlayTriggerValueAnimation(gambleDice.transform, Vector3.down, value, "blue");
         PlayManager.Instance.IncreasePlayMaxAndRemain(value);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

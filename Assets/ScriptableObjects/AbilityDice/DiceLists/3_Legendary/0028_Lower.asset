@@ -22,7 +22,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   rarity: 0
-  autoKeepType: 1
+  autoKeepType: 0
   price: 1
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   shaderDataSO: {fileID: 11400000, guid: dbc95a66f4c077c4ca37bf51aa3cdaf1, type: 2}

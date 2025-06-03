@@ -63,11 +63,12 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void PlayTriggerAnimation(int enhanceLevel, ScorePair scorePair)
     {
-        enhanceLevelText.text = enhanceLevel.ToString();
-        UpdateScoreText(scorePair);
+        SequenceManager.Instance.AddCoroutine(() => enhanceLevelText.text = enhanceLevel.ToString(), true);
+        SequenceManager.Instance.AddCoroutine(() => UpdateScoreText(scorePair), true);
+        AnimationFunction.AddShakeAnimation(enhanceLevelText.transform, true, true);
+        AnimationFunction.AddShakeAnimation(baseScoreText.transform, true, true);
+        AnimationFunction.AddShakeAnimation(multiplierText.transform, true, true);
 
-        StartCoroutine(AnimationFunction.ShakeAnimation(enhanceLevelText.transform));
-        StartCoroutine(AnimationFunction.ShakeAnimation(baseScoreText.transform));
-        StartCoroutine(AnimationFunction.ShakeAnimation(multiplierText.transform));
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 }

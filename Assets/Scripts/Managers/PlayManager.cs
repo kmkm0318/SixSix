@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 public class PlayManager : Singleton<PlayManager>
 {
@@ -32,7 +31,7 @@ public class PlayManager : Singleton<PlayManager>
         currentPlayMax = playMax;
     }
 
-    public void ResetPlayRemain()
+    public void StartPlay()
     {
         PlayRemain = currentPlayMax;
     }
@@ -50,6 +49,7 @@ public class PlayManager : Singleton<PlayManager>
         {
             if (RoundManager.Instance.CurrentRound == RoundManager.Instance.ClearRound)
             {
+                GameResultManager.Instance.IsClear = true;
                 GameManager.Instance.ChangeState(GameState.GameResult);
             }
             else
@@ -59,6 +59,7 @@ public class PlayManager : Singleton<PlayManager>
         }
         else if (PlayRemain == 0)
         {
+            GameResultManager.Instance.IsClear = false;
             GameManager.Instance.ChangeState(GameState.GameResult);
         }
         else
@@ -70,6 +71,7 @@ public class PlayManager : Singleton<PlayManager>
     public void IncreasePlayMaxAndRemain(int value = 1)
     {
         playMax += value;
+        currentPlayMax = playMax;
         PlayRemain += value;
     }
 

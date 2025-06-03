@@ -30,19 +30,24 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
         Hide();
     }
 
-    public IEnumerator ShowContext(Transform targetTransform, Vector3 offset, ScorePair pair)
+    public IEnumerator ShowScoreContext(Transform targetTransform, Vector3 offset, ScorePair pair)
     {
-        return ShowContext(targetTransform, offset, () => SetupUI(pair));
+        return ShowContext(targetTransform, offset, () => SetupScoreUI(pair));
     }
 
-    public IEnumerator ShowContext(Transform targetTransform, Vector3 offset, int money)
+    public IEnumerator ShowMoneyContext(Transform targetTransform, Vector3 offset, int money)
     {
-        return ShowContext(targetTransform, offset, () => SetupUI(money));
+        return ShowContext(targetTransform, offset, () => SetupMoneyUI(money));
+    }
+
+    public IEnumerator ShowValueContext(Transform targetTransform, Vector3 offset, int value, string color)
+    {
+        return ShowContext(targetTransform, offset, () => SetupValueUI(value, color));
     }
     #endregion
 
     #region SetupUI
-    private void SetupUI(ScorePair pair)
+    private void SetupScoreUI(ScorePair pair)
     {
         bool isBaseScore = pair.baseScore != 0;
         bool isMultiplier = pair.multiplier != 0;
@@ -61,12 +66,18 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
         }
     }
 
-    private void SetupUI(int money)
+    private void SetupMoneyUI(int money)
     {
         scoreText.TMP_Text.color = DataContainer.Instance.DefaultColorSO.yellow;
         string sign = money > 0 ? "+" : "-";
         int absMoney = Mathf.Abs(money);
         scoreText.SetText($"{sign}${absMoney}");
+    }
+
+    private void SetupValueUI(int value, string color)
+    {
+        string res = "<color=" + color + ">" + value.ToString("+0;-0;0") + "</color>";
+        scoreText.SetText(res);
     }
     #endregion
 

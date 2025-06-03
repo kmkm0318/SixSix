@@ -9,6 +9,6 @@ public class RollState : BaseGameState
     {
         HandManager.Instance.UpdateHands();
         TriggerManager.Instance.TriggerOnRollCompleted();
-        base.Exit();
+        SequenceManager.Instance.AddCoroutine(base.Exit);
     }
 }

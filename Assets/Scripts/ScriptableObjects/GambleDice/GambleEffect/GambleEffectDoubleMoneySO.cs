@@ -7,8 +7,8 @@ public class GambleEffectDoubleMoneySO : GambleEffectSO
 
     public override void TriggerEffect(GambleDice gambleDice)
     {
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(gambleDice.transform);
         int addValue = Mathf.Clamp(MoneyManager.Instance.Money, 0, maximum);
+        TriggerAnimationManager.Instance.PlayTriggerMoneyAnimation(gambleDice.transform, Vector3.down, addValue);
         MoneyManager.Instance.AddMoney(addValue);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

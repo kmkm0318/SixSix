@@ -3,7 +3,7 @@ public class PlayState : BaseGameState
     public override void Enter()
     {
         base.Enter();
-        RollManager.Instance.ResetRollRemain();
+        RollManager.Instance.StartRoll();
     }
 
     public override void Exit()

@@ -170,7 +170,7 @@ public class TriggerManager : Singleton<TriggerManager>
         }
 
         ScoreManager.Instance.ApplyScorePair(scorePair);
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(targetTransform, offset, scorePair);
+        TriggerAnimationManager.Instance.PlayTriggerScoreAnimation(targetTransform, offset, scorePair);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
@@ -179,7 +179,7 @@ public class TriggerManager : Singleton<TriggerManager>
         if (money == 0) return;
 
         MoneyManager.Instance.Money += money;
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(targetTransform, offset, money);
+        TriggerAnimationManager.Instance.PlayTriggerMoneyAnimation(targetTransform, offset, money);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
     #endregion

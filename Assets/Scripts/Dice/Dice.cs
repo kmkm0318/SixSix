@@ -278,11 +278,11 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         return DiceInteractType;
     }
 
-    public virtual void EnhanceDice(ScorePair scorePair)
+    public virtual void EnhanceDice(ScorePair enhanceValue)
     {
-        faces[faceIndex].Enhance(scorePair);
+        SequenceManager.Instance.AddCoroutine(() => faces[faceIndex].Enhance(enhanceValue), true);
         SequenceManager.Instance.AddCoroutine(() => diceVisual.SetColor(faces[faceIndex].EnhanceValue), true);
-        AnimationFunction.AddShakeAnimation(transform, false, true);
+        TriggerAnimationManager.Instance.PlayTriggerScoreAnimation(transform, Vector3.up, enhanceValue);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 

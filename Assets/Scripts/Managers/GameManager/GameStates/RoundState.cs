@@ -9,7 +9,7 @@ public class RoundState : BaseGameState
             BossRoundManager.Instance.EnterBossRound();
         }
         ScoreManager.Instance.UpdateTargetRoundScore();
-        PlayManager.Instance.ResetPlayRemain();
+        PlayManager.Instance.StartPlay();
         GameManager.Instance.ChangeState(GameState.Play);
     }
 
