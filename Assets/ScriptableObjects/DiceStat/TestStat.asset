@@ -16,7 +16,7 @@ MonoBehaviour:
   defaultStartMoney: 50
   defaultInitialTargetRoundScore: 50
   defaultPlayDiceCount: 5
-  defaultAbilityDiceMax: 5
+  defaultAbilityDiceMax: 100
   defaultGambleDiceMax: 3
   defaultGambleDiceSaveMax: 5
   defaultPlayMax: 3
