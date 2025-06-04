@@ -237,7 +237,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1388789473091584
-    m_Localized: Enhance Dice {0}
+    m_Localized: 'Enhance Dice
+
+      {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 1388848004603904
