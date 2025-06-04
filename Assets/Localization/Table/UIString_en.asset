@@ -256,6 +256,10 @@ MonoBehaviour:
       Hand <color=yellow>Lv.{0}</color>'
     m_Metadata:
       m_Items: []
+  - m_Id: 4161591762624512
+    m_Localized: <size=85%>Again!</size>
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

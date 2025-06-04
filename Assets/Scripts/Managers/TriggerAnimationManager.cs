@@ -30,4 +30,10 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
         PlayTriggerAnimation(targetTransform);
         SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowValueContext(targetTransform, offset, value, color), true);
     }
+
+    public void PlayRetriggerAnimation(Transform targetTransform, Vector3 offset, string color)
+    {
+        PlayTriggerAnimation(targetTransform);
+        SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowRetriggerContext(targetTransform, offset, color), true);
+    }
 }

@@ -19004,6 +19004,18 @@ MonoBehaviour:
   mainCamera: {fileID: 519420031}
   scoreText: {fileID: 1416196031}
   offsetDistance: 1
+  retriggerText:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 4161591762624512
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1487878778
 GameObject:
   m_ObjectHideFlags: 0

@@ -248,6 +248,10 @@ MonoBehaviour:
       \uAC15\uD654\uD569\uB2C8\uB2E4"
     m_Metadata:
       m_Items: []
+  - m_Id: 4161591762624512
+    m_Localized: "<size=85%>\uB2E4\uC2DC!</size>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

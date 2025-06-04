@@ -16,7 +16,7 @@ public class AbilityEffectRetriggerPlayDiceSO : AbilityEffectSO
 
     private void RetriggerPlayDice(AbilityDiceContext context)
     {
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(context.currentAbilityDice.transform);
+        TriggerAnimationManager.Instance.PlayRetriggerAnimation(context.currentAbilityDice.transform, Vector3.down, "blue");
         SequenceManager.Instance.ApplyParallelCoroutine();
         TriggerManager.Instance.TriggerPlayDice(context.playDice, true);
     }

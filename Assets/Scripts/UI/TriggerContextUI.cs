@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class TriggerContextUI : Singleton<TriggerContextUI>
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private AnimatedText scoreText;
     [SerializeField] private float offsetDistance;
+    [SerializeField] private LocalizedString retriggerText;
 
     private RectTransform rectTransform;
 
@@ -44,6 +45,11 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
     {
         return ShowContext(targetTransform, offset, () => SetupValueUI(value, color));
     }
+
+    public IEnumerator ShowRetriggerContext(Transform targetTarnsform, Vector3 offset, string color)
+    {
+        return ShowContext(targetTarnsform, offset, () => SetupRetriggerUI(color));
+    }
     #endregion
 
     #region SetupUI
@@ -79,6 +85,12 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
         string res = "<color=" + color + ">" + value.ToString("+0;-0;0") + "</color>";
         scoreText.SetText(res);
     }
+
+    private void SetupRetriggerUI(string color)
+    {
+        string res = "<color=" + color + ">" + retriggerText.GetLocalizedString() + "</color>";
+        scoreText.SetText(res);
+    }
     #endregion
 
     private void SetPosition(Transform targetTransform, Vector3 offset)
@@ -99,6 +111,7 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
 
     private void Hide()
     {
+        scoreText.SetText(string.Empty);
         gameObject.SetActive(false);
     }
 }

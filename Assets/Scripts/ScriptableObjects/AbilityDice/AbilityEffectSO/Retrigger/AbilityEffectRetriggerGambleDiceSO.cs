@@ -16,7 +16,7 @@ public class AbilityEffectRetriggerGambleDiceSO : AbilityEffectSO
 
     private void RetriggerGambleDice(AbilityDiceContext context)
     {
-        TriggerAnimationManager.Instance.PlayTriggerAnimation(context.currentAbilityDice.transform);
+        TriggerAnimationManager.Instance.PlayRetriggerAnimation(context.currentAbilityDice.transform, Vector3.down, "green");
         SequenceManager.Instance.ApplyParallelCoroutine();
         TriggerManager.Instance.TriggerGambleDice(context.gambleDice, true);
     }
