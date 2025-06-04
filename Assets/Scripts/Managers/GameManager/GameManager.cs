@@ -18,83 +18,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        RegisterEvents();
         ChangeState(GameState.Loading);
     }
-
-    #region RegisterEvents
-    private void RegisterEvents()
-    {
-        RegisterEvent(GameState.Loading, () =>
-        {
-            Debuging("Loading State Entered");
-        }, () =>
-        {
-            Debuging("Loading State Exited");
-        });
-
-        RegisterEvent(GameState.Round, () =>
-        {
-            Debuging("Round State Entered");
-        }, () =>
-        {
-            Debuging("Round State Exited");
-        });
-
-        RegisterEvent(GameState.RoundClear, () =>
-        {
-            Debuging("RoundClear State Entered");
-        }, () =>
-        {
-            Debuging("RoundClear State Exited");
-        });
-
-        RegisterEvent(GameState.Shop, () =>
-        {
-            Debuging("Shop State Entered");
-        }, () =>
-        {
-            Debuging("Shop State Exited");
-        });
-
-        RegisterEvent(GameState.Play, () =>
-        {
-            Debuging("Play State Entered");
-        }, () =>
-        {
-            Debuging("Play State Exited");
-        });
-
-        RegisterEvent(GameState.Roll, () =>
-        {
-            Debuging("Roll State Entered");
-        }, () =>
-        {
-            Debuging("Roll State Exited");
-        });
-
-        RegisterEvent(GameState.Enhance, () =>
-        {
-            Debuging("Enhance State Entered");
-        }, () =>
-        {
-            Debuging("Enhance State Exited");
-        });
-
-        RegisterEvent(GameState.GameResult, () =>
-        {
-            Debuging("GameResult State Entered");
-        }, () =>
-        {
-            Debuging("GameResult State Exited");
-        });
-    }
-
-    private void Debuging(string message)
-    {
-        Debug.Log(message);
-    }
-    #endregion
 
     #region Game State
     public void ChangeState(GameState newState)
