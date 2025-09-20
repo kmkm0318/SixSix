@@ -245,6 +245,30 @@ MonoBehaviour:
     m_Key: TriggerContextUI_Retrigger
     m_Metadata:
       m_Items: []
+  - m_Id: 40865123488112640
+    m_Key: Shop_Dice_Recommendation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43068687862079488
+    m_Key: Option_Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43371254022283264
+    m_Key: UI_MainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43372145685176320
+    m_Key: MainMenu_Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43372363675738112
+    m_Key: MainMenu_Option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43372394172522496
+    m_Key: MainMenu_Exit
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

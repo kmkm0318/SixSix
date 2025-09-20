@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        AudioManager.Instance.PlayBGM(BGMType.GameScene);
+
         ChangeState(GameState.Loading);
     }
 

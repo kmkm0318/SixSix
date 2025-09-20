@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -8,10 +8,11 @@ public class DiceMerchantUI : MonoBehaviour
 {
     [SerializeField] private ShopDiceIcon diceImage;
     [SerializeField] private TMP_Text nameText;
-    [SerializeField] private LocalizedString buyButtonText;
     [SerializeField] private ButtonPanel buyButton;
+    [SerializeField] private LocalizedString buyButtonText;
+    [SerializeField] private GameObject recommendation;
 
-    private AbilityDiceSO avilityDiceSO;
+    private AbilityDiceSO abilityDiceSO;
     private GambleDiceSO gambleDiceSO;
 
     private void Start()
@@ -37,9 +38,9 @@ public class DiceMerchantUI : MonoBehaviour
 
     private void OnBuyButtonClicked()
     {
-        if (avilityDiceSO != null)
+        if (abilityDiceSO != null)
         {
-            ShopManager.Instance.TryPurchaseAbilityDice(avilityDiceSO);
+            ShopManager.Instance.TryPurchaseAbilityDice(abilityDiceSO);
         }
         else if (gambleDiceSO != null)
         {
@@ -56,8 +57,8 @@ public class DiceMerchantUI : MonoBehaviour
 
     private void OnAbilityDicePurchaseAttempted(AbilityDiceSO sO, PurchaseResult result)
     {
-        if (avilityDiceSO == null) return;
-        if (avilityDiceSO == sO && result == PurchaseResult.Success)
+        if (abilityDiceSO == null) return;
+        if (abilityDiceSO == sO && result == PurchaseResult.Success)
         {
             gameObject.SetActive(false);
         }
@@ -75,25 +76,35 @@ public class DiceMerchantUI : MonoBehaviour
 
     public void Init(AbilityDiceSO sO)
     {
-        avilityDiceSO = sO;
+        abilityDiceSO = sO;
+        gambleDiceSO = null;
         UpdateUI();
     }
 
     public void Init(GambleDiceSO sO)
     {
+        abilityDiceSO = null;
         gambleDiceSO = sO;
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        if (avilityDiceSO != null)
+        recommendation.SetActive(false);
+
+        if (abilityDiceSO != null)
         {
-            diceImage.Init(avilityDiceSO);
+            diceImage.Init(abilityDiceSO);
 
-            nameText.text = avilityDiceSO.DiceName;
-            buyButtonText.Arguments = new object[] { avilityDiceSO.price };
+            nameText.text = abilityDiceSO.DiceName;
+            buyButtonText.Arguments = new object[] { abilityDiceSO.price };
 
+            bool isRecommended = IsRecommended();
+
+            if (isRecommended)
+            {
+                recommendation.SetActive(true);
+            }
         }
         else if (gambleDiceSO != null)
         {
@@ -108,5 +119,22 @@ public class DiceMerchantUI : MonoBehaviour
         }
 
         buyButton.SetText(buyButtonText.GetLocalizedString());
+    }
+
+    private bool IsRecommended()
+    {
+        int targetId = abilityDiceSO.abilityDiceID;
+        int targetRound = RoundManager.Instance.CurrentRound + 1;
+
+        var diceList = DiceManager.Instance.AbilityDiceList;
+
+        List<int> diceIds = new();
+
+        foreach (var dice in diceList)
+        {
+            diceIds.Add(dice.AbilityDiceSO.abilityDiceID);
+        }
+
+        return AbilityDiceRecommendManager.Instance.IsRecommended(diceIds, targetId, targetRound);
     }
 }

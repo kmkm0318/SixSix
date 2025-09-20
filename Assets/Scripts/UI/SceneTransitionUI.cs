@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class LoadingCanvas : Singleton<LoadingCanvas>
+public class SceneTransitionUI : Singleton<SceneTransitionUI>
 {
     [SerializeField] private FadeCanvasGroup fadePanel;
 

@@ -5,6 +5,7 @@ using UnityEngine.Localization;
 public class AbilityDiceSO : ScriptableObject
 {
     [Header("Dice Info")]
+    public int abilityDiceID;
     public LocalizedString diceNameLocalized;
     public string DiceName => diceNameLocalized.GetLocalizedString();
     public AbilityDiceRarity rarity;

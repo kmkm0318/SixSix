@@ -20,6 +20,7 @@ public enum OptionType
     Language,
     Fullscreen,
     Resolution,
+    MasterVolume,
     BGMVolume,
     SFXVolume,
 }

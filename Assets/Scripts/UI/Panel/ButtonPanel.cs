@@ -27,6 +27,7 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
         isPressed = true;
 
         HandlePos();
+        AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
 
         OnButtonDown?.Invoke();
     }
@@ -37,6 +38,7 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
         isPressed = false;
 
         HandlePos();
+        AudioManager.Instance.PlaySFX(SFXType.ButtonUp);
 
         OnButtonUp?.Invoke();
     }

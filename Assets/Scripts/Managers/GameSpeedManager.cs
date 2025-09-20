@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,17 +18,37 @@ public class GameSpeedManager : Singleton<GameSpeedManager>
         RegisterEvents();
     }
 
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
     private void Init()
     {
         OnGameSpeedChanged(OptionManager.Instance.OptionData.gameSpeed);
     }
 
-    #region RegisterEvents
+    #region Events
     private void RegisterEvents()
     {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.GameSpeed, OnGameSpeedChanged);
+        OptionUIEvents.OnOptionValueChanged += OnOptionValueChanged;
         SequenceManager.Instance.OnAnimationStarted += OnAnimationStarted;
         SequenceManager.Instance.OnAnimationFinished += OnAnimationFinished;
+    }
+
+    private void UnregisterEvents()
+    {
+        OptionUIEvents.OnOptionValueChanged -= OnOptionValueChanged;
+        SequenceManager.Instance.OnAnimationStarted -= OnAnimationStarted;
+        SequenceManager.Instance.OnAnimationFinished -= OnAnimationFinished;
+    }
+
+    private void OnOptionValueChanged(OptionType type, int value)
+    {
+        if (type == OptionType.GameSpeed)
+        {
+            OnGameSpeedChanged(value);
+        }
     }
 
     private void OnGameSpeedChanged(int value)

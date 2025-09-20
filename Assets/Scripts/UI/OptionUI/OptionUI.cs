@@ -3,25 +3,49 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionUI : Singleton<OptionUI>
+public class OptionUI : MonoBehaviour
 {
     [SerializeField] private RectTransform optionPanel;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private OptionSelectUI[] optionSelectUIs;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button mainMenuButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
 
     private void Start()
     {
         RegisterEvents();
         closeButton.onClick.AddListener(() => Hide());
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
         gameObject.SetActive(false);
+    }
+
+    private void GoToMainMenu()
+    {
+        Hide();
+
+        SceneTransitionManager.Instance.ChangeScene(SceneType.MainMenu);
+    }
+
+    private void OnDestroy()
+    {
+        UnregisterEvents();
     }
 
     #region RegisterEvents
     private void RegisterEvents()
     {
-        StateUI.Instance.OnOptionButtonClicked += OnOptionButtonClicked;
+        OptionUIEvents.OnOptionButtonClicked += OnOptionButtonClicked;
+
+        foreach (var optionSelectUI in optionSelectUIs)
+        {
+            optionSelectUI.OnOptionValueChanged += (value) => OptionUIEvents.TriggerOnOptionValueChanged(optionSelectUI.OptionTypeDataSO.optionType, value);
+        }
+    }
+
+    private void UnregisterEvents()
+    {
+        OptionUIEvents.OnOptionButtonClicked -= OnOptionButtonClicked;
     }
 
     private void OnOptionButtonClicked()
@@ -44,6 +68,7 @@ public class OptionUI : Singleton<OptionUI>
             });
 
         fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
+        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
 
     private void Hide()
@@ -58,17 +83,7 @@ public class OptionUI : Singleton<OptionUI>
             });
 
         fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
+        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
     #endregion
-
-    public void RegisterOnOptionValueChanged(OptionType type, Action<int> action)
-    {
-        foreach (var optionSelectUI in optionSelectUIs)
-        {
-            if (optionSelectUI.OptionTypeDataSO.optionType == type)
-            {
-                optionSelectUI.OnOptionValueChanged += action;
-            }
-        }
-    }
 }

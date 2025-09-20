@@ -19,6 +19,11 @@ public class LocalizationManager : Singleton<LocalizationManager>
         RegisterEvents();
     }
 
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
     private void Init()
     {
         OnLanguageChanged(OptionManager.Instance.OptionData.language);
@@ -35,15 +40,28 @@ public class LocalizationManager : Singleton<LocalizationManager>
         OnInitializationComplete?.Invoke();
     }
 
-    #region RegisterEvents
+    #region Events
     private void RegisterEvents()
     {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.Language, OnLanguageChanged);
+        OptionUIEvents.OnOptionValueChanged += OnOptionValueChanged;
     }
 
-    private void OnLanguageChanged(int obj)
+    private void UnregisterEvents()
     {
-        switch (obj)
+        OptionUIEvents.OnOptionValueChanged -= OnOptionValueChanged;
+    }
+
+    private void OnOptionValueChanged(OptionType type, int value)
+    {
+        if (type == OptionType.Language)
+        {
+            OnLanguageChanged(value);
+        }
+    }
+
+    private void OnLanguageChanged(int value)
+    {
+        switch (value)
         {
             case 0:
                 SetLocale(ENGLISH_CODE);
@@ -52,7 +70,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
                 SetLocale(KOREAN_CODE);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(obj), $"Unsupported language option: {obj}");
+                throw new ArgumentOutOfRangeException(nameof(value), $"Unsupported language option: {value}");
         }
     }
     #endregion

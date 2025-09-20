@@ -1,25 +1,9 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
-public class LoadingManager : Singleton<LoadingManager>
+public class LoadingManager : MonoBehaviour
 {
-    [SerializeField] private float waitDuration = 2f;
-    [SerializeField] private float loadingDuration = 2f;
-
-    public void StartLoading(Action onComplete = null)
+    private void Start()
     {
-        StartCoroutine(LoadingCoroutine(onComplete));
-    }
-
-    private IEnumerator LoadingCoroutine(Action onComplete)
-    {
-        LoadingCanvas.Instance.Show(0f);
-        yield return new WaitForSeconds(waitDuration);
-        LoadingCanvas.Instance.Hide(loadingDuration, () =>
-        {
-            onComplete?.Invoke();
-        });
-        yield break;
+        SceneTransitionManager.Instance.ChangeScene(SceneType.MainMenu);
     }
 }

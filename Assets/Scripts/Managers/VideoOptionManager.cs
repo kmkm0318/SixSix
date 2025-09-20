@@ -8,17 +8,41 @@ public class VideoOptionManager : Singleton<VideoOptionManager>
         RegisterEvents();
     }
 
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
     private void Init()
     {
         OnFullscreenChanged(OptionManager.Instance.OptionData.fullscreen);
         OnResolutionChanged(OptionManager.Instance.OptionData.resolution);
     }
 
-    #region RegisterEvents
+    #region Events
     private void RegisterEvents()
     {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.Fullscreen, OnFullscreenChanged);
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.Resolution, OnResolutionChanged);
+        OptionUIEvents.OnOptionValueChanged += OnOptionValueChanged;
+    }
+
+    private void UnregisterEvents()
+    {
+        OptionUIEvents.OnOptionValueChanged -= OnOptionValueChanged;
+    }
+
+    private void OnOptionValueChanged(OptionType type, int value)
+    {
+        switch (type)
+        {
+            case OptionType.Fullscreen:
+                OnFullscreenChanged(value);
+                break;
+            case OptionType.Resolution:
+                OnResolutionChanged(value);
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnFullscreenChanged(int value)

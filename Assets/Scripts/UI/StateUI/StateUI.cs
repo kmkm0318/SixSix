@@ -8,12 +8,10 @@ public class StateUI : Singleton<StateUI>
     [SerializeField] private AnimatedText playRemainText;
     [SerializeField] private AnimatedText rollRemainText;
 
-    public event Action OnOptionButtonClicked;
-
     protected override void Awake()
     {
         base.Awake();
-        optionButton.OnClick += () => OnOptionButtonClicked?.Invoke();
+        optionButton.OnClick += OptionUIEvents.TriggerOnOptionButtonClicked;
     }
 
     private void Start()

@@ -260,6 +260,8 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     public virtual void HandleDiceCollided()
     {
+        AudioManager.Instance.PlaySFX(SFXType.DiceCollide);
+
         if (IsRolling && !IsKeeped)
         {
             ChangeFace(1);

@@ -101,6 +101,8 @@ public class RollManager : Singleton<RollManager>
         OnRollPowerApplied?.Invoke(rollPower);
         RollRemain--;
 
+        AudioManager.Instance.PlaySFX(SFXType.DiceRoll);
+
         StartCoroutine(WaitForAllDiceToStop(() =>
         {
             GameManager.Instance.ExitState(GameState.Roll);

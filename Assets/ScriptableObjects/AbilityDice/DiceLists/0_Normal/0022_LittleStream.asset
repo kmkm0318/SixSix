@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
   m_Name: 0022_LittleStream
   m_EditorClassIdentifier: 
+  abilityDiceID: 22
   diceNameLocalized:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d

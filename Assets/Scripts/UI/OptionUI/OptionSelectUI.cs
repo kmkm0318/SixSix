@@ -108,6 +108,9 @@ public class OptionSelectUI : MonoBehaviour
             case OptionType.Resolution:
                 index = OptionManager.Instance.OptionData.resolution;
                 break;
+            case OptionType.MasterVolume:
+                index = OptionManager.Instance.OptionData.masterVolume;
+                break;
             case OptionType.BGMVolume:
                 index = OptionManager.Instance.OptionData.bgmVolume;
                 break;

@@ -19,16 +19,20 @@ public class OptionManager : Singleton<OptionManager>
         RegisterEvents();
     }
 
-    #region RegisterEvents
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
     private void RegisterEvents()
     {
-        foreach (var type in Enum.GetValues(typeof(OptionType)))
-        {
-            if (type is OptionType optionType)
-            {
-                OptionUI.Instance.RegisterOnOptionValueChanged(optionType, (value) => OnOptionValueChanged(optionType, value));
-            }
-        }
+        OptionUIEvents.OnOptionValueChanged += OnOptionValueChanged;
+    }
+
+    private void UnregisterEvents()
+    {
+        OptionUIEvents.OnOptionValueChanged -= OnOptionValueChanged;
     }
 
     private void OnOptionValueChanged(OptionType type, int value)
@@ -49,6 +53,9 @@ public class OptionManager : Singleton<OptionManager>
                 break;
             case OptionType.Resolution:
                 optionData.resolution = value;
+                break;
+            case OptionType.MasterVolume:
+                optionData.masterVolume = value;
                 break;
             case OptionType.BGMVolume:
                 optionData.bgmVolume = value;
@@ -81,6 +88,7 @@ public class OptionManager : Singleton<OptionManager>
                 language = 0,
                 fullscreen = 0,
                 resolution = 0,
+                masterVolume = 5,
                 bgmVolume = 5,
                 sfxVolume = 5
             };
@@ -101,6 +109,7 @@ public struct OptionData
     public int language;
     public int fullscreen;
     public int resolution;
+    public int masterVolume;
     public int bgmVolume;
     public int sfxVolume;
 }

@@ -72,6 +72,7 @@ public class GameResultUI : Singleton<GameResultUI>
             });
 
         fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
+        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
 
     private void Hide(Action onComplete = null)
@@ -87,6 +88,7 @@ public class GameResultUI : Singleton<GameResultUI>
             });
 
         fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
+        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
     #endregion
 }

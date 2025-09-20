@@ -90,6 +90,11 @@ public class DiceManager : Singleton<DiceManager>
         RegisterEvents();
     }
 
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
     private void Init()
     {
         OnAbilityDiceAutoKeepChanged(OptionManager.Instance.OptionData.abilityDiceAutoKeep);
@@ -103,11 +108,25 @@ public class DiceManager : Singleton<DiceManager>
         CurrentGambleDiceMax = DataContainer.Instance.CurrentDiceStat.defaultGambleDiceMax;
     }
 
-    #region RegisterEvents
+    #region Events
     private void RegisterEvents()
     {
-        OptionUI.Instance.RegisterOnOptionValueChanged(OptionType.AbilityDiceAutoKeep, OnAbilityDiceAutoKeepChanged);
+        OptionUIEvents.OnOptionValueChanged += OnOptionValueChanged;
         ShopManager.Instance.OnAbilityDicePurchaseAttempted += OnPurchaseAttempted;
+    }
+
+    private void UnregisterEvents()
+    {
+        OptionUIEvents.OnOptionValueChanged -= OnOptionValueChanged;
+        ShopManager.Instance.OnAbilityDicePurchaseAttempted -= OnPurchaseAttempted;
+    }
+
+    private void OnOptionValueChanged(OptionType type, int value)
+    {
+        if (type == OptionType.AbilityDiceAutoKeep)
+        {
+            OnAbilityDiceAutoKeepChanged(value);
+        }
     }
 
     public void StartAddBonusPlayDice()
