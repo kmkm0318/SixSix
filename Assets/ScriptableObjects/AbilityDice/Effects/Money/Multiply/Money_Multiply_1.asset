@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b855dfb92765c3f41a055b98ec8a5eb7, type: 3}
   m_Name: Money_Multiply_1
   m_EditorClassIdentifier: 
-  calculateType: 0
+  calculateType: 1
   effectDescription:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d

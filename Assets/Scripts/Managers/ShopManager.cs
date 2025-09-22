@@ -140,7 +140,7 @@ public class ShopManager : Singleton<ShopManager>
         while (res.Count < merchantItemCountMax && tryCount < tryMax)
         {
             var diceLists = DataContainer.Instance.ShopAbilityDiceLists.diceLists;
-            var diceList = diceLists.GetRandomElement();
+            var diceList = diceLists.GetWeightedRandomElement();
             var dice = diceList.abilityDiceSOList.GetRandomElement();
 
             if (dice == null) continue;

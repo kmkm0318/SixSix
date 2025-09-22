@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a9516010274e4428fc6effe8d9a155, type: 3}
   m_Name: 1_RareDiceList
   m_EditorClassIdentifier: 
-  abilityDiceSOList: []
+  abilityDiceSOList:
+  - {fileID: 11400000, guid: 8459efa39e17eec4c81b7322ad89ce01, type: 2}
+  - {fileID: 11400000, guid: 9fdd4007c8e6cdf45b069951fb7e35fc, type: 2}
+  - {fileID: 11400000, guid: c828bb95656e12b408c51b8b0e418496, type: 2}
+  - {fileID: 11400000, guid: 8d852998e2dd7d84ba4ca13d0b201807, type: 2}
+  - {fileID: 11400000, guid: ba59e3b8f99f4b640acf255e7ea222b1, type: 2}
+  - {fileID: 11400000, guid: 9c945aae088a24a4380c2210bc1748c6, type: 2}

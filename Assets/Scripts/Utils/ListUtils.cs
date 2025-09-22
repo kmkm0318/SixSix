@@ -12,6 +12,8 @@ public static class ListUtils
     {
         if (list == null || list.Count == 0) return default;
 
+        Debug.Log($"Normal Random. List Count : {list.Count}");
+
         return list[Random.Range(0, list.Count)];
     }
 
@@ -38,15 +40,18 @@ public static class ListUtils
         return res;
     }
 
-    public static T GetRandomElement<T>(this List<WeightedItem<T>> list)
+    public static T GetWeightedRandomElement<T>(this List<WeightedItem<T>> list)
     {
         if (list == null || list.Count == 0) return default;
+
+        Debug.Log($"Weighted Random. List Count : {list.Count}");
 
         int totalWeight = 0;
         foreach (var pair in list) totalWeight += pair.weight;
 
         if (totalWeight <= 0) return default;
 
+        Debug.Log($"Total Weight : {totalWeight}");
 
         int rand = Random.Range(0, totalWeight);
         int sum = 0;

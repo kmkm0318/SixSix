@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: 0026_RerollMania
+  m_Name: 1005_Prosperity
   m_EditorClassIdentifier: 
-  abilityDiceID: 26
+  abilityDiceID: 29
   diceNameLocalized:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 13042154086400
+      m_KeyId: 13043626287104
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  rarity: 0
+  rarity: 1
   autoKeepType: 0
   price: 6
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: e71cc5360c8a5a04d9541ded55fe4771, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 48eef3bc02af43d4e9921b0ded8fc3f6, type: 2}
   maxDiceValue: 5
-  abilityTrigger: {fileID: 11400000, guid: 03a76412f492c4e469ae0091cd6b409a, type: 2}
-  abilityEffect: {fileID: 11400000, guid: bd391b5bc9b875143890307753aa42c8, type: 2}
+  abilityTrigger: {fileID: 11400000, guid: 1594a466392d7f44b8f426cc42fc67bf, type: 2}
+  abilityEffect: {fileID: 11400000, guid: f2f2a2ba8c95a0948ba570d8bc458d96, type: 2}
   references:
     version: 2
     RefIds: []

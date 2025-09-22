@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShaderTestUI : MonoBehaviour
@@ -10,12 +11,14 @@ public class ShaderTestUI : MonoBehaviour
 
     private void MakeAbilityDiceImages()
     {
-        var abilityDiceList = DataContainer.Instance.NormalAbilityDiceListSO.abilityDiceSOList;
-        abilityDiceList.AddRange(DataContainer.Instance.RareAbilityDiceListSO.abilityDiceSOList);
-        abilityDiceList.AddRange(DataContainer.Instance.EpicAbilityDiceListSO.abilityDiceSOList);
-        abilityDiceList.AddRange(DataContainer.Instance.LegendaryAbilityDiceListSO.abilityDiceSOList);
+        List<AbilityDiceSO> diceList = new();
 
-        foreach (var so in abilityDiceList)
+        diceList.AddRange(DataContainer.Instance.NormalAbilityDiceListSO.abilityDiceSOList);
+        diceList.AddRange(DataContainer.Instance.RareAbilityDiceListSO.abilityDiceSOList);
+        diceList.AddRange(DataContainer.Instance.EpicAbilityDiceListSO.abilityDiceSOList);
+        diceList.AddRange(DataContainer.Instance.LegendaryAbilityDiceListSO.abilityDiceSOList);
+
+        foreach (var so in diceList)
         {
             var newShaderTest = Instantiate(shaderTestPrefab, transform);
             newShaderTest.gameObject.SetActive(true);

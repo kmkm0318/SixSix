@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceLists:
   - item: {fileID: 11400000, guid: a79c26c8014f8a144821d955b1630579, type: 2}
-    weight: 100
+    weight: 216
   - item: {fileID: 11400000, guid: 7be95526f4cddab4b8de620885f8ddb6, type: 2}
-    weight: 0
+    weight: 36
   - item: {fileID: 11400000, guid: 8b59e45c6bfa51b46a2310bc796699c8, type: 2}
-    weight: 0
+    weight: 6
   - item: {fileID: 11400000, guid: 58d8fa8811349b146804047a46392f69, type: 2}
-    weight: 50
+    weight: 1

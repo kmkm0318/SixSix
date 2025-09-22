@@ -10,14 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: 1007_Freedom
+  m_Name: 1007_Oddinary
   m_EditorClassIdentifier: 
-  diceName: Freedom
+  abilityDiceID: 0
+  diceNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   rarity: 1
   autoKeepType: 0
   price: 7
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  diceMaterialSO: {fileID: 11400000, guid: e822d140864351245b0cdd8ab2cb5d83, type: 2}
+  shaderDataSO: {fileID: 0}
   maxDiceValue: 3
-  availityTrigger: {fileID: 11400000, guid: 4711a7bab1f224340af177b02c586024, type: 2}
-  availityEffect: {fileID: 11400000, guid: 2b956866ff36f9d4ca715fa76820f929, type: 2}
+  abilityTrigger: {fileID: 0}
+  abilityEffect: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

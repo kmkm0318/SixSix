@@ -10,14 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: 1005_OnlyOne
+  m_Name: 1010_LowFive
   m_EditorClassIdentifier: 
-  diceName: Only One
+  abilityDiceID: 0
+  diceNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   rarity: 1
   autoKeepType: 0
-  price: 6
+  price: 7
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  diceMaterialSO: {fileID: 11400000, guid: 12d839e55aab74140aa41ec5d2964ac5, type: 2}
+  shaderDataSO: {fileID: 0}
   maxDiceValue: 5
-  availityTrigger: {fileID: 11400000, guid: 1986600841724654a860956135ae51ad, type: 2}
-  availityEffect: {fileID: 11400000, guid: 1e532b61cdda5504eaaa237fcdef4084, type: 2}
+  abilityTrigger: {fileID: 0}
+  abilityEffect: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
