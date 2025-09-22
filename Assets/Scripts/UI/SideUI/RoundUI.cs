@@ -58,6 +58,7 @@ public class RoundUI : MonoBehaviour
     private void OnPlayScoreChanged(double score)
     {
         UpdateScoreText(playScoreText, score);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.DiceTrigger), true);
     }
 
     private void OnScorePairChanged(ScorePair pair)

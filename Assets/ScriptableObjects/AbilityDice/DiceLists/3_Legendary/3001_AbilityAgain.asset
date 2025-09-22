@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: 0029_Prosperity
+  m_Name: 3001_AbilityAgain
   m_EditorClassIdentifier: 
+  abilityDiceID: 3001
   diceNameLocalized:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 13043626287104
+      m_KeyId: 43508988955205632
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   rarity: 3
   autoKeepType: 0
-  price: 1
+  price: 12
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: 48eef3bc02af43d4e9921b0ded8fc3f6, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 48e15f252e8a220448773ab05a80ea27, type: 2}
   maxDiceValue: 3
-  abilityTrigger: {fileID: 11400000, guid: 3fb54307b070d114ba29e6c24890a576, type: 2}
-  abilityEffect: {fileID: 11400000, guid: 214ea454418f82b4a82a7ad57ce367b9, type: 2}
+  abilityTrigger: {fileID: 11400000, guid: e2a0a4f3108527740b1c5d254335b58f, type: 2}
+  abilityEffect: {fileID: 11400000, guid: 1ee79b49e2ce08a4f99349766be379c3, type: 2}
   references:
     version: 2
     RefIds: []

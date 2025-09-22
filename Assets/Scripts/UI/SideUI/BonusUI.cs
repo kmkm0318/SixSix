@@ -95,7 +95,6 @@ public class BonusUI : Singleton<BonusUI>
     {
         if (bonusTargetTextDict.TryGetValue(type, out var targetText))
         {
-            SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(targetText, "Successed"), true);
             AddTextAnimation(targetText, "Successed");
         }
     }
@@ -103,6 +102,7 @@ public class BonusUI : Singleton<BonusUI>
     private void AddTextAnimation(TMP_Text text, string targetString)
     {
         SequenceManager.Instance.AddCoroutine(SetTextAndPlayAnimation(text, targetString), true);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.DiceTrigger), true);
     }
 
 

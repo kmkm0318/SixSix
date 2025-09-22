@@ -216,8 +216,6 @@ public class ShopUI : Singleton<ShopUI>
         {
             onComplete?.Invoke();
         });
-
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
 
     private void Hide(Action onComplete = null)
@@ -231,8 +229,6 @@ public class ShopUI : Singleton<ShopUI>
             onComplete?.Invoke();
             gameObject.SetActive(false);
         });
-
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
 }
 

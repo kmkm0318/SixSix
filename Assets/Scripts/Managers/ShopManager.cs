@@ -34,7 +34,8 @@ public class ShopManager : Singleton<ShopManager>
 
     private void Start()
     {
-        abilityDiceListSO = DataContainer.Instance.ShopAbilityDiceListSO;
+        abilityDiceListSO = DataContainer.Instance.NormalAbilityDiceListSO;
+
         gambleDiceListSO = DataContainer.Instance.ShopGambleDiceListSO;
 
         RegisterEvents();
@@ -131,17 +132,30 @@ public class ShopManager : Singleton<ShopManager>
 
     public List<AbilityDiceSO> GetRandomAbilityDiceList()
     {
-        List<AbilityDiceSO> randomAbilityDiceList = new();
-        while (randomAbilityDiceList.Count < merchantItemCountMax)
-        {
-            if (randomAbilityDiceList.Count >= abilityDiceListSO.abilityDiceSOList.Count) break;
+        List<AbilityDiceSO> res = new();
+        HashSet<AbilityDiceSO> has = new();
+        int tryCount = 0;
+        int tryMax = 100;
 
-            AbilityDiceSO randomAbilityDice = abilityDiceListSO.GetRandomAbilityDiceSO();
-            if (randomAbilityDice == null) continue;
-            if (randomAbilityDiceList.Contains(randomAbilityDice)) continue;
-            randomAbilityDiceList.Add(randomAbilityDice);
+        while (res.Count < merchantItemCountMax && tryCount < tryMax)
+        {
+            var diceLists = DataContainer.Instance.ShopAbilityDiceLists.diceLists;
+            var diceList = diceLists.GetRandomElement();
+            var dice = diceList.abilityDiceSOList.GetRandomElement();
+
+            if (dice == null) continue;
+
+            if (has.Contains(dice))
+            {
+                tryCount++;
+                continue;
+            }
+
+            res.Add(dice);
+            has.Add(dice);
         }
-        return randomAbilityDiceList;
+
+        return res;
     }
 
     public List<GambleDiceSO> GetRandomGambleDiceList()

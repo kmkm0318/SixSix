@@ -10,9 +10,12 @@ public class ShaderTestUI : MonoBehaviour
 
     private void MakeAbilityDiceImages()
     {
-        var abilityDiceList = DataContainer.Instance.ShopAbilityDiceListSO;
+        var abilityDiceList = DataContainer.Instance.NormalAbilityDiceListSO.abilityDiceSOList;
+        abilityDiceList.AddRange(DataContainer.Instance.RareAbilityDiceListSO.abilityDiceSOList);
+        abilityDiceList.AddRange(DataContainer.Instance.EpicAbilityDiceListSO.abilityDiceSOList);
+        abilityDiceList.AddRange(DataContainer.Instance.LegendaryAbilityDiceListSO.abilityDiceSOList);
 
-        foreach (var so in abilityDiceList.abilityDiceSOList)
+        foreach (var so in abilityDiceList)
         {
             var newShaderTest = Instantiate(shaderTestPrefab, transform);
             newShaderTest.gameObject.SetActive(true);

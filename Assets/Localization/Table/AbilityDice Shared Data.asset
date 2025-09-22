@@ -259,6 +259,18 @@ MonoBehaviour:
     m_Key: Effect_RetriggerAbilityDice
     m_Metadata:
       m_Items: []
+  - m_Id: 43508988955205632
+    m_Key: Name_3001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43509013642878976
+    m_Key: Name_3002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43509021997932544
+    m_Key: Name_3003
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

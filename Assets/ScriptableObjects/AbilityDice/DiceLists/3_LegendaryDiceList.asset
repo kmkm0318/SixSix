@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a9516010274e4428fc6effe8d9a155, type: 3}
+  m_Name: 3_LegendaryDiceList
+  m_EditorClassIdentifier: 
+  abilityDiceSOList:
+  - {fileID: 11400000, guid: a3cb98012e6ca8b4fade52592374e15c, type: 2}
+  - {fileID: 11400000, guid: a6336d449e4edf24ebbd56a1e5b4bab1, type: 2}
+  - {fileID: 11400000, guid: ac5a12a9aa060c542a2a1224f0ad3f08, type: 2}

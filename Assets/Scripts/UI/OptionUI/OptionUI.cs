@@ -68,7 +68,6 @@ public class OptionUI : MonoBehaviour
             });
 
         fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
 
     private void Hide()
@@ -83,7 +82,6 @@ public class OptionUI : MonoBehaviour
             });
 
         fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
     #endregion
 }

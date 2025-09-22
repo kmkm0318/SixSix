@@ -994,13 +994,20 @@ MonoBehaviour:
     - key: 5
       value: {fileID: 8300000, guid: 9db1edd51b12af14195e019eb773802b, type: 3}
     - key: 6
-      value: {fileID: 8300000, guid: 65b1d4deaa039a145b899263fc22d234, type: 3}
+      value: {fileID: 8300000, guid: cf858d510f0b15942b328600647b483d, type: 3}
     - key: 7
       value: {fileID: 8300000, guid: ae3c4480a10e2384491e44c32c506915, type: 3}
     - key: 8
-      value: {fileID: 8300000, guid: 0493aa72621dc8848a96b7015d28eaa0, type: 3}
-    - key: 8
-      value: {fileID: 8300000, guid: afa33502db7f15944a02280e5721a051, type: 3}
+      value: {fileID: 8300000, guid: e5279384346e63546b660e84ecdce26c, type: 3}
+    - key: 9
+      value: {fileID: 8300000, guid: 068ca12c3116a644b8fd25a351c2bd1b, type: 3}
+    - key: 10
+      value: {fileID: 8300000, guid: 4644dfa226a604c4f88d7745ea25e900, type: 3}
+    - key: 11
+      value: {fileID: 8300000, guid: 65b1d4deaa039a145b899263fc22d234, type: 3}
+    - key: 12
+      value: {fileID: 8300000, guid: d01c0f20cf29a6540b06e387c629bf59, type: 3}
+  _maxSameSFXCount: 1
 --- !u!4 &2077021265
 Transform:
   m_ObjectHideFlags: 0

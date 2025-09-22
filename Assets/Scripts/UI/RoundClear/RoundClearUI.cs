@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -65,6 +63,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
             });
 
         fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
+
+        AudioManager.Instance.PlaySFX(SFXType.RoundClear);
 
         yield return myTween.WaitForCompletion();
         OnRoundClearUIOpened?.Invoke();

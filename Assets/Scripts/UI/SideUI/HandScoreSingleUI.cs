@@ -24,6 +24,7 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         button.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
             HandScoreUI.Instance.HandleSelectHand(handSO);
         });
     }

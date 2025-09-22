@@ -18,8 +18,16 @@ public class DataContainer : Singleton<DataContainer>
     #endregion
 
     #region AbilityDiceListSO
-    [SerializeField] private AbilityDiceListSO shopAbilityDiceListSO;
-    public AbilityDiceListSO ShopAbilityDiceListSO => shopAbilityDiceListSO;
+    [SerializeField] private AbilityDiceListSO normalAbilityDiceListSO;
+    [SerializeField] private AbilityDiceListSO rareAbilityDiceListSO;
+    [SerializeField] private AbilityDiceListSO epicAbilityDiceListSO;
+    [SerializeField] private AbilityDiceListSO legendaryAbilityDiceListSO;
+    [SerializeField] private AbilityDiceWeightedListSO shopAbilityDiceLists;
+    public AbilityDiceListSO NormalAbilityDiceListSO => normalAbilityDiceListSO;
+    public AbilityDiceListSO RareAbilityDiceListSO => rareAbilityDiceListSO;
+    public AbilityDiceListSO EpicAbilityDiceListSO => epicAbilityDiceListSO;
+    public AbilityDiceListSO LegendaryAbilityDiceListSO => legendaryAbilityDiceListSO;
+    public AbilityDiceWeightedListSO ShopAbilityDiceLists => shopAbilityDiceLists;
     #endregion
 
     #region GambleDiceListSO

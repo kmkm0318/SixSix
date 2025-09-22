@@ -46,7 +46,9 @@ public class StateUI : Singleton<StateUI>
 
     private void OnMoneyChanged(int money)
     {
-        AnimationFunction.AddUpdateTextAndPlayAnimation(moneyText, $"${money}");
+        AnimationFunction.AddUpdateTextAndPlayAnimation(moneyText, $"${money}", true);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.Money), true);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void OnPlayRemainChanged(int playRemain)

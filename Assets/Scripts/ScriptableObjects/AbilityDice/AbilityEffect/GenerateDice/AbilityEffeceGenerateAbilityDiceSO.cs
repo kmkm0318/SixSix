@@ -7,7 +7,7 @@ public class AbilityEffeceGenerateAbilityDiceSO : AbilityEffectSO
     {
         TriggerAnimationManager.Instance.PlayTriggerAnimation(context.currentAbilityDice.transform);
         SequenceManager.Instance.ApplyParallelCoroutine();
-        DiceManager.Instance.StartGenerateAbilityDice(context.currentAbilityDice.DiceValue);
+        DiceManager.Instance.StartGenerateRandomNormalAbilityDice(context.currentAbilityDice.DiceValue);
     }
 
     public override string GetEffectDescription(AbilityDiceSO abilityDiceSO)

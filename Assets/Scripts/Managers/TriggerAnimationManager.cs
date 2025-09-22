@@ -5,6 +5,7 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
     public void PlayTriggerAnimation(Transform targetTransform)
     {
         AnimationFunction.AddShakeAnimation(targetTransform, false, true);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.DiceTrigger), true);
     }
 
     public void PlayTriggerScoreAnimation(Transform targetTransform, Vector3 offset, ScorePair scorePair)

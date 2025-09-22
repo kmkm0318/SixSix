@@ -16,6 +16,8 @@ public class GameResultUI : Singleton<GameResultUI>
     [SerializeField] private GameObject infinityModeButtonRow;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
 
+    private bool _isGameClear;
+
     private void Start()
     {
         mainMenuButton.OnClick += OnClickMainMenuButton;
@@ -42,14 +44,16 @@ public class GameResultUI : Singleton<GameResultUI>
 
     public void ShowGameResult(bool isGameClear)
     {
-        SequenceManager.Instance.AddCoroutine(Show);
-        resultText.SetText(isGameClear ? "Game Clear" : "Game Over");
+        _isGameClear = isGameClear;
 
-        Color color = isGameClear ?
+        SequenceManager.Instance.AddCoroutine(Show);
+        resultText.SetText(_isGameClear ? "Game Clear" : "Game Over");
+
+        Color color = _isGameClear ?
         DataContainer.Instance.DefaultColorSO.blue : DataContainer.Instance.DefaultColorSO.red;
 
         resultText.TMP_Text.color = color;
-        infinityModeButtonRow.SetActive(isGameClear);
+        infinityModeButtonRow.SetActive(_isGameClear);
 
         foreach (var pair in gameResultUIPairs)
         {
@@ -72,7 +76,8 @@ public class GameResultUI : Singleton<GameResultUI>
             });
 
         fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
+
+        AudioManager.Instance.PlaySFX(_isGameClear ? SFXType.Win : SFXType.Lose);
     }
 
     private void Hide(Action onComplete = null)
@@ -88,7 +93,6 @@ public class GameResultUI : Singleton<GameResultUI>
             });
 
         fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-        AudioManager.Instance.PlaySFX(SFXType.UIShowHide);
     }
     #endregion
 }

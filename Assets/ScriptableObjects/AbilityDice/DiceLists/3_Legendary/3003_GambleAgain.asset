@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
-  m_Name: 0030_Decline
+  m_Name: 3003_GambleAgain
   m_EditorClassIdentifier: 
+  abilityDiceID: 3003
   diceNameLocalized:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 13044100243456
+      m_KeyId: 43509021997932544
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   rarity: 3
   autoKeepType: 0
-  price: 1
+  price: 12
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: ea632f233f6a0c34fb532f710b14e806, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 593d1aed32df9644c830486a6b388e5b, type: 2}
   maxDiceValue: 3
   abilityTrigger: {fileID: 11400000, guid: 8261ab28c1791244fb1cd3885d1700f1, type: 2}
   abilityEffect: {fileID: 11400000, guid: 6093243ce21cdc64b957f89d49206d94, type: 2}

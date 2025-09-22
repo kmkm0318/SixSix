@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51a9516010274e4428fc6effe8d9a155, type: 3}
-  m_Name: NormalDiceList
+  m_Name: 0_NormalDiceList
   m_EditorClassIdentifier: 
   abilityDiceSOList:
   - {fileID: 11400000, guid: 2b1224fbd09c24047b18b658b5d403f7, type: 2}

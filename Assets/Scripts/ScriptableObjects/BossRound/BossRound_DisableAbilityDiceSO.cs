@@ -30,9 +30,9 @@ public class BossRound_DisableAbilityDiceSO : BossRoundSO
 
     private void DisableDices()
     {
-        disabledAbilityDiceList = DiceManager.Instance.GetRandomAbilityDiceList(limitCount);
+        disabledAbilityDiceList = DiceManager.Instance.AbilityDiceList.GetRandomElements(limitCount);
 
-        if (disabledAbilityDiceList == null) return;
+        if (ListUtils.IsNullOrEmpty(disabledAbilityDiceList)) return;
 
         foreach (var abilityDice in disabledAbilityDiceList)
         {
@@ -43,7 +43,7 @@ public class BossRound_DisableAbilityDiceSO : BossRoundSO
 
     private void EnableDices()
     {
-        if (disabledAbilityDiceList == null) return;
+        if (ListUtils.IsNullOrEmpty(disabledAbilityDiceList)) return;
 
         foreach (var abilityDice in disabledAbilityDiceList)
         {

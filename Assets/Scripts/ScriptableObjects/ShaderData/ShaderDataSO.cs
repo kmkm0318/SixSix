@@ -14,7 +14,19 @@ public class ShaderDataSO : ScriptableObject
     [Header("Negative")]
     public bool NEGATIVE_ON = false;
 
-    public Texture2D GenerateGradientTexture(float colorRampLuminosity = 0, float blend = 1.0f)
+    [Header("Hologram")]
+    public bool HOLOGRAM_ON = false;
+    public Color HologramStripeColor = Color.white;
+
+    [Header("ChromaticAberration")]
+    public bool CHROMABERR_ON = false;
+
+    [Header("Overlay Texture")]
+    public bool OVERLAY_ON = false;
+    public bool OVERLAYMULT_ON = false;
+    public Texture _OverlayTex;
+
+    private Texture2D GenerateGradientTexture(float colorRampLuminosity = 0, float blend = 1.0f)
     {
         if (colorRampTexture != null) return colorRampTexture;
 
@@ -72,6 +84,55 @@ public class ShaderDataSO : ScriptableObject
         {
             material.DisableKeyword(ShaderConstants.NEGATIVE_ON);
         }
+
+        if (NEGATIVE_ON)
+        {
+            material.EnableKeyword(ShaderConstants.NEGATIVE_ON);
+        }
+        else
+        {
+            material.DisableKeyword(ShaderConstants.NEGATIVE_ON);
+        }
+
+        if (HOLOGRAM_ON)
+        {
+            material.EnableKeyword(ShaderConstants.HOLOGRAM_ON);
+            material.SetColor(ShaderConstants._HologramStripeColor, HologramStripeColor);
+        }
+        else
+        {
+            material.DisableKeyword(ShaderConstants.HOLOGRAM_ON);
+        }
+
+        if (CHROMABERR_ON)
+        {
+            material.EnableKeyword(ShaderConstants.CHROMABERR_ON);
+        }
+        else
+        {
+            material.DisableKeyword(ShaderConstants.CHROMABERR_ON);
+        }
+
+        if (OVERLAY_ON)
+        {
+            material.EnableKeyword(ShaderConstants.OVERLAY_ON);
+
+            if (OVERLAYMULT_ON)
+            {
+                material.EnableKeyword(ShaderConstants.OVERLAYMULT_ON);
+            }
+            else
+            {
+                material.DisableKeyword(ShaderConstants.OVERLAYMULT_ON);
+            }
+
+            material.SetTexture(ShaderConstants._OverlayTex, _OverlayTex);
+        }
+        else
+        {
+            material.DisableKeyword(ShaderConstants.OVERLAY_ON);
+            material.DisableKeyword(ShaderConstants.OVERLAYMULT_ON);
+        }
     }
 
     public void SetRandomFade(Material material)
@@ -91,4 +152,10 @@ public class ShaderConstants
     public const string COLORRAMP_ON = "COLORRAMP_ON";
     public const string _ColorRampTex = "_ColorRampTex";
     public const string NEGATIVE_ON = "NEGATIVE_ON";
+    public const string HOLOGRAM_ON = "HOLOGRAM_ON";
+    public const string _HologramStripeColor = "_HologramStripeColor";
+    public const string CHROMABERR_ON = "CHROMABERR_ON";
+    public const string OVERLAY_ON = "OVERLAY_ON";
+    public const string OVERLAYMULT_ON = "OVERLAYMULT_ON";
+    public const string _OverlayTex = "_OverlayTex";
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +14,11 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private PairList<BGMType, AudioClip> _bgmClipList;
     [SerializeField] private PairList<SFXType, AudioClip> _sfxClipList;
+    [SerializeField] private int _maxSameSFXCount = 3;
 
     private Dictionary<BGMType, AudioClip> _bgmClips;
     private Dictionary<SFXType, AudioClip> _sfxClips;
+    private Dictionary<SFXType, int> _sfxCounts = new();
     private Coroutine _fadeVolumeCoroutine;
 
     protected override void Awake()
@@ -108,13 +109,28 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (_sfxClips.TryGetValue(type, out var clip))
         {
-            _sfxSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+            if (!_sfxCounts.ContainsKey(type)) _sfxCounts[type] = 0;
+            if (_sfxCounts[type] > _maxSameSFXCount) return;
+            _sfxCounts[type]++;
+
+            _sfxSource.pitch = Random.Range(minPitch, maxPitch);
             _sfxSource.PlayOneShot(clip);
             _sfxSource.pitch = 1f;
+
+            StartCoroutine(DecreaseSFXCount(type, clip.length));
         }
         else
         {
             Debug.LogWarning($"There is no SFX For : {type}");
+        }
+    }
+
+    private IEnumerator DecreaseSFXCount(SFXType type, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        if (_sfxCounts.ContainsKey(type))
+        {
+            _sfxCounts[type] = Mathf.Max(0, _sfxCounts[type] - 1);
         }
     }
 
@@ -174,8 +190,11 @@ public enum SFXType
     DiceCollide,
     Win,
     Lose,
-    UIShowHide,
+    RoundClear,
     Error,
-    BuyItem,
-    SellItem,
+    DiceClick,
+    DiceTrigger,
+    Money,
+    DiceGenerate,
+    DiceRemove
 }

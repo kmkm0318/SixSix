@@ -162,6 +162,8 @@ public class DiceManager : Singleton<DiceManager>
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultShaderData, playDicePlayboard);
 
+        AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
+
         AddPlayDice(playDice);
     }
 
@@ -177,6 +179,8 @@ public class DiceManager : Singleton<DiceManager>
         {
             playDicePool.Release(playDice);
         });
+
+        AudioManager.Instance.PlaySFX(SFXType.DiceRemove);
     }
 
     public void EnablePlayDice(PlayDice playDice)
@@ -271,6 +275,8 @@ public class DiceManager : Singleton<DiceManager>
         abilityDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         abilityDice.Init(sO, abilityDicePlayboard);
 
+        AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
+
         AddAbilityDice(abilityDice);
     }
 
@@ -290,6 +296,8 @@ public class DiceManager : Singleton<DiceManager>
         {
             abilityDicePool.Release(abilityDice);
         });
+
+        AudioManager.Instance.PlaySFX(SFXType.DiceRemove);
     }
 
     public void EnableAbilityDice(AbilityDice abilityDice)
@@ -306,42 +314,21 @@ public class DiceManager : Singleton<DiceManager>
         abilityDiceList.Remove(abilityDice);
     }
 
-    public void StartGenerateAbilityDice(int abilityDiceCount)
+    public void StartGenerateRandomNormalAbilityDice(int abilityDiceCount)
     {
-        SequenceManager.Instance.AddCoroutine(GenerateAbilityDiceCoroutine(abilityDiceCount));
+        SequenceManager.Instance.AddCoroutine(GenerateAbilityRandomNormalDiceCoroutine(abilityDiceCount));
     }
 
-    private IEnumerator GenerateAbilityDiceCoroutine(int abilityDiceCount)
+    private IEnumerator GenerateAbilityRandomNormalDiceCoroutine(int abilityDiceCount)
     {
         for (int i = 0; i < abilityDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
-            GenerateAbilityDice(DataContainer.Instance.ShopAbilityDiceListSO.GetRandomAbilityDiceSO());
+            var randomAbilityDice = DataContainer.Instance.NormalAbilityDiceListSO.abilityDiceSOList.GetRandomElement();
+            GenerateAbilityDice(randomAbilityDice);
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());
-    }
-
-    public List<AbilityDice> GetRandomAbilityDiceList(int count)
-    {
-        List<AbilityDice> res = new();
-
-        if (AbilityDiceList.Count <= count)
-        {
-            res.AddRange(AbilityDiceList);
-            return res;
-        }
-        else
-        {
-            var cloneList = new List<AbilityDice>(abilityDiceList);
-            for (int i = 0; i < count; i++)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, cloneList.Count);
-                res.Add(cloneList[randomIndex]);
-                cloneList.RemoveAt(randomIndex);
-            }
-            return res;
-        }
     }
     #endregion
 
@@ -351,6 +338,8 @@ public class DiceManager : Singleton<DiceManager>
         var chaosDice = chaosDicePool.Get();
         chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, playDicePlayboard);
+
+        AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
 
         AddChaosDice(chaosDice);
     }
@@ -367,6 +356,8 @@ public class DiceManager : Singleton<DiceManager>
         {
             chaosDicePool.Release(chaosDice);
         });
+
+        AudioManager.Instance.PlaySFX(SFXType.DiceRemove);
     }
 
     public void StartGenerateChaosDice(int chaosDiceCount)
@@ -403,6 +394,8 @@ public class DiceManager : Singleton<DiceManager>
         gambleDice.transform.SetPositionAndRotation(abilityDicePlayboard.DiceGeneratePosition, Quaternion.identity);
         gambleDice.Init(gambleDiceSO, abilityDicePlayboard);
 
+        AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
+
         AddGambleDice(gambleDice);
     }
 
@@ -421,6 +414,8 @@ public class DiceManager : Singleton<DiceManager>
         {
             gambleDicePool.Release(gambleDice);
         });
+
+        AudioManager.Instance.PlaySFX(SFXType.DiceRemove);
     }
 
     public void ClearGambleDices()
@@ -455,6 +450,8 @@ public class DiceManager : Singleton<DiceManager>
 
     public void HandleDiceClick(Dice dice)
     {
+        AudioManager.Instance.PlaySFX(SFXType.DiceClick);
+
         if (dice is PlayDice playDice)
         {
             OnPlayDiceClicked?.Invoke(playDice);
