@@ -45,9 +45,9 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   NEGATIVE_ON: 0
-  HOLOGRAM_ON: 0
+  HOLOGRAM_ON: 1
   HologramStripeColor: {r: 0, g: 1, b: 0, a: 1}
   CHROMABERR_ON: 0
-  OVERLAY_ON: 1
-  OVERLAYMULT_ON: 1
-  _OverlayTex: {fileID: 2800000, guid: 253ade5030af1b643bf9a54cceb26f01, type: 3}
+  OVERLAY_ON: 0
+  OVERLAYMULT_ON: 0
+  _OverlayTex: {fileID: 0}

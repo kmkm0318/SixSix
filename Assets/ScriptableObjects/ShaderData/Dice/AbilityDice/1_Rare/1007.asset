@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6d12da502c4d7d41aa4cedb07f5d157, type: 3}
-  m_Name: 3002
+  m_Name: 1007
   m_EditorClassIdentifier: 
   FADE_ON: 1
-  COLORRAMP_ON: 0
+  COLORRAMP_ON: 1
   colorRampGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -45,8 +45,8 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   NEGATIVE_ON: 0
-  HOLOGRAM_ON: 1
-  HologramStripeColor: {r: 0, g: 0, b: 1, a: 1}
+  HOLOGRAM_ON: 0
+  HologramStripeColor: {r: 1, g: 1, b: 1, a: 1}
   CHROMABERR_ON: 0
   OVERLAY_ON: 0
   OVERLAYMULT_ON: 0
