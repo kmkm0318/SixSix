@@ -15,28 +15,8 @@ MonoBehaviour:
   m_TableCollectionName: AbilityDice
   m_TableCollectionNameGuidString: b20a225e51e76ad48ab00b9ad829b69d
   m_Entries:
-  - m_Id: 41002868736
-    m_Key: Trigger_PlayDice
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1975462010880
-    m_Key: Trigger_Hand
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2728654151680
-    m_Key: Trigger_MultipleOfN
-    m_Metadata:
-      m_Items: []
   - m_Id: 3133177995264
     m_Key: Trigger_WithoutKeep
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3459352240128
-    m_Key: Trigger_RoundCleared
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7289464823808
-    m_Key: Trigger_RoundStarted
     m_Metadata:
       m_Items: []
   - m_Id: 7382175719424
@@ -47,188 +27,28 @@ MonoBehaviour:
     m_Key: Trigger_ShopEnded
     m_Metadata:
       m_Items: []
-  - m_Id: 9168710148096
-    m_Key: Effect_Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9413904965632
-    m_Key: Effect_Money
-    m_Metadata:
-      m_Items: []
-  - m_Id: 10823719591936
-    m_Key: Effect_Grow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 11168948559872
-    m_Key: Effect_Shrink
-    m_Metadata:
-      m_Items: []
-  - m_Id: 11284220616704
-    m_Key: Effect_RerollCost
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12829939081216
-    m_Key: Name_0001
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12861283115008
-    m_Key: Name_0002
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12903351984128
-    m_Key: Name_0003
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12916761174016
-    m_Key: Name_0004
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12923128127488
-    m_Key: Name_0005
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12928962404352
-    m_Key: Name_0006
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12933760688128
-    m_Key: Name_0007
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12938114375680
-    m_Key: Name_0008
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12942635835392
-    m_Key: Name_0009
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12947195043840
-    m_Key: Name_0010
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12961040441344
-    m_Key: Name_0011
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12967680024576
-    m_Key: Name_0012
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12971635253248
-    m_Key: Name_0013
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12975926026240
-    m_Key: Name_0014
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12978799124480
-    m_Key: Name_0015
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12990534787072
-    m_Key: Name_0016
-    m_Metadata:
-      m_Items: []
-  - m_Id: 12996037713920
-    m_Key: Name_0017
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13000894717952
-    m_Key: Name_0018
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13006024351744
-    m_Key: Name_0019
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13013767036928
-    m_Key: Name_0020
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13026400280576
-    m_Key: Name_0021
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13028379992064
-    m_Key: Name_0022
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13029516648448
-    m_Key: Name_0023
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13040618971136
-    m_Key: Name_0024
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13041617215488
-    m_Key: Name_0025
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13042154086400
-    m_Key: Name_0026
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13042657402880
-    m_Key: Name_0027
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13043127164928
-    m_Key: Name_0028
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13043626287104
-    m_Key: Name_0029
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13044100243456
-    m_Key: Name_0030
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18026581073920
-    m_Key: Trigger_HandPlayed
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2256803848396800
-    m_Key: Trigger_AllEven
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2259076095811584
-    m_Key: Trigger_AllOdd
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2259151119327232
-    m_Key: Trigger_BuzzerBeater
-    m_Metadata:
-      m_Items: []
   - m_Id: 2260010070843392
     m_Key: Trigger_SameHand
     m_Metadata:
       m_Items: []
+  - m_Id: 7289464823808
+    m_Key: Trigger_RoundStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3459352240128
+    m_Key: Trigger_RoundCleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591671962705920
+    m_Key: Trigger_RollStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2591693705977856
+    m_Key: Trigger_RollEnded
+    m_Metadata:
+      m_Items: []
   - m_Id: 2308538411393024
     m_Key: Trigger_Probability
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2575458016567296
-    m_Key: Effect_GenerateAbilityDice
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2575524546617344
-    m_Key: Effect_GenerateGambleDice
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2590520861138944
-    m_Key: Trigger_PlayDiceTriggered
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2590704659734528
-    m_Key: Trigger_AbilityDiceTriggered
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2590732539273216
-    m_Key: Trigger_GambleDiceTriggered
     m_Metadata:
       m_Items: []
   - m_Id: 2591526680403968
@@ -239,12 +59,216 @@ MonoBehaviour:
     m_Key: Trigger_PlayEnded
     m_Metadata:
       m_Items: []
-  - m_Id: 2591671962705920
-    m_Key: Trigger_RollStarted
+  - m_Id: 2590520861138944
+    m_Key: Trigger_PlayDiceTriggered
     m_Metadata:
       m_Items: []
-  - m_Id: 2591693705977856
-    m_Key: Trigger_RollEnded
+  - m_Id: 41002868736
+    m_Key: Trigger_PlayDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2728654151680
+    m_Key: Trigger_MultipleOfN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18026581073920
+    m_Key: Trigger_HandPlayed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1975462010880
+    m_Key: Trigger_Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590732539273216
+    m_Key: Trigger_GambleDiceTriggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259151119327232
+    m_Key: Trigger_BuzzerBeater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49658405022212096
+    m_Key: Trigger_AllSmall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259076095811584
+    m_Key: Trigger_AllOdd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256803848396800
+    m_Key: Trigger_AllEven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49657665428004864
+    m_Key: Trigger_AllBig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590704659734528
+    m_Key: Trigger_AbilityDiceTriggered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43509021997932544
+    m_Key: Name_3003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43509013642878976
+    m_Key: Name_3002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43508988955205632
+    m_Key: Name_3001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49681058151931904
+    m_Key: Name_1012
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49681006792679424
+    m_Key: Name_1011
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49677128516902912
+    m_Key: Name_1010
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49677106710716416
+    m_Key: Name_1009
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49669607274192896
+    m_Key: Name_1008
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49669618712059904
+    m_Key: Name_1007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13044100243456
+    m_Key: Name_1006
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043626287104
+    m_Key: Name_1005
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13043127164928
+    m_Key: Name_1004
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042657402880
+    m_Key: Name_1003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13042154086400
+    m_Key: Name_1002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13041617215488
+    m_Key: Name_1001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13040618971136
+    m_Key: Name_0024
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13029516648448
+    m_Key: Name_0023
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13028379992064
+    m_Key: Name_0022
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13026400280576
+    m_Key: Name_0021
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13013767036928
+    m_Key: Name_0020
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13006024351744
+    m_Key: Name_0019
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13000894717952
+    m_Key: Name_0018
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12996037713920
+    m_Key: Name_0017
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12990534787072
+    m_Key: Name_0016
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12978799124480
+    m_Key: Name_0015
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12975926026240
+    m_Key: Name_0014
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12971635253248
+    m_Key: Name_0013
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12967680024576
+    m_Key: Name_0012
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12961040441344
+    m_Key: Name_0011
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12947195043840
+    m_Key: Name_0010
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12942635835392
+    m_Key: Name_0009
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12938114375680
+    m_Key: Name_0008
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12933760688128
+    m_Key: Name_0007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12928962404352
+    m_Key: Name_0006
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12923128127488
+    m_Key: Name_0005
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12916761174016
+    m_Key: Name_0004
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12903351984128
+    m_Key: Name_0003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12861283115008
+    m_Key: Name_0002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12829939081216
+    m_Key: Name_0001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11168948559872
+    m_Key: Effect_Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9168710148096
+    m_Key: Effect_Score
     m_Metadata:
       m_Items: []
   - m_Id: 2654583448281088
@@ -259,16 +283,96 @@ MonoBehaviour:
     m_Key: Effect_RetriggerAbilityDice
     m_Metadata:
       m_Items: []
-  - m_Id: 43508988955205632
-    m_Key: Name_3001
+  - m_Id: 11284220616704
+    m_Key: Effect_RerollCost
     m_Metadata:
       m_Items: []
-  - m_Id: 43509013642878976
-    m_Key: Name_3002
+  - m_Id: 9413904965632
+    m_Key: Effect_Money
     m_Metadata:
       m_Items: []
-  - m_Id: 43509021997932544
-    m_Key: Name_3003
+  - m_Id: 10823719591936
+    m_Key: Effect_Grow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575524546617344
+    m_Key: Effect_GenerateGambleDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2575458016567296
+    m_Key: Effect_GenerateAbilityDice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49706775875035136
+    m_Key: Trigger_Less10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49707934006255616
+    m_Key: Trigger_More25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708090965499904
+    m_Key: Trigger_FirstPlay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708154450485248
+    m_Key: Trigger_FirstPlayClear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708685164158976
+    m_Key: Trigger_LastPlay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708738582814720
+    m_Key: Trigger_LastPlayClear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49709194797260800
+    m_Key: Trigger_AllDifferent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751739648581632
+    m_Key: Name_2001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751761719009280
+    m_Key: Name_2002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751764973789184
+    m_Key: Name_2003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751766584401920
+    m_Key: Name_2004
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751767259684864
+    m_Key: Name_2005
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751768362786816
+    m_Key: Name_2006
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751769000321024
+    m_Key: Name_2007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751770078257152
+    m_Key: Name_2008
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751770778705920
+    m_Key: Name_2009
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751772087328768
+    m_Key: Name_2010
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751773295288320
+    m_Key: Name_2011
     m_Metadata:
       m_Items: []
   m_Metadata:

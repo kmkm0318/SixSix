@@ -25,9 +25,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 847450087424
-    m_Localized: 'Make Money Double
-
-      <size=85%><color=gray>(Maximum is ${0})</color></size>'
+    m_Localized: Get <color=yellow>(${0})</color>
     m_Metadata:
       m_Items: []
   - m_Id: 1159825072128
@@ -51,35 +49,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5362224078848
-    m_Localized: Gamble Dice 0001
+    m_Localized: Bonus
     m_Metadata:
       m_Items: []
   - m_Id: 5392049774592
-    m_Localized: Gamble Dice 0002
+    m_Localized: Chance
     m_Metadata:
       m_Items: []
   - m_Id: 5412060798976
-    m_Localized: Gamble Dice 0003
+    m_Localized: Booster
     m_Metadata:
       m_Items: []
   - m_Id: 5415814701056
-    m_Localized: Gamble Dice 0004
+    m_Localized: Foundation
     m_Metadata:
       m_Items: []
   - m_Id: 5426178826240
-    m_Localized: Gamble Dice 0005
+    m_Localized: Tutor
     m_Metadata:
       m_Items: []
   - m_Id: 5430670925824
-    m_Localized: Gamble Dice 0006
+    m_Localized: CoinToss
     m_Metadata:
       m_Items: []
   - m_Id: 5447959846912
-    m_Localized: Gamble Dice 1001
+    m_Localized: Height
     m_Metadata:
       m_Items: []
   - m_Id: 5467568218112
-    m_Localized: Gamble Dice 1002
+    m_Localized: Width
     m_Metadata:
       m_Items: []
   - m_Id: 7238457892864

@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a9516010274e4428fc6effe8d9a155, type: 3}
   m_Name: 2_EpicDiceList
   m_EditorClassIdentifier: 
-  abilityDiceSOList: []
+  abilityDiceSOList:
+  - {fileID: 11400000, guid: d60c13003917dc44398adf1696f2e2f3, type: 2}
+  - {fileID: 11400000, guid: 024d7334350098a459a54af4593bb91f, type: 2}
+  - {fileID: 11400000, guid: 8dbc500e6e5814c42ad0f968bc6bb6ac, type: 2}
+  - {fileID: 11400000, guid: 1beacf5fd7958034ea364df7fcbc2ced, type: 2}
+  - {fileID: 11400000, guid: 1f2b8f0944fedb94480ffdf42f9f5b93, type: 2}
+  - {fileID: 11400000, guid: 7521419de32bd374f9428a7a8fa57c1e, type: 2}
+  - {fileID: 11400000, guid: 9e8709807a28f5a418e7e3fed8047dd4, type: 2}
+  - {fileID: 11400000, guid: 4c75d94e689db2b4abf1b323f7d19ca2, type: 2}
+  - {fileID: 11400000, guid: 4e237444cf1cbf643b672b23c24ae717, type: 2}
+  - {fileID: 11400000, guid: 8ec46b0ac238f3641990c82320a418b3, type: 2}
+  - {fileID: 11400000, guid: 5ce74da98a7151548a59fc80709a0db5, type: 2}

@@ -10,14 +10,4 @@ public abstract class AbilityEffectSO : ScriptableObject
     {
         return effectDescription.GetLocalizedString();
     }
-
-    protected virtual float GetCalculatedEffectValue(float value, int diceValue)
-    {
-        return calculateType switch
-        {
-            EffectCalculateType.Multiply => value * diceValue,
-            EffectCalculateType.Power => Mathf.Pow(value, diceValue),
-            _ => value,
-        };
-    }
 }

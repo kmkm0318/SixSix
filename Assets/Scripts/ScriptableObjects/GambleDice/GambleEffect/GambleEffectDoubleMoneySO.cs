@@ -1,15 +1,14 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GambleEffectDoubleMoneySO", menuName = "Scriptable Objects/GambleEffects/GambleEffectDoubleMoneySO")]
-public class GambleEffectDoubleMoneySO : GambleEffectSO
+[CreateAssetMenu(fileName = "GambleEffectGetMoneySO", menuName = "Scriptable Objects/GambleEffects/GambleEffectGetMoneySO")]
+public class GambleEffectGetMoneySO : GambleEffectSO
 {
-    [SerializeField] private int maximum = 20;
+    [SerializeField] private int amount = 20;
 
     public override void TriggerEffect(GambleDice gambleDice)
     {
-        int addValue = Mathf.Clamp(MoneyManager.Instance.Money, 0, maximum);
-        TriggerAnimationManager.Instance.PlayTriggerMoneyAnimation(gambleDice.transform, Vector3.down, addValue);
-        MoneyManager.Instance.AddMoney(addValue);
+        TriggerAnimationManager.Instance.PlayTriggerMoneyAnimation(gambleDice.transform, Vector3.down, amount);
+        MoneyManager.Instance.AddMoney(amount);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
@@ -20,7 +19,7 @@ public class GambleEffectDoubleMoneySO : GambleEffectSO
             Debug.LogError("Effect description is not set for " + name);
             return string.Empty;
         }
-        effectDescription.Arguments = new object[] { maximum };
+        effectDescription.Arguments = new object[] { amount };
         effectDescription.RefreshString();
         return effectDescription.GetLocalizedString();
     }

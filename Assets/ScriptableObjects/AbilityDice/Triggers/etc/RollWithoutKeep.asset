@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbdf930115e5a545ac00cb7ab7d944e, type: 3}
   m_Name: RollWithoutKeep
   m_EditorClassIdentifier: 
-  triggerType: 11
+  triggerType: 12
   triggerDescription:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d

@@ -44,7 +44,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  NEGATIVE_ON: 0
+  NEGATIVE_ON: 1
   HOLOGRAM_ON: 1
   HologramStripeColor: {r: 1, g: 0, b: 0, a: 1}
   CHROMABERR_ON: 0

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6798d65261e0ab43a2bbeafbe94e3af, type: 3}
+  m_Name: 2011_Momentum
+  m_EditorClassIdentifier: 
+  abilityDiceID: 2011
+  diceNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
+    m_TableEntryReference:
+      m_KeyId: 49751773295288320
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  rarity: 2
+  autoKeepType: 0
+  price: 9
+  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 7a0d543036fbe2c40b4944683c957351, type: 2}
+  maxDiceValue: 3
+  abilityTrigger: {fileID: 11400000, guid: 26ff462d2ec7c374fb45b6c8af62e43a, type: 2}
+  abilityEffect: {fileID: 11400000, guid: 4d5d01128db0ebd428d78246b87814b6, type: 2}
+  references:
+    version: 2
+    RefIds: []

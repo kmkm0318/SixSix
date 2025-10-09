@@ -16,7 +16,7 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: d1c1b7cd50819b44aae257bea624d264
   m_Entries:
   - m_Id: 847450087424
-    m_Key: Effect_DoubleMoney
+    m_Key: Effect_GetMoney
     m_Metadata:
       m_Items: []
   - m_Id: 1159825072128

@@ -15,9 +15,9 @@ MonoBehaviour:
   triggerType: 4
   triggerDescription:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 2256803848396800
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

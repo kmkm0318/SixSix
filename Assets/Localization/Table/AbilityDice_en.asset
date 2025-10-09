@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9413904965632
-    m_Localized: Get <color=yellow>(${0})</color>{1}
+    m_Localized: Get <color=yellow>${0}</color>{1}
     m_Metadata:
       m_Items: []
   - m_Id: 10823719591936
@@ -296,6 +296,124 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 43509021997932544
     m_Localized: Ensemble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49657665428004864
+    m_Localized: 'When All Play Dice Is
+
+      <color=yellow>"4"</color> or Higher'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49658405022212096
+    m_Localized: 'When All Play Dice Is
+
+      <color=yellow>"3"</color> or Less'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49669618712059904
+    m_Localized: High Five
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49669607274192896
+    m_Localized: Low Five
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49677106710716416
+    m_Localized: Oddinary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49677128516902912
+    m_Localized: Even Better
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49681006792679424
+    m_Localized: Only One
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49681058151931904
+    m_Localized: Lucky Seven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49706775875035136
+    m_Localized: 'When Sum of Play Dices
+
+      is <color=yellow>"10"</color> or
+      Less'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49707934006255616
+    m_Localized: 'When Sum of Play Dices
+
+      is <color=yellow>"25"</color> or
+      More'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708090965499904
+    m_Localized: On The First Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708154450485248
+    m_Localized: 'When Round is Cleared
+
+      On The First Play'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708685164158976
+    m_Localized: On The Last Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49708738582814720
+    m_Localized: 'When Round is Cleared
+
+      On The Last Play'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49709194797260800
+    m_Localized: When All Play Dice is Different
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751739648581632
+    m_Localized: Quick Starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751761719009280
+    m_Localized: Slow Starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751764973789184
+    m_Localized: One Punch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751766584401920
+    m_Localized: Buzzer Beater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751767259684864
+    m_Localized: The More
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751768362786816
+    m_Localized: The Less
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751769000321024
+    m_Localized: The Lonely
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751770078257152
+    m_Localized: Invest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751770778705920
+    m_Localized: Jackpot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751772087328768
+    m_Localized: Chad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49751773295288320
+    m_Localized: Momentum
     m_Metadata:
       m_Items: []
   references:

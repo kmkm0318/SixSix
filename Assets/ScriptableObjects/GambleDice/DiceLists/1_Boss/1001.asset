@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd2df094cdbdee4b8e5889dd2acfdd9, type: 3}
+  m_Name: 1001
+  m_EditorClassIdentifier: 
+  diceNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+    m_TableEntryReference:
+      m_KeyId: 5447959846912
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  price: 10
+  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 43c9df3c4103443479ddf9d81de1070e, type: 2}
+  maxDiceValue: 6
+  gambleTriggerSO: {fileID: 11400000, guid: 475ae3919649aa94490638703595e432, type: 2}
+  gambleEffectSO: {fileID: 11400000, guid: 6dc7052b65b468f469053413344e0fd9, type: 2}
+  references:
+    version: 2
+    RefIds: []
