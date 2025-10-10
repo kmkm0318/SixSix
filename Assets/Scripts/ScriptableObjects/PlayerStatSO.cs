@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DiceStatSO", menuName = "Scriptable Objects/DiceStatSO")]
-public class DiceStatSO : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerStatSO", menuName = "Scriptable Objects/PlayerStatSO")]
+public class PlayerStatSO : ScriptableObject
 {
     public DiceSpriteListSO defaultDiceSpriteListSO;
     public int defaultStartMoney = 0;
