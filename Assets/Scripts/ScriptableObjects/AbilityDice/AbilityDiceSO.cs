@@ -18,9 +18,10 @@ public class AbilityDiceSO : ScriptableObject
     public int MaxDiceValue => Mathf.Min(maxDiceValue, diceSpriteListSO.DiceFaceCount);
 
 
-    [Header("Dice Trigger, Effect")]
+    [Header("Dice Trigger, Effect, Unlock")]
     public AbilityTriggerSO abilityTrigger;
     public AbilityEffectSO abilityEffect;
+    public AbilityDiceUnlockSO abilityUnlock;
 
     public void Init()
     {
@@ -32,14 +33,24 @@ public class AbilityDiceSO : ScriptableObject
         return abilityTrigger.IsTriggered(triggerType, context);
     }
 
-    public virtual void TriggerEffect(AbilityDiceContext context)
+    public void TriggerEffect(AbilityDiceContext context)
     {
         abilityEffect.TriggerEffect(context);
     }
 
-    public virtual string GetDescriptionText()
+    public string GetDescriptionText()
     {
         return abilityTrigger.GetTriggerDescription(this) + "\n" + abilityEffect.GetEffectDescription(this);
+    }
+
+    public bool IsUnlcoked()
+    {
+        return abilityUnlock.IsUnlocked();
+    }
+
+    public string GetUnlockDescriptionText()
+    {
+        return abilityUnlock.GetDescriptionText();
     }
 }
 

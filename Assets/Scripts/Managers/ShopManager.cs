@@ -7,8 +7,6 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private int initialRerollCost = 5;
     [SerializeField] private int merchantItemCountMax = 3;
 
-    private AbilityDiceListSO abilityDiceListSO;
-    private GambleDiceListSO gambleDiceListSO;
     private int rerollCost = 0;
 
     public int MerchantItemCountMax => merchantItemCountMax;
@@ -34,10 +32,6 @@ public class ShopManager : Singleton<ShopManager>
 
     private void Start()
     {
-        abilityDiceListSO = DataContainer.Instance.NormalAbilityDiceListSO;
-
-        gambleDiceListSO = DataContainer.Instance.ShopGambleDiceListSO;
-
         RegisterEvents();
     }
 
@@ -133,26 +127,54 @@ public class ShopManager : Singleton<ShopManager>
     public List<AbilityDiceSO> GetRandomAbilityDiceList()
     {
         List<AbilityDiceSO> res = new();
-        HashSet<AbilityDiceSO> has = new();
+        HashSet<int> has = new();
         int tryCount = 0;
         int tryMax = 100;
 
+        foreach (var dice in DiceManager.Instance.AbilityDiceList)
+        {
+            has.Add(dice.AbilityDiceSO.abilityDiceID);
+        }
+
         while (res.Count < merchantItemCountMax && tryCount < tryMax)
         {
-            var diceLists = DataContainer.Instance.ShopAbilityDiceLists.diceLists;
-            var diceList = diceLists.GetWeightedRandomElement();
-            var dice = diceList.abilityDiceSOList.GetRandomElement();
+            var rarityList = DataContainer.Instance.AbilityDiceRarityWeightedListSO.rarityList;
+            var targetRarity = rarityList.GetWeightedRandomElement();
 
-            if (dice == null) continue;
+            AbilityDiceListSO diceListSO = targetRarity switch
+            {
+                AbilityDiceRarity.Normal => DataContainer.Instance.NormalAbilityDiceListSO,
+                AbilityDiceRarity.Rare => DataContainer.Instance.RareAbilityDiceListSO,
+                AbilityDiceRarity.Epic => DataContainer.Instance.EpicAbilityDiceListSO,
+                AbilityDiceRarity.Legendary => DataContainer.Instance.LegendaryAbilityDiceListSO,
+                _ => null
+            };
 
-            if (has.Contains(dice))
+            if (diceListSO == null) continue;
+
+            List<AbilityDiceSO> diceList = new();
+
+            foreach (var so in diceListSO.abilityDiceSOList)
+            {
+                if (so.IsUnlcoked()) diceList.Add(so);
+            }
+
+            var dice = diceList.GetRandomElement();
+            if (dice == null)
+            {
+                tryCount++;
+                continue;
+            }
+
+            var diceID = dice.abilityDiceID;
+            if (has.Contains(diceID))
             {
                 tryCount++;
                 continue;
             }
 
             res.Add(dice);
-            has.Add(dice);
+            has.Add(diceID);
         }
 
         return res;
@@ -163,6 +185,8 @@ public class ShopManager : Singleton<ShopManager>
         List<GambleDiceSO> randomGambleDiceList = new();
         while (randomGambleDiceList.Count < merchantItemCountMax)
         {
+            var gambleDiceListSO = DataContainer.Instance.NormalGambleDiceListSO;
+
             if (randomGambleDiceList.Count >= gambleDiceListSO.gambleDiceSOList.Count) break;
 
             GambleDiceSO randomGambleDice = gambleDiceListSO.GetRandomGambleDiceSO();

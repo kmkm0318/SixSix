@@ -30,7 +30,7 @@ public class GambleDiceSaveUI : Singleton<GambleDiceSaveUI>
         panel.OnPointerEntered += OnPointerEntered;
         panel.OnPointerExited += OnPointerExited;
 
-        for (int i = 0; i < DataContainer.Instance.CurrentDiceStat.defaultGambleDiceSaveMax; i++)
+        for (int i = 0; i < DataContainer.Instance.CurrentPlayerStat.defaultGambleDiceSaveMax; i++)
         {
             AddSlot();
         }

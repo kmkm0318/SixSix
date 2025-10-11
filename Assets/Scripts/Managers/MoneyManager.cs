@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class MoneyManager : Singleton<MoneyManager>
 {
-    [SerializeField] private int bonusMoney = 25;
-    [SerializeField] private int roundclearReward = 3;
-    [SerializeField] private int playRemainReward = 1;
-    [SerializeField] private int interestUnit = 10;
-    [SerializeField] private int interestPerUnit = 1;
-    [SerializeField] private int interestMax = 5;
-    [SerializeField] private int bossRoundReward = 3;
     private int money = 0;
 
     public int Money
@@ -30,12 +23,12 @@ public class MoneyManager : Singleton<MoneyManager>
             OnMoneyChanged?.Invoke(money);
         }
     }
-    public int BonusMoney => bonusMoney;
-    public int RoundClearReward => roundclearReward;
-    public int PlayRemainReward => playRemainReward * PlayManager.Instance.PlayRemain;
-    public int MoneyInterestReward => Mathf.Min(interestMax, Money / interestUnit * interestPerUnit);
-    public int InterestMax => interestMax;
-    public int BossRoundReward => RoundManager.Instance.IsBossRound ? bossRoundReward : 0;
+    public int BonusMoney => DataContainer.Instance.CurrentPlayerStat.bonusMoney;
+    public int RoundClearReward => DataContainer.Instance.CurrentPlayerStat.roundClearReward;
+    public int PlayRemainReward => DataContainer.Instance.CurrentPlayerStat.playRemainReward * PlayManager.Instance.PlayRemain;
+    public int MoneyInterestReward => Mathf.Min(DataContainer.Instance.CurrentPlayerStat.interestMax, Money / DataContainer.Instance.CurrentPlayerStat.interestUnit * DataContainer.Instance.CurrentPlayerStat.interestPerUnit);
+    public int InterestMax => DataContainer.Instance.CurrentPlayerStat.interestMax;
+    public int BossRoundReward => RoundManager.Instance.IsBossRound ? DataContainer.Instance.CurrentPlayerStat.bossRoundReward : 0;
 
     public event Action<int> OnMoneyChanged;
     public event Action<int> OnMoneyAdded;
@@ -44,7 +37,7 @@ public class MoneyManager : Singleton<MoneyManager>
     private void Start()
     {
         RegisterEvents();
-        Money = DataContainer.Instance.CurrentDiceStat.defaultStartMoney;
+        Money = DataContainer.Instance.CurrentPlayerStat.defaultStartMoney;
     }
 
     #region RegisterEvents

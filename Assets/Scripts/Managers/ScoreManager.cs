@@ -84,7 +84,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private void Start()
     {
         RegisterEvents();
-        initialTargetRoundScore = DataContainer.Instance.CurrentDiceStat.defaultInitialTargetRoundScore;
+        initialTargetRoundScore = DataContainer.Instance.CurrentPlayerStat.defaultInitialTargetRoundScore;
     }
 
     #region RegisterEvents

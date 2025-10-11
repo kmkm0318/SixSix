@@ -75,7 +75,7 @@ public class GameResultManager : Singleton<GameResultManager>
     }
     #endregion
 
-    public string GetResultValue(GameResultValueType type)
+    public string GetResultText(GameResultValueType type)
     {
         return type switch
         {
@@ -88,6 +88,20 @@ public class GameResultManager : Singleton<GameResultManager>
             GameResultValueType.MoneyLost => "$" + moneyLost.ToString(),
             GameResultValueType.RerollCount => rerollCount.ToString(),
             _ => "0"
+        };
+    }
+
+    public int GetResultValue(GameResultValueType type)
+    {
+        return type switch
+        {
+            GameResultValueType.ClearRound => ClearRound,
+            GameResultValueType.PlayCount => playCount,
+            GameResultValueType.RollCount => rollCount,
+            GameResultValueType.MoneyGained => moneyGained,
+            GameResultValueType.MoneyLost => moneyLost,
+            GameResultValueType.RerollCount => rerollCount,
+            _ => 0
         };
     }
 

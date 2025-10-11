@@ -5,8 +5,7 @@ public class OptionManager : Singleton<OptionManager>
 {
     private const string OPTION_DATA_NAME = "OptionData";
 
-    private OptionData optionData;
-    public OptionData OptionData => optionData;
+    public OptionData OptionData { get; private set; }
 
     override protected void Awake()
     {
@@ -40,28 +39,28 @@ public class OptionManager : Singleton<OptionManager>
         switch (type)
         {
             case OptionType.GameSpeed:
-                optionData.gameSpeed = value;
+                OptionData.gameSpeed = value;
                 break;
             case OptionType.AbilityDiceAutoKeep:
-                optionData.abilityDiceAutoKeep = value;
+                OptionData.abilityDiceAutoKeep = value;
                 break;
             case OptionType.Language:
-                optionData.language = value;
+                OptionData.language = value;
                 break;
             case OptionType.Fullscreen:
-                optionData.fullscreen = value;
+                OptionData.fullscreen = value;
                 break;
             case OptionType.Resolution:
-                optionData.resolution = value;
+                OptionData.resolution = value;
                 break;
             case OptionType.MasterVolume:
-                optionData.masterVolume = value;
+                OptionData.masterVolume = value;
                 break;
             case OptionType.BGMVolume:
-                optionData.bgmVolume = value;
+                OptionData.bgmVolume = value;
                 break;
             case OptionType.SFXVolume:
-                optionData.sfxVolume = value;
+                OptionData.sfxVolume = value;
                 break;
         }
         SaveOptionDataSO();
@@ -71,7 +70,7 @@ public class OptionManager : Singleton<OptionManager>
     #region SaveLoad
     private void SaveOptionDataSO()
     {
-        string json = JsonUtility.ToJson(optionData);
+        string json = JsonUtility.ToJson(OptionData);
         PlayerPrefs.SetString(OPTION_DATA_NAME, json);
         PlayerPrefs.Save();
     }
@@ -81,7 +80,7 @@ public class OptionManager : Singleton<OptionManager>
         string json = PlayerPrefs.GetString(OPTION_DATA_NAME, string.Empty);
         if (string.IsNullOrEmpty(json))
         {
-            optionData = new()
+            OptionData = new()
             {
                 gameSpeed = 0,
                 abilityDiceAutoKeep = 0,
@@ -95,14 +94,14 @@ public class OptionManager : Singleton<OptionManager>
         }
         else
         {
-            optionData = JsonUtility.FromJson<OptionData>(json);
+            OptionData = JsonUtility.FromJson<OptionData>(json);
         }
     }
     #endregion
 }
 
 [Serializable]
-public struct OptionData
+public class OptionData
 {
     public int gameSpeed;
     public int abilityDiceAutoKeep;

@@ -420,12 +420,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1433829853}
   - {fileID: 268022222}
   - {fileID: 949506640}
   - {fileID: 2077021265}
   - {fileID: 425767081}
   - {fileID: 396989594}
   - {fileID: 774595808}
+  - {fileID: 1950873448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &684512447
@@ -674,7 +676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &891028139
 Animator:
   serializedVersion: 7
@@ -814,6 +816,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4309dd8e2bdc4e439d00b640269afb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1433829851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1433829853}
+  - component: {fileID: 1433829852}
+  m_Layer: 0
+  m_Name: DataContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1433829852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433829851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf97bae4785272943999aca3c3acbfee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPlayerStat: {fileID: 11400000, guid: 5408f6bd12fe79c44935e824fef1b860, type: 2}
+  defaultShaderData: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
+  chaosShaderData: {fileID: 11400000, guid: 1dbc04af982a519488130d18f0dd0994, type: 2}
+  normalAbilityDiceListSO: {fileID: 11400000, guid: a79c26c8014f8a144821d955b1630579, type: 2}
+  rareAbilityDiceListSO: {fileID: 11400000, guid: 7be95526f4cddab4b8de620885f8ddb6, type: 2}
+  epicAbilityDiceListSO: {fileID: 11400000, guid: 8b59e45c6bfa51b46a2310bc796699c8, type: 2}
+  legendaryAbilityDiceListSO: {fileID: 11400000, guid: 58d8fa8811349b146804047a46392f69, type: 2}
+  abilityDiceRarityWeightedListSO: {fileID: 11400000, guid: b9fa221e42091cd48b234161c9b62c1a, type: 2}
+  normalGambleDiceListSO: {fileID: 11400000, guid: 05c2bd08277cb3b4cbbfb271e519a13c, type: 2}
+  bossGambleDiceListSO: {fileID: 11400000, guid: 2a2743c99881d4c48991afa902e751e3, type: 2}
+  totalHandListSO: {fileID: 11400000, guid: 32b7c6e513868eb40acbc0dc9e8b76cc, type: 2}
+  playergroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  defaultColorSO: {fileID: 11400000, guid: 756e0eca105305c4aaa6995d145183d4, type: 2}
+--- !u!4 &1433829853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433829851}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 684512446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1950873447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950873448}
+  - component: {fileID: 1950873449}
+  m_Layer: 0
+  m_Name: PlayerRecordManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1950873448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950873447}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 684512446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1950873449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950873447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41f9fd6589bb1a409b9e426b9c9ea76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRecordManager
 --- !u!1 &2054279651
 GameObject:
   m_ObjectHideFlags: 0

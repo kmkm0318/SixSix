@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2da7074f5193f84eb24bafa4b37348b, type: 3}
-  m_Name: GambleEffectGetPlayMaxSO
-  m_EditorClassIdentifier: 
-  effectDescription:
+  m_Script: {fileID: 11500000, guid: 043beaeb0a302ec49a770de8f06b2353, type: 3}
+  m_Name: None
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockNoneSO
+  unlockDescription:
     m_TableReference:
-      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
+      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 7238457892864
+      m_KeyId: 50446747477352448
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  value: 1
   references:
     version: 2
     RefIds: []

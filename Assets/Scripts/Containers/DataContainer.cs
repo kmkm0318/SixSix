@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DataContainer : Singleton<DataContainer>
 {
-
-    #region DiceStatSO
-    [SerializeField] private PlayerStatSO currentDiceStat;
-    public PlayerStatSO CurrentDiceStat => currentDiceStat;
-    public DiceSpriteListSO DefaultDiceSpriteList => currentDiceStat.defaultDiceSpriteListSO;
+    #region PlayerStatSO
+    [SerializeField] private PlayerStatSO currentPlayerStat;
+    public PlayerStatSO CurrentPlayerStat => currentPlayerStat;
+    public DiceSpriteListSO DefaultDiceSpriteList => currentPlayerStat.defaultDiceSpriteListSO;
     #endregion
 
     #region ShaderDataSO
@@ -22,17 +20,17 @@ public class DataContainer : Singleton<DataContainer>
     [SerializeField] private AbilityDiceListSO rareAbilityDiceListSO;
     [SerializeField] private AbilityDiceListSO epicAbilityDiceListSO;
     [SerializeField] private AbilityDiceListSO legendaryAbilityDiceListSO;
-    [SerializeField] private AbilityDiceWeightedListSO shopAbilityDiceLists;
+    [SerializeField] private AbilityDiceRarityWeightedListSO abilityDiceRarityWeightedListSO;
     public AbilityDiceListSO NormalAbilityDiceListSO => normalAbilityDiceListSO;
     public AbilityDiceListSO RareAbilityDiceListSO => rareAbilityDiceListSO;
     public AbilityDiceListSO EpicAbilityDiceListSO => epicAbilityDiceListSO;
     public AbilityDiceListSO LegendaryAbilityDiceListSO => legendaryAbilityDiceListSO;
-    public AbilityDiceWeightedListSO ShopAbilityDiceLists => shopAbilityDiceLists;
+    public AbilityDiceRarityWeightedListSO AbilityDiceRarityWeightedListSO => abilityDiceRarityWeightedListSO;
     #endregion
 
     #region GambleDiceListSO
-    [SerializeField] private GambleDiceListSO shopGambleDiceListSO;
-    public GambleDiceListSO ShopGambleDiceListSO => shopGambleDiceListSO;
+    [SerializeField] private GambleDiceListSO normalGambleDiceListSO;
+    public GambleDiceListSO NormalGambleDiceListSO => normalGambleDiceListSO;
     [SerializeField] private GambleDiceListSO bossGambleDiceListSO;
     public GambleDiceListSO BossGambleDiceListSO => bossGambleDiceListSO;
     #endregion

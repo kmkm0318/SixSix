@@ -104,8 +104,8 @@ public class DiceManager : Singleton<DiceManager>
         chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { chaosDice.gameObject.SetActive(true); }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
         gambleDicePool = new(() => Instantiate(gambleDicePrefab), gambleDice => { gambleDice.gameObject.SetActive(true); }, gambleDice => gambleDice.gameObject.SetActive(false), gambleDice => Destroy(gambleDice.gameObject), false);
 
-        CurrentAbilityDiceMax = DataContainer.Instance.CurrentDiceStat.defaultAbilityDiceMax;
-        CurrentGambleDiceMax = DataContainer.Instance.CurrentDiceStat.defaultGambleDiceMax;
+        CurrentAbilityDiceMax = DataContainer.Instance.CurrentPlayerStat.defaultAbilityDiceMax;
+        CurrentGambleDiceMax = DataContainer.Instance.CurrentPlayerStat.defaultGambleDiceMax;
     }
 
     #region Events
@@ -204,7 +204,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private IEnumerator FirstPlayDiceGenerate(Action onComplete = null)
     {
-        for (int i = 0; i < DataContainer.Instance.CurrentDiceStat.defaultPlayDiceCount; i++)
+        for (int i = 0; i < DataContainer.Instance.CurrentPlayerStat.defaultPlayDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
 
@@ -436,7 +436,7 @@ public class DiceManager : Singleton<DiceManager>
         for (int i = 0; i < gambleDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
-            GenerateGambleDice(DataContainer.Instance.ShopGambleDiceListSO.GetRandomGambleDiceSO());
+            GenerateGambleDice(DataContainer.Instance.NormalGambleDiceListSO.GetRandomGambleDiceSO());
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());

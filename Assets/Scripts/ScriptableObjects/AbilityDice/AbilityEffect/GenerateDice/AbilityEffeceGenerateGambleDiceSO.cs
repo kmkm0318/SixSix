@@ -7,7 +7,11 @@ public class AbilityEffeceGenerateGambleDiceSO : AbilityEffectSO
     {
         TriggerAnimationManager.Instance.PlayTriggerAnimation(context.currentAbilityDice.transform);
         SequenceManager.Instance.ApplyParallelCoroutine();
-        DiceManager.Instance.StartGenerateGambleDice(context.currentAbilityDice.DiceValue);
+
+        for (int i = 0; i < context.currentAbilityDice.DiceValue; i++)
+        {
+            GambleDiceSaveManager.Instance.TryAddRandomNormalGambleDiceIcon();
+        }
     }
 
     public override string GetEffectDescription(AbilityDiceSO abilityDiceSO)

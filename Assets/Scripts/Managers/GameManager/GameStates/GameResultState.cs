@@ -8,6 +8,7 @@ public class GameResultState : BaseGameState
 
         bool isClear = GameResultManager.Instance.IsClear;
         GameResultUI.Instance.ShowGameResult(isClear);
+        PlayerRecordManager.Instance.UpdatePlayerRecord();
     }
 
     public override void Exit()

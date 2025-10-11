@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: DefaultDiceStat
+  m_Name: DefaultStat
   m_EditorClassIdentifier: 
   defaultDiceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  defaultStartMoney: 0
   defaultInitialTargetRoundScore: 600
   defaultPlayDiceCount: 5
   defaultAbilityDiceMax: 5
@@ -21,3 +20,11 @@ MonoBehaviour:
   defaultGambleDiceSaveMax: 5
   defaultPlayMax: 3
   defaultRollMax: 3
+  defaultStartMoney: 0
+  bonusMoney: 25
+  roundClearReward: 10
+  playRemainReward: 2
+  interestUnit: 10
+  interestPerUnit: 1
+  interestMax: 10
+  bossRoundReward: 10

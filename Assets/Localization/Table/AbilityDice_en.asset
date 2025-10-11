@@ -35,7 +35,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3133177995264
-    m_Localized: When Roll Without <color=yellow>"KEEP"</color>
+    m_Localized: 'When Roll <color=yellow>"Without KEEP"</color>
+
+      any Play
+      Dice'
     m_Metadata:
       m_Items: []
   - m_Id: 3459352240128
@@ -221,7 +224,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2260010070843392
-    m_Localized: When Play <color=yellow>"Same Hand"</color>
+    m_Localized: When Play <color=yellow>"Same Hand"</color> as Before
     m_Metadata:
       m_Items: []
   - m_Id: 2308538411393024
@@ -414,6 +417,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49751773295288320
     m_Localized: Momentum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50446747477352448
+    m_Localized: Unlocked from the Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50447397372174336
+    m_Localized: Cannot Unlock
     m_Metadata:
       m_Items: []
   references:

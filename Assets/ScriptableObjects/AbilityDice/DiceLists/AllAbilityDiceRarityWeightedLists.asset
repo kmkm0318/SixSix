@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b545577c467c4344a809ad7820cce44, type: 3}
-  m_Name: WeightedLists
+  m_Name: AllAbilityDiceRarityWeightedLists
   m_EditorClassIdentifier: 
-  diceLists:
-  - item: {fileID: 11400000, guid: a79c26c8014f8a144821d955b1630579, type: 2}
+  rarityList:
+  - item: 0
     weight: 216
-  - item: {fileID: 11400000, guid: 7be95526f4cddab4b8de620885f8ddb6, type: 2}
+  - item: 1
     weight: 36
-  - item: {fileID: 11400000, guid: 8b59e45c6bfa51b46a2310bc796699c8, type: 2}
+  - item: 2
     weight: 6
-  - item: {fileID: 11400000, guid: 58d8fa8811349b146804047a46392f69, type: 2}
+  - item: 3
     weight: 1

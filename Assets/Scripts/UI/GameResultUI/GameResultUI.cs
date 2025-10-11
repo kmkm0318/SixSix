@@ -28,12 +28,16 @@ public class GameResultUI : Singleton<GameResultUI>
 
     private void OnClickMainMenuButton()
     {
-        Debug.Log("Go To Main Menu");
+        Hide();
+
+        SceneTransitionManager.Instance.ChangeScene(SceneType.MainMenu);
     }
 
     private void OnClickNewGameButton()
     {
-        SceneManager.LoadScene(0);
+        Hide();
+
+        SceneTransitionManager.Instance.ChangeScene(SceneType.Game);
     }
 
     private void OnClickInfinityModeButton()
@@ -57,7 +61,7 @@ public class GameResultUI : Singleton<GameResultUI>
 
         foreach (var pair in gameResultUIPairs)
         {
-            string res = GameResultManager.Instance.GetResultValue(pair.type);
+            string res = GameResultManager.Instance.GetResultText(pair.type);
             pair.panel.SetValue(res);
         }
     }

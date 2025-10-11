@@ -26,7 +26,7 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
 
     private void Start()
     {
-        currentGambleDiceSaveMax = DataContainer.Instance.CurrentDiceStat.defaultGambleDiceSaveMax;
+        currentGambleDiceSaveMax = DataContainer.Instance.CurrentPlayerStat.defaultGambleDiceSaveMax;
         RegisterEvents();
     }
 
@@ -112,6 +112,18 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         OnGambleDiceRemoved?.Invoke(idx);
 
         return true;
+    }
+
+    public bool TryAddRandomNormalGambleDiceIcon()
+    {
+        var listSO = DataContainer.Instance.NormalGambleDiceListSO;
+        if (listSO == null) return false;
+        if (savedGambleDiceSOs.Count >= currentGambleDiceSaveMax) return false;
+
+        GambleDiceSO diceSO = listSO.GetRandomGambleDiceSO();
+        if (diceSO == null) return false;
+
+        return diceSO != null && TryAddGambleDiceIcon(diceSO);
     }
 
     public bool TryAddRandomBossGambleDiceIcon()

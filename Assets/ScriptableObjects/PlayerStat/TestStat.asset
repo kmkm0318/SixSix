@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: TestStat
   m_EditorClassIdentifier: 
   defaultDiceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  defaultStartMoney: 600
-  defaultInitialTargetRoundScore: 50
+  defaultInitialTargetRoundScore: 100
   defaultPlayDiceCount: 5
   defaultAbilityDiceMax: 5
   defaultGambleDiceMax: 3
   defaultGambleDiceSaveMax: 5
   defaultPlayMax: 3
   defaultRollMax: 3
+  defaultStartMoney: 0
+  bonusMoney: 25
+  roundClearReward: 10
+  playRemainReward: 2
+  interestUnit: 10
+  interestPerUnit: 1
+  interestMax: 10
+  bossRoundReward: 10

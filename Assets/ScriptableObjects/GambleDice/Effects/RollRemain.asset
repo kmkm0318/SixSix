@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbdf930115e5a545ac00cb7ab7d944e, type: 3}
-  m_Name: RollWithoutKeep
+  m_Script: {fileID: 11500000, guid: ab1e828f72171d940bca6c0052c68ea8, type: 3}
+  m_Name: RollRemain
   m_EditorClassIdentifier: 
-  triggerType: 12
-  triggerDescription:
+  effectDescription:
     m_TableReference:
-      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
+      m_TableCollectionName: GUID:d1c1b7cd50819b44aae257bea624d264
     m_TableEntryReference:
-      m_KeyId: 3133177995264
+      m_KeyId: 2637021192192
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  value: 1
   references:
     version: 2
     RefIds: []
