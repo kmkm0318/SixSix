@@ -36,6 +36,12 @@ MonoBehaviour:
     - Locale-ko
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87fbcd5df0c82b44192edfc9f8e5dd5c
+    m_Address: Formats_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c866995837896a48b57b1f74b885ea6
     m_Address: DefaultString_ko
     m_ReadOnly: 1

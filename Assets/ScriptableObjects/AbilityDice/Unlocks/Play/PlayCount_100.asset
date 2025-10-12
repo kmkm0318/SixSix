@@ -9,18 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 043beaeb0a302ec49a770de8f06b2353, type: 3}
-  m_Name: None
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockNoneSO
+  m_Script: {fileID: 11500000, guid: 6a2ee0f1160930a48bf6b6ce9632c222, type: 3}
+  m_Name: PlayCount_100
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockPlayCountSO
   unlockDescription:
     m_TableReference:
-      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
+      m_TableCollectionName: 
     m_TableEntryReference:
-      m_KeyId: 50447397372174336
+      m_KeyId: 0
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  value: 100
   references:
     version: 2
     RefIds: []

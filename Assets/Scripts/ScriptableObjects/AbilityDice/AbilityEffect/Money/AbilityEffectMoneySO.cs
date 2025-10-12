@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "AbilityEffectMoneySO", menuName = "Scriptable Objects/AbilityEffectSO/AbilityEffectMoneySO")]
 public class AbilityEffectMoneySO : AbilityEffectSO
@@ -21,7 +22,13 @@ public class AbilityEffectMoneySO : AbilityEffectSO
             Debug.LogError("Effect description is not set for AbilityEffectMoneySO.");
             return string.Empty;
         }
-        effectDescription.Arguments = new object[] { moneyAmount, DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType) };
+
+        var moneyValue = new LocalizedString("Formats", "MoneyValue");
+        moneyValue.Arguments = new object[] { moneyAmount };
+        moneyValue.RefreshString();
+        var moneyValueString = moneyValue.GetLocalizedString();
+
+        effectDescription.Arguments = new object[] { moneyValueString, DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType) };
         effectDescription.RefreshString();
         return effectDescription.GetLocalizedString();
     }

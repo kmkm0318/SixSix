@@ -383,6 +383,38 @@ MonoBehaviour:
     m_Key: Unlock_None
     m_Metadata:
       m_Items: []
+  - m_Id: 50810289032404992
+    m_Key: Unlock_MoneyGained
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810535858806784
+    m_Key: Unlock_MoneyLost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810549616123904
+    m_Key: Unlock_PlayCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810550920552448
+    m_Key: Unlock_RollCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810562601689088
+    m_Key: Unlock_RerollCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810565080522752
+    m_Key: Unlock_MaxClearedRound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810565621587968
+    m_Key: Unlock_RoundCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810566724689920
+    m_Key: Unlock_MaxScore
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9413904965632
-    m_Localized: Get <color=yellow>${0}</color>{1}
+    m_Localized: Get {0}{1}
     m_Metadata:
       m_Items: []
   - m_Id: 10823719591936
@@ -425,6 +425,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 50447397372174336
     m_Localized: Cannot Unlock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810289032404992
+    m_Localized: Get {0} or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810535858806784
+    m_Localized: Spend {0} or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810549616123904
+    m_Localized: Play {0} times or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810550920552448
+    m_Localized: Roll {0} times or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810562601689088
+    m_Localized: Reroll {0} times or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810565080522752
+    m_Localized: Clear {0} Round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810565621587968
+    m_Localized: Clear Round {0} times or more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50810566724689920
+    m_Localized: Get {0} score or more
     m_Metadata:
       m_Items: []
   references:

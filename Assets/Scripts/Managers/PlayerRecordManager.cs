@@ -55,8 +55,8 @@ public class PlayerRecordManager : Singleton<PlayerRecordManager>
             PlayerRecordData = new()
             {
                 unlockedAbilityDiceIDList = new(),
-                maxClearedRound = 0,
                 maxScore = 0.0f,
+                maxClearedRound = 0,
                 roundCount = 0,
                 playCount = 0,
                 rollCount = 0,
