@@ -8,15 +8,15 @@ public class OptionUI : MonoBehaviour
     [SerializeField] private RectTransform optionPanel;
     [SerializeField] private Vector3 hidePos;
     [SerializeField] private OptionSelectUI[] optionSelectUIs;
-    [SerializeField] private Button closeButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
 
     private void Start()
     {
         RegisterEvents();
-        closeButton.onClick.AddListener(() => Hide());
         mainMenuButton.onClick.AddListener(GoToMainMenu);
+        closeButton.onClick.AddListener(() => Hide());
         gameObject.SetActive(false);
     }
 

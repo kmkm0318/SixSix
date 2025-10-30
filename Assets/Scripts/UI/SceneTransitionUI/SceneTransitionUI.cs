@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class SceneTransitionUI : Singleton<SceneTransitionUI>
 {
-    [SerializeField] private FadeCanvasGroup fadePanel;
+    [SerializeField] private TransitionUI transitionUI;
 
     public void Show(float duration, Action onComplete = null)
     {
         gameObject.SetActive(true);
-        fadePanel.FadeIn(duration, () =>
+        transitionUI.FadeIn(duration, () =>
         {
             onComplete?.Invoke();
         });
@@ -16,7 +16,7 @@ public class SceneTransitionUI : Singleton<SceneTransitionUI>
 
     public void Hide(float duration, Action onComplete = null)
     {
-        fadePanel.FadeOut(duration, () =>
+        transitionUI.FadeOut(duration, () =>
         {
             gameObject.SetActive(false);
             onComplete?.Invoke();

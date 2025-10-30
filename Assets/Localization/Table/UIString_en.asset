@@ -259,7 +259,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4161591762624512
-    m_Localized: <size=75%>Again!</size>
+    m_Localized: <size=75%>Trigger!</size>
     m_Metadata:
       m_Items: []
   - m_Id: 40865123488112640
@@ -284,6 +284,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 43372394172522496
     m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57849590052167680
+    m_Localized: QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57870659727269888
+    m_Localized: REFRESH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57881723743379456
+    m_Localized: CLEAR!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57884740676886528
+    m_Localized: QUEST
     m_Metadata:
       m_Items: []
   references:

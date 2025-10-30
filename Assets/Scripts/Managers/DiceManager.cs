@@ -436,7 +436,7 @@ public class DiceManager : Singleton<DiceManager>
         for (int i = 0; i < gambleDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
-            GenerateGambleDice(DataContainer.Instance.NormalGambleDiceListSO.GetRandomGambleDiceSO());
+            GenerateGambleDice(DataContainer.Instance.NormalGambleDiceListSO.gambleDiceSOList.GetRandomElement());
         }
 
         yield return new WaitUntil(() => AreAllDiceStopped());

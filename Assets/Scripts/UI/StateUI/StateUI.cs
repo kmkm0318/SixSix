@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class StateUI : Singleton<StateUI>
 {
+    [SerializeField] private ButtonPanel questButton;
     [SerializeField] private ButtonPanel optionButton;
     [SerializeField] private AnimatedText moneyText;
     [SerializeField] private AnimatedText playRemainText;
@@ -11,6 +12,7 @@ public class StateUI : Singleton<StateUI>
     protected override void Awake()
     {
         base.Awake();
+        questButton.OnClick += QuestUIEvents.TriggerOnQuestButtonClicked;
         optionButton.OnClick += OptionUIEvents.TriggerOnOptionButtonClicked;
     }
 

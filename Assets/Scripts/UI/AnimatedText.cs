@@ -3,6 +3,9 @@ using Febucci.UI;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
+[RequireComponent(typeof(TextAnimator_TMP))]
+[RequireComponent(typeof(TypewriterByCharacter))]
 public class AnimatedText : MonoBehaviour
 {
     [SerializeField] private DefaultColorSO textColorSO;

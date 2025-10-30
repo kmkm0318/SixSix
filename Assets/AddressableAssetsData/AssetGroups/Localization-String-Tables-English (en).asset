@@ -35,6 +35,12 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba0320e746b104743a82253083742708
+    m_Address: Quest_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c99227a5c95dae04e8b6c927dee5c601
     m_Address: UIString_en
     m_ReadOnly: 1

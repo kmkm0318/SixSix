@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3958fb1b442b09246b4845132548b394, type: 3}
+  m_Name: QuestDataList
+  m_EditorClassIdentifier: Assembly-CSharp::QuestDataList
+  questDatas:
+  - {fileID: 11400000, guid: 0ad8e7a5b72a18449b49b9f0e544eb43, type: 2}
+  - {fileID: 11400000, guid: 9f8839a74ce50814184e8a3d4ceb9d4a, type: 2}
+  - {fileID: 11400000, guid: e0d7b2d953c9c5748a36c97d72ebbbfc, type: 2}
+  - {fileID: 11400000, guid: 2b2ef9e4610cb9f4aa10d99fc85b2adf, type: 2}
+  - {fileID: 11400000, guid: a223a3e20460ca844a7cde6d9abc8f12, type: 2}
+  - {fileID: 11400000, guid: fdff6ed9e126d144d9e5590818a7a584, type: 2}
+  - {fileID: 11400000, guid: 7863e0fdcc076eb4c920632f6fd6071b, type: 2}
+  - {fileID: 11400000, guid: d71d76aad2deb93428d3217d6463cd06, type: 2}
+  - {fileID: 11400000, guid: bfc87f2c2996a0544b3935e33db99bbe, type: 2}

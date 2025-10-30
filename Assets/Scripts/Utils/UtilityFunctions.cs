@@ -16,7 +16,7 @@ public static class UtilityFunctions
         return results.Count > 0;
     }
 
-    public static string FormatNumber(double value)
+    public static string FormatNumber(this double value)
     {
         value = Math.Floor(value);
         if (value >= 1e12f)

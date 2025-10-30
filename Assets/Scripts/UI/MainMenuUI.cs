@@ -4,6 +4,7 @@ using UnityEngine;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private ButtonPanel _startButton;
+    [SerializeField] private ButtonPanel _questButton;
     [SerializeField] private ButtonPanel _optionButton;
     [SerializeField] private ButtonPanel _exitButton;
 
@@ -14,6 +15,7 @@ public class MainMenuUI : MonoBehaviour
         _isActive = true;
 
         _startButton.OnClick += StartGame;
+        _questButton.OnClick += ShowQuestUI;
         _optionButton.OnClick += ShowOptionUI;
         _exitButton.OnClick += ExitGame;
     }
@@ -24,6 +26,13 @@ public class MainMenuUI : MonoBehaviour
         _isActive = false;
 
         SceneTransitionManager.Instance.ChangeScene(SceneType.Game);
+    }
+
+    private void ShowQuestUI()
+    {
+        if (!_isActive) return;
+
+        QuestUIEvents.TriggerOnQuestButtonClicked();
     }
 
     private void ShowOptionUI()

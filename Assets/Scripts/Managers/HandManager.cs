@@ -30,7 +30,7 @@ public class HandManager : Singleton<HandManager>
     public HandSO LastSelectedHandSO => lastSelectedHandSO;
     public bool IsSameHand { get; private set; } = false;
 
-    public event Action<HandSO> OnHandSelected;
+    public event Action<HandSO> OnEnhanceHandSelected;
     public event Action<ScorePair> OnHandScoreApplied;
 
     protected override void Awake()
@@ -133,6 +133,12 @@ public class HandManager : Singleton<HandManager>
         if (!isActive) return;
         isActive = false;
 
+        if (GameManager.Instance.CurrentGameState == GameState.Shop)
+        {
+            OnEnhanceHandSelected?.Invoke(handSO);
+            return;
+        }
+
         IsSameHand = lastSelectedHandSO != null && lastSelectedHandSO.hand == handSO.hand;
         lastSelectedHandSO = handSO;
 
@@ -144,7 +150,8 @@ public class HandManager : Singleton<HandManager>
         {
             handSelectionCounts[handSO.hand] = 1;
         }
-        OnHandSelected?.Invoke(handSO);
+
+        QuestManager.Instance.OnHandPlayed(handSO);
 
         if (!handScores.TryGetValue(handSO.hand, out var scorePair))
         {

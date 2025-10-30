@@ -16,7 +16,7 @@ public class BossRoundManager : Singleton<BossRoundManager>
         if (currentBossRoundSO != null) return;
         SequenceManager.Instance.AddCoroutine(() =>
         {
-            currentBossRoundSO = bossRoundListSO.GetRandomBossRoundSO();
+            currentBossRoundSO = bossRoundListSO.bossRounds.GetRandomElement();
             currentBossRoundSO.OnEnter();
             OnBossRoundEntered?.Invoke();
         });

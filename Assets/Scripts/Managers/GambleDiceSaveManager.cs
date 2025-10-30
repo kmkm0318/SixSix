@@ -120,7 +120,7 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         if (listSO == null) return false;
         if (savedGambleDiceSOs.Count >= currentGambleDiceSaveMax) return false;
 
-        GambleDiceSO diceSO = listSO.GetRandomGambleDiceSO();
+        GambleDiceSO diceSO = listSO.gambleDiceSOList.GetRandomElement();
         if (diceSO == null) return false;
 
         return diceSO != null && TryAddGambleDiceIcon(diceSO);
@@ -132,7 +132,7 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
         if (bossGambleDiceListSO == null) return false;
         if (savedGambleDiceSOs.Count >= currentGambleDiceSaveMax) return false;
 
-        GambleDiceSO randomGambleDiceSO = bossGambleDiceListSO.GetRandomGambleDiceSO();
+        GambleDiceSO randomGambleDiceSO = bossGambleDiceListSO.gambleDiceSOList.GetRandomElement();
         if (randomGambleDiceSO == null) return false;
 
         return randomGambleDiceSO != null && TryAddGambleDiceIcon(randomGambleDiceSO);

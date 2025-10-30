@@ -189,7 +189,7 @@ public class ShopManager : Singleton<ShopManager>
 
             if (randomGambleDiceList.Count >= gambleDiceListSO.gambleDiceSOList.Count) break;
 
-            GambleDiceSO randomGambleDice = gambleDiceListSO.GetRandomGambleDiceSO();
+            GambleDiceSO randomGambleDice = gambleDiceListSO.gambleDiceSOList.GetRandomElement();
             if (randomGambleDice == null) continue;
             if (randomGambleDiceList.Contains(randomGambleDice)) continue;
             randomGambleDiceList.Add(randomGambleDice);

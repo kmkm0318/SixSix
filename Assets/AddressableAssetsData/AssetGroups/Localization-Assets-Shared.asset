@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 746ceb8ee23b5c74389389554d5b2e8f
   m_SerializeEntries:
+  - m_GUID: 4f329b405ae3c2e4ba901c1167bc4e54
+    m_Address: Assets/Localization/Table/Quest Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b20a225e51e76ad48ab00b9ad829b69d
     m_Address: Assets/Localization/Table/AbilityDiceTrigger Shared Data.asset
     m_ReadOnly: 1

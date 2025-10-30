@@ -49,7 +49,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
     private void StartHandEnhance()
     {
         CurrentEnhanceType = EnhanceType.Hand;
-        HandManager.Instance.OnHandSelected += OnHandSelected;
+        HandManager.Instance.OnEnhanceHandSelected += OnHandSelected;
         GameManager.Instance.ChangeState(GameState.Enhance);
     }
 
@@ -61,7 +61,7 @@ public class EnhanceManager : Singleton<EnhanceManager>
 
     private void CompleteHandEnhance()
     {
-        HandManager.Instance.OnHandSelected -= OnHandSelected;
+        HandManager.Instance.OnEnhanceHandSelected -= OnHandSelected;
         GameManager.Instance.ExitState(GameState.Play);
         GameManager.Instance.ExitState(GameState.Enhance);
     }
