@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerDataManager : Singleton<PlayerDataManager>
 {
     private const string PLAYER_DATA = "PlayerData";
 
     public PlayerData PlayerData { get; private set; }
+
+    public event Action<int> OnChipChanged;
 
     protected override void Awake()
     {
@@ -21,6 +24,7 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
         int ogirinalAmount = Mathf.Clamp(PlayerData.chip, 0, maxValue);
 
         PlayerData.chip = Mathf.Clamp(ogirinalAmount + addAmount, 0, maxValue);
+        OnChipChanged?.Invoke(PlayerData.chip);
 
         SaveData();
     }

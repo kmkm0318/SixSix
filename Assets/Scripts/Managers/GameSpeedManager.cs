@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class GameSpeedManager : Singleton<GameSpeedManager>
+public class GameSpeedManager : MonoBehaviour
 {
     [SerializeField] private float animationSpeed = 1f;
     [SerializeField] private float animationSpeedMax = 10f;
@@ -78,11 +77,18 @@ public class GameSpeedManager : Singleton<GameSpeedManager>
     {
         animationSpeed = newSpeed;
         SetTimeScale();
+        SetSFXPitchBias();
     }
 
     private void SetTimeScale()
     {
         Time.timeScale = gameSpeed * animationSpeed;
+    }
+
+    private void SetSFXPitchBias()
+    {
+        float bias = Mathf.Lerp(1, 1.5f, animationSpeed / animationSpeedMax);
+        AudioManager.Instance.SetSFXPitchBias(bias);
     }
 
     private void StartSpeedUpCoroutine()
@@ -106,8 +112,7 @@ public class GameSpeedManager : Singleton<GameSpeedManager>
         {
             if (animationSpeed < animationSpeedMax)
             {
-                animationSpeed += speedUpAmount;
-                SetTimeScale();
+                ChangeAnimationSpeed(animationSpeed + speedUpAmount);
             }
             yield return new WaitForSeconds(speedUpInterval);
         }

@@ -20,6 +20,7 @@ public class AudioManager : Singleton<AudioManager>
     private Dictionary<SFXType, AudioClip> _sfxClips;
     private Dictionary<SFXType, int> _sfxCounts = new();
     private Coroutine _fadeVolumeCoroutine;
+    private float _sfxPitchBias = 0f;
 
     protected override void Awake()
     {
@@ -113,7 +114,7 @@ public class AudioManager : Singleton<AudioManager>
             if (_sfxCounts[type] > _maxSameSFXCount) return;
             _sfxCounts[type]++;
 
-            _sfxSource.pitch = Random.Range(minPitch, maxPitch);
+            _sfxSource.pitch = Random.Range(minPitch, maxPitch) + _sfxPitchBias;
             _sfxSource.PlayOneShot(clip);
             _sfxSource.pitch = 1f;
 
@@ -174,6 +175,11 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
     #endregion
+
+    public void SetSFXPitchBias(float value)
+    {
+        _sfxPitchBias = value;
+    }
 }
 
 public enum BGMType

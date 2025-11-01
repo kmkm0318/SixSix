@@ -22,9 +22,9 @@ MonoBehaviour:
   defaultRollMax: 3
   defaultStartMoney: 0
   bonusMoney: 25
-  roundClearReward: 10
-  playRemainReward: 2
+  roundClearReward: 5
+  playRemainReward: 1
   interestUnit: 10
   interestPerUnit: 1
-  interestMax: 10
-  bossRoundReward: 10
+  interestMax: 5
+  bossRoundReward: 5

@@ -52,6 +52,27 @@ MonoBehaviour:
   _questDescriptionText: {fileID: 963151047590714967}
   _clearButton: {fileID: 1366908600501728314}
   _chipRewardText: {fileID: 5048252046092730167}
+  _chipString:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 58675235330072576
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _chipRewardedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
+    m_TableEntryReference:
+      m_KeyId: 58675844670169088
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &2236747464179071898
 PrefabInstance:
   m_ObjectHideFlags: 0

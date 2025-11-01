@@ -53,7 +53,6 @@ public class PlayerRecordManager : Singleton<PlayerRecordManager>
         {
             PlayerRecordData = new()
             {
-                unlockedAbilityDiceIDList = new(),
                 maxScore = 0.0f,
                 maxClearedRound = 0,
                 roundCount = 0,
@@ -75,7 +74,6 @@ public class PlayerRecordManager : Singleton<PlayerRecordManager>
 [Serializable]
 public class PlayerRecordData
 {
-    public List<int> unlockedAbilityDiceIDList;
     public double maxScore;
     public int maxClearedRound;
     public int roundCount;
