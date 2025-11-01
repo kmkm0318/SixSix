@@ -163,7 +163,8 @@ public class BonusManager : Singleton<BonusManager>
         switch (type)
         {
             case BonusType.Money:
-                MoneyManager.Instance.AddMoney(MoneyManager.Instance.BonusMoney, true);
+                var playerStat = DataContainer.Instance.CurrentPlayerStat;
+                MoneyManager.Instance.AddMoney(playerStat.bonusMoney, true);
                 break;
             case BonusType.AbilityDiceCountMax:
                 DiceManager.Instance.IncreaseCurrentAbilityDiceMax();

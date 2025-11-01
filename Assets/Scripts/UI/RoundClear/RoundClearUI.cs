@@ -117,6 +117,8 @@ public class RoundClearUI : Singleton<RoundClearUI>
 
     private void ApplyReward()
     {
+        var playerStat = DataContainer.Instance.CurrentPlayerStat;
+
         foreach (var type in RoundClearManager.Instance.DefaultRewardList)
         {
             int rewardValue = RoundClearManager.Instance.GetRewardValue(type);
@@ -126,7 +128,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
             if (rewardUI == null) continue;
 
             var args = type == RoundClearRewardType.MoneyInterest ?
-            new object[] { GetRewardValueText(rewardValue), MoneyManager.Instance.InterestMax } :
+            new object[] { GetRewardValueText(rewardValue), playerStat.interestMax } :
             new object[] { GetRewardValueText(rewardValue) };
 
             rewardUI.RewardText.Arguments = args;

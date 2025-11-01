@@ -23,12 +23,6 @@ public class MoneyManager : Singleton<MoneyManager>
             OnMoneyChanged?.Invoke(money);
         }
     }
-    public int BonusMoney => DataContainer.Instance.CurrentPlayerStat.bonusMoney;
-    public int RoundClearReward => DataContainer.Instance.CurrentPlayerStat.roundClearReward;
-    public int PlayRemainReward => DataContainer.Instance.CurrentPlayerStat.playRemainReward * PlayManager.Instance.PlayRemain;
-    public int MoneyInterestReward => Mathf.Min(DataContainer.Instance.CurrentPlayerStat.interestMax, Money / DataContainer.Instance.CurrentPlayerStat.interestUnit * DataContainer.Instance.CurrentPlayerStat.interestPerUnit);
-    public int InterestMax => DataContainer.Instance.CurrentPlayerStat.interestMax;
-    public int BossRoundReward => RoundManager.Instance.IsBossRound ? DataContainer.Instance.CurrentPlayerStat.bossRoundReward : 0;
 
     public event Action<int> OnMoneyChanged;
     public event Action<int> OnMoneyAdded;

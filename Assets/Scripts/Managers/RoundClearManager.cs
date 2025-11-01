@@ -24,12 +24,14 @@ public class RoundClearManager : Singleton<RoundClearManager>
 
     public int GetRewardValue(RoundClearRewardType type)
     {
+        var playerStat = DataContainer.Instance.CurrentPlayerStat;
+
         return type switch
         {
-            RoundClearRewardType.RoundClear => MoneyManager.Instance.RoundClearReward,
-            RoundClearRewardType.BossRoundClear => MoneyManager.Instance.BossRoundReward,
-            RoundClearRewardType.PlayRemain => MoneyManager.Instance.PlayRemainReward,
-            RoundClearRewardType.MoneyInterest => MoneyManager.Instance.MoneyInterestReward,
+            RoundClearRewardType.RoundClear => playerStat.roundClearReward,
+            RoundClearRewardType.BossRoundClear => playerStat.bossRoundReward,
+            RoundClearRewardType.PlayRemain => playerStat.playRemainReward,
+            RoundClearRewardType.MoneyInterest => Mathf.Min(playerStat.interestMax, MoneyManager.Instance.Money / playerStat.interestUnit * playerStat.interestPerUnit),
             _ => 0,
         };
     }
