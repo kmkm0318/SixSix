@@ -86,6 +86,7 @@ public class TriggerManager : Singleton<TriggerManager>
         if (DiceManager.Instance.UsableDiceValues != null && !DiceManager.Instance.UsableDiceValues.Contains(playDice.DiceValue)) return;
 
         playDice.ApplyScorePairs();
+        QuestManager.Instance.TriggerActiveQuest(QuestTriggerType.PlayDiceTrigger, playDice.DiceValue);
         TriggerAbilityDices(playDice, isRetriggered);
     }
 

@@ -15,13 +15,6 @@ public class QuestManager : Singleton<QuestManager>
     {
         base.Awake();
         LoadActiveQuests();
-
-        foreach (var activeQuest in activeQuests)
-        {
-            var data = activeQuest.questData;
-            var progress = activeQuest.progress;
-            Debug.Log($"({data.QuestID}): {data.GetDescription(progress)}");
-        }
     }
 
     private void OnEnable()
@@ -44,8 +37,6 @@ public class QuestManager : Singleton<QuestManager>
     private void LoadActiveQuests()
     {
         string json = PlayerPrefs.GetString(ACTIVE_QUESTS, string.Empty);
-
-        Debug.Log($"json : {json}");
 
         if (json == string.Empty)
         {
@@ -107,36 +98,25 @@ public class QuestManager : Singleton<QuestManager>
         return null;
     }
 
-    #region QuestTrigger
-    public void OnHandPlayed(HandSO handSO)
+    public void TriggerActiveQuest(QuestTriggerType triggerType, object value)
     {
         foreach (var activeQuest in activeQuests)
         {
             if (activeQuest.isCleared) continue;
+            if (activeQuest.questData.TriggerType != triggerType) continue;
 
-            if (activeQuest.questData is QuestData_HandPlay data)
-            {
-                if (data.IsTargetHand(handSO))
-                {
-                    activeQuest.progress++;
-                    Debug.Log($"({data.QuestID}): {data.GetDescription(activeQuest.progress)}");
-
-                    if (data.IsCleared(activeQuest.progress))
-                    {
-                        activeQuest.isCleared = true;
-                    }
-                }
-            }
+            activeQuest.questData.TriggerQuest(value, ref activeQuest.progress);
+            if (activeQuest.questData.IsCleared(activeQuest.progress)) activeQuest.isCleared = true;
         }
 
         SaveActiveQuests();
     }
-    #endregion
 
     public void GetQuestReward(ActiveQuest activeQuest)
     {
-        Debug.Log($"Quest Rewarded!: ({activeQuest.questID}){activeQuest.questData.GetDescription(activeQuest.progress)}");
         activeQuest.isRewarded = true;
+
+        PlayerDataManager.Instance.AddChip(activeQuest.questData.ChipReward);
 
         SaveActiveQuests();
     }

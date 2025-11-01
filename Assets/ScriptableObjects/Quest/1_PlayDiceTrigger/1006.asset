@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974643ecae956ef48b9023e20a0b6e50, type: 3}
-  m_Name: 0001
-  m_EditorClassIdentifier: Assembly-CSharp::QuestData_HandPlay
-  questID: 1
+  m_Script: {fileID: 11500000, guid: b210d5725b30851448615226dd257650, type: 3}
+  m_Name: 1006
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData_PlayDiceTrigger
+  questID: 1006
   questName:
     m_TableReference:
       m_TableCollectionName: 
@@ -26,13 +26,14 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4f329b405ae3c2e4ba901c1167bc4e54
     m_TableEntryReference:
-      m_KeyId: 89652600832
+      m_KeyId: 755326550155264
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  targetHandSO: {fileID: 11400000, guid: bf73f0db5fc5a894a9515a6832a88ea4, type: 2}
-  targetCount: 3
+  chipReward: 3
+  targetPlayDiceValue: 6
+  targetCount: 5
   references:
     version: 2
     RefIds: []

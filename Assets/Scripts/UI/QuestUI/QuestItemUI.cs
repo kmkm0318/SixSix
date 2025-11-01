@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class QuestItemUI : MonoBehaviour
 {
     [SerializeField] private AnimatedText _questDescriptionText;
     [SerializeField] private ButtonPanel _clearButton;
+    [SerializeField] private AnimatedText _chipRewardText;
 
     private ActiveQuest _activeQuest;
 
@@ -26,6 +28,7 @@ public class QuestItemUI : MonoBehaviour
         _activeQuest = activeQuest;
 
         _questDescriptionText.SetText(activeQuest.questData.GetDescription(activeQuest.progress));
-        _clearButton.gameObject.SetActive(activeQuest.isCleared && !activeQuest.isRewarded);
+        _clearButton.SetInteractable(activeQuest.isCleared && !activeQuest.isRewarded);
+        _chipRewardText.SetText($"<sprite=32>+{activeQuest.questData.ChipReward}");
     }
 }

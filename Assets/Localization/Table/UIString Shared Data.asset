@@ -277,10 +277,6 @@ MonoBehaviour:
     m_Key: QuestUI_Refresh
     m_Metadata:
       m_Items: []
-  - m_Id: 57881723743379456
-    m_Key: QuestItemUI_Clear
-    m_Metadata:
-      m_Items: []
   - m_Id: 57884740676886528
     m_Key: StateUI_Quest
     m_Metadata:

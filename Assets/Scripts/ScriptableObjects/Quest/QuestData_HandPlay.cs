@@ -6,6 +6,8 @@ public class QuestData_HandPlay : QuestData
     [SerializeField] private HandSO targetHandSO;
     [SerializeField] private int targetCount;
 
+    public override QuestTriggerType TriggerType => QuestTriggerType.HandPlay;
+
     public override string GetDescription(double progress = 0)
     {
         return questDescription.GetLocalizedString(targetHandSO.HandName, targetCount, (int)progress);
@@ -16,8 +18,11 @@ public class QuestData_HandPlay : QuestData
         return progress >= targetCount;
     }
 
-    public bool IsTargetHand(HandSO handSO)
+    public override void TriggerQuest(object value, ref double progress)
     {
-        return targetHandSO.hand == handSO.hand;
+        if (value is HandSO handSO && targetHandSO.hand == handSO.hand)
+        {
+            progress++;
+        }
     }
 }

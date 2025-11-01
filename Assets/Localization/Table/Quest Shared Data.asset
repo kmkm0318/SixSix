@@ -19,6 +19,14 @@ MonoBehaviour:
     m_Key: Description_HandPlay
     m_Metadata:
       m_Items: []
+  - m_Id: 755326550155264
+    m_Key: Description_PlayDiceTrigger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 755733309562880
+    m_Key: Description_RoundClear
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

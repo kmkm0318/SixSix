@@ -23,6 +23,7 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (!button.interactable) return;
         if (isPressed || eventData.button != PointerEventData.InputButton.Left) return;
         isPressed = true;
 
@@ -34,6 +35,7 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
+        if (!button.interactable) return;
         if (!isPressed || eventData.button != PointerEventData.InputButton.Left) return;
         isPressed = false;
 
@@ -59,5 +61,10 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
             shadow.enabled = true;
             rectTransform.anchoredPosition = originalPos;
         }
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        button.interactable = interactable;
     }
 }

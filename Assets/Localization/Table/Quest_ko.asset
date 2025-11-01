@@ -22,6 +22,15 @@ MonoBehaviour:
     m_Localized: "<color=yellow>\"{0}\"</color> {1}\uD68C \uD50C\uB808\uC774. ({2}/{1})"
     m_Metadata:
       m_Items: []
+  - m_Id: 755326550155264
+    m_Localized: "<color=yellow>\"\uD50C\uB808\uC774 \uB2E4\uC774\uC2A4({0})\"</color>
+      {1}\uD68C \uD2B8\uB9AC\uAC70. ({2}/{1})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 755733309562880
+    m_Localized: "<color=yellow>\"\uB77C\uC6B4\uB4DC {0}\"</color> \uD074\uB9AC\uC5B4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

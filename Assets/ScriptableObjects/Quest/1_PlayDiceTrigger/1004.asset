@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b210d5725b30851448615226dd257650, type: 3}
+  m_Name: 1004
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData_PlayDiceTrigger
+  questID: 1004
+  questName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  questDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:4f329b405ae3c2e4ba901c1167bc4e54
+    m_TableEntryReference:
+      m_KeyId: 755326550155264
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  chipReward: 3
+  targetPlayDiceValue: 4
+  targetCount: 5
+  references:
+    version: 2
+    RefIds: []

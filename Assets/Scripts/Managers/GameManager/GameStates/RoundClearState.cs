@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class RoundClearState : BaseGameState
 {
     public override void Enter()
     {
         base.Enter();
+        QuestManager.Instance.TriggerActiveQuest(QuestTriggerType.RoundClear, RoundManager.Instance.CurrentRound);
+
         if (RoundManager.Instance.IsBossRound)
         {
             SequenceManager.Instance.AddCoroutine(() =>
@@ -13,7 +14,7 @@ public class RoundClearState : BaseGameState
                 GambleDiceSaveManager.Instance.TryAddRandomBossGambleDiceIcon();
             });
         }
-        
+
         SaveRunAbilityDiceData();
     }
 

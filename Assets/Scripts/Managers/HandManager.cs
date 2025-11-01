@@ -151,7 +151,7 @@ public class HandManager : Singleton<HandManager>
             handSelectionCounts[handSO.hand] = 1;
         }
 
-        QuestManager.Instance.OnHandPlayed(handSO);
+        QuestManager.Instance.TriggerActiveQuest(QuestTriggerType.HandPlay, handSO);
 
         if (!handScores.TryGetValue(handSO.hand, out var scorePair))
         {

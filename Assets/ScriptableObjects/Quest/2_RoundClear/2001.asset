@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974643ecae956ef48b9023e20a0b6e50, type: 3}
-  m_Name: 0004
-  m_EditorClassIdentifier: Assembly-CSharp::QuestData_HandPlay
-  questID: 4
+  m_Script: {fileID: 11500000, guid: a095a80bc78e970459e44cf04c66caf2, type: 3}
+  m_Name: 2001
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData_RoundClear
+  questID: 2001
   questName:
     m_TableReference:
       m_TableCollectionName: 
@@ -26,13 +26,14 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4f329b405ae3c2e4ba901c1167bc4e54
     m_TableEntryReference:
-      m_KeyId: 89652600832
+      m_KeyId: 755733309562880
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  targetHandSO: {fileID: 11400000, guid: 0d1b74a568caf3d46a84dd9ede3a29ac, type: 2}
-  targetCount: 3
+  chipReward: 3
+  targetRound: 6
+  targetCount: 1
   references:
     version: 2
     RefIds: []

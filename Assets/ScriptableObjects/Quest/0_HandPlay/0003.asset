@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 974643ecae956ef48b9023e20a0b6e50, type: 3}
-  m_Name: 0007
+  m_Name: 0003
   m_EditorClassIdentifier: Assembly-CSharp::QuestData_HandPlay
-  questID: 7
+  questID: 3
   questName:
     m_TableReference:
       m_TableCollectionName: 
@@ -31,7 +31,8 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  targetHandSO: {fileID: 11400000, guid: adc4f3ae747abcf41849c5471647ff0d, type: 2}
+  chipReward: 3
+  targetHandSO: {fileID: 11400000, guid: f46828785cd775840a2e0b69ff4257b8, type: 2}
   targetCount: 3
   references:
     version: 2
