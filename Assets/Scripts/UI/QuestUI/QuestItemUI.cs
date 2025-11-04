@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -37,5 +36,7 @@ public class QuestItemUI : MonoBehaviour
             activeQuest.isRewarded ?
             _chipRewardedString.GetLocalizedString() :
             _chipString.GetLocalizedString(activeQuest.questData.ChipReward.ToString("N0")));
+
+        _chipRewardText.TMP_Text.color = activeQuest.isCleared ? Color.white : Color.gray;
     }
 }

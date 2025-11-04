@@ -42,6 +42,12 @@ MonoBehaviour:
     - Locale-ko
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bc72a9703eedab4d8fd5fe5b5bed717
+    m_Address: PlayerStat_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 87fbcd5df0c82b44192edfc9f8e5dd5c
     m_Address: Formats_ko
     m_ReadOnly: 1

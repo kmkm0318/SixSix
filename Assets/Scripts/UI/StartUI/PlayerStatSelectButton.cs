@@ -22,6 +22,8 @@ public class PlayerStatSelectButton : MonoBehaviour
     private void Awake()
     {
         _buttonPanel.OnClick += () => OnSelected.Invoke(this);
+        _buttonPanel.OnPointerEntered += ShowToolTip;
+        _buttonPanel.OnPointerExited += HideToolTip;
     }
 
     public void Init(PlayerStatSO playerStatSO, bool isAchieved)
@@ -46,5 +48,17 @@ public class PlayerStatSelectButton : MonoBehaviour
         _diceImage.sprite = _playerStatSO.diceSpriteListSO.spriteList.First();
         _diceImage.material = new(_diceImage.material);
         _playerStatSO.shaderDataSO.SetMaterialProperties(_diceImage.material);
+    }
+
+    public void ShowToolTip()
+    {
+        var name = _playerStatSO.playerStatName.GetLocalizedString();
+        var description = _playerStatSO.playerStatDescription.GetLocalizedString();
+        ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, name, description);
+    }
+
+    private void HideToolTip()
+    {
+        ToolTipUI.Instance.HideToolTip();
     }
 }

@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f0596363c392a94bbfd4c95bd201f51
+    m_Address: PlayerStat_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5300238d70989744481408f25ae6788a
     m_Address: GambleDice_en
     m_ReadOnly: 1

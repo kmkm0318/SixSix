@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: 1_TestStat
+  m_Name: 1_NumberStat
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
   diceSpriteListSO: {fileID: 11400000, guid: 8454517fdec8c7847aa7f912f269e8f9, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: 08a9f2d2227cacc499bc6561adeaf3ca, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
   playerStatName:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 53652889600
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   playerStatDescription:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 87098269696
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

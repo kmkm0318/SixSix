@@ -27,9 +27,9 @@ public class ToolTipUI : Singleton<ToolTipUI>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        ShopUI.Instance.OnShopUIOpened += HideToolTip;
-        RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
-        MouseManager.Instance.OnMouseExited += OnMouseExit;
+        if (ShopUI.Instance) ShopUI.Instance.OnShopUIOpened += HideToolTip;
+        if (RoundClearUI.Instance) RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
+        if (MouseManager.Instance) MouseManager.Instance.OnMouseExited += OnMouseExit;
     }
 
     private void OnMouseExit()

@@ -14,6 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
   diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
+  playerStatName:
+    m_TableReference:
+      m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
+    m_TableEntryReference:
+      m_KeyId: 10103431168
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  playerStatDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
+    m_TableEntryReference:
+      m_KeyId: 48116408320
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  id: 0
+  price: 0
   initialTargetRoundScore: 600
   playDiceCount: 5
   abilityDiceMax: 5
@@ -29,3 +49,6 @@ MonoBehaviour:
   interestPerUnit: 1
   interestMax: 10
   bossRoundReward: 10
+  references:
+    version: 2
+    RefIds: []

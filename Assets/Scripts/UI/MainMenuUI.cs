@@ -7,12 +7,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private ButtonPanel _optionButton;
     [SerializeField] private ButtonPanel _exitButton;
 
-    bool _isActive = false;
-
     private void Start()
     {
-        _isActive = true;
-
         _startButton.OnClick += StartGame;
         _questButton.OnClick += ShowQuestUI;
         _optionButton.OnClick += ShowOptionUI;
@@ -21,30 +17,21 @@ public class MainMenuUI : MonoBehaviour
 
     private void StartGame()
     {
-        if (!_isActive) return;
-        _isActive = false;
-
         StartUIEvents.TriggerOnStartUIButtonClicked();
     }
 
     private void ShowQuestUI()
     {
-        if (!_isActive) return;
-
         QuestUIEvents.TriggerOnQuestButtonClicked();
     }
 
     private void ShowOptionUI()
     {
-        if (!_isActive) return;
-
         OptionUIEvents.TriggerOnOptionButtonClicked();
     }
 
     private void ExitGame()
     {
-        if (!_isActive) return;
-
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

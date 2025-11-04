@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
+public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Vector2 pressedOffset = new(0, -4);
 
@@ -14,6 +14,8 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
     public event Action OnClick;
     public event Action OnButtonDown;
     public event Action OnButtonUp;
+    public event Action OnPointerEntered;
+    public event Action OnPointerExited;
 
     private void Awake()
     {
@@ -64,5 +66,15 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler
     public void SetInteractable(bool interactable)
     {
         button.interactable = interactable;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnPointerEntered?.Invoke();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnPointerExited?.Invoke();
     }
 }

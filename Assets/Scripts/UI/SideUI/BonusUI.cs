@@ -24,7 +24,7 @@ public class BonusUI : Singleton<BonusUI>
 
     private void InitDiceImages()
     {
-        var diceSprite = DataContainer.Instance.DefaultDiceSpriteList.spriteList;
+        var diceSprite = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO.spriteList;
         for (int i = 0; i < diceImage.Count; i++)
         {
             if (i < diceSprite.Count)

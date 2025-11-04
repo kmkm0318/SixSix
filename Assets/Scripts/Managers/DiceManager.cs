@@ -158,9 +158,11 @@ public class DiceManager : Singleton<DiceManager>
     #region Play Dice
     private void GeneratePlayDice()
     {
+        var curStatSO = DataContainer.Instance.CurrentPlayerStat;
+
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.PlayDiceShaderData, playDicePlayboard);
+        playDice.Init(defaultPlayDiceValueMax, curStatSO.diceSpriteListSO, curStatSO.shaderDataSO, playDicePlayboard);
 
         AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
 
