@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class PlayerDataUI : MonoBehaviour
+public class PlayerChipText : MonoBehaviour
 {
     [SerializeField] private AnimatedText _chipText;
     [SerializeField] private LocalizedString _chipString;

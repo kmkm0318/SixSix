@@ -27,7 +27,7 @@ public class PlayManager : Singleton<PlayManager>
 
     private void Init()
     {
-        playMax = DataContainer.Instance.CurrentPlayerStat.defaultPlayMax;
+        playMax = DataContainer.Instance.CurrentPlayerStat.playMax;
         currentPlayMax = playMax;
     }
 

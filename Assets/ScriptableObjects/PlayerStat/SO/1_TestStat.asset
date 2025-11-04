@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
+  m_Name: 1_TestStat
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
+  diceSpriteListSO: {fileID: 11400000, guid: 8454517fdec8c7847aa7f912f269e8f9, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 08a9f2d2227cacc499bc6561adeaf3ca, type: 2}
+  playerStatName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  playerStatDescription:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  id: 1
+  price: 6
+  initialTargetRoundScore: 600
+  playDiceCount: 5
+  abilityDiceMax: 5
+  gambleDiceMax: 3
+  gambleDiceSaveMax: 5
+  playMax: 3
+  rollMax: 3
+  startMoney: 0
+  bonusMoney: 25
+  roundClearReward: 5
+  playRemainReward: 2
+  interestUnit: 10
+  interestPerUnit: 1
+  interestMax: 10
+  bossRoundReward: 10
+  references:
+    version: 2
+    RefIds: []

@@ -131,9 +131,3 @@ public class ActiveQuest
     public bool isCleared = false;
     public bool isRewarded = false;
 }
-
-[Serializable]
-public class ActiveQuestListWrapper
-{
-    public List<ActiveQuest> activeQuests;
-}

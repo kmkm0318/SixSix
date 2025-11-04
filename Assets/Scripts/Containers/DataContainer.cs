@@ -3,16 +3,17 @@ using UnityEngine;
 public class DataContainer : Singleton<DataContainer>
 {
     #region PlayerStatSO
-    [SerializeField] private PlayerStatSO currentPlayerStat;
-    public PlayerStatSO CurrentPlayerStat => currentPlayerStat;
-    public DiceSpriteListSO DefaultDiceSpriteList => currentPlayerStat.defaultDiceSpriteListSO;
+    [SerializeField] private PlayerStatListSO playerStatListSO;
+    public PlayerStatListSO PlayerStatListSO => playerStatListSO;
+    public PlayerStatSO CurrentPlayerStat;
+    public DiceSpriteListSO DefaultDiceSpriteList => CurrentPlayerStat.diceSpriteListSO;
     #endregion
 
-    #region ShaderDataSO
-    [SerializeField] private ShaderDataSO defaultShaderData;
-    public ShaderDataSO DefaultShaderData => defaultShaderData;
-    [SerializeField] private ShaderDataSO chaosShaderData;
-    public ShaderDataSO ChaosShaderData => chaosShaderData;
+    #region DiceShaderDataSO
+    [SerializeField] private ShaderDataSO playDiceShaderData;
+    public ShaderDataSO PlayDiceShaderData => playDiceShaderData;
+    [SerializeField] private ShaderDataSO chaosDiceShaderData;
+    public ShaderDataSO ChaosDiceShaderData => chaosDiceShaderData;
     #endregion
 
     #region AbilityDiceListSO

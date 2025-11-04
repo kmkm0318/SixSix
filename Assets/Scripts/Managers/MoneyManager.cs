@@ -31,7 +31,7 @@ public class MoneyManager : Singleton<MoneyManager>
     private void Start()
     {
         RegisterEvents();
-        Money = DataContainer.Instance.CurrentPlayerStat.defaultStartMoney;
+        Money = DataContainer.Instance.CurrentPlayerStat.startMoney;
     }
 
     #region RegisterEvents

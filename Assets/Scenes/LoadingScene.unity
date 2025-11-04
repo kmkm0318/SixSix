@@ -981,9 +981,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf97bae4785272943999aca3c3acbfee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayerStat: {fileID: 11400000, guid: 5408f6bd12fe79c44935e824fef1b860, type: 2}
-  defaultShaderData: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
-  chaosShaderData: {fileID: 11400000, guid: 1dbc04af982a519488130d18f0dd0994, type: 2}
+  playerStatListSO: {fileID: 11400000, guid: 5b69ede99c798bb4a8ba51cce4e2d056, type: 2}
+  CurrentPlayerStat: {fileID: 0}
+  playDiceShaderData: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
+  chaosDiceShaderData: {fileID: 11400000, guid: 1dbc04af982a519488130d18f0dd0994, type: 2}
   normalAbilityDiceListSO: {fileID: 11400000, guid: a79c26c8014f8a144821d955b1630579, type: 2}
   rareAbilityDiceListSO: {fileID: 11400000, guid: 7be95526f4cddab4b8de620885f8ddb6, type: 2}
   epicAbilityDiceListSO: {fileID: 11400000, guid: 8b59e45c6bfa51b46a2310bc796699c8, type: 2}

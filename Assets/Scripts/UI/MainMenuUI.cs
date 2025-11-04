@@ -24,7 +24,7 @@ public class MainMenuUI : MonoBehaviour
         if (!_isActive) return;
         _isActive = false;
 
-        SceneTransitionManager.Instance.ChangeScene(SceneType.Game);
+        StartUIEvents.TriggerOnStartUIButtonClicked();
     }
 
     private void ShowQuestUI()

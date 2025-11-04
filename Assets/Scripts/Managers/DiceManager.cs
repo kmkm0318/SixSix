@@ -104,8 +104,8 @@ public class DiceManager : Singleton<DiceManager>
         chaosDicePool = new(() => Instantiate(chaosDicePrefab), chaosDice => { chaosDice.gameObject.SetActive(true); }, chaosDice => chaosDice.gameObject.SetActive(false), chaosDice => Destroy(chaosDice.gameObject), false);
         gambleDicePool = new(() => Instantiate(gambleDicePrefab), gambleDice => { gambleDice.gameObject.SetActive(true); }, gambleDice => gambleDice.gameObject.SetActive(false), gambleDice => Destroy(gambleDice.gameObject), false);
 
-        CurrentAbilityDiceMax = DataContainer.Instance.CurrentPlayerStat.defaultAbilityDiceMax;
-        CurrentGambleDiceMax = DataContainer.Instance.CurrentPlayerStat.defaultGambleDiceMax;
+        CurrentAbilityDiceMax = DataContainer.Instance.CurrentPlayerStat.abilityDiceMax;
+        CurrentGambleDiceMax = DataContainer.Instance.CurrentPlayerStat.gambleDiceMax;
     }
 
     #region Events
@@ -160,7 +160,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         var playDice = playDicePool.Get();
         playDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.DefaultShaderData, playDicePlayboard);
+        playDice.Init(defaultPlayDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.PlayDiceShaderData, playDicePlayboard);
 
         AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
 
@@ -204,7 +204,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private IEnumerator FirstPlayDiceGenerate(Action onComplete = null)
     {
-        for (int i = 0; i < DataContainer.Instance.CurrentPlayerStat.defaultPlayDiceCount; i++)
+        for (int i = 0; i < DataContainer.Instance.CurrentPlayerStat.playDiceCount; i++)
         {
             if (i != 0) yield return new WaitForSeconds(diceGenerateDelay);
 
@@ -337,7 +337,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         var chaosDice = chaosDicePool.Get();
         chaosDice.transform.SetPositionAndRotation(playDicePlayboard.DiceGeneratePosition, Quaternion.identity);
-        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosShaderData, playDicePlayboard);
+        chaosDice.Init(defaultChaosDiceValueMax, DataContainer.Instance.DefaultDiceSpriteList, DataContainer.Instance.ChaosDiceShaderData, playDicePlayboard);
 
         AudioManager.Instance.PlaySFX(SFXType.DiceGenerate);
 

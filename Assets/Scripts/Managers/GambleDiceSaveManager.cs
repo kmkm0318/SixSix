@@ -26,7 +26,7 @@ public class GambleDiceSaveManager : Singleton<GambleDiceSaveManager>
 
     private void Start()
     {
-        currentGambleDiceSaveMax = DataContainer.Instance.CurrentPlayerStat.defaultGambleDiceSaveMax;
+        currentGambleDiceSaveMax = DataContainer.Instance.CurrentPlayerStat.gambleDiceSaveMax;
         RegisterEvents();
     }
 

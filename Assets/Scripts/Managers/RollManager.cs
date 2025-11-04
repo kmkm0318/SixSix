@@ -39,7 +39,7 @@ public class RollManager : Singleton<RollManager>
 
     private void Init()
     {
-        rollMax = DataContainer.Instance.CurrentPlayerStat.defaultRollMax;
+        rollMax = DataContainer.Instance.CurrentPlayerStat.rollMax;
         currentRollMax = rollMax;
         powerChangeSpeed = rollPowerMax - rollPowerMin;
     }

@@ -235,8 +235,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1388848004603904
-    m_Localized: "\uC120\uD0DD\uB41C \uD50C\uB808\uC774 \uB2E4\uC774\uC2A4\uB97C\n{0}\uB9CC\uD07C
-      \uAC15\uD654\uD569\uB2C8\uB2E4"
+    m_Localized: "\uC120\uD0DD\uB41C \uD50C\uB808\uC774 \uB2E4\uC774\uC2A4\uC758
+      \uB208\uC744\n{0}\uB9CC\uD07C \uAC15\uD654\uD569\uB2C8\uB2E4"
     m_Metadata:
       m_Items: []
   - m_Id: 1388863221538816
