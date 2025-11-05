@@ -16,7 +16,9 @@ public class ShaderTest : MonoBehaviour
     {
         if (so == null) return;
 
-        diceImage.sprite = so.diceSpriteListSO.spriteList[^1];
+        var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
+
+        diceImage.sprite = diceSpriteListSO.spriteList[^1];
         so.shaderDataSO.SetMaterialProperties(diceImage.material);
         diceNameText.SetText(so.DiceName);
     }

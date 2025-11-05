@@ -88,6 +88,7 @@ public class HandManager : Singleton<HandManager>
         }
         else
         {
+            GameManager.Instance.UnregisterEvent(GameState.Play, OnPlayStarted);
             GameManager.Instance.UnregisterEvent(GameState.Roll, null, OnRollCompleted);
         }
     }
@@ -100,6 +101,7 @@ public class HandManager : Singleton<HandManager>
         }
         else
         {
+            GameManager.Instance.RegisterEvent(GameState.Play, OnPlayStarted);
             GameManager.Instance.RegisterEvent(GameState.Roll, null, OnRollCompleted);
         }
     }

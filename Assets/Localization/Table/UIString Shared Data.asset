@@ -285,10 +285,6 @@ MonoBehaviour:
     m_Key: UI_Chip
     m_Metadata:
       m_Items: []
-  - m_Id: 58675844670169088
-    m_Key: Quest_Completed
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

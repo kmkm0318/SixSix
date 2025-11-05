@@ -27,17 +27,19 @@ public class ShopDiceIcon : UIMouseHandler
 
     public void SetImage()
     {
+        var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
+
         if (abilityDiceSO != null)
         {
             Image.material = new(Image.material);
             abilityDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
-            Image.sprite = abilityDiceSO.diceSpriteListSO.spriteList[abilityDiceSO.MaxDiceValue - 1];
+            Image.sprite = diceSpriteListSO.spriteList[abilityDiceSO.MaxDiceValue - 1];
         }
         else if (gambleDiceSO != null)
         {
             Image.material = new(Image.material);
             gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
-            Image.sprite = gambleDiceSO.diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
+            Image.sprite = diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
         }
     }
 

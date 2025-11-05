@@ -61,15 +61,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _chipRewardedString:
-    m_TableReference:
-      m_TableCollectionName: GUID:b42d05c8298834447a192c01a058061a
-    m_TableEntryReference:
-      m_KeyId: 58675844670169088
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
   references:
     version: 2
     RefIds: []
@@ -452,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8565469952475451257, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_text
-      value: <sprite=32>+3
+      value: <sprite=7 tint=1>+3
       objectReference: {fileID: 0}
     - target: {fileID: 8565469952475451257, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_fontSize

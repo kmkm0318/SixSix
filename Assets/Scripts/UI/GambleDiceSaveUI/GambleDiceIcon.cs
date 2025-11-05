@@ -116,9 +116,11 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
     {
         if (gambleDiceSO != null)
         {
+            var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
+
             Image.material = new(Image.material);
             gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
-            Image.sprite = gambleDiceSO.diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
+            Image.sprite = diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
         }
     }
 

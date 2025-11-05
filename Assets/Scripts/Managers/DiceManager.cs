@@ -131,7 +131,7 @@ public class DiceManager : Singleton<DiceManager>
 
     public void StartAddBonusPlayDice()
     {
-        StartCoroutine(AddBonusPlayDice());
+        SequenceManager.Instance.AddCoroutine(AddBonusPlayDice());
     }
 
     public void IncreaseCurrentAbilityDiceMax()

@@ -6,7 +6,9 @@ public class GambleDice : Dice
 
     public void Init(GambleDiceSO gambleDiceSO, Playboard playboard)
     {
-        base.Init(gambleDiceSO.MaxDiceValue, gambleDiceSO.diceSpriteListSO, gambleDiceSO.shaderDataSO, playboard);
+        var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
+
+        base.Init(gambleDiceSO.MaxDiceValue, diceSpriteListSO, gambleDiceSO.shaderDataSO, playboard);
 
         this.gambleDiceSO = gambleDiceSO;
     }

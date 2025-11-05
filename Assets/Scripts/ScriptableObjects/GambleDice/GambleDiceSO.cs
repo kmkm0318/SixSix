@@ -9,10 +9,9 @@ public class GambleDiceSO : ScriptableObject
     public string DiceName => diceNameLocalized.GetLocalizedString();
     public int price;
     public int SellPrice => price / 2;
-    public DiceSpriteListSO diceSpriteListSO;
     public ShaderDataSO shaderDataSO;
     public int maxDiceValue;
-    public int MaxDiceValue => Mathf.Min(maxDiceValue, diceSpriteListSO.DiceFaceCount);
+    public int MaxDiceValue => Mathf.Min(maxDiceValue, DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO.DiceFaceCount);
 
 
     [Header("Dice Trigger, Effect")]

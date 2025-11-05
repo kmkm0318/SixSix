@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -7,9 +8,10 @@ public class QuestItemUI : MonoBehaviour
     [SerializeField] private ButtonPanel _clearButton;
     [SerializeField] private AnimatedText _chipRewardText;
     [SerializeField] private LocalizedString _chipString;
-    [SerializeField] private LocalizedString _chipRewardedString;
 
     private ActiveQuest _activeQuest;
+
+    public event Action<QuestItemUI> OnRewarded;
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class QuestItemUI : MonoBehaviour
 
         QuestManager.Instance.GetQuestReward(_activeQuest);
 
-        UpdateItem(_activeQuest);
+        OnRewarded?.Invoke(this);
     }
 
     public void UpdateItem(ActiveQuest activeQuest)
@@ -32,10 +34,7 @@ public class QuestItemUI : MonoBehaviour
         _questDescriptionText.SetText(activeQuest.questData.GetDescription(activeQuest.progress));
         _clearButton.SetInteractable(activeQuest.isCleared && !activeQuest.isRewarded);
 
-        _chipRewardText.SetText(
-            activeQuest.isRewarded ?
-            _chipRewardedString.GetLocalizedString() :
-            _chipString.GetLocalizedString(activeQuest.questData.ChipReward.ToString("N0")));
+        _chipRewardText.SetText(_chipString.GetLocalizedString(activeQuest.questData.ChipReward.ToString("N0")));
 
         _chipRewardText.TMP_Text.color = activeQuest.isCleared ? Color.white : Color.gray;
     }

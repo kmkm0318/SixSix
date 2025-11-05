@@ -35,9 +35,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1552873299968
-    m_Localized: 'Enhance Every Play Dice
+    m_Localized: 'Enhance Every
 
-      <color=green>{0}</color>'
+      Play Dice Face {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 1945023946752

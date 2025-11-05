@@ -10,7 +10,9 @@ public class AbilityDice : Dice
 
     public void Init(AbilityDiceSO abilityDiceSO, Playboard playboard)
     {
-        base.Init(abilityDiceSO.MaxDiceValue, abilityDiceSO.diceSpriteListSO, abilityDiceSO.shaderDataSO, playboard);
+        var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
+
+        base.Init(abilityDiceSO.MaxDiceValue, diceSpriteListSO, abilityDiceSO.shaderDataSO, playboard);
 
         this.abilityDiceSO = Instantiate(abilityDiceSO);
         this.abilityDiceSO.Init();

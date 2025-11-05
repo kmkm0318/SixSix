@@ -31,7 +31,12 @@ public class QuestUI : MonoBehaviour
     private void InitPool()
     {
         _questItemPool = new(
-            () => Instantiate(_questItemUIPrefab, _questItemParent),
+            () =>
+            {
+                var item = Instantiate(_questItemUIPrefab, _questItemParent);
+                item.OnRewarded += (rewardedItem) => _questItemPool.Release(rewardedItem);
+                return item;
+            },
             (item) =>
             {
                 item.gameObject.SetActive(true);
@@ -62,6 +67,8 @@ public class QuestUI : MonoBehaviour
 
         foreach (var activeQuest in activeQuests)
         {
+            if (activeQuest.isRewarded) continue;
+
             var newItem = _questItemPool.Get();
             newItem.UpdateItem(activeQuest);
         }

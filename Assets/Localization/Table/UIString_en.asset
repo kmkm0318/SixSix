@@ -302,10 +302,6 @@ MonoBehaviour:
     m_Localized: <sprite=7 tint=1>{0}
     m_Metadata:
       m_Items: []
-  - m_Id: 58675844670169088
-    m_Localized: Complete!
-    m_Metadata:
-      m_Items: []
   references:
     version: 2
     RefIds: []
