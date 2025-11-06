@@ -23,11 +23,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53652889600
-    m_Localized: Number Dice
+    m_Localized: Dot Dice(Red)
     m_Metadata:
       m_Items: []
   - m_Id: 48116408320
-    m_Localized: Play Max <color=blue>+1</color>
+    m_Localized: No Effects
     m_Metadata:
       m_Items: []
   - m_Id: 87098269696
@@ -35,11 +35,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 316778356736
-    m_Localized: Name0002
+    m_Localized: Dot Dice(Blue)
     m_Metadata:
       m_Items: []
   - m_Id: 319252996096
-    m_Localized: Description0002
+    m_Localized: Play Max <color=blue>+1</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616223359770624
+    m_Localized: Number Dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616175616008192
+    m_Localized: Dot Dice(Yellow)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616235540029440
+    m_Localized: No Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616210508423168
+    m_Localized: Start  Money <color=yellow>+10</color>
     m_Metadata:
       m_Items: []
   references:

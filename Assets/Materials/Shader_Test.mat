@@ -13,9 +13,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - BLURISHD_ON
+  - COLORRAMP_ON
   - GRADIENTCOLORRAMP_ON
-  - HOLOGRAM_ON
-  - NEGATIVE_ON
   m_InvalidKeywords:
   - _BLURHD_ON
   m_LightmapFlags: 4
@@ -241,7 +240,7 @@ Material:
     - _GradTopRightCol: {r: 1, g: 1, b: 0, a: 1}
     - _GreyscaleTintColor: {r: 1, g: 1, b: 1, a: 1}
     - _HitEffectColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HologramStripeColor: {r: 1, g: 0, b: 0, a: 1}
+    - _HologramStripeColor: {r: 0, g: 0, b: 0, a: 1}
     - _InnerOutlineColor: {r: 1, g: 0, b: 0.05406809, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _OverlayColor: {r: 1, g: 0.696885, b: 0, a: 1}
@@ -255,7 +254,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":0.0,"b":0.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_Name: z_ColorRampTexGradientTex{"mode":0,"colorKeys":[{"color":{"r":0.75,"g":0.0,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -289,7 +288,7 @@ Texture2D:
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 256
-  _typelessdata: fffffffffbfbfbfff7f7f7fff3f3f3ffefefefffebebebffe7e7e7ffe3e3e3ffdfdfdfffdbdbdbffd7d7d7ffd2d2d2ffcececeffcacacaffc6c6c6ffc2c2c2ffbebebeffbababaffb6b6b6ffb2b2b2ffaeaeaeffaaaaaaffa6a6a6ffa2a2a2ff9e9e9eff9a9a9aff969696ff929292ff8e8e8eff8a8a8aff868686ff828282ff7d7d7dff797979ff757575ff717171ff6d6d6dff696969ff656565ff616161ff5d5d5dff595959ff555555ff515151ff4d4d4dff494949ff454545ff414141ff3d3d3dff393939ff353535ff313131ff2d2d2dff282828ff242424ff202020ff1c1c1cff181818ff141414ff101010ff0c0c0cff080808ff040404ff000000ff
+  _typelessdata: bf0000ffc00404ffc10808ffc20c0cffc31010ffc41414ffc51818ffc61c1cffc72020ffc82424ffc92828ffca2d2dffcb3131ffcc3535ffcd3939ffce3d3dffcf4141ffd04545ffd14949ffd24d4dffd35151ffd55555ffd65959ffd75d5dffd86161ffd96565ffda6969ffdb6d6dffdc7171ffdd7575ffde7979ffdf7d7dffe08282ffe18686ffe28a8affe38e8effe49292ffe59696ffe69a9affe79e9effe8a2a2ffe9a6a6ffeaaaaaffebaeaeffecb2b2ffedb6b6ffeebabaffefbebefff0c2c2fff1c6c6fff2cacafff3cecefff4d2d2fff5d7d7fff6dbdbfff7dfdffff8e3e3fff9e7e7fffaebebfffbefeffffcf3f3fffdf7f7fffefbfbffffffffff
   m_StreamData:
     serializedVersion: 2
     offset: 0

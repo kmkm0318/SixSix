@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: 1_NumberDice
+  m_Name: 1_DotDice_Red
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
-  diceSpriteListSO: {fileID: 11400000, guid: 8454517fdec8c7847aa7f912f269e8f9, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
+  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: bef5e5d01334f6a4eb1971bb0eaa3103, type: 2}
   playerStatName:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
@@ -39,8 +39,8 @@ MonoBehaviour:
   abilityDiceMax: 5
   gambleDiceMax: 3
   gambleDiceSaveMax: 5
-  playMax: 3
-  rollMax: 4
+  playMax: 4
+  rollMax: 3
   startMoney: 0
   bonusMoney: 25
   roundClearReward: 5

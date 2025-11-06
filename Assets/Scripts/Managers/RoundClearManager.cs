@@ -30,7 +30,7 @@ public class RoundClearManager : Singleton<RoundClearManager>
         {
             RoundClearRewardType.RoundClear => playerStat.roundClearReward,
             RoundClearRewardType.BossRoundClear => RoundManager.Instance.IsBossRound ? playerStat.bossRoundReward : 0,
-            RoundClearRewardType.PlayRemain => playerStat.playRemainReward,
+            RoundClearRewardType.PlayRemain => playerStat.playRemainReward * PlayManager.Instance.PlayRemain,
             RoundClearRewardType.MoneyInterest => Mathf.Min(playerStat.interestMax, MoneyManager.Instance.Money / playerStat.interestUnit * playerStat.interestPerUnit),
             _ => 0,
         };

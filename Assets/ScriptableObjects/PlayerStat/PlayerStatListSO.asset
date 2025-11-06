@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatListSO
   playerStatSOs:
   - {fileID: 11400000, guid: 836afc27c90ea954a80f06dc204c62dc, type: 2}
+  - {fileID: 11400000, guid: d9ce949d414fc134c9f98640113e466c, type: 2}
+  - {fileID: 11400000, guid: 2f75606f982eca044a0d64b4f6c451de, type: 2}
+  - {fileID: 11400000, guid: b6f57a5fb18664a44afc3b9c8e9710f0, type: 2}
   - {fileID: 11400000, guid: 5408f6bd12fe79c44935e824fef1b860, type: 2}
