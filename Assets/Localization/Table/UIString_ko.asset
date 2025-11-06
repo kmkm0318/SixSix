@@ -170,7 +170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 306342689906688
-    m_Localized: "<wave>\uACE8\uB4DC \uC774\uC790</wave> : <bounce><color=yellow>{0}</color></bounce>\n<wave><color=gray><size=85%>($10\uB2F9
+    m_Localized: "<wave>\uC774\uC790</wave> : <bounce><color=yellow>{0}</color></bounce>\n<wave><color=gray><size=85%>($10\uB2F9
       $1, \uCD5C\uB300 : ${1})</size></color><wave>"
     m_Metadata:
       m_Items: []

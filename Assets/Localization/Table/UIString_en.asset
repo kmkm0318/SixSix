@@ -174,7 +174,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 306342689906688
-    m_Localized: '<wave>Money Interest</wave> : <bounce><color=yellow>{0}</color></bounce>
+    m_Localized: '<wave>Interest</wave> : <bounce><color=yellow>{0}</color></bounce>
 
       <wave><color=gray><size=small>($1
       Per $10, Maximum : ${1})</size></color><wave>'
