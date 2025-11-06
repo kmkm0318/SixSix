@@ -59,7 +59,10 @@ public class QuestUI : MonoBehaviour
         {
             if (child.TryGetComponent<QuestItemUI>(out var item))
             {
-                _questItemPool.Release(item);
+                if (item.gameObject.activeSelf)
+                {
+                    _questItemPool.Release(item);
+                }
             }
         }
 
