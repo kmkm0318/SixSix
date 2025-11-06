@@ -34,12 +34,19 @@ public class ShopUI : Singleton<ShopUI>
         InitPool();
         RegisterEvents();
         rerollButton.OnClick += OnclickRerollButton;
-        LocalizationSettings.SelectedLocaleChanged += (locale) =>
-        {
-            UpdateRerollButtonText();
-        };
+        LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
         closeButton.OnClick += OnClickCloseButton;
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
+    }
+
+    private void SelectedLocaleChanged(Locale locale)
+    {
+        UpdateRerollButtonText();
     }
 
     private void OnclickRerollButton()
