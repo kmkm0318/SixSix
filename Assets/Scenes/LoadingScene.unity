@@ -982,7 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatListSO: {fileID: 11400000, guid: 5b69ede99c798bb4a8ba51cce4e2d056, type: 2}
-  CurrentPlayerStat: {fileID: 0}
+  currentPlayerStat: {fileID: 11400000, guid: 836afc27c90ea954a80f06dc204c62dc, type: 2}
   playDiceShaderData: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
   chaosDiceShaderData: {fileID: 11400000, guid: 1dbc04af982a519488130d18f0dd0994, type: 2}
   normalAbilityDiceListSO: {fileID: 11400000, guid: a79c26c8014f8a144821d955b1630579, type: 2}

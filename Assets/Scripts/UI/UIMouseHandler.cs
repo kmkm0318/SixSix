@@ -3,14 +3,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
+[RequireComponent(typeof(Image))]
 public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    private RectTransform rectTransform;
-    private Image image;
-    private bool isEntered = false;
+    private RectTransform _rectTransform;
+    private Image _image;
+    private bool _isEntered = false;
 
-    public RectTransform RectTransform => rectTransform;
-    public Image Image => image;
+    public RectTransform RectTransform => _rectTransform;
+    public Image Image => _image;
 
     public event Action OnPointerExited;
     public event Action OnPointerEntered;
@@ -18,22 +20,22 @@ public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        image = GetComponent<Image>();
+        _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isEntered) return;
-        isEntered = true;
+        if (_isEntered) return;
+        _isEntered = true;
 
         OnPointerEntered?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!isEntered) return;
-        isEntered = false;
+        if (!_isEntered) return;
+        _isEntered = false;
 
         OnPointerExited?.Invoke();
     }

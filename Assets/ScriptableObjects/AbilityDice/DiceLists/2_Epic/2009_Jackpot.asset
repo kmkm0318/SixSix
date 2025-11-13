@@ -25,12 +25,11 @@ MonoBehaviour:
   rarity: 2
   autoKeepType: 0
   price: 10
-  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
   shaderDataSO: {fileID: 11400000, guid: 84056e820109c384e8d8cfb315c572e5, type: 2}
   maxDiceValue: 6
   abilityTrigger: {fileID: 11400000, guid: 0bb6a98230a11ee46afd26e4057f1d95, type: 2}
   abilityEffect: {fileID: 11400000, guid: 73207a93d97c9e647a061ee961d67476, type: 2}
-  abilityUnlock: {fileID: 11400000, guid: e215815d6a0402646837bce94a5948fd, type: 2}
+  abilityUnlock: {fileID: 11400000, guid: 4a957bf3ce1ef8c4aa9f35cfde3b78cd, type: 2}
   references:
     version: 2
     RefIds: []

@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private ButtonPanel _startButton;
     [SerializeField] private ButtonPanel _questButton;
+    [SerializeField] private ButtonPanel _collectionButton;
     [SerializeField] private ButtonPanel _optionButton;
     [SerializeField] private ButtonPanel _exitButton;
 
@@ -11,6 +13,7 @@ public class MainMenuUI : MonoBehaviour
     {
         _startButton.OnClick += StartGame;
         _questButton.OnClick += ShowQuestUI;
+        _collectionButton.OnClick += ShowCollectionUI;
         _optionButton.OnClick += ShowOptionUI;
         _exitButton.OnClick += ExitGame;
     }
@@ -23,6 +26,11 @@ public class MainMenuUI : MonoBehaviour
     private void ShowQuestUI()
     {
         QuestUIEvents.TriggerOnQuestButtonClicked();
+    }
+
+    private void ShowCollectionUI()
+    {
+        CollectionUIEvents.TriggerOnCollectionButtonClicked();
     }
 
     private void ShowOptionUI()

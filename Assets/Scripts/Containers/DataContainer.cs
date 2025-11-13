@@ -5,7 +5,12 @@ public class DataContainer : Singleton<DataContainer>
     #region PlayerStatSO
     [SerializeField] private PlayerStatListSO playerStatListSO;
     public PlayerStatListSO PlayerStatListSO => playerStatListSO;
-    public PlayerStatSO CurrentPlayerStat;
+    [SerializeField] private PlayerStatSO currentPlayerStat;
+    public PlayerStatSO CurrentPlayerStat
+    {
+        get => currentPlayerStat;
+        set => currentPlayerStat = value;
+    }
     public DiceSpriteListSO DefaultDiceSpriteList => CurrentPlayerStat.diceSpriteListSO;
     #endregion
 

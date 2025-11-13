@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockPlayCountSO
   unlockDescription:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 50810549616123904
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

@@ -6,7 +6,7 @@ public class GameResultManager : Singleton<GameResultManager>
     private int moneyLost = 0;
     private int rerollCount = 0;
 
-    public int ClearRound => RoundManager.Instance.CurrentRound - 1;
+    public int ClearRound => RoundManager.Instance.CurrentRound + (IsClear ? 0 : -1);
     public bool IsClear { get; set; } = false;
 
     private void Start()
