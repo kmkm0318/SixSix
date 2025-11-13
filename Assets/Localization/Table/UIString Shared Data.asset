@@ -285,6 +285,10 @@ MonoBehaviour:
     m_Key: UI_Chip
     m_Metadata:
       m_Items: []
+  - m_Id: 62882101518016512
+    m_Key: MainMenu_Collection
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -70,3 +70,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# 외부 플러그인들
+/[Aa]ssets/Plugins/AllIn1SpriteShader
+/[Aa]ssets/Plugins/Demigiant
+/[Aa]ssets/Plugins/Febucci
+/[Aa]ssets/Plugins/Sqlite

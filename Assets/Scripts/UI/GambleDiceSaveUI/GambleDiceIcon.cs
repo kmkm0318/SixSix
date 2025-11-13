@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class GambleDiceIcon : UIMouseHandler, IHighlightable
 {
-    private GambleDiceSO gambleDiceSO;
-    private bool isShowToolTip = false;
-    private DiceInteractType interactType = DiceInteractType.None;
+    private GambleDiceSO _gambleDiceSO;
+    private bool _isShowToolTip = false;
+    private DiceInteractType _interactType = DiceInteractType.None;
+    private Action<GambleDiceIcon> _onClicked;
 
-    public int SellPrice => gambleDiceSO?.SellPrice ?? 0;
+    public int SellPrice => _gambleDiceSO == null ? 0 : _gambleDiceSO.SellPrice;
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
             HideToolTip();
             DiceHighlightManager.Instance.HideHighlight();
         };
-        OnPointerClicked += () => GambleDiceSaveUI.Instance.HandleGambleDiceIconClicked(this);
+        OnPointerClicked += () => _onClicked?.Invoke(this);
     }
 
     private void OnEnable()
@@ -38,16 +39,16 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
         switch (GameManager.Instance.CurrentGameState)
         {
             case GameState.Play:
-                interactType = DiceInteractType.Use;
+                _interactType = DiceInteractType.Use;
                 break;
             case GameState.Roll:
-                interactType = DiceInteractType.None;
+                _interactType = DiceInteractType.None;
                 break;
             case GameState.Shop:
-                interactType = DiceInteractType.Sell;
+                _interactType = DiceInteractType.Sell;
                 break;
             default:
-                interactType = DiceInteractType.None;
+                _interactType = DiceInteractType.None;
                 break;
         }
     }
@@ -77,69 +78,70 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
     }
     private void OnPlayStarted()
     {
-        interactType = DiceInteractType.Use;
+        _interactType = DiceInteractType.Use;
     }
 
     private void OnPlayEnded()
     {
-        interactType = DiceInteractType.None;
+        _interactType = DiceInteractType.None;
     }
 
     private void OnRollStarted()
     {
-        interactType = DiceInteractType.None;
+        _interactType = DiceInteractType.None;
     }
 
     private void OnRollEnded()
     {
-        interactType = DiceInteractType.Use;
+        _interactType = DiceInteractType.Use;
     }
 
     private void OnShopStarted()
     {
-        interactType = DiceInteractType.Sell;
+        _interactType = DiceInteractType.Sell;
     }
 
     private void OnShopEnded()
     {
-        interactType = DiceInteractType.None;
+        _interactType = DiceInteractType.None;
     }
     #endregion
 
-    public void Init(GambleDiceSO gambleDiceSO)
+    public void Init(GambleDiceSO gambleDiceSO, Action<GambleDiceIcon> onClicked = null)
     {
-        this.gambleDiceSO = gambleDiceSO;
+        _gambleDiceSO = gambleDiceSO;
+        _onClicked = onClicked;
         SetImage();
     }
 
     public void SetImage()
     {
-        if (gambleDiceSO != null)
+        if (_gambleDiceSO != null)
         {
             var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
 
             Image.material = new(Image.material);
-            gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
-            Image.sprite = diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
+            _gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
+            Image.sprite = diceSpriteListSO.spriteList[_gambleDiceSO.MaxDiceValue - 1];
         }
     }
 
     private void ShowToolTip()
     {
         if (ToolTipUI.Instance == null) return;
-        if (isShowToolTip) return;
-        if (gambleDiceSO != null)
+        if (_isShowToolTip) return;
+        if (_gambleDiceSO != null)
         {
-            isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(RectTransform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            _isShowToolTip = true;
+            ToolTipUI.Instance.ShowToolTip(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 
     private void HideToolTip()
     {
         if (ToolTipUI.Instance == null) return;
-        if (!isShowToolTip) return;
-        isShowToolTip = false;
+        if (!_isShowToolTip) return;
+        _isShowToolTip = false;
 
         ToolTipUI.Instance.HideToolTip();
     }
@@ -151,6 +153,6 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
 
     public DiceInteractType GetHighlightType()
     {
-        return interactType;
+        return _interactType;
     }
 }

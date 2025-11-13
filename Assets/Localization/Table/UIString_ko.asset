@@ -292,6 +292,10 @@ MonoBehaviour:
     m_Localized: <sprite=7 tint=1>{0}
     m_Metadata:
       m_Items: []
+  - m_Id: 62882101518016512
+    m_Localized: "\uCEEC\uB809\uC158"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
