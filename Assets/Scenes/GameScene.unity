@@ -15232,8 +15232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2313fb210faa6488f9e0cc81d7ae95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundClearPanel: {fileID: 1063701855}
-  hidePos: {x: 0, y: -1000, z: 0}
+  _panel: {fileID: 0}
+  _background: {fileID: 0}
+  _showPos: {x: 0, y: 0, z: 0}
+  _hidePos: {x: 0, y: -1000, z: 0}
   closeButton: {fileID: 1487094934}
   fadeCanvasGroup: {fileID: 962660402}
   resultText: {fileID: 781460240}

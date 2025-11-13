@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -51,6 +52,12 @@ public class QuestUI : BaseUI
     private void OnRefreshButtonClicked()
     {
         QuestUIEvents.TriggerOnRefreshButtonClicked();
+        UpdateQuestUI();
+    }
+
+    protected override void Show(Action onComplete = null)
+    {
+        base.Show(onComplete);
         UpdateQuestUI();
     }
 
