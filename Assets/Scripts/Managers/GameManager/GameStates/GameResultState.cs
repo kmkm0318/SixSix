@@ -7,7 +7,7 @@ public class GameResultState : BaseGameState
         base.Enter();
 
         bool isClear = GameResultManager.Instance.IsClear;
-        GameResultUI.Instance.ShowGameResult(isClear);
+        GameResultUIEvents.TriggerOnGameResultUIShowRequested(isClear);
         PlayerRecordManager.Instance.UpdatePlayerRecord();
     }
 

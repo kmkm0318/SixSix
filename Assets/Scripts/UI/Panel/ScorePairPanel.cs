@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class ScorePairPanel : BasePanel
 {
-    [SerializeField] private AnimatedText playScoreText;
-    [SerializeField] private TextPanel baseScorePanel;
-    [SerializeField] private TextPanel multiplierPanel;
+    [SerializeField] private AnimatedText _playScoreText;
+    [SerializeField] private TextPanel _baseScorePanel;
+    [SerializeField] private TextPanel _multiplierPanel;
 
     public void SetPlayScore(double totalScore)
     {
-        playScoreText.SetText(totalScore.ToString("0"));
+        _playScoreText.SetText(totalScore.ToString("0"));
     }
 
     public void SetBaseScore(double baseScore)
     {
-        baseScorePanel.SetText(baseScore.ToString("0"));
+        _baseScorePanel.SetText(baseScore.ToString("0"));
     }
 
     public void SetMultiplier(double multiplier)
     {
-        multiplierPanel.SetText(multiplier.ToString("0"));
+        _multiplierPanel.SetText(multiplier.ToString("0"));
     }
 }

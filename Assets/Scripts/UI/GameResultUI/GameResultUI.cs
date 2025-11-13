@@ -1,29 +1,35 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameResultUI : Singleton<GameResultUI>
+public class GameResultUI : BaseUI
 {
-    [SerializeField] private RectTransform gameResultPanel;
-    [SerializeField] private Vector3 hidePos;
-    [SerializeField] private AnimatedText resultText;
-    [SerializeField] private List<GameResultUIPair> gameResultUIPairs;
-    [SerializeField] private ButtonPanel mainMenuButton;
-    [SerializeField] private ButtonPanel newGameButton;
-    [SerializeField] private ButtonPanel infinityModeButton;
-    [SerializeField] private GameObject infinityModeButtonRow;
-    [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
+    [SerializeField] private AnimatedText _resultText;
+    [SerializeField] private List<GameResultUIPair> _gameResultUIPairs;
+    [SerializeField] private ButtonPanel _mainMenuButton;
+    [SerializeField] private ButtonPanel _newGameButton;
+    [SerializeField] private ButtonPanel _infinityModeButton;
+    [SerializeField] private GameObject _infinityModeButtonRow;
 
     private bool _isGameClear;
 
     private void Start()
     {
-        mainMenuButton.OnClick += OnClickMainMenuButton;
-        newGameButton.OnClick += OnClickNewGameButton;
-        infinityModeButton.OnClick += OnClickInfinityModeButton;
+        _mainMenuButton.OnClick += OnClickMainMenuButton;
+        _newGameButton.OnClick += OnClickNewGameButton;
+        _infinityModeButton.OnClick += OnClickInfinityModeButton;
+        GameResultUIEvents.OnGameResultUIShowRequested += OnGameResultUIShowRequested;
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        GameResultUIEvents.OnGameResultUIShowRequested -= OnGameResultUIShowRequested;
+    }
+
+    private void OnGameResultUIShowRequested(bool isClear)
+    {
+        ShowGameResult(isClear);
     }
 
     private void OnClickMainMenuButton()
@@ -46,59 +52,26 @@ public class GameResultUI : Singleton<GameResultUI>
         GameManager.Instance.ChangeState(GameState.RoundClear);
     }
 
-    public void ShowGameResult(bool isGameClear)
+    private void ShowGameResult(bool isGameClear)
     {
         _isGameClear = isGameClear;
 
-        SequenceManager.Instance.AddCoroutine(Show);
-        resultText.SetText(_isGameClear ? "Game Clear" : "Game Over");
+        _resultText.SetText(_isGameClear ? "Game Clear" : "Game Over");
 
         Color color = _isGameClear ?
         DataContainer.Instance.DefaultColorSO.blue : DataContainer.Instance.DefaultColorSO.red;
 
-        resultText.TMP_Text.color = color;
-        infinityModeButtonRow.SetActive(_isGameClear);
+        _resultText.TMP_Text.color = color;
+        _infinityModeButtonRow.SetActive(_isGameClear);
 
-        foreach (var pair in gameResultUIPairs)
+        foreach (var pair in _gameResultUIPairs)
         {
             string res = GameResultManager.Instance.GetResultText(pair.type);
             pair.panel.SetValue(res);
         }
+
+        SequenceManager.Instance.AddCoroutine(() => Show());
     }
-
-    #region ShowHide
-    private void Show()
-    {
-        gameObject.SetActive(true);
-        gameResultPanel.anchoredPosition = hidePos;
-        gameResultPanel
-            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-            .SetEase(Ease.InOutBack)
-            .OnComplete(() =>
-            {
-
-            });
-
-        fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-
-        AudioManager.Instance.PlaySFX(_isGameClear ? SFXType.Win : SFXType.Lose);
-    }
-
-    private void Hide(Action onComplete = null)
-    {
-        gameResultPanel.anchoredPosition = Vector3.zero;
-        gameResultPanel
-            .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
-            .SetEase(Ease.InOutBack)
-            .OnComplete(() =>
-            {
-                onComplete?.Invoke();
-                gameObject.SetActive(false);
-            });
-
-        fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-    }
-    #endregion
 }
 
 [Serializable]

@@ -39,14 +39,7 @@ public class BonusManager : Singleton<BonusManager>
 
     private void Start()
     {
-        if (DataContainer.Instance.CurrentPlayerStat.playDiceCount >= 6)
-        {
-            HandScoreUI.Instance.ScrollLayoutPanel(true);
-        }
-        else
-        {
-            RegisterEvents();
-        }
+        RegisterEvents();
     }
 
     private void RegisterEvents()

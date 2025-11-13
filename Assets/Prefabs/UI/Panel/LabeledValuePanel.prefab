@@ -110,28 +110,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9044146386072781435}
   m_SourcePrefab: {fileID: 100100000, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
---- !u!114 &344634580421709427 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1703658608998003174, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
-  m_PrefabInstance: {fileID: 1399774137115131797}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6994781010236259024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3407197171192969410 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4333646943548507991, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
-  m_PrefabInstance: {fileID: 1399774137115131797}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6994781010236259024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5097541429762729347 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184257874556787222, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
@@ -154,11 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980273c07f561f44e912058483785745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 5097541429762729347}
-  image: {fileID: 3407197171192969410}
-  shadow: {fileID: 344634580421709427}
-  labelText: {fileID: 6238090707392850561}
-  valueTextPanel: {fileID: 4412616356858961036}
+  _labelText: {fileID: 6238090707392850561}
+  _valueTextPanel: {fileID: 4412616356858961036}
 --- !u!114 &9044146386072781435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,6 +443,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8778504642307311146, guid: ea447cae1d4d4d64fa92ed04396b6b84, type: 3}
       propertyPath: shadow
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778504642307311146, guid: ea447cae1d4d4d64fa92ed04396b6b84, type: 3}
+      propertyPath: _shadow
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9056390787932539483, guid: ea447cae1d4d4d64fa92ed04396b6b84, type: 3}

@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HandScoreUI : Singleton<HandScoreUI>
+public class HandScoreUI : MonoBehaviour
 {
     [SerializeField] private Transform handScoreSingleUIPrefab;
     [SerializeField] private RectTransform layoutPanel;
@@ -18,10 +18,28 @@ public class HandScoreUI : Singleton<HandScoreUI>
         Init();
     }
 
-    #region RegisterEvents
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
     private void RegisterEvents()
     {
-        BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
+        if (BonusManager.Instance) BonusManager.Instance.OnAllBonusAchieved += OnAllBonusAchieved;
+
+        HandScoreUIEvents.OnHandScoreUIUpdateRequested += UpdateHandScores;
+        HandScoreUIEvents.OnHandScoreUIResetRequested += ResetHandScoreUI;
+        HandScoreUIEvents.OnHandScoreUIPlayHandTriggerAnimationRequested += PlayHandTriggerAnimation;
+    }
+
+    private void UnregisterEvents()
+    {
+        if (BonusManager.Instance) BonusManager.Instance.OnAllBonusAchieved -= OnAllBonusAchieved;
+
+        HandScoreUIEvents.OnHandScoreUIUpdateRequested -= UpdateHandScores;
+        HandScoreUIEvents.OnHandScoreUIResetRequested -= ResetHandScoreUI;
+        HandScoreUIEvents.OnHandScoreUIPlayHandTriggerAnimationRequested -= PlayHandTriggerAnimation;
     }
 
     private void OnAllBonusAchieved()
@@ -37,11 +55,16 @@ public class HandScoreUI : Singleton<HandScoreUI>
         {
             var handScoreSingleUITransform = Instantiate(handScoreSingleUIPrefab, layoutPanel);
             var handScoreSingleUI = handScoreSingleUITransform.GetComponent<HandScoreSingleUI>();
-            handScoreSingleUI.Init(handSO);
+            handScoreSingleUI.Init(handSO, HandleSelectHand);
             handScoreSingleUIDict.Add(handSO.hand, handScoreSingleUI);
         }
 
         RebuildLayout();
+    }
+
+    private void HandleSelectHand(HandSO handSO)
+    {
+        HandManager.Instance.HandleSelectHand(handSO);
     }
 
     public void UpdateHandScores(Dictionary<Hand, ScorePair> handScoreDict)
@@ -76,7 +99,7 @@ public class HandScoreUI : Singleton<HandScoreUI>
         }
     }
 
-    public void ScrollLayoutPanel(bool isImmediate = false)
+    private void ScrollLayoutPanel(bool isImmediate = false)
     {
         if (isImmediate)
         {
@@ -86,10 +109,5 @@ public class HandScoreUI : Singleton<HandScoreUI>
         {
             layoutPanel.DOAnchorPos(targetScrollAnchoredPosition, scrollDuration).SetEase(Ease.InOutQuint);
         }
-    }
-
-    public void HandleSelectHand(HandSO handSO)
-    {
-        HandManager.Instance.HandleSelectHand(handSO);
     }
 }

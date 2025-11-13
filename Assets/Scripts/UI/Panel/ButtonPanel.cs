@@ -3,13 +3,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(Shadow))]
 public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Vector2 pressedOffset = new(0, -4);
-
-    private Button button;
-    private Vector2 originalPos = Vector2.zero;
-    private bool isPressed = false;
+    [SerializeField] private Vector2 _pressedOffset = new(0, -4);
+    private Button _button;
+    private Shadow _shadow;
+    private Vector2 _originalPos = Vector2.zero;
+    private bool _isPressed = false;
 
     public event Action OnClick;
     public event Action OnButtonDown;
@@ -17,16 +19,20 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler, IP
     public event Action OnPointerEntered;
     public event Action OnPointerExited;
 
-    private void Awake()
+    protected override void Awake()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(() => OnClick?.Invoke());
+        base.Awake();
+
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(() => OnClick?.Invoke());
+
+        _shadow = GetComponent<Shadow>();
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (isPressed || eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = true;
+        if (_isPressed || eventData.button != PointerEventData.InputButton.Left) return;
+        _isPressed = true;
 
         HandlePos();
         AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
@@ -36,8 +42,8 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler, IP
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        if (!isPressed || eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = false;
+        if (!_isPressed || eventData.button != PointerEventData.InputButton.Left) return;
+        _isPressed = false;
 
         HandlePos();
         AudioManager.Instance.PlaySFX(SFXType.ButtonUp);
@@ -47,25 +53,25 @@ public class ButtonPanel : TextPanel, IPointerDownHandler, IPointerUpHandler, IP
 
     private void HandlePos()
     {
-        if (isPressed)
+        if (_isPressed)
         {
-            shadow.enabled = false;
-            if (originalPos == Vector2.zero)
+            _shadow.enabled = false;
+            if (_originalPos == Vector2.zero)
             {
-                originalPos = rectTransform.anchoredPosition;
+                _originalPos = _rectTransform.anchoredPosition;
             }
-            rectTransform.anchoredPosition = originalPos + pressedOffset;
+            _rectTransform.anchoredPosition = _originalPos + _pressedOffset;
         }
         else
         {
-            shadow.enabled = true;
-            rectTransform.anchoredPosition = originalPos;
+            _shadow.enabled = true;
+            _rectTransform.anchoredPosition = _originalPos;
         }
     }
 
     public void SetInteractable(bool interactable)
     {
-        button.interactable = interactable;
+        _button.interactable = interactable;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

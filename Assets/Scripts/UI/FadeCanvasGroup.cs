@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class FadeCanvasGroup : MonoBehaviour
 {
     private CanvasGroup canvasGroup;

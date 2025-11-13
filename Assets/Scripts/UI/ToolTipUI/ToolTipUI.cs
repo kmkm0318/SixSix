@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class ToolTipUI : Singleton<ToolTipUI>
+public class ToolTipUI : MonoBehaviour
 {
     [SerializeField] private LabeledValuePanel labelPanel;
     [SerializeField] private RectTransform labelPanelRectTransform;
@@ -24,12 +24,32 @@ public class ToolTipUI : Singleton<ToolTipUI>
         HideToolTip();
     }
 
-    #region RegisterEvents
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
     private void RegisterEvents()
     {
-        if (ShopUI.Instance) ShopUI.Instance.OnShopUIOpened += HideToolTip;
-        if (RoundClearUI.Instance) RoundClearUI.Instance.OnRoundClearUIOpened += HideToolTip;
         if (MouseManager.Instance) MouseManager.Instance.OnMouseExited += OnMouseExit;
+
+        ShopUIEvents.OnShopUIShown += HideToolTip;
+        RoundClearUIEvents.OnRoundClearUIShown += HideToolTip;
+
+        ToolTipUIEvents.OnToolTipShowRequested += ShowToolTip;
+        ToolTipUIEvents.OnToolTipHideRequested += HideToolTip;
+    }
+
+    private void UnregisterEvents()
+    {
+        if (MouseManager.Instance) MouseManager.Instance.OnMouseExited += OnMouseExit;
+
+        ShopUIEvents.OnShopUIShown -= HideToolTip;
+        RoundClearUIEvents.OnRoundClearUIShown -= HideToolTip;
+
+        ToolTipUIEvents.OnToolTipShowRequested -= ShowToolTip;
+        ToolTipUIEvents.OnToolTipHideRequested -= HideToolTip;
     }
 
     private void OnMouseExit()

@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class LabeledValuePanel : BasePanel
 {
-    [SerializeField] private AnimatedText labelText;
-    [SerializeField] private TextPanel valueTextPanel;
+    [SerializeField] private AnimatedText _labelText;
+    [SerializeField] private TextPanel _valueTextPanel;
 
     public void SetLabel(string label, bool isShow = false)
     {
         if (isShow)
         {
-            labelText.ShowText(label);
+            _labelText.ShowText(label);
         }
         else
         {
-            labelText.SetText(label);
+            _labelText.SetText(label);
         }
     }
 
     public void SetValue(string value, bool isShow = false)
     {
-        valueTextPanel.SetText(value, isShow);
+        _valueTextPanel.SetText(value, isShow);
     }
 }

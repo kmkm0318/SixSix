@@ -45,26 +45,24 @@ public class ShopDiceIcon : UIMouseHandler
 
     private void ShowToolTip()
     {
-        if (ToolTipUI.Instance == null) return;
         if (isShowToolTip) return;
         if (abilityDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.AbilityDice, abilityDiceSO.rarity);
+            ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.AbilityDice, abilityDiceSO.rarity);
         }
         else if (gambleDiceSO != null)
         {
             isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 
     private void HideToolTip()
     {
-        if (ToolTipUI.Instance == null) return;
         if (!isShowToolTip) return;
         isShowToolTip = false;
 
-        ToolTipUI.Instance.HideToolTip();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested();
     }
 }

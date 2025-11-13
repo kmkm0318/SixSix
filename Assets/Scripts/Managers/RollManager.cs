@@ -44,11 +44,22 @@ public class RollManager : Singleton<RollManager>
         powerChangeSpeed = rollPowerMax - rollPowerMin;
     }
 
-    #region RegisterEvents
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
     private void RegisterEvents()
     {
-        RollUI.Instance.OnRollButtonPressed += OnRollButtonPressed;
-        RollUI.Instance.OnRollButtonReleased += OnRollButtonReleased;
+        RollUIEvents.OnRollButtonPressed += OnRollButtonPressed;
+        RollUIEvents.OnRollButtonReleased += OnRollButtonReleased;
+    }
+
+    private void UnregisterEvents()
+    {
+        RollUIEvents.OnRollButtonPressed -= OnRollButtonPressed;
+        RollUIEvents.OnRollButtonReleased -= OnRollButtonReleased;
     }
 
     private void OnRollButtonPressed()

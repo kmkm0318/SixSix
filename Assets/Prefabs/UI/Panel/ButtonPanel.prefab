@@ -107,17 +107,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7630919360122928819}
   m_SourcePrefab: {fileID: 100100000, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
---- !u!114 &348829150044717434 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1703658608998003174, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
-  m_PrefabInstance: {fileID: 1401699453511610524}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6993348413818025433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3411444654799960011 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4333646943548507991, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
@@ -195,11 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f87de56724316c4abb7a2113ae7bb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 5089406213682473610}
-  image: {fileID: 3411444654799960011}
-  shadow: {fileID: 348829150044717434}
-  text: {fileID: 4400222333943231934}
-  pressedOffset: {x: 0, y: -4}
+  _text: {fileID: 4400222333943231934}
+  _pressedOffset: {x: 0, y: -4}
 --- !u!1001 &5324445519155425702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -230,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4556116114106040031, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_fontSize
-      value: 23.35
+      value: 18.1
       objectReference: {fileID: 0}
     - target: {fileID: 4556116114106040031, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_fontStyle

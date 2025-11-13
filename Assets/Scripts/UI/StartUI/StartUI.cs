@@ -1,11 +1,8 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class StartUI : MonoBehaviour
+public class StartUI : BaseUI
 {
-    [SerializeField] private RectTransform _startPanel;
-    [SerializeField] private Vector3 _hidePos;
     [SerializeField] private PlayerStatSelectButton _playerStatSelectButtonPrefab;
     [SerializeField] private Transform _playerStatSelectButtonParent;
     [SerializeField] private FadeCanvasGroup _fadeCanvasGroup;
@@ -17,14 +14,19 @@ public class StartUI : MonoBehaviour
     {
         InitPool();
         InitButtons();
-        StartUIEvents.OnStartUIButtonClicked += Show;
-        _closeButton.OnClick += Hide;
+        _closeButton.OnClick += () => Hide();
+        StartUIEvents.OnStartUIButtonClicked += OnStartUIButtonClicked;
         gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        StartUIEvents.OnStartUIButtonClicked -= Show;
+        StartUIEvents.OnStartUIButtonClicked -= OnStartUIButtonClicked;
+    }
+
+    private void OnStartUIButtonClicked()
+    {
+        Show();
     }
 
     private void InitPool()
@@ -74,32 +76,4 @@ public class StartUI : MonoBehaviour
             button.SetIsAchieved(true);
         }
     }
-
-    #region ShowHide
-    private void Show()
-    {
-        gameObject.SetActive(true);
-
-        _startPanel
-            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-            .From(_hidePos)
-            .SetEase(Ease.InOutBack);
-
-        _fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-    }
-
-    private void Hide()
-    {
-        _startPanel
-            .DOAnchorPos(_hidePos, AnimationFunction.DefaultDuration)
-            .From(Vector3.zero)
-            .SetEase(Ease.InOutBack)
-            .OnComplete(() =>
-            {
-                gameObject.SetActive(false);
-            });
-
-        _fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-    }
-    #endregion
 }

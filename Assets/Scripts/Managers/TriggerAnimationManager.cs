@@ -13,7 +13,7 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
         if (scorePair.baseScore == 0 && (scorePair.multiplier == 0 || scorePair.multiplier == 1)) return;
 
         PlayTriggerAnimation(targetTransform);
-        SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowScoreContext(targetTransform, offset, scorePair), true);
+        TriggerContextUIEvents.TriggerOnShowScoreContext(targetTransform, offset, scorePair);
     }
 
     public void PlayTriggerMoneyAnimation(Transform targetTransform, Vector3 offset, int money)
@@ -21,7 +21,7 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
         if (money == 0) return;
 
         PlayTriggerAnimation(targetTransform);
-        SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowMoneyContext(targetTransform, offset, money), true);
+        TriggerContextUIEvents.TriggerOnShowMoneyContext(targetTransform, offset, money);
     }
 
     public void PlayTriggerValueAnimation(Transform targetTransform, Vector3 offset, int value, string color)
@@ -29,12 +29,12 @@ public class TriggerAnimationManager : Singleton<TriggerAnimationManager>
         if (value == 0) return;
 
         PlayTriggerAnimation(targetTransform);
-        SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowValueContext(targetTransform, offset, value, color), true);
+        TriggerContextUIEvents.TriggerOnShowValueContext(targetTransform, offset, value, color);
     }
 
     public void PlayRetriggerAnimation(Transform targetTransform, Vector3 offset, string color)
     {
         PlayTriggerAnimation(targetTransform);
-        SequenceManager.Instance.AddCoroutine(TriggerContextUI.Instance.ShowRetriggerContext(targetTransform, offset, color), true);
+        TriggerContextUIEvents.TriggerOnShowRetriggerContext(targetTransform, offset, color);
     }
 }

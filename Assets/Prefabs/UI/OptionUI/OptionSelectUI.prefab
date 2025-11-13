@@ -77,11 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a30fadcc6dfc1742aa0cdb7aa826c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionTypeDataSO: {fileID: 0}
-  optionNameText: {fileID: 3256169258245434142}
-  optionNameLocalizedText: {fileID: 8681245066775705079}
-  arrowButtonPanel: {fileID: 4900665256847802192}
-  optionValueLocalizedText: {fileID: 92586471563458834}
+  _optionTypeDataSO: {fileID: 0}
+  _optionNameText: {fileID: 3256169258245434142}
+  _optionNameLocalizedText: {fileID: 8681245066775705079}
+  _arrowButtonPanel: {fileID: 4900665256847802192}
+  _optionValueLocalizedText: {fileID: 92586471563458834}
 --- !u!1001 &2066682972176770529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682182199984233123, guid: dd4bbb5d40ff8c74d81aeab6ef848a7e, type: 3}
       propertyPath: m_fontSize
-      value: 23.35
+      value: 19.3
       objectReference: {fileID: 0}
     - target: {fileID: 2344494007644725337, guid: dd4bbb5d40ff8c74d81aeab6ef848a7e, type: 3}
       propertyPath: m_Color.b
@@ -304,7 +304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6600864468553958648, guid: dd4bbb5d40ff8c74d81aeab6ef848a7e, type: 3}
       propertyPath: m_fontSize
-      value: 23.35
+      value: 19.3
       objectReference: {fileID: 0}
     - target: {fileID: 7433801934298279939, guid: dd4bbb5d40ff8c74d81aeab6ef848a7e, type: 3}
       propertyPath: _text
@@ -348,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8718999373534943467, guid: dd4bbb5d40ff8c74d81aeab6ef848a7e, type: 3}
       propertyPath: m_fontSize
-      value: 23.35
+      value: 19.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -463,7 +463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4556116114106040031, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 21.2
       objectReference: {fileID: 0}
     - target: {fileID: 4556116114106040031, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_fontSizeMax

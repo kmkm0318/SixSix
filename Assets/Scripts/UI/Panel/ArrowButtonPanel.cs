@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class ArrowButtonPanel : MonoBehaviour
 {
-    [SerializeField] private ButtonPanel leftButton;
-    [SerializeField] private ButtonPanel rightButton;
-    [SerializeField] private TextPanel textPanel;
+    [SerializeField] private ButtonPanel _leftButton;
+    [SerializeField] private ButtonPanel _rightButton;
+    [SerializeField] private TextPanel _textPanel;
 
     public event Action OnLeftButtonClick;
     public event Action OnRightButtonClick;
 
     private void Awake()
     {
-        leftButton.OnClick += () => OnLeftButtonClick?.Invoke();
-        rightButton.OnClick += () => OnRightButtonClick?.Invoke();
+        _leftButton.OnClick += () => OnLeftButtonClick?.Invoke();
+        _rightButton.OnClick += () => OnRightButtonClick?.Invoke();
     }
 
     public void SetText(string value, bool isShow = false)
     {
-        textPanel.SetText(value, isShow);
+        _textPanel.SetText(value, isShow);
     }
 }

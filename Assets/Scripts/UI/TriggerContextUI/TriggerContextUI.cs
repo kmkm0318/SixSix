@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class TriggerContextUI : Singleton<TriggerContextUI>
+public class TriggerContextUI : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private AnimatedText scoreText;
@@ -15,8 +15,52 @@ public class TriggerContextUI : Singleton<TriggerContextUI>
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+        RegisterEvents();
         Hide();
     }
+
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
+    private void RegisterEvents()
+    {
+        TriggerContextUIEvents.OnShowScoreContext += OnShowScoreContext;
+        TriggerContextUIEvents.OnShowMoneyContext += OnShowMoneyContext;
+        TriggerContextUIEvents.ShowValueContext += OnShowValueContext;
+        TriggerContextUIEvents.ShowRetriggerContext += OnShowRetriggerContext;
+    }
+
+    private void UnregisterEvents()
+    {
+        TriggerContextUIEvents.OnShowScoreContext -= OnShowScoreContext;
+        TriggerContextUIEvents.OnShowMoneyContext -= OnShowMoneyContext;
+        TriggerContextUIEvents.ShowValueContext -= OnShowValueContext;
+        TriggerContextUIEvents.ShowRetriggerContext -= OnShowRetriggerContext;
+    }
+
+    private void OnShowScoreContext(Transform targetTransform, Vector3 offset, ScorePair scorePair)
+    {
+        SequenceManager.Instance.AddCoroutine(ShowScoreContext(targetTransform, offset, scorePair), true);
+    }
+
+    private void OnShowMoneyContext(Transform targetTransform, Vector3 offset, int money)
+    {
+        SequenceManager.Instance.AddCoroutine(ShowMoneyContext(targetTransform, offset, money), true);
+    }
+
+    private void OnShowValueContext(Transform targetTransform, Vector3 offset, int value, string color)
+    {
+        SequenceManager.Instance.AddCoroutine(ShowValueContext(targetTransform, offset, value, color), true);
+    }
+
+    private void OnShowRetriggerContext(Transform targetTransform, Vector3 offset, string color)
+    {
+        SequenceManager.Instance.AddCoroutine(ShowRetriggerContext(targetTransform, offset, color), true);
+    }
+    #endregion
 
     #region ShowContext
     private IEnumerator ShowContext(Transform targetTransform, Vector3 offset, Action setupAction)

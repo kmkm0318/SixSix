@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class GambleDiceCountText : MonoBehaviour
 {
-    private TMP_Text text;
+    private TMP_Text _text;
 
-    private int currentCount;
-    private int maxCount;
+    private int _currentCount;
+    private int _maxCount;
 
     private void Awake()
     {
-        text = GetComponent<TMP_Text>();
+        _text = GetComponent<TMP_Text>();
     }
 
     private void Start()
@@ -27,27 +28,27 @@ public class GambleDiceCountText : MonoBehaviour
 
     private void OnGambleDiceCountChanged(int count)
     {
-        currentCount = count;
+        _currentCount = count;
         SetText();
         StartCoroutine(AnimationFunction.ShakeAnimation(transform, true));
     }
 
     private void OnCurrentGambleDiceMaxChanged(int count)
     {
-        maxCount = count;
+        _maxCount = count;
         SetText();
         StartCoroutine(AnimationFunction.ShakeAnimation(transform, true));
     }
 
     private void Init()
     {
-        currentCount = DiceManager.Instance.GambleDiceList.Count;
-        maxCount = DiceManager.Instance.CurrentGambleDiceMax;
+        _currentCount = DiceManager.Instance.GambleDiceList.Count;
+        _maxCount = DiceManager.Instance.CurrentGambleDiceMax;
         SetText();
     }
 
     private void SetText()
     {
-        text.text = $"{currentCount}/{maxCount}";
+        _text.text = $"{_currentCount}/{_maxCount}";
     }
 }

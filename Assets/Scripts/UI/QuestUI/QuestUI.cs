@@ -1,14 +1,10 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class QuestUI : MonoBehaviour
+public class QuestUI : BaseUI
 {
-    [SerializeField] private RectTransform _questPanel;
-    [SerializeField] private Vector3 _hidePos;
     [SerializeField] private Transform _questItemParent;
     [SerializeField] private QuestItemUI _questItemUIPrefab;
-    [SerializeField] private FadeCanvasGroup _fadeCanvasGroup;
     [SerializeField] private ButtonPanel _refreshButton;
     [SerializeField] private ButtonPanel _closeButton;
 
@@ -18,14 +14,19 @@ public class QuestUI : MonoBehaviour
     {
         InitPool();
         _refreshButton.OnClick += OnRefreshButtonClicked;
-        _closeButton.OnClick += Hide;
-        QuestUIEvents.OnQuestButtonClicked += Show;
+        _closeButton.OnClick += () => Hide();
+        QuestUIEvents.OnQuestButtonClicked += OnQuestButtonClicked;
         gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        QuestUIEvents.OnQuestButtonClicked -= Show;
+        QuestUIEvents.OnQuestButtonClicked -= OnQuestButtonClicked;
+    }
+
+    private void OnQuestButtonClicked()
+    {
+        Show();
     }
 
     private void InitPool()
@@ -76,34 +77,4 @@ public class QuestUI : MonoBehaviour
             newItem.UpdateItem(activeQuest);
         }
     }
-
-    #region ShowHide
-    private void Show()
-    {
-        gameObject.SetActive(true);
-
-        UpdateQuestUI();
-
-        _questPanel
-            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-            .From(_hidePos)
-            .SetEase(Ease.InOutBack);
-
-        _fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-    }
-
-    private void Hide()
-    {
-        _questPanel
-            .DOAnchorPos(_hidePos, AnimationFunction.DefaultDuration)
-            .From(Vector3.zero)
-            .SetEase(Ease.InOutBack)
-            .OnComplete(() =>
-            {
-                gameObject.SetActive(false);
-            });
-
-        _fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-    }
-    #endregion
 }

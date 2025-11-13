@@ -1,24 +1,20 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class AdviserUI : Singleton<AdviserUI>
+public class AdviserUI : BaseUI
 {
     [SerializeField] private LabeledValuePanel advisePanel;
-    [SerializeField] private RectTransform advisePanelRectTransform;
-    [SerializeField] private Vector3 hidePos;
     [SerializeField] private float showTime;
     [SerializeField] private float adviseMinProbability;
 
-    private Tween currentTween;
     private bool isAvailiable = true;
 
     private void Start()
     {
         RegisterEvents();
-        advisePanelRectTransform.gameObject.SetActive(false);
+        _panel.gameObject.SetActive(false);
     }
 
     #region RegisterEvents
@@ -112,44 +108,12 @@ public class AdviserUI : Singleton<AdviserUI>
 
     private void DelayHide(float delayTime)
     {
-        currentTween?.Kill();
+        _currentTween?.Kill();
 
-        currentTween = DOVirtual.DelayedCall(delayTime, () =>
+        _currentTween = DOVirtual.DelayedCall(delayTime, () =>
         {
             Hide();
         });
     }
     #endregion
-
-    private void Show(Action onComplete = null)
-    {
-        currentTween?.Kill();
-
-        advisePanelRectTransform.gameObject.SetActive(true);
-        advisePanelRectTransform.anchoredPosition = hidePos;
-
-        currentTween = advisePanelRectTransform
-        .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-        .SetEase(Ease.InOutBack)
-        .OnComplete(() =>
-        {
-            onComplete?.Invoke();
-        });
-    }
-
-    private void Hide(Action onComplete = null)
-    {
-        currentTween?.Kill();
-
-        advisePanelRectTransform.anchoredPosition = Vector3.zero;
-
-        currentTween = advisePanelRectTransform
-        .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
-        .SetEase(Ease.InOutBack)
-        .OnComplete(() =>
-        {
-            advisePanelRectTransform.gameObject.SetActive(false);
-            onComplete?.Invoke();
-        });
-    }
 }

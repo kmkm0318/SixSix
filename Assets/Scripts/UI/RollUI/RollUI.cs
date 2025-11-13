@@ -1,14 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RollUI : Singleton<RollUI>
+public class RollUI : MonoBehaviour
 {
     [SerializeField] private Slider rollPowerSlider;
     [SerializeField] private RollButton rollButton;
-
-    public event Action OnRollButtonPressed;
-    public event Action OnRollButtonReleased;
 
     private void Start()
     {
@@ -22,14 +18,14 @@ public class RollUI : Singleton<RollUI>
 
     private void OnButtonPressed()
     {
-        OnRollButtonPressed?.Invoke();
+        RollUIEvents.TriggerOnRollButtonPressed();
 
         rollPowerSlider.gameObject.SetActive(true);
     }
 
     private void OnButtonReleased()
     {
-        OnRollButtonReleased?.Invoke();
+        RollUIEvents.TriggerOnRollButtonReleased();
 
         rollPowerSlider.gameObject.SetActive(false);
     }

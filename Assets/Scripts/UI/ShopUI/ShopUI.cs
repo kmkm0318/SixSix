@@ -1,16 +1,12 @@
-using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
-public class ShopUI : Singleton<ShopUI>
+public class ShopUI : BaseUI
 {
-    [SerializeField] private RectTransform shopPanel;
-    [SerializeField] private Vector3 hidePos;
     [SerializeField] private Transform abilityDiceMerchantParent;
     [SerializeField] private Transform gambleDiceMerchantParent;
     [SerializeField] private Transform enhanceMerchantParent;
@@ -21,13 +17,8 @@ public class ShopUI : Singleton<ShopUI>
     [SerializeField] private ButtonPanel closeButton;
     [SerializeField] private List<ScrollRect> scrollRects;
 
-    public event Action OnShopUIOpened;
-    public event Action OnShopUIClosed;
-
     private ObjectPool<DiceMerchantUI> diceMerchantPool;
     private ObjectPool<EnhanceMerchantUI> enhanceMerchantPool;
-
-    private Tween currentTween;
 
     private void Start()
     {
@@ -58,7 +49,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         SequenceManager.Instance.AddCoroutine(() => Hide(() =>
         {
-            OnShopUIClosed?.Invoke();
+            ShopUIEvents.TriggerOnShopUIHidden();
         }));
     }
 
@@ -103,7 +94,7 @@ public class ShopUI : Singleton<ShopUI>
     {
         Show(() =>
         {
-            OnShopUIOpened?.Invoke();
+            ShopUIEvents.TriggerOnShopUIShown();
         });
         InitMerchantUI();
     }
@@ -212,30 +203,6 @@ public class ShopUI : Singleton<ShopUI>
         rerollButtonText.Arguments = new object[] { ShopManager.Instance.RerollCost };
         rerollButtonText.RefreshString();
         rerollButton.SetText(rerollButtonText.GetLocalizedString());
-    }
-
-    private void Show(Action onComplete = null)
-    {
-        currentTween?.Kill(true);
-        shopPanel.anchoredPosition = hidePos;
-        gameObject.SetActive(true);
-        currentTween = shopPanel.DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
-        {
-            onComplete?.Invoke();
-        });
-    }
-
-    private void Hide(Action onComplete = null)
-    {
-        if (!gameObject.activeSelf) return;
-
-        currentTween?.Kill(true);
-        shopPanel.anchoredPosition = Vector3.zero;
-        currentTween = shopPanel.DOAnchorPos(hidePos, AnimationFunction.DefaultDuration).SetEase(Ease.InOutBack).OnComplete(() =>
-        {
-            onComplete?.Invoke();
-            gameObject.SetActive(false);
-        });
     }
 }
 

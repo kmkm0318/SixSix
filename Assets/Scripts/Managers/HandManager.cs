@@ -76,7 +76,8 @@ public class HandManager : Singleton<HandManager>
     private void OnPlayStarted()
     {
         isActive = false;
-        HandScoreUI.Instance.ResetHandScoreUI();
+
+        HandScoreUIEvents.TriggerOnHandScoreUIResetRequested();
     }
 
     private void OnEnhanceStarted()
@@ -125,7 +126,7 @@ public class HandManager : Singleton<HandManager>
             }
         }
 
-        HandScoreUI.Instance.UpdateHandScores(handScoreDict);
+        HandScoreUIEvents.TriggerOnHandScoreUIUpdateRequested(handScoreDict);
     }
 
     public void HandleSelectHand(HandSO handSO)
@@ -179,7 +180,7 @@ public class HandManager : Singleton<HandManager>
             handScores[hand] = handSO.GetEnhancedScorePair(enhanceLevel);
         }
 
-        HandScoreUI.Instance.PlayHandTriggerAnimation(hand, handEnhanceLevels[hand], handScores[hand]);
+        HandScoreUIEvents.TriggerOnHandScoreUIPlayHandTriggerAnimationRequested(hand, handEnhanceLevels[hand], handScores[hand]);
     }
 
     public void GetMostPlayedHand(out Hand handName, out int count)

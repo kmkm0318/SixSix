@@ -6,29 +6,24 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
-public class RoundClearUI : Singleton<RoundClearUI>
+public class RoundClearUI : BaseUI
 {
-    [SerializeField] private RectTransform roundClearPanel;
-    [SerializeField] private Vector3 hidePos;
     [SerializeField] private Button closeButton;
     [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
     [SerializeField] private AnimatedText resultText;
     [SerializeField] private LocalizedString resultString;
     [SerializeField] private List<RewardTextPair> rewardTexts;
 
-    private bool isClosable = false;
-    private string resultTextValue = string.Empty;
-
-    public event Action OnRoundClearUIOpened;
-    public event Action OnRoundClearUIClosed;
+    private bool _isClosable = false;
+    private string _resultTextValue = string.Empty;
 
     private void Start()
     {
         RegisterEvents();
         closeButton.onClick.AddListener(() =>
         {
-            if (!isClosable) return;
-            SequenceManager.Instance.AddCoroutine(Hide());
+            if (!_isClosable) return;
+            SequenceManager.Instance.AddCoroutine(() => Hide(RoundClearUIEvents.TriggerOnRoundClearUIHidden));
         });
         gameObject.SetActive(false);
     }
@@ -42,60 +37,20 @@ public class RoundClearUI : Singleton<RoundClearUI>
     private void OnRoundClearStarted()
     {
         ClearTexts();
-        SequenceManager.Instance.AddCoroutine(Show());
+        SequenceManager.Instance.AddCoroutine(() =>
+        {
+            AudioManager.Instance.PlaySFX(SFXType.RoundClear);
+            Show(RoundClearUIEvents.TriggerOnRoundClearUIShown);
+        });
         SequenceManager.Instance.AddCoroutine(ShowTextAnimations());
-        SequenceManager.Instance.AddCoroutine(() => isClosable = true);
-    }
-    #endregion
-
-    #region ShowHide
-    private IEnumerator Show()
-    {
-        gameObject.SetActive(true);
-        roundClearPanel.anchoredPosition = hidePos;
-
-        var myTween = roundClearPanel
-            .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-            .SetEase(Ease.InOutBack)
-            .OnComplete(() =>
-            {
-
-            });
-
-        fadeCanvasGroup.FadeIn(AnimationFunction.DefaultDuration);
-
-        AudioManager.Instance.PlaySFX(SFXType.RoundClear);
-
-        yield return myTween.WaitForCompletion();
-        OnRoundClearUIOpened?.Invoke();
-    }
-
-    private IEnumerator Hide()
-    {
-        if (!isClosable) yield break;
-        isClosable = false;
-
-        roundClearPanel.anchoredPosition = Vector3.zero;
-
-        var myTween = roundClearPanel
-             .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
-             .SetEase(Ease.InOutBack)
-             .OnComplete(() =>
-             {
-                 gameObject.SetActive(false);
-             });
-
-        fadeCanvasGroup.FadeOut(AnimationFunction.DefaultDuration);
-
-        yield return myTween.WaitForCompletion();
-        OnRoundClearUIClosed?.Invoke();
+        SequenceManager.Instance.AddCoroutine(() => _isClosable = true);
     }
     #endregion
 
     #region TextAnimation
     private void ClearTexts()
     {
-        resultTextValue = string.Empty;
+        _resultTextValue = string.Empty;
         resultText.ClearText();
     }
 
@@ -108,11 +63,11 @@ public class RoundClearUI : Singleton<RoundClearUI>
             UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore),
         };
         resultString.RefreshString();
-        resultTextValue = resultString.GetLocalizedString();
+        _resultTextValue = resultString.GetLocalizedString();
 
         ApplyReward();
 
-        yield return resultText.ShowTextCoroutine(resultTextValue);
+        yield return resultText.ShowTextCoroutine(_resultTextValue);
     }
 
     private void ApplyReward()
@@ -134,7 +89,7 @@ public class RoundClearUI : Singleton<RoundClearUI>
             rewardUI.RewardText.Arguments = args;
             rewardUI.RewardText.RefreshString();
 
-            resultTextValue += "\n\n" + rewardUI.RewardText.GetLocalizedString();
+            _resultTextValue += "\n\n" + rewardUI.RewardText.GetLocalizedString();
 
             MoneyManager.Instance.AddMoney(rewardValue, true);
         }

@@ -1,8 +1,8 @@
 using UnityEngine.EventSystems;
 
-public class RollButton : ButtonPanel, IPointerDownHandler, IPointerUpHandler
+public class RollButton : ButtonPanel
 {
-    private bool isActive = false;
+    private bool _isActive = false;
 
     #region RegisterEvents
     private void Start()
@@ -19,44 +19,44 @@ public class RollButton : ButtonPanel, IPointerDownHandler, IPointerUpHandler
 
     private void OnPlayStarted()
     {
-        isActive = true;
+        _isActive = true;
     }
 
     private void OnPlayEnded()
     {
-        isActive = false;
+        _isActive = false;
     }
 
     private void OnRollStarted()
     {
-        isActive = false;
+        _isActive = false;
     }
 
     private void OnRollCompleted()
     {
-        isActive = RollManager.Instance.RollRemain > 0;
+        _isActive = RollManager.Instance.RollRemain > 0;
     }
 
     private void OnEnhanceStarted()
     {
-        isActive = true;
+        _isActive = true;
     }
 
     private void OnEnhanceCompleted()
     {
-        isActive = false;
+        _isActive = false;
     }
     #endregion
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (!isActive) return;
+        if (!_isActive) return;
         base.OnPointerDown(eventData);
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if (!isActive) return;
+        if (!_isActive) return;
         base.OnPointerUp(eventData);
     }
 }

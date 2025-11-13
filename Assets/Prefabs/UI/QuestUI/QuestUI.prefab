@@ -127,11 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162a64cf578931c4db9ff6b7635e8b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestUI
-  _questPanel: {fileID: 5871751452574609272}
+  _panel: {fileID: 5871751452574609272}
+  _background: {fileID: 1355904843534346660}
+  _showPos: {x: 0, y: 0, z: 0}
   _hidePos: {x: 0, y: -1000, z: 0}
   _questItemParent: {fileID: 1773519180718653583}
   _questItemUIPrefab: {fileID: -7757573910826060973, guid: c531fa96717ec634e85d49270defad4f, type: 3}
-  _fadeCanvasGroup: {fileID: 1355904843534346660}
   _refreshButton: {fileID: 8710475077495112220}
   _closeButton: {fileID: 296246617197299303}
 --- !u!1 &4548877983166647409

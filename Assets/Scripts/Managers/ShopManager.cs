@@ -35,14 +35,25 @@ public class ShopManager : Singleton<ShopManager>
         RegisterEvents();
     }
 
-    #region RegisterEvents
+    private void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    #region Events
     private void RegisterEvents()
     {
-        ShopUI.Instance.OnShopUIClosed += OnShopUIClosed;
+        ShopUIEvents.OnShopUIHidden += OnShopUIHidden;
         DiceManager.Instance.OnAbilityDiceClicked += OnAbilityDiceClicked;
     }
 
-    private void OnShopUIClosed()
+    private void UnregisterEvents()
+    {
+        ShopUIEvents.OnShopUIHidden -= OnShopUIHidden;
+        if (DiceManager.Instance) DiceManager.Instance.OnAbilityDiceClicked -= OnAbilityDiceClicked;
+    }
+
+    private void OnShopUIHidden()
     {
         EndShop();
     }

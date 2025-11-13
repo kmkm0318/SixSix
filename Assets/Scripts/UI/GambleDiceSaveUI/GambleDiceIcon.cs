@@ -128,22 +128,20 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
 
     private void ShowToolTip()
     {
-        if (ToolTipUI.Instance == null) return;
         if (_isShowToolTip) return;
         if (_gambleDiceSO != null)
         {
             _isShowToolTip = true;
-            ToolTipUI.Instance.ShowToolTip(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 
     private void HideToolTip()
     {
-        if (ToolTipUI.Instance == null) return;
         if (!_isShowToolTip) return;
         _isShowToolTip = false;
 
-        ToolTipUI.Instance.HideToolTip();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested();
     }
 
     public void ShowHighlight()

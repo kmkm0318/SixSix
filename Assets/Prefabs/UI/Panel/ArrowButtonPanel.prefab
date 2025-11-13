@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3820e9aa21ededd4aa86fc70603da82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftButton: {fileID: 603657156039306089}
-  rightButton: {fileID: 7365859894722079009}
-  textPanel: {fileID: 6095571238785420715}
+  _leftButton: {fileID: 603657156039306089}
+  _rightButton: {fileID: 7365859894722079009}
+  _textPanel: {fileID: 6095571238785420715}
 --- !u!1001 &1143547300731393938
 PrefabInstance:
   m_ObjectHideFlags: 0

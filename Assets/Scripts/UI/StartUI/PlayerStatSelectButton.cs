@@ -54,11 +54,11 @@ public class PlayerStatSelectButton : MonoBehaviour
     {
         var name = _playerStatSO.playerStatName.GetLocalizedString();
         var description = _playerStatSO.playerStatDescription.GetLocalizedString();
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.left, name, description);
+        ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, name, description);
     }
 
     private void HideToolTip()
     {
-        ToolTipUI.Instance.HideToolTip();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested();
     }
 }

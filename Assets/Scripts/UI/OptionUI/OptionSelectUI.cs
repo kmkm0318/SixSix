@@ -6,19 +6,19 @@ using UnityEngine.Localization.Components;
 
 public class OptionSelectUI : MonoBehaviour
 {
-    [SerializeField] private OptionTypeDataSO optionTypeDataSO;
-    public OptionTypeDataSO OptionTypeDataSO => optionTypeDataSO;
-    [SerializeField] private AnimatedText optionNameText;
-    [SerializeField] private LocalizeStringEvent optionNameLocalizedText;
-    [SerializeField] private ArrowButtonPanel arrowButtonPanel;
-    [SerializeField] private LocalizeStringEvent optionValueLocalizedText;
+    [SerializeField] private OptionTypeDataSO _optionTypeDataSO;
+    public OptionTypeDataSO OptionTypeDataSO => _optionTypeDataSO;
+    [SerializeField] private AnimatedText _optionNameText;
+    [SerializeField] private LocalizeStringEvent _optionNameLocalizedText;
+    [SerializeField] private ArrowButtonPanel _arrowButtonPanel;
+    [SerializeField] private LocalizeStringEvent _optionValueLocalizedText;
 
     public event Action<int> OnOptionValueChanged;
 
-    private List<string> optionValues;
-    private List<LocalizedString> optionValuesLocalized;
-    private int valueCount = 0;
-    private int currentIndex = 0;
+    private List<string> _optionValues;
+    private List<LocalizedString> _optionValuesLocalized;
+    private int _valueCount = 0;
+    private int _currentIndex = 0;
 
     private void Start()
     {
@@ -27,71 +27,71 @@ public class OptionSelectUI : MonoBehaviour
 
     private void Init()
     {
-        if (optionTypeDataSO == null) return;
+        if (_optionTypeDataSO == null) return;
 
-        if (optionTypeDataSO.isLocalizedName)
+        if (_optionTypeDataSO.isLocalizedName)
         {
-            optionNameLocalizedText.StringReference = optionTypeDataSO.optionNameLocalized;
+            _optionNameLocalizedText.StringReference = _optionTypeDataSO.optionNameLocalized;
         }
         else
         {
-            SetOptionName(optionTypeDataSO.optionName);
+            SetOptionName(_optionTypeDataSO.optionName);
         }
 
-        if (optionTypeDataSO.isLocalizedValue)
+        if (_optionTypeDataSO.isLocalizedValue)
         {
-            SetOptionValues(optionTypeDataSO.optionValuesLocalized);
+            SetOptionValues(_optionTypeDataSO.optionValuesLocalized);
         }
         else
         {
-            SetOptionValues(optionTypeDataSO.optionValues);
+            SetOptionValues(_optionTypeDataSO.optionValues);
         }
 
         SetCurrentIndex();
 
-        arrowButtonPanel.OnLeftButtonClick += OnLeftArrowClicked;
-        arrowButtonPanel.OnRightButtonClick += OnRightArrowClicked;
+        _arrowButtonPanel.OnLeftButtonClick += OnLeftArrowClicked;
+        _arrowButtonPanel.OnRightButtonClick += OnRightArrowClicked;
     }
 
     private void SetOptionName(string optionName)
     {
-        optionNameText.SetText(optionName);
+        _optionNameText.SetText(optionName);
     }
 
     private void SetOptionValues(string[] optionValues)
     {
-        this.optionValues = new List<string>(optionValues);
-        valueCount = this.optionValues.Count;
-        if (this.optionValues.Count > 0)
+        _optionValues = new List<string>(optionValues);
+        _valueCount = _optionValues.Count;
+        if (_optionValues.Count > 0)
         {
-            currentIndex = 0;
+            _currentIndex = 0;
             UpdateOptionValueText();
         }
         else
         {
-            arrowButtonPanel.SetText(string.Empty);
+            _arrowButtonPanel.SetText(string.Empty);
         }
     }
 
     private void SetOptionValues(LocalizedString[] optionValuesLocalized)
     {
-        this.optionValuesLocalized = new List<LocalizedString>(optionValuesLocalized);
-        valueCount = this.optionValuesLocalized.Count;
-        if (this.optionValuesLocalized.Count > 0)
+        _optionValuesLocalized = new List<LocalizedString>(optionValuesLocalized);
+        _valueCount = _optionValuesLocalized.Count;
+        if (_optionValuesLocalized.Count > 0)
         {
-            currentIndex = 0;
+            _currentIndex = 0;
             UpdateOptionValueText();
         }
         else
         {
-            arrowButtonPanel.SetText(string.Empty);
+            _arrowButtonPanel.SetText(string.Empty);
         }
     }
 
     private void SetCurrentIndex()
     {
         int index = 0;
-        switch (optionTypeDataSO.optionType)
+        switch (_optionTypeDataSO.optionType)
         {
             case OptionType.GameSpeed:
                 index = OptionManager.Instance.OptionData.gameSpeed;
@@ -119,39 +119,39 @@ public class OptionSelectUI : MonoBehaviour
                 break;
         }
 
-        if (index < 0 || index >= valueCount) return;
+        if (index < 0 || index >= _valueCount) return;
 
-        currentIndex = index;
+        _currentIndex = index;
         UpdateOptionValueText();
     }
 
     private void OnLeftArrowClicked()
     {
-        if (valueCount == 0) return;
+        if (_valueCount == 0) return;
 
-        currentIndex = (currentIndex - 1 + valueCount) % valueCount;
+        _currentIndex = (_currentIndex - 1 + _valueCount) % _valueCount;
         UpdateOptionValueText();
-        OnOptionValueChanged?.Invoke(currentIndex);
+        OnOptionValueChanged?.Invoke(_currentIndex);
     }
 
     private void OnRightArrowClicked()
     {
-        if (valueCount == 0) return;
+        if (_valueCount == 0) return;
 
-        currentIndex = (currentIndex + 1) % valueCount;
+        _currentIndex = (_currentIndex + 1) % _valueCount;
         UpdateOptionValueText();
-        OnOptionValueChanged?.Invoke(currentIndex);
+        OnOptionValueChanged?.Invoke(_currentIndex);
     }
 
     private void UpdateOptionValueText()
     {
-        if (optionTypeDataSO.isLocalizedValue)
+        if (_optionTypeDataSO.isLocalizedValue)
         {
-            optionValueLocalizedText.StringReference = optionValuesLocalized[currentIndex];
+            _optionValueLocalizedText.StringReference = _optionValuesLocalized[_currentIndex];
         }
         else
         {
-            arrowButtonPanel.SetText(optionValues[currentIndex]);
+            _arrowButtonPanel.SetText(_optionValues[_currentIndex]);
         }
     }
 }

@@ -104,28 +104,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8778504642307311146}
   m_SourcePrefab: {fileID: 100100000, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
---- !u!114 &348829150044717434 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1703658608998003174, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
-  m_PrefabInstance: {fileID: 1401699453511610524}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6993348413818025433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3411444654799960011 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4333646943548507991, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
-  m_PrefabInstance: {fileID: 1401699453511610524}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6993348413818025433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5089406213682473610 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184257874556787222, guid: a3d463542916dcf4e93490a8df7d468b, type: 3}
@@ -148,10 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d473705d44cf64e86d211eba491f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 5089406213682473610}
-  image: {fileID: 3411444654799960011}
-  shadow: {fileID: 348829150044717434}
-  text: {fileID: 4400222333943231934}
+  _text: {fileID: 4400222333943231934}
 --- !u!1001 &5324445519155425702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,6 +138,10 @@ PrefabInstance:
     - target: {fileID: 3768098422351674365, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_Name
       value: Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556116114106040031, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
+      propertyPath: m_fontSize
+      value: 10.15
       objectReference: {fileID: 0}
     - target: {fileID: 7838210710606833313, guid: d0570591e9fcd0f438da3c3d01cf5fb7, type: 3}
       propertyPath: m_Pivot.x

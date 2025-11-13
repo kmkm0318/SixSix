@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,7 +15,7 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] private Color focusedColor;
     [SerializeField] private Color unfocusedColor;
 
-    public void Init(HandSO handSO)
+    public void Init(HandSO handSO, Action<HandSO> onClick)
     {
         nameLocalizedText.StringReference = handSO.handNameLocalized;
 
@@ -25,7 +26,7 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         button.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
-            HandScoreUI.Instance.HandleSelectHand(handSO);
+            onClick?.Invoke(handSO);
         });
     }
 

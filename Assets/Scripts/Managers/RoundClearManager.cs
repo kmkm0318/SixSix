@@ -12,12 +12,22 @@ public class RoundClearManager : Singleton<RoundClearManager>
         RegisterEvents();
     }
 
-    private void RegisterEvents()
+    private void OnDestroy()
     {
-        RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
+        UnregisterEvents();
     }
 
-    private void OnRoundClearUIClosed()
+    private void RegisterEvents()
+    {
+        RoundClearUIEvents.OnRoundClearUIHidden += OnRoundClearUIHidden;
+    }
+
+    private void UnregisterEvents()
+    {
+        RoundClearUIEvents.OnRoundClearUIHidden -= OnRoundClearUIHidden;
+    }
+
+    private void OnRoundClearUIHidden()
     {
         ShopManager.Instance.StartShop();
     }

@@ -7,11 +7,16 @@ public class RoundClearRewardUI : MonoBehaviour
     [SerializeField] private AnimatedText rewardValueText;
     [SerializeField] private float showDelay = 0.25f;
 
-    private RoundClearRewardType type;
+    private RoundClearRewardType _type;
 
     private void Start()
     {
-        RoundClearUI.Instance.OnRoundClearUIClosed += OnRoundClearUIClosed;
+        RoundClearUIEvents.OnRoundClearUIHidden += OnRoundClearUIClosed;
+    }
+
+    private void OnDestroy()
+    {
+        RoundClearUIEvents.OnRoundClearUIHidden -= OnRoundClearUIClosed;
     }
 
     private void OnRoundClearUIClosed()
@@ -22,14 +27,14 @@ public class RoundClearRewardUI : MonoBehaviour
 
     public void ShowReward(RoundClearRewardType type)
     {
-        this.type = type;
+        this._type = type;
 
         SequenceManager.Instance.AddCoroutine(ShowRewardTextAnimation());
     }
 
     private IEnumerator ShowRewardTextAnimation()
     {
-        int rewardValue = RoundClearManager.Instance.GetRewardValue(type);
+        int rewardValue = RoundClearManager.Instance.GetRewardValue(_type);
 
         if (rewardValue == 0)
         {
@@ -50,7 +55,7 @@ public class RoundClearRewardUI : MonoBehaviour
 
     private string GetRewardName()
     {
-        return type switch
+        return _type switch
         {
             RoundClearRewardType.RoundClear => "Round Clear",
             RoundClearRewardType.PlayRemain => "Play Remain",

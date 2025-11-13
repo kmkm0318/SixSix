@@ -1,22 +1,17 @@
-using System;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
-public class BossRoundUI : Singleton<BossRoundUI>
+public class BossRoundUI : BaseUI
 {
     [SerializeField] private LabeledValuePanel bossRoundPanel;
-    [SerializeField] private RectTransform bossRoundPanelRectTransform;
-    [SerializeField] private Vector3 hidePos;
 
     private BossRoundSO currentBossRoundSO = null;
-    private Tween currentTween;
 
     private void Start()
     {
         RegisterEvents();
-        bossRoundPanelRectTransform.gameObject.SetActive(false);
+        _panel.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -66,36 +61,5 @@ public class BossRoundUI : Singleton<BossRoundUI>
 
         bossRoundPanel.SetLabel(currentBossRoundSO.BossName);
         bossRoundPanel.SetValue(currentBossRoundSO.GetBossDescription());
-    }
-
-    private void Show()
-    {
-        currentTween?.Kill();
-
-        bossRoundPanelRectTransform.gameObject.SetActive(true);
-        bossRoundPanelRectTransform.anchoredPosition = hidePos;
-
-        currentTween = bossRoundPanelRectTransform
-        .DOAnchorPos(Vector3.zero, AnimationFunction.DefaultDuration)
-        .SetEase(Ease.InOutBack)
-        .OnComplete(() =>
-        {
-
-        });
-    }
-
-    private void Hide()
-    {
-        currentTween?.Kill();
-
-        bossRoundPanelRectTransform.anchoredPosition = Vector3.zero;
-
-        currentTween = bossRoundPanelRectTransform
-        .DOAnchorPos(hidePos, AnimationFunction.DefaultDuration)
-        .SetEase(Ease.InOutBack)
-        .OnComplete(() =>
-        {
-            bossRoundPanelRectTransform.gameObject.SetActive(false);
-        });
     }
 }

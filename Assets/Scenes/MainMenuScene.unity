@@ -4497,7 +4497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83be610ee2ec6442b18e9f3b839c0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartUI
-  _startPanel: {fileID: 1777478380}
+  _panel: {fileID: 1777478380}
+  _background: {fileID: 726098503}
+  _showPos: {x: 0, y: 0, z: 0}
   _hidePos: {x: 0, y: -1000, z: 0}
   _playerStatSelectButtonPrefab: {fileID: 5389193348798695355, guid: d18825c67285b92409f758e11b2d2aee, type: 3}
   _playerStatSelectButtonParent: {fileID: 1831757372}
@@ -4709,7 +4711,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 16}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1001 &628337940130823373
 PrefabInstance:
@@ -4937,10 +4939,10 @@ RectTransform:
   - {fileID: 8241163060450477487}
   m_Father: {fileID: 1948439266132641813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -676.1683}
+  m_SizeDelta: {x: 608, y: 55.66337}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1263509654601271236
 MonoBehaviour:
@@ -5224,25 +5226,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3156707333461646387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3521746419975357427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 162a64cf578931c4db9ff6b7635e8b22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuestUI
-  _questPanel: {fileID: 1948439266132641813}
-  _hidePos: {x: 0, y: -1000, z: 0}
-  _questItemParent: {fileID: 520361948736978421}
-  _questItemUIPrefab: {fileID: -7757573910826060973, guid: c531fa96717ec634e85d49270defad4f, type: 3}
-  _fadeCanvasGroup: {fileID: 969778491490014430}
-  _refreshButton: {fileID: 0}
-  _closeButton: {fileID: 8241163060450477490}
 --- !u!1 &3521746419975357427
 GameObject:
   m_ObjectHideFlags: 0
@@ -5252,14 +5235,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9119623970025644939}
-  - component: {fileID: 3156707333461646387}
   m_Layer: 5
   m_Name: CollectionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4027355653668997451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5490,10 +5472,10 @@ RectTransform:
   - {fileID: 1912658514811849104}
   m_Father: {fileID: 1948439266132641813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -324.1683}
+  m_SizeDelta: {x: 608, y: 616.3366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8226808731884710654
 MonoBehaviour:
@@ -5607,11 +5589,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5089406213682473610, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 304
       objectReference: {fileID: 0}
     - target: {fileID: 5089406213682473610, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -27.831684
       objectReference: {fileID: 0}
     - target: {fileID: 5089406213682473610, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5676,17 +5658,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8241163060450477490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7630919360122928819, guid: 1da22bad58860ad42ac58a03e0204e90, type: 3}
-  m_PrefabInstance: {fileID: 8241163060450477486}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f87de56724316c4abb7a2113ae7bb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8271102316449668689

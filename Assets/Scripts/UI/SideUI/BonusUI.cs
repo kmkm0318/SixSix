@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BonusUI : Singleton<BonusUI>
+public class BonusUI : MonoBehaviour
 {
     [SerializeField] private List<Image> diceImage;
     [SerializeField] private List<AnimatedText> diceCountTextList;

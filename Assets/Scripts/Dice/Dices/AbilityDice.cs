@@ -84,7 +84,7 @@ public class AbilityDice : Dice
     {
         string name = abilityDiceSO.DiceName;
         string description = abilityDiceSO.GetDescriptionText();
-        ToolTipUI.Instance.ShowToolTip(transform, Vector2.down, name, description, ToolTipTag.AbilityDice, abilityDiceSO.rarity);
+        ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.down, name, description, ToolTipTag.AbilityDice, abilityDiceSO.rarity);
     }
 
     protected override void InitDiceInteractType()
