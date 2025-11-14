@@ -3,31 +3,39 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
-public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HandScoreSingleUI : UIMouseHandler
 {
     [SerializeField] private LocalizeStringEvent nameLocalizedText;
     [SerializeField] private TMP_Text enhanceLevelText;
     [SerializeField] private TMP_Text baseScoreText;
     [SerializeField] private TMP_Text multiplierText;
-    [SerializeField] private Button button;
     [SerializeField] private Color focusedColor;
     [SerializeField] private Color unfocusedColor;
+
+    private HandSO _handSO;
+    private Action<HandSO> _onClick;
+
+    private void Awake()
+    {
+        OnPointerEntered += OnFocused;
+        OnPointerExited += OnUnfocused;
+        OnPointerClicked += () =>
+        {
+            AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
+            _onClick?.Invoke(_handSO);
+        };
+    }
 
     public void Init(HandSO handSO, Action<HandSO> onClick)
     {
         nameLocalizedText.StringReference = handSO.handNameLocalized;
 
+        _handSO = handSO;
+        _onClick = onClick;
+
         ResetScoreText();
-
         OnUnfocused();
-
-        button.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
-            onClick?.Invoke(handSO);
-        });
     }
 
     public void UpdateScoreText(ScorePair scorePair)
@@ -41,20 +49,10 @@ public class HandScoreSingleUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         UpdateScoreText(new(0, 0));
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        OnFocused();
-    }
-
     private void OnFocused()
     {
         baseScoreText.color = focusedColor;
         multiplierText.color = focusedColor;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        OnUnfocused();
     }
 
     private void OnUnfocused()

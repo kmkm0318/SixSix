@@ -1,26 +1,46 @@
 using System;
 using UnityEngine;
 
-public class GambleDiceIcon : UIMouseHandler, IHighlightable
+/// <summary>
+/// 갬블 다이스 아이콘 UI 클래스
+/// 갬블 다이스를 저장하고 사용 및 판매할 수 있다
+/// </summary>
+public class GambleDiceIcon : UIMouseHandler
 {
-    private GambleDiceSO _gambleDiceSO;
-    private bool _isShowToolTip = false;
-    private DiceInteractType _interactType = DiceInteractType.None;
-    private Action<GambleDiceIcon> _onClicked;
+    [SerializeField] private DiceHighlightUI _highlight;
+    [SerializeField] private DiceInteractionTypeDataList _dataList;
 
-    public int SellPrice => _gambleDiceSO == null ? 0 : _gambleDiceSO.SellPrice;
+    private GambleDiceSO _gambleDiceSO;
+    private DiceInteractionType _interactType = DiceInteractionType.None;
+    public DiceInteractionType InteractType
+    {
+        get => _interactType;
+        set
+        {
+            if (_interactType == value) return;
+            _interactType = value;
+
+            UpdateHighlightState();
+        }
+    }
+
+    private Action<GambleDiceIcon> _onClicked;
 
     private void Start()
     {
         OnPointerEntered += () =>
         {
-            ShowToolTip();
-            DiceHighlightManager.Instance.ShowHighlight(this);
+            if (_gambleDiceSO != null)
+            {
+                ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            }
+
+            UpdateHighlightState();
         };
         OnPointerExited += () =>
         {
-            HideToolTip();
-            DiceHighlightManager.Instance.HideHighlight();
+            ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
+            UpdateHighlightState();
         };
         OnPointerClicked += () => _onClicked?.Invoke(this);
     }
@@ -39,16 +59,16 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
         switch (GameManager.Instance.CurrentGameState)
         {
             case GameState.Play:
-                _interactType = DiceInteractType.Use;
+                _interactType = DiceInteractionType.Use;
                 break;
             case GameState.Roll:
-                _interactType = DiceInteractType.None;
+                _interactType = DiceInteractionType.None;
                 break;
             case GameState.Shop:
-                _interactType = DiceInteractType.Sell;
+                _interactType = DiceInteractionType.Sell;
                 break;
             default:
-                _interactType = DiceInteractType.None;
+                _interactType = DiceInteractionType.None;
                 break;
         }
     }
@@ -56,9 +76,9 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
     private void OnDisable()
     {
         UnregisterEvents();
-        HideToolTip();
-        if (DiceHighlightManager.Instance == null) return;
-        DiceHighlightManager.Instance.HideHighlight();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
+
+        _highlight.StopHighlightCoroutine();
     }
 
     #region RegisterEvents
@@ -78,32 +98,32 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
     }
     private void OnPlayStarted()
     {
-        _interactType = DiceInteractType.Use;
+        _interactType = DiceInteractionType.Use;
     }
 
     private void OnPlayEnded()
     {
-        _interactType = DiceInteractType.None;
+        _interactType = DiceInteractionType.None;
     }
 
     private void OnRollStarted()
     {
-        _interactType = DiceInteractType.None;
+        _interactType = DiceInteractionType.None;
     }
 
     private void OnRollEnded()
     {
-        _interactType = DiceInteractType.Use;
+        _interactType = DiceInteractionType.Use;
     }
 
     private void OnShopStarted()
     {
-        _interactType = DiceInteractType.Sell;
+        _interactType = DiceInteractionType.Sell;
     }
 
     private void OnShopEnded()
     {
-        _interactType = DiceInteractType.None;
+        _interactType = DiceInteractionType.None;
     }
     #endregion
 
@@ -126,31 +146,18 @@ public class GambleDiceIcon : UIMouseHandler, IHighlightable
         }
     }
 
-    private void ShowToolTip()
+    private void UpdateHighlightState()
     {
-        if (_isShowToolTip) return;
-        if (_gambleDiceSO != null)
+        if (!IsPointerOver || _interactType == DiceInteractionType.None)
         {
-            _isShowToolTip = true;
-            ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            _highlight.StopHighlightCoroutine();
+            return;
         }
-    }
 
-    private void HideToolTip()
-    {
-        if (!_isShowToolTip) return;
-        _isShowToolTip = false;
-
-        ToolTipUIEvents.TriggerOnToolTipHideRequested();
-    }
-
-    public void ShowHighlight()
-    {
-        DiceHighlightManager.Instance.ShowHighlight(this);
-    }
-
-    public DiceInteractType GetHighlightType()
-    {
-        return _interactType;
+        if (_dataList.DataDict.TryGetValue(_interactType, out var typeData))
+        {
+            _highlight.SetColor(typeData.color);
+            _highlight.StartHighlightCoroutine();
+        }
     }
 }

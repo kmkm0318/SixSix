@@ -1,27 +1,27 @@
 using System;
 using UnityEngine;
 
-public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
+public abstract class Dice : MonoBehaviour, IToolTipable
 {
     [SerializeField] private DiceMovement diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
     [SerializeField] private DiceVisual diceVisual;
 
-    private DiceFace[] faces;
-    private bool isKeeped = false;
-    private bool isEnabled = true;
-    private int faceIndex;
-    private int diceValueMax;
+    private DiceFace[] _faces;
+    private bool _isKeeped = false;
+    private bool _isEnabled = true;
+    private int _faceIndex;
+    private int _diceValueMax;
 
-    public DiceFace[] Faces => faces;
-    protected DiceInteractType DiceInteractType
+    public DiceFace[] Faces => _faces;
+    protected DiceInteractionType DiceInteractType
     {
         get => diceInteraction.InteractType;
         set
         {
-            if (value == DiceInteractType.Keep || value == DiceInteractType.Unkeep)
+            if (value == DiceInteractionType.Keep || value == DiceInteractionType.Unkeep)
             {
-                diceInteraction.InteractType = IsKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
+                diceInteraction.InteractType = IsKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
             }
             else
             {
@@ -31,13 +31,12 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     }
     public bool IsKeeped
     {
-        get => isKeeped;
+        get => _isKeeped;
         set
         {
-            if (isKeeped == value) return;
-            isKeeped = value;
-            diceInteraction.InteractType = isKeeped ? DiceInteractType.Unkeep : DiceInteractType.Keep;
-            OnIsKeepedChanged?.Invoke(isKeeped);
+            if (_isKeeped == value) return;
+            _isKeeped = value;
+            diceInteraction.InteractType = _isKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
         }
     }
     public bool IsRolling => diceMovement.IsRolling;
@@ -48,21 +47,18 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     }
     public bool IsEnabled
     {
-        get => isEnabled;
+        get => _isEnabled;
         set
         {
-            if (isEnabled == value) return;
-            isEnabled = value;
+            if (_isEnabled == value) return;
+            _isEnabled = value;
 
             diceVisual.SetAlpha(value ? 1 : 0.5f);
         }
     }
-    public int FaceIndex => faceIndex;
-    public int DiceValue => faces[faceIndex].FaceValue;
-    public int DiceValueMax => diceValueMax;
-
-    public event Action<bool> OnIsKeepedChanged;
-    public event Action<bool> OnIsInteractableChanged;
+    public int FaceIndex => _faceIndex;
+    public int DiceValue => _faces[_faceIndex].FaceValue;
+    public int DiceValueMax => _diceValueMax;
 
     public virtual void Init(int maxValue, DiceSpriteListSO diceSpriteListSO, ShaderDataSO shaderDataSO, Playboard playboard)
     {
@@ -72,19 +68,19 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
             Debug.LogWarning($"Dice face count is {maxValue} but max value is {maxValue}. Set to {maxValue}.");
         }
 
-        faces = new DiceFace[maxValue];
+        _faces = new DiceFace[maxValue];
 
-        for (int i = 0; i < faces.Length; i++)
+        for (int i = 0; i < _faces.Length; i++)
         {
-            faces[i] = new();
-            faces[i].Init(i + 1, diceSpriteListSO.spriteList[i]);
+            _faces[i] = new();
+            _faces[i].Init(i + 1, diceSpriteListSO.spriteList[i]);
         }
 
-        faceIndex = 0;
-        diceValueMax = maxValue;
+        _faceIndex = 0;
+        _diceValueMax = maxValue;
 
         diceVisual.Initialize(shaderDataSO);
-        SetFace(faceIndex);
+        SetFace(_faceIndex);
         InitDiceInteractType();
 
         diceMovement.Init(playboard);
@@ -93,7 +89,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void InitDiceInteractType()
     {
-        DiceInteractType = DiceInteractType.Keep;
+        DiceInteractType = DiceInteractionType.Keep;
     }
 
     protected virtual void OnEnable()
@@ -133,7 +129,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void OnRoundStarted()
     {
-        DiceInteractType = DiceInteractType.Keep;
+        DiceInteractType = DiceInteractionType.Keep;
     }
 
     protected virtual void OnRoundEnded()
@@ -165,7 +161,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
 
     protected virtual void OnRollCompleted()
     {
-        diceInteraction.IsInteractable = DiceInteractType != DiceInteractType.Sell && (DiceInteractType == DiceInteractType.Enhance || RollManager.Instance.RollRemain > 0);
+        diceInteraction.IsInteractable = DiceInteractType != DiceInteractionType.Sell && (DiceInteractType == DiceInteractionType.Enhance || RollManager.Instance.RollRemain > 0);
     }
 
     protected virtual void OnShopStarted()
@@ -225,15 +221,15 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     #region Faces
     public virtual void SetFace(int faceIndex)
     {
-        diceVisual.SetSprite(faces[faceIndex].CurrentSprite);
-        diceVisual.SetColor(faces[faceIndex].EnhanceValue);
+        diceVisual.SetSprite(_faces[faceIndex].CurrentSprite);
+        diceVisual.SetColor(_faces[faceIndex].EnhanceValue);
     }
 
     protected virtual void ChangeFace(int value = 1)
     {
-        faceIndex += value;
-        faceIndex %= diceValueMax;
-        SetFace(faceIndex);
+        _faceIndex += value;
+        _faceIndex %= _diceValueMax;
+        SetFace(_faceIndex);
     }
     #endregion
 
@@ -242,7 +238,7 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     {
         if (!IsInteractable) return;
 
-        if (DiceInteractType == DiceInteractType.Keep || DiceInteractType == DiceInteractType.Unkeep)
+        if (DiceInteractType == DiceInteractionType.Keep || DiceInteractType == DiceInteractionType.Unkeep)
         {
             if (DiceManager.Instance.IsKeepable)
             {
@@ -251,11 +247,6 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
         }
 
         DiceManager.Instance.HandleDiceClick(this);
-    }
-
-    public virtual void HandleIsInteractable(bool isInteractable)
-    {
-        OnIsInteractableChanged?.Invoke(isInteractable);
     }
 
     public virtual void HandleDiceCollided()
@@ -268,21 +259,10 @@ public abstract class Dice : MonoBehaviour, IHighlightable, IToolTipable
     }
     #endregion
 
-    public void ShowHighlight()
-    {
-        if (UtilityFunctions.IsPointerOverUIElement()) return;
-        DiceHighlightManager.Instance.ShowHighlight(this);
-    }
-
-    public virtual DiceInteractType GetHighlightType()
-    {
-        return DiceInteractType;
-    }
-
     public virtual void EnhanceDice(ScorePair enhanceValue)
     {
-        SequenceManager.Instance.AddCoroutine(() => faces[faceIndex].Enhance(enhanceValue), true);
-        SequenceManager.Instance.AddCoroutine(() => diceVisual.SetColor(faces[faceIndex].EnhanceValue), true);
+        SequenceManager.Instance.AddCoroutine(() => _faces[_faceIndex].Enhance(enhanceValue), true);
+        SequenceManager.Instance.AddCoroutine(() => diceVisual.SetColor(_faces[_faceIndex].EnhanceValue), true);
         TriggerAnimationManager.Instance.PlayTriggerScoreAnimation(transform, Vector3.up, enhanceValue);
         SequenceManager.Instance.ApplyParallelCoroutine();
     }

@@ -14,7 +14,7 @@ public class AdviserUI : BaseUI
     private void Start()
     {
         RegisterEvents();
-        _panel.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     #region RegisterEvents

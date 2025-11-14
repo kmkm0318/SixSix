@@ -3,16 +3,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// UI 마우스 핸들러 컴포넌트
+/// 마우스 포인터가 UI 요소 위에 진입, 이탈, 클릭했을 때 이벤트를 발생시킨다.
+/// </summary>
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Image))]
 public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    private RectTransform _rectTransform;
-    private Image _image;
-    private bool _isEntered = false;
+    protected RectTransform RectTransform { get; private set; }
+    protected Image Image { get; private set; }
 
-    public RectTransform RectTransform => _rectTransform;
-    public Image Image => _image;
+    protected bool IsPointerOver { get; private set; } = false;
 
     public event Action OnPointerExited;
     public event Action OnPointerEntered;
@@ -20,23 +22,19 @@ public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void Awake()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _image = GetComponent<Image>();
+        RectTransform = GetComponent<RectTransform>();
+        Image = GetComponent<Image>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_isEntered) return;
-        _isEntered = true;
-
+        IsPointerOver = true;
         OnPointerEntered?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_isEntered) return;
-        _isEntered = false;
-
+        IsPointerOver = false;
         OnPointerExited?.Invoke();
     }
 

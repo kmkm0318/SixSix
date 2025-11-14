@@ -66,10 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7055470765296504697, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
       propertyPath: m_Name
-      value: AvailityDice
+      value: AbilityDice
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3085649920975083101, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
+    - {fileID: 7336197106188435344, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -127,6 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d024cdd7ef6e9a849bc7ce8aefc7b370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceVisual: {fileID: 2289756218039906955}
   diceMovement: {fileID: 1226285127584898628}
   diceInteraction: {fileID: 2592887251310282084}
+  diceVisual: {fileID: 2289756218039906955}

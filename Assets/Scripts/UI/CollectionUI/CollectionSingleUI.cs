@@ -23,7 +23,7 @@ public class CollectionSingleUI : UIMouseHandler
 
         OnPointerExited += () =>
         {
-            ToolTipUIEvents.TriggerOnToolTipHideRequested();
+            ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
         };
 
         Image.sprite = defaultDiceSpriteList[abilityDiceSO.MaxDiceValue - 1];

@@ -206,23 +206,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 654107471126528
-    m_Key: Highlight_Keep
+    m_Key: DiceInteractType_Keep
     m_Metadata:
       m_Items: []
   - m_Id: 654170293411840
-    m_Key: Highlight_Unkeep
+    m_Key: DiceInteractType_Unkeep
     m_Metadata:
       m_Items: []
   - m_Id: 654271086731264
-    m_Key: Highlight_Enhance
+    m_Key: DiceInteractType_Enhance
     m_Metadata:
       m_Items: []
   - m_Id: 654347351760896
-    m_Key: Highlight_Sell
+    m_Key: DiceInteractType_Sell
     m_Metadata:
       m_Items: []
   - m_Id: 654425944629248
-    m_Key: Highlight_Use
+    m_Key: DiceInteractType_Use
     m_Metadata:
       m_Items: []
   - m_Id: 1388789473091584

@@ -59,6 +59,6 @@ public class PlayerStatSelectButton : MonoBehaviour
 
     private void HideToolTip()
     {
-        ToolTipUIEvents.TriggerOnToolTipHideRequested();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested(transform);
     }
 }

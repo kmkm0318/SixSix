@@ -64,7 +64,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GambleDice
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7336197106188435344, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

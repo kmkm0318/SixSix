@@ -5,8 +5,6 @@ public class ShopDiceIcon : UIMouseHandler
     private AbilityDiceSO abilityDiceSO;
     private GambleDiceSO gambleDiceSO;
 
-    private bool isShowToolTip = false;
-
     private void Start()
     {
         OnPointerEntered += ShowToolTip;
@@ -45,24 +43,18 @@ public class ShopDiceIcon : UIMouseHandler
 
     private void ShowToolTip()
     {
-        if (isShowToolTip) return;
         if (abilityDiceSO != null)
         {
-            isShowToolTip = true;
-            ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.AbilityDice, abilityDiceSO.rarity);
+            ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, abilityDiceSO.DiceName, abilityDiceSO.GetDescriptionText(), ToolTipTag.AbilityDice, abilityDiceSO.rarity);
         }
         else if (gambleDiceSO != null)
         {
-            isShowToolTip = true;
-            ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
+            ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, gambleDiceSO.DiceName, gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
         }
     }
 
     private void HideToolTip()
     {
-        if (!isShowToolTip) return;
-        isShowToolTip = false;
-
-        ToolTipUIEvents.TriggerOnToolTipHideRequested();
+        ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
+[RequireComponent(typeof(RectTransform))]
 public class ToolTipUI : MonoBehaviour
 {
     [SerializeField] private LabeledValuePanel labelPanel;
@@ -11,17 +12,17 @@ public class ToolTipUI : MonoBehaviour
     [SerializeField] private List<TagData> tagDataList;
     [SerializeField] private float offset;
 
-    private RectTransform rectTransform;
-    private Transform targetTransform;
-    private Vector3 targetOffset;
-    private Vector3 offsetDirection;
+    private RectTransform _rectTransform;
+    private Transform _target;
+    private Vector3 _targetOffset;
+    private Vector3 _offsetDirection;
     bool isUI = false;
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
+        _rectTransform = GetComponent<RectTransform>();
         RegisterEvents();
-        HideToolTip();
+        HideToolTip(null);
     }
 
     private void OnDestroy()
@@ -32,30 +33,14 @@ public class ToolTipUI : MonoBehaviour
     #region Events
     private void RegisterEvents()
     {
-        if (MouseManager.Instance) MouseManager.Instance.OnMouseExited += OnMouseExit;
-
-        ShopUIEvents.OnShopUIShown += HideToolTip;
-        RoundClearUIEvents.OnRoundClearUIShown += HideToolTip;
-
         ToolTipUIEvents.OnToolTipShowRequested += ShowToolTip;
         ToolTipUIEvents.OnToolTipHideRequested += HideToolTip;
     }
 
     private void UnregisterEvents()
     {
-        if (MouseManager.Instance) MouseManager.Instance.OnMouseExited += OnMouseExit;
-
-        ShopUIEvents.OnShopUIShown -= HideToolTip;
-        RoundClearUIEvents.OnRoundClearUIShown -= HideToolTip;
-
         ToolTipUIEvents.OnToolTipShowRequested -= ShowToolTip;
         ToolTipUIEvents.OnToolTipHideRequested -= HideToolTip;
-    }
-
-    private void OnMouseExit()
-    {
-        if (isUI) return;
-        HideToolTip();
     }
     #endregion
 
@@ -66,39 +51,38 @@ public class ToolTipUI : MonoBehaviour
 
     private void HandleTransform()
     {
-        if (targetTransform == null) return;
+        if (_target == null) return;
 
         Vector3 targetPos;
         if (isUI)
         {
-            targetPos = targetTransform.position + targetOffset;
+            targetPos = _target.position + _targetOffset;
         }
         else
         {
-            targetPos = Camera.main.WorldToScreenPoint(targetTransform.position + targetOffset);
+            targetPos = Camera.main.WorldToScreenPoint(_target.position + _targetOffset);
         }
 
-        rectTransform.position = targetPos + offsetDirection * offset;
+        _rectTransform.position = targetPos + _offsetDirection * offset;
     }
 
-    public void ShowToolTip(Transform transform, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None, AbilityDiceRarity rarity = AbilityDiceRarity.Normal)
+    public void ShowToolTip(Transform target, Vector2 direction, string name, string description, ToolTipTag tag = ToolTipTag.None, AbilityDiceRarity rarity = AbilityDiceRarity.Normal)
     {
-        if (transform == null) return;
-        if (transform is RectTransform rect)
+        if (target == null) return;
+        if (target is RectTransform rect)
         {
             isUI = true;
-            targetOffset = rect.rect.width / 2 * direction;
+            _targetOffset = rect.rect.width / 2 * direction;
         }
         else
         {
-            if (UtilityFunctions.IsPointerOverUIElement()) return;
             isUI = false;
-            targetOffset = transform.localScale.x / 2 * direction;
+            _targetOffset = target.localScale.x / 2 * direction;
         }
-        offsetDirection = direction.normalized;
+        _offsetDirection = direction.normalized;
         gameObject.SetActive(true);
         SetPanelAnchor(direction);
-        targetTransform = transform;
+        _target = target;
 
         labelPanel.SetLabel(name, true);
         labelPanel.SetValue(description);
@@ -170,9 +154,10 @@ public class ToolTipUI : MonoBehaviour
         labelPanelRectTransform.anchoredPosition = Vector2.zero;
     }
 
-    public void HideToolTip()
+    public void HideToolTip(Transform target)
     {
-        targetTransform = null;
+        if (_target != target) return;
+        _target = null;
         gameObject.SetActive(false);
         labelPanel.SetLabel(string.Empty, false);
         labelPanel.SetValue(string.Empty);

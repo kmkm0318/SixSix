@@ -23,7 +23,7 @@ public class AbilityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractType.Keep && DiceManager.Instance.IsAbilityDiceAutoKeep && DiceManager.Instance.IsKeepable)
+        if (IsInteractable && DiceInteractType == DiceInteractionType.Keep && DiceManager.Instance.IsAbilityDiceAutoKeep && DiceManager.Instance.IsKeepable)
         {
             if (abilityDiceSO && abilityDiceSO.autoKeepType == AbilityDiceAutoKeepType.High)
             {
@@ -45,13 +45,13 @@ public class AbilityDice : Dice
     protected override void OnShopStarted()
     {
         IsInteractable = true;
-        DiceInteractType = DiceInteractType.Sell;
+        DiceInteractType = DiceInteractionType.Sell;
     }
 
     protected override void OnShopEnded()
     {
         IsInteractable = false;
-        DiceInteractType = DiceInteractType.Keep;
+        DiceInteractType = DiceInteractionType.Keep;
     }
 
     protected override void OnDiceEnhanceStarted()
@@ -93,7 +93,7 @@ public class AbilityDice : Dice
 
         if (GameManager.Instance.CurrentGameState == GameState.Shop)
         {
-            DiceInteractType = DiceInteractType.Sell;
+            DiceInteractType = DiceInteractionType.Sell;
         }
     }
 

@@ -21,7 +21,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  value: 100
+  value: 36
   references:
     version: 2
     RefIds: []

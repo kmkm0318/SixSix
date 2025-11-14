@@ -52,7 +52,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChaosDice
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7336197106188435344, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -77,9 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3da41ee53a0f1a48aadbafb03a9d10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceVisual: {fileID: 2514399028580361127}
   diceMovement: {fileID: 3181382390687125352}
   diceInteraction: {fileID: 2223054772521473096}
+  diceVisual: {fileID: 2514399028580361127}
 --- !u!114 &2223054772521473096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -1558305301515133675, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
