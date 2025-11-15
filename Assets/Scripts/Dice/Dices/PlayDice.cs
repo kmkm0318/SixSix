@@ -5,13 +5,13 @@ public class PlayDice : Dice
     #region Events
     protected override void OnDiceEnhanceStarted()
     {
-        DiceInteractType = DiceInteractionType.Enhance;
+        DiceInteractionType = DiceInteractionType.Enhance;
         GameManager.Instance.RegisterEvent(GameState.Play, EnableInteraction);
     }
 
     protected override void OnDiceEnhanceCompleted()
     {
-        DiceInteractType = DiceInteractionType.Keep;
+        DiceInteractionType = DiceInteractionType.Keep;
         GameManager.Instance.UnregisterEvent(GameState.Play, EnableInteraction);
     }
 

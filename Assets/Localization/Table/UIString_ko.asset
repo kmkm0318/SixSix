@@ -223,7 +223,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 654347351760896
-    m_Localized: "\uD310\uB9E4(${0})"
+    m_Localized: "\uD310\uB9E4(<color=yellow>${0}</color>)"
     m_Metadata:
       m_Items: []
   - m_Id: 654425944629248

@@ -12,15 +12,15 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private Dice _dice;
     private bool _isPointerOver = false;
-    private DiceInteractionType _interactType;
-    public DiceInteractionType InteractType
+    private DiceInteractionType _interactionType;
+    public DiceInteractionType InteractionType
     {
-        get => _interactType;
+        get => _interactionType;
         set
         {
-            if (_interactType == value) return;
-            _interactType = value;
-            UpdateInteractableState();
+            if (_interactionType == value) return;
+            _interactionType = value;
+            UpdateHighlightAndInteractionInfo();
         }
     }
 
@@ -32,7 +32,7 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             if (isInteractable == value) return;
             isInteractable = value;
-            UpdateInteractableState();
+            UpdateHighlightAndInteractionInfo();
         }
     }
 
@@ -46,13 +46,18 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
         IsInteractable = GameManager.Instance.CurrentGameState == GameState.Shop;
     }
 
+    private void OnDisable()
+    {
+        OnPointerExit(null);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         _isPointerOver = true;
 
         _dice.ShowToolTip();
 
-        UpdateInteractableState();
+        UpdateHighlightAndInteractionInfo();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -61,7 +66,7 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
         ToolTipUIEvents.TriggerOnToolTipHideRequested(_dice.transform);
 
-        UpdateInteractableState();
+        UpdateHighlightAndInteractionInfo();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -72,18 +77,20 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
         DiceInteractionEvents.TriggerOnDiceClicked(_dice);
     }
 
-    private void UpdateInteractableState()
+    private void UpdateHighlightAndInteractionInfo()
     {
         if (!_isPointerOver || !IsInteractable)
         {
             _diceHighlight.StopHighlightCoroutine();
+            InteractionInfoUIEvents.TriggerOnHideInteractionInfoUI(_dice.transform);
             return;
         }
 
-        if (_dataList.DataDict.TryGetValue(InteractType, out var data))
+        if (_dataList.DataDict.TryGetValue(InteractionType, out var data))
         {
             _diceHighlight.SetColor(data.color);
             _diceHighlight.StartHighlightCoroutine();
+            _dice.ShowInteractionInfo();
         }
     }
 }

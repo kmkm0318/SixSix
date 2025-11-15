@@ -11,16 +11,16 @@ public class GambleDiceIcon : UIMouseHandler
     [SerializeField] private DiceInteractionTypeDataList _dataList;
 
     private GambleDiceSO _gambleDiceSO;
-    private DiceInteractionType _interactType = DiceInteractionType.None;
-    public DiceInteractionType InteractType
+    private DiceInteractionType _interactionType = DiceInteractionType.None;
+    public DiceInteractionType InteractionType
     {
-        get => _interactType;
+        get => _interactionType;
         set
         {
-            if (_interactType == value) return;
-            _interactType = value;
+            if (_interactionType == value) return;
+            _interactionType = value;
 
-            UpdateHighlightState();
+            UpdateHighlightAndInfo();
         }
     }
 
@@ -35,12 +35,12 @@ public class GambleDiceIcon : UIMouseHandler
                 ToolTipUIEvents.TriggerOnToolTipShowRequested(RectTransform, Vector2.left, _gambleDiceSO.DiceName, _gambleDiceSO.GetDescriptionText(), ToolTipTag.GambleDice);
             }
 
-            UpdateHighlightState();
+            UpdateHighlightAndInfo();
         };
         OnPointerExited += () =>
         {
             ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
-            UpdateHighlightState();
+            UpdateHighlightAndInfo();
         };
         OnPointerClicked += () => _onClicked?.Invoke(this);
     }
@@ -59,16 +59,16 @@ public class GambleDiceIcon : UIMouseHandler
         switch (GameManager.Instance.CurrentGameState)
         {
             case GameState.Play:
-                _interactType = DiceInteractionType.Use;
+                InteractionType = DiceInteractionType.Use;
                 break;
             case GameState.Roll:
-                _interactType = DiceInteractionType.None;
+                InteractionType = DiceInteractionType.None;
                 break;
             case GameState.Shop:
-                _interactType = DiceInteractionType.Sell;
+                InteractionType = DiceInteractionType.Sell;
                 break;
             default:
-                _interactType = DiceInteractionType.None;
+                InteractionType = DiceInteractionType.None;
                 break;
         }
     }
@@ -76,9 +76,8 @@ public class GambleDiceIcon : UIMouseHandler
     private void OnDisable()
     {
         UnregisterEvents();
-        ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
 
-        _highlight.StopHighlightCoroutine();
+        OnPointerExit(null);
     }
 
     #region RegisterEvents
@@ -98,32 +97,32 @@ public class GambleDiceIcon : UIMouseHandler
     }
     private void OnPlayStarted()
     {
-        _interactType = DiceInteractionType.Use;
+        InteractionType = DiceInteractionType.Use;
     }
 
     private void OnPlayEnded()
     {
-        _interactType = DiceInteractionType.None;
+        InteractionType = DiceInteractionType.None;
     }
 
     private void OnRollStarted()
     {
-        _interactType = DiceInteractionType.None;
+        InteractionType = DiceInteractionType.None;
     }
 
     private void OnRollEnded()
     {
-        _interactType = DiceInteractionType.Use;
+        InteractionType = DiceInteractionType.Use;
     }
 
     private void OnShopStarted()
     {
-        _interactType = DiceInteractionType.Sell;
+        InteractionType = DiceInteractionType.Sell;
     }
 
     private void OnShopEnded()
     {
-        _interactType = DiceInteractionType.None;
+        InteractionType = DiceInteractionType.None;
     }
     #endregion
 
@@ -146,18 +145,20 @@ public class GambleDiceIcon : UIMouseHandler
         }
     }
 
-    private void UpdateHighlightState()
+    private void UpdateHighlightAndInfo()
     {
-        if (!IsPointerOver || _interactType == DiceInteractionType.None)
+        if (!IsPointerOver || InteractionType == DiceInteractionType.None)
         {
             _highlight.StopHighlightCoroutine();
+            InteractionInfoUIEvents.TriggerOnHideInteractionInfoUI(RectTransform);
             return;
         }
 
-        if (_dataList.DataDict.TryGetValue(_interactType, out var typeData))
+        if (_dataList.DataDict.TryGetValue(InteractionType, out var typeData))
         {
             _highlight.SetColor(typeData.color);
             _highlight.StartHighlightCoroutine();
+            InteractionInfoUIEvents.TriggerOnShowInteractionInfoUI(RectTransform, InteractionType, _gambleDiceSO.SellPrice);
         }
     }
 }

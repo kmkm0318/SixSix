@@ -35,7 +35,7 @@ MonoBehaviour:
   id: 0
   price: 0
   initialTargetRoundScore: 600
-  playDiceCount: 5
+  playDiceCount: 6
   abilityDiceMax: 5
   gambleDiceMax: 3
   gambleDiceSaveMax: 5

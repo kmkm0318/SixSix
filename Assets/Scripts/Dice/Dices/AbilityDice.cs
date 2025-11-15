@@ -6,7 +6,6 @@ public class AbilityDice : Dice
     private AbilityDiceContext previousContext;
 
     public AbilityDiceSO AbilityDiceSO => abilityDiceSO;
-    public int SellPrice => abilityDiceSO.SellPrice;
 
     public void Init(AbilityDiceSO abilityDiceSO, Playboard playboard)
     {
@@ -23,7 +22,7 @@ public class AbilityDice : Dice
     {
         base.OnRollCompleted();
 
-        if (IsInteractable && DiceInteractType == DiceInteractionType.Keep && DiceManager.Instance.IsAbilityDiceAutoKeep && DiceManager.Instance.IsKeepable)
+        if (IsInteractable && DiceInteractionType == DiceInteractionType.Keep && DiceManager.Instance.IsAbilityDiceAutoKeep && DiceManager.Instance.IsKeepable)
         {
             if (abilityDiceSO && abilityDiceSO.autoKeepType == AbilityDiceAutoKeepType.High)
             {
@@ -45,13 +44,13 @@ public class AbilityDice : Dice
     protected override void OnShopStarted()
     {
         IsInteractable = true;
-        DiceInteractType = DiceInteractionType.Sell;
+        DiceInteractionType = DiceInteractionType.Sell;
     }
 
     protected override void OnShopEnded()
     {
         IsInteractable = false;
-        DiceInteractType = DiceInteractionType.Keep;
+        DiceInteractionType = DiceInteractionType.Keep;
     }
 
     protected override void OnDiceEnhanceStarted()
@@ -87,13 +86,18 @@ public class AbilityDice : Dice
         ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.down, name, description, ToolTipTag.AbilityDice, abilityDiceSO.rarity);
     }
 
+    public override void ShowInteractionInfo()
+    {
+        InteractionInfoUIEvents.TriggerOnShowInteractionInfoUI(transform, DiceInteractionType, abilityDiceSO.SellPrice);
+    }
+
     protected override void InitDiceInteractType()
     {
         base.InitDiceInteractType();
 
         if (GameManager.Instance.CurrentGameState == GameState.Shop)
         {
-            DiceInteractType = DiceInteractionType.Sell;
+            DiceInteractionType = DiceInteractionType.Sell;
         }
     }
 

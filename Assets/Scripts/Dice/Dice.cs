@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class Dice : MonoBehaviour, IToolTipable
+public abstract class Dice : MonoBehaviour
 {
     [SerializeField] private DiceMovement diceMovement;
     [SerializeField] private DiceInteraction diceInteraction;
@@ -14,18 +14,18 @@ public abstract class Dice : MonoBehaviour, IToolTipable
     private int _diceValueMax;
 
     public DiceFace[] Faces => _faces;
-    protected DiceInteractionType DiceInteractType
+    protected DiceInteractionType DiceInteractionType
     {
-        get => diceInteraction.InteractType;
+        get => diceInteraction.InteractionType;
         set
         {
             if (value == DiceInteractionType.Keep || value == DiceInteractionType.Unkeep)
             {
-                diceInteraction.InteractType = IsKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
+                diceInteraction.InteractionType = IsKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
             }
             else
             {
-                diceInteraction.InteractType = value;
+                diceInteraction.InteractionType = value;
             }
         }
     }
@@ -36,7 +36,7 @@ public abstract class Dice : MonoBehaviour, IToolTipable
         {
             if (_isKeeped == value) return;
             _isKeeped = value;
-            diceInteraction.InteractType = _isKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
+            diceInteraction.InteractionType = _isKeeped ? DiceInteractionType.Unkeep : DiceInteractionType.Keep;
         }
     }
     public bool IsRolling => diceMovement.IsRolling;
@@ -89,7 +89,7 @@ public abstract class Dice : MonoBehaviour, IToolTipable
 
     protected virtual void InitDiceInteractType()
     {
-        DiceInteractType = DiceInteractionType.Keep;
+        DiceInteractionType = DiceInteractionType.Keep;
     }
 
     protected virtual void OnEnable()
@@ -129,7 +129,7 @@ public abstract class Dice : MonoBehaviour, IToolTipable
 
     protected virtual void OnRoundStarted()
     {
-        DiceInteractType = DiceInteractionType.Keep;
+        DiceInteractionType = DiceInteractionType.Keep;
     }
 
     protected virtual void OnRoundEnded()
@@ -161,7 +161,7 @@ public abstract class Dice : MonoBehaviour, IToolTipable
 
     protected virtual void OnRollCompleted()
     {
-        diceInteraction.IsInteractable = DiceInteractType != DiceInteractionType.Sell && (DiceInteractType == DiceInteractionType.Enhance || RollManager.Instance.RollRemain > 0);
+        diceInteraction.IsInteractable = DiceInteractionType != DiceInteractionType.Sell && (DiceInteractionType == DiceInteractionType.Enhance || RollManager.Instance.RollRemain > 0);
     }
 
     protected virtual void OnShopStarted()
@@ -238,7 +238,7 @@ public abstract class Dice : MonoBehaviour, IToolTipable
     {
         if (!IsInteractable) return;
 
-        if (DiceInteractType == DiceInteractionType.Keep || DiceInteractType == DiceInteractionType.Unkeep)
+        if (DiceInteractionType == DiceInteractionType.Keep || DiceInteractionType == DiceInteractionType.Unkeep)
         {
             if (DiceManager.Instance.IsKeepable)
             {
@@ -268,6 +268,11 @@ public abstract class Dice : MonoBehaviour, IToolTipable
     }
 
     public abstract void ShowToolTip();
+
+    public virtual void ShowInteractionInfo()
+    {
+        InteractionInfoUIEvents.TriggerOnShowInteractionInfoUI(transform, DiceInteractionType);
+    }
 
     public void FadeIn(Action onComplete = null)
     {
