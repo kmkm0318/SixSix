@@ -11,7 +11,7 @@ public class BossRoundUI : BaseUI
     private void Start()
     {
         RegisterEvents();
-        _panel.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()

@@ -26,14 +26,20 @@ public class GameManager : Singleton<GameManager>
     #region Game State
     public void ChangeState(GameState newState)
     {
-        gameStateManager.ChangeState(newState);
-        OnGameStateChanged?.Invoke();
+        SequenceManager.Instance.AddCoroutine(() =>
+        {
+            gameStateManager.ChangeState(newState);
+            OnGameStateChanged?.Invoke();
+        });
     }
 
     public void ExitState(GameState state)
     {
-        gameStateManager.ExitInnerState(state);
-        OnGameStateChanged?.Invoke();
+        SequenceManager.Instance.AddCoroutine(() =>
+        {
+            gameStateManager.ExitInnerState(state);
+            OnGameStateChanged?.Invoke();
+        });
     }
 
     public void RegisterEvent(GameState state, Action onEnter = null, Action onExit = null)

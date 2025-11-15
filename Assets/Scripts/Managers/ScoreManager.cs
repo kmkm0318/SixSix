@@ -134,7 +134,12 @@ public class ScoreManager : Singleton<ScoreManager>
 
         if (currentRound < 1) return;
 
-        double baseScore = initialTargetRoundScore * Mathf.Pow(6, (currentRound - 1) / 6);
+        //매 라운드마다 baseScore에서 50%씩 증가하는 효과. BaseScore는 6라운드마다 18배 증가. 이는 보스 라운드 클리어 시 6배 증가하는 효과.
+
+        //6 라운드마다 18배 증가. 보스 라운드 클리어 시 6배 증가하는 효과
+        double baseScore = initialTargetRoundScore * Mathf.Pow(18, (currentRound - 1) / 6);
+
+        //6 라운드 안에서는 1라운드당 50%씩 증가. 보스 라운드까지 250% 증가하는 효과
         double multiplier = 1f + (currentRound - 1) % 6 * 0.5f;
         double score = baseScore * multiplier;
 
