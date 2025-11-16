@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2044250903387222036}
   - component: {fileID: 7032938431907185237}
   - component: {fileID: 587809239120476770}
+  - component: {fileID: 7140823859282999804}
   m_Layer: 6
   m_Name: Playboard
   m_TagString: Untagged
@@ -91,6 +92,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -112,6 +115,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
@@ -333,6 +337,18 @@ MonoBehaviour:
   diceGenerateTransform: {fileID: 7737669603667701967}
   randomGenerateRange: 2
   forceTransform: {fileID: 7637713890866101417}
+--- !u!114 &7140823859282999804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305782390062369178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c3fca0fe0ef5c4dacb91d5a3f761af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FocusRemover
 --- !u!1 &5511739764537116205
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +401,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -406,6 +424,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
