@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
-public class PlayerStatSelectButton : MonoBehaviour
+public class PlayerStatSelectUI : UIFocusHandler
 {
-    [SerializeField] private ButtonPanel _buttonPanel;
-    [SerializeField] private Image _diceImage;
     [SerializeField] private AnimatedText _chipText;
     [SerializeField] private LocalizedString _chipString;
 
@@ -17,13 +15,13 @@ public class PlayerStatSelectButton : MonoBehaviour
     public PlayerStatSO PlayerStatSO => _playerStatSO;
     public bool IsAchieved => _isAchieved;
 
-    public event Action<PlayerStatSelectButton> OnSelected;
+    public event Action<PlayerStatSelectUI> OnSelected;
 
-    private void Awake()
+    private void Start()
     {
-        _buttonPanel.OnClick += () => OnSelected.Invoke(this);
-        _buttonPanel.OnPointerEntered += ShowToolTip;
-        _buttonPanel.OnPointerExited += HideToolTip;
+        OnPointerClicked += () => OnSelected.Invoke(this);
+        OnPointerEntered += ShowToolTip;
+        OnPointerExited += HideToolTip;
     }
 
     public void Init(PlayerStatSO playerStatSO, bool isAchieved)
@@ -44,10 +42,10 @@ public class PlayerStatSelectButton : MonoBehaviour
         _chipText.SetText(_chipString.GetLocalizedString(_playerStatSO.price));
         _chipText.gameObject.SetActive(!_isAchieved);
 
-        _diceImage.color = new Color(1, 1, 1, _isAchieved ? 1 : 0.5f);
-        _diceImage.sprite = _playerStatSO.diceSpriteListSO.spriteList.First();
-        _diceImage.material = new(_diceImage.material);
-        _playerStatSO.shaderDataSO.SetMaterialProperties(_diceImage.material);
+        Image.color = new Color(1, 1, 1, _isAchieved ? 1 : 0.5f);
+        Image.sprite = _playerStatSO.diceSpriteListSO.spriteList.First();
+        Image.material = new(Image.material);
+        _playerStatSO.shaderDataSO.SetMaterialProperties(Image.material);
     }
 
     public void ShowToolTip()

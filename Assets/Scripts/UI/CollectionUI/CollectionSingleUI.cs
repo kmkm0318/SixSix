@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollectionSingleUI : UIMouseHandler
+public class CollectionSingleUI : UIFocusHandler
 {
     public void Init(AbilityDiceSO abilityDiceSO)
     {

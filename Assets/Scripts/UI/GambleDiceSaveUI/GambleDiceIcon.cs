@@ -5,7 +5,7 @@ using UnityEngine;
 /// 갬블 다이스 아이콘 UI 클래스
 /// 갬블 다이스를 저장하고 사용 및 판매할 수 있다
 /// </summary>
-public class GambleDiceIcon : UIMouseHandler
+public class GambleDiceIcon : UIFocusHandler
 {
     [SerializeField] private DiceHighlightUI _highlight;
     [SerializeField] private DiceInteractionTypeDataList _dataList;

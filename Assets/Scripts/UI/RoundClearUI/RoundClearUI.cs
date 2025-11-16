@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class RoundClearUI : BaseUI
 {
     [SerializeField] private Button closeButton;
-    [SerializeField] private FadeCanvasGroup fadeCanvasGroup;
     [SerializeField] private AnimatedText resultText;
     [SerializeField] private LocalizedString resultString;
     [SerializeField] private List<RewardTextPair> rewardTexts;

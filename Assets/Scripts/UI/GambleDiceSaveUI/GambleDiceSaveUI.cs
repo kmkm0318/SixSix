@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GambleDiceSaveUI : BaseUI
 {
-    [SerializeField] private UIMouseHandler _panelMouseHandler;
+    [SerializeField] private UIFocusHandler _panelMouseHandler;
     [SerializeField] private Transform _slotParent;
     [SerializeField] private Transform _slotPrefab;
     [SerializeField] private GambleDiceIcon _gambleDiceIconPrefab;

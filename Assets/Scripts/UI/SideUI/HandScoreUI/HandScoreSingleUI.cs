@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 
-public class HandScoreSingleUI : UIMouseHandler
+public class HandScoreSingleUI : UIFocusHandler
 {
     [SerializeField] private LocalizeStringEvent nameLocalizedText;
     [SerializeField] private TMP_Text enhanceLevelText;

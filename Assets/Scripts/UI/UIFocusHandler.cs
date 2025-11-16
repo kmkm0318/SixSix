@@ -4,12 +4,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI 마우스 핸들러 컴포넌트
-/// 마우스 포인터가 UI 요소 위에 진입, 이탈, 클릭했을 때 이벤트를 발생시킨다.
+/// UI 포커스 핸들러 클래스
+/// 마우스 오버 및 클릭 이벤트를 처리한다
 /// </summary>
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Image))]
-public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class UIFocusHandler : MonoBehaviour, IFocusable, IPointerClickHandler//, IPointerEnterHandler, IPointerExitHandler
 {
     protected RectTransform RectTransform { get; private set; }
     protected Image Image { get; private set; }
@@ -40,9 +40,21 @@ public class UIMouseHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button != PointerEventData.InputButton.Left) return;
-        if (eventData.clickCount > 1) return;
+        if (FocusManager.Instance) FocusManager.Instance.OnClick(this);
+    }
 
+    public void OnFocus()
+    {
+        OnPointerEnter(null);
+    }
+
+    public void OnUnfocus()
+    {
+        OnPointerExit(null);
+    }
+
+    public void OnInteract()
+    {
         OnPointerClicked?.Invoke();
     }
 }

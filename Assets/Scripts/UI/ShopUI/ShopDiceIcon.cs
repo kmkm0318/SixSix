@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShopDiceIcon : UIMouseHandler
+public class ShopDiceIcon : UIFocusHandler
 {
     private AbilityDiceSO abilityDiceSO;
     private GambleDiceSO gambleDiceSO;
@@ -56,5 +56,10 @@ public class ShopDiceIcon : UIMouseHandler
     private void HideToolTip()
     {
         ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
+    }
+
+    private void OnDisable()
+    {
+        HideToolTip();
     }
 }

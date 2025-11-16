@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// 다이스의 상호작용을 처리하는 클래스
 /// </summary>
 [RequireComponent(typeof(Dice))]
-public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class DiceInteraction : MonoBehaviour, IFocusable, IPointerClickHandler//, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private DiceHighlight _diceHighlight;
     [SerializeField] private DiceInteractionTypeDataList _dataList;
@@ -71,10 +71,11 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!IsInteractable) return;
+        if (FocusManager.Instance) FocusManager.Instance.OnClick(this);
 
-        _dice.HandleMouseClick();
-        DiceInteractionEvents.TriggerOnDiceClicked(_dice);
+        // if (!IsInteractable) return;
+        // _dice.HandleMouseClick();
+        // DiceInteractionEvents.TriggerOnDiceClicked(_dice);
     }
 
     private void UpdateHighlightAndInteractionInfo()
@@ -92,5 +93,23 @@ public class DiceInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExit
             _diceHighlight.StartHighlightCoroutine();
             _dice.ShowInteractionInfo();
         }
+    }
+
+    public void OnFocus()
+    {
+        OnPointerEnter(null);
+    }
+
+    public void OnUnfocus()
+    {
+        OnPointerExit(null);
+    }
+
+    public void OnInteract()
+    {
+        if (!IsInteractable) return;
+
+        _dice.HandleMouseClick();
+        DiceInteractionEvents.TriggerOnDiceClicked(_dice);
     }
 }

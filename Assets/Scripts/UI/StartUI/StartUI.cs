@@ -3,12 +3,11 @@ using UnityEngine.Pool;
 
 public class StartUI : BaseUI
 {
-    [SerializeField] private PlayerStatSelectButton _playerStatSelectButtonPrefab;
+    [SerializeField] private PlayerStatSelectUI _playerStatSelectButtonPrefab;
     [SerializeField] private Transform _playerStatSelectButtonParent;
-    [SerializeField] private FadeCanvasGroup _fadeCanvasGroup;
     [SerializeField] private ButtonPanel _closeButton;
 
-    private ObjectPool<PlayerStatSelectButton> _buttonPool;
+    private ObjectPool<PlayerStatSelectUI> _buttonPool;
 
     private void Start()
     {
@@ -58,7 +57,7 @@ public class StartUI : BaseUI
         }
     }
 
-    private void OnSelected(PlayerStatSelectButton button)
+    private void OnSelected(PlayerStatSelectUI button)
     {
         if (button.IsAchieved)
         {
