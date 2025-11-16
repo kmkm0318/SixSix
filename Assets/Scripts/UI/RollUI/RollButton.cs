@@ -3,6 +3,26 @@ using UnityEngine.EventSystems;
 public class RollButton : ButtonPanel
 {
     private bool _isActive = false;
+    public bool IsActive
+    {
+        get => _isActive;
+        private set
+        {
+            if (_isActive == value) return;
+
+            if (value)
+            {
+                SequenceManager.Instance.AddCoroutine(() =>
+                {
+                    _isActive = true;
+                });
+            }
+            else
+            {
+                _isActive = false;
+            }
+        }
+    }
 
     #region RegisterEvents
     private void Start()
@@ -19,44 +39,44 @@ public class RollButton : ButtonPanel
 
     private void OnPlayStarted()
     {
-        _isActive = true;
+        IsActive = true;
     }
 
     private void OnPlayEnded()
     {
-        _isActive = false;
+        IsActive = false;
     }
 
     private void OnRollStarted()
     {
-        _isActive = false;
+        IsActive = false;
     }
 
     private void OnRollCompleted()
     {
-        _isActive = RollManager.Instance.RollRemain > 0;
+        IsActive = RollManager.Instance.RollRemain > 0;
     }
 
     private void OnEnhanceStarted()
     {
-        _isActive = true;
+        IsActive = true;
     }
 
     private void OnEnhanceCompleted()
     {
-        _isActive = false;
+        IsActive = false;
     }
     #endregion
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (!_isActive) return;
+        if (!IsActive) return;
         base.OnPointerDown(eventData);
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if (!_isActive) return;
+        if (!IsActive) return;
         base.OnPointerUp(eventData);
     }
 }

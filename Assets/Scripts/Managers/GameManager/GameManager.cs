@@ -7,8 +7,6 @@ public class GameManager : Singleton<GameManager>
 
     public GameState CurrentGameState => gameStateManager.CurrentGameState;
 
-    public event Action OnGameStateChanged;
-
     protected override void Awake()
     {
         base.Awake();
@@ -26,20 +24,12 @@ public class GameManager : Singleton<GameManager>
     #region Game State
     public void ChangeState(GameState newState)
     {
-        SequenceManager.Instance.AddCoroutine(() =>
-        {
-            gameStateManager.ChangeState(newState);
-            OnGameStateChanged?.Invoke();
-        });
+        gameStateManager.ChangeState(newState);
     }
 
     public void ExitState(GameState state)
     {
-        SequenceManager.Instance.AddCoroutine(() =>
-        {
-            gameStateManager.ExitInnerState(state);
-            OnGameStateChanged?.Invoke();
-        });
+        gameStateManager.ExitInnerState(state);
     }
 
     public void RegisterEvent(GameState state, Action onEnter = null, Action onExit = null)

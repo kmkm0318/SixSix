@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -23,7 +22,7 @@ public class RoundClearUI : BaseUI
         closeButton.onClick.AddListener(() =>
         {
             if (!_isClosable) return;
-            SequenceManager.Instance.AddCoroutine(() => Hide(RoundClearUIEvents.TriggerOnRoundClearUIHidden));
+            Hide(RoundClearUIEvents.TriggerOnRoundClearUIHidden);
         });
         gameObject.SetActive(false);
     }

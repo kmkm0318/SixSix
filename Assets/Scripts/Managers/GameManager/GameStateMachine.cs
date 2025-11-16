@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameStateMachine : IStateMachine<GameState>
 {
@@ -50,6 +51,11 @@ public class GameStateMachine : IStateMachine<GameState>
         currentState?.Enter();
     }
 
+    private void EnterInnerState(IState newState)
+    {
+        newState?.Enter();
+    }
+
     public void ExitInnerState(GameState state)
     {
         if (innerStates.TryGetValue(state, out var innerState))
@@ -58,13 +64,8 @@ public class GameStateMachine : IStateMachine<GameState>
         }
         else
         {
-            UnityEngine.Debug.LogWarning($"Attempting to exit a non-inner state: {state}");
+            Debug.LogWarning($"Attempting to exit a non-inner state: {state}");
         }
-    }
-
-    private void EnterInnerState(IState newState)
-    {
-        newState?.Enter();
     }
 
     public IState GetState(GameState state)
