@@ -8,26 +8,33 @@ public class AbilityEffectGrowingScorePairSO : AbilityEffectSO
 
     public override void TriggerEffect(AbilityDiceContext context)
     {
-        GrowScorePair(context.currentAbilityDice.DiceValue);
+        var abilityDice = context.currentAbilityDice;
+        var diceValue = abilityDice.DiceValue;
 
-        TriggerManager.Instance.ApplyTriggerEffect(context.currentAbilityDice.transform, Vector3.down, scorePair);
+        abilityDice.IncreaseEffectValue(diceValue);
+
+        var effectValue = abilityDice.EffectValue;
+        var effectScorePair = GetScorePair(effectValue);
+
+        TriggerManager.Instance.ApplyTriggerEffect(context.currentAbilityDice.transform, Vector3.down, effectScorePair);
     }
 
-    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO)
+    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO, int effectValue = 0)
     {
         if (effectDescription == null)
         {
             Debug.LogError("Effect description is not set for AbilityEffectGrowingScorePairSO.");
             return string.Empty;
         }
-        effectDescription.Arguments = new object[] { scorePair, growValue, DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType) };
-        effectDescription.RefreshString();
-        return effectDescription.GetLocalizedString();
+
+        var effectScorePair = GetScorePair(effectValue);
+        var calcDescription = DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType);
+        return effectDescription.GetLocalizedString(effectScorePair, growValue, calcDescription);
     }
 
-    private void GrowScorePair(int diceValue)
+    private ScorePair GetScorePair(int effectValue)
     {
-        var growingValue = DiceEffectCalculator.GetCalculatedEffectValue(growValue, diceValue, calculateType);
-        scorePair = new ScorePair(scorePair.baseScore + growingValue.baseScore, scorePair.multiplier + growingValue.multiplier);
+        var growingValue = DiceEffectCalculator.GetCalculatedEffectValue(growValue, effectValue, calculateType);
+        return new ScorePair(scorePair.baseScore + growingValue.baseScore, scorePair.multiplier + growingValue.multiplier);
     }
 }

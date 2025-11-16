@@ -22,11 +22,6 @@ public class AbilityDiceSO : ScriptableObject
     public AbilityEffectSO abilityEffect;
     public AbilityDiceUnlockSO abilityUnlock;
 
-    public void Init()
-    {
-        abilityEffect = Instantiate(abilityEffect);
-    }
-
     public bool IsTriggered(EffectTriggerType triggerType, AbilityDiceContext context)
     {
         return abilityTrigger.IsTriggered(triggerType, context);
@@ -37,9 +32,9 @@ public class AbilityDiceSO : ScriptableObject
         abilityEffect.TriggerEffect(context);
     }
 
-    public string GetDescriptionText()
+    public string GetDescriptionText(int effectValue = 0)
     {
-        return abilityTrigger.GetTriggerDescription(this) + "\n" + abilityEffect.GetEffectDescription(this);
+        return abilityTrigger.GetTriggerDescription(this) + "\n" + abilityEffect.GetEffectDescription(this, effectValue);
     }
 
     public bool IsUnlcoked()

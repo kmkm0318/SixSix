@@ -21,7 +21,7 @@ public class AbilityEffectRetriggerAbilityDiceSO : AbilityEffectSO
         TriggerManager.Instance.TriggerAbilityDice(context.abilityDice, null, true);
     }
 
-    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO)
+    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO, int effectValue = 0)
     {
         if (effectDescription == null)
         {

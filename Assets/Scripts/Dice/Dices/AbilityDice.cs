@@ -7,14 +7,15 @@ public class AbilityDice : Dice
 
     public AbilityDiceSO AbilityDiceSO => abilityDiceSO;
 
+    //같은 Effect SO를 사용하는 각 Ability Dice에서 서로 다른 Effect 값을 가질 수 있도록 함
+    public int EffectValue { get; private set; } = 0;
+
     public void Init(AbilityDiceSO abilityDiceSO, Playboard playboard)
     {
+        this.abilityDiceSO = abilityDiceSO;
+
         var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
-
         base.Init(abilityDiceSO.MaxDiceValue, diceSpriteListSO, abilityDiceSO.shaderDataSO, playboard);
-
-        this.abilityDiceSO = Instantiate(abilityDiceSO);
-        this.abilityDiceSO.Init();
     }
 
     #region Events
@@ -82,7 +83,7 @@ public class AbilityDice : Dice
     public override void ShowToolTip()
     {
         string name = abilityDiceSO.DiceName;
-        string description = abilityDiceSO.GetDescriptionText();
+        string description = GetDescriptionText();
         ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.down, name, description, ToolTipTag.AbilityDice, abilityDiceSO.rarity);
     }
 
@@ -115,5 +116,15 @@ public class AbilityDice : Dice
         context.currentAbilityDice = this;
         previousContext = context;
         abilityDiceSO.TriggerEffect(context);
+    }
+
+    public string GetDescriptionText()
+    {
+        return abilityDiceSO.GetDescriptionText(EffectValue);
+    }
+
+    public void IncreaseEffectValue(int amount)
+    {
+        EffectValue += amount;
     }
 }

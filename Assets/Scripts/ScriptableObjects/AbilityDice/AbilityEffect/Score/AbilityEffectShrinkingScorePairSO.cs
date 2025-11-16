@@ -8,36 +8,41 @@ public class AbilityEffectShrinkingScorePairSO : AbilityEffectSO
 
     public override void TriggerEffect(AbilityDiceContext context)
     {
-        TriggerManager.Instance.ApplyTriggerEffect(context.currentAbilityDice.transform, Vector3.down, scorePair);
+        var abilityDice = context.currentAbilityDice;
+        var diceValue = abilityDice.DiceValue;
+        var effectScorePair = GetScorePair(abilityDice.EffectValue);
 
-        ShrinkScorePair(context.currentAbilityDice.DiceValue);
+        TriggerManager.Instance.ApplyTriggerEffect(abilityDice.transform, Vector3.down, effectScorePair);
 
-        CheckThenRemove(context.currentAbilityDice);
+        abilityDice.IncreaseEffectValue(diceValue);
+        effectScorePair = GetScorePair(abilityDice.EffectValue);
+        CheckThenRemove(effectScorePair, abilityDice);
     }
 
-    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO)
+    public override string GetEffectDescription(AbilityDiceSO abilityDiceSO, int effectValue = 0)
     {
         if (effectDescription == null)
         {
             Debug.LogError("Effect description is not set for AbilityEffectShrinkingScorePairSO.");
             return string.Empty;
         }
-        effectDescription.Arguments = new object[] { scorePair, shrinkValue, DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType) };
-        effectDescription.RefreshString();
-        return effectDescription.GetLocalizedString();
+
+        var effectScorePair = GetScorePair(effectValue);
+        var calcDescription = DiceEffectCalculator.GetCalculateDescription(abilityDiceSO.MaxDiceValue, calculateType);
+        return effectDescription.GetLocalizedString(effectScorePair, shrinkValue, calcDescription);
     }
 
-    private void ShrinkScorePair(int diceValue)
+    private ScorePair GetScorePair(int effectValue)
     {
-        var shrinkingValue = DiceEffectCalculator.GetCalculatedEffectValue(shrinkValue, diceValue, calculateType);
-        scorePair = new ScorePair(scorePair.baseScore - shrinkingValue.baseScore, scorePair.multiplier - shrinkingValue.multiplier);
+        var shrinkingValue = DiceEffectCalculator.GetCalculatedEffectValue(shrinkValue, effectValue, calculateType);
+        return new ScorePair(scorePair.baseScore - shrinkingValue.baseScore, scorePair.multiplier - shrinkingValue.multiplier);
     }
 
-    private void CheckThenRemove(AbilityDice dice)
+    private void CheckThenRemove(ScorePair effectScorePair, AbilityDice dice)
     {
         float ellipson = 0.001f;
 
-        if (scorePair.baseScore < ellipson && scorePair.multiplier < 1f + ellipson)
+        if (effectScorePair.baseScore < ellipson && effectScorePair.multiplier < 1f + ellipson)
         {
             SequenceManager.Instance.AddCoroutine(() =>
             {
