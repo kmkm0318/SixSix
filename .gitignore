@@ -76,3 +76,9 @@ crashlytics-build.properties
 /[Aa]ssets/Plugins/Demigiant
 /[Aa]ssets/Plugins/Febucci
 /[Aa]ssets/Plugins/Sqlite
+
+# 파이어베이스
+Assets/Firebase
+Assets/Editor Default Resources/Firebase
+Assets/Plugins/iOS/Firebase
+Assets/Plugins/tvOS/Firebase

@@ -101,7 +101,7 @@ public class ScoreManager : Singleton<ScoreManager>
         SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
-    private void OnHandScoreApplied(ScorePair scorePair)
+    private async void OnHandScoreApplied(ScorePair scorePair)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Round) return;
 
@@ -115,6 +115,7 @@ public class ScoreManager : Singleton<ScoreManager>
         ScorePair = new();
         SequenceManager.Instance.ApplyParallelCoroutine();
         UpdateCurrentRoundScore(UtilityFunctions.SafeAdd(CurrentRoundScore, PlayScore));
+        await FirebaseManager.Instance.AddScoreToLeaderboard(CurrentRoundScore);
 
         GameManager.Instance.ExitState(GameState.Play);
     }

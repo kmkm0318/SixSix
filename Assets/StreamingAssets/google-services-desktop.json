@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "960967062150",
+    "firebase_url": "https://sixsix-b8c5f-default-rtdb.firebaseio.com",
+    "project_id": "sixsix-b8c5f",
+    "storage_bucket": "sixsix-b8c5f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960967062150:android:4da080ec696dd00cf69707",
+        "android_client_info": {
+          "package_name": "com.company.SixSix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1LoyyvuIjKrLEHHi0QAzEZjjKuGYQRdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
