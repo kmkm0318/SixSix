@@ -70,7 +70,9 @@ public class GameResultUI : BaseUI
             pair.panel.SetValue(res);
         }
 
-        SequenceManager.Instance.AddCoroutine(() => Show());
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(isGameClear ? SFXType.Win : SFXType.Lose), true);
+        SequenceManager.Instance.AddCoroutine(() => Show(), true);
+        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 }
 

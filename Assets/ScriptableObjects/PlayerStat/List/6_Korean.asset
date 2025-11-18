@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: 0_DotDice
+  m_Name: 6_Korean
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
-  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
+  diceSpriteListSO: {fileID: 11400000, guid: 3c554e2120a8e9b44a68602901923d60, type: 2}
   shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
   playerStatName:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 10103431168
+      m_KeyId: 616284827295744
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -27,20 +27,20 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 48116408320
+      m_KeyId: 616286270136320
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  id: 0
-  price: 0
+  id: 5
+  price: 24
   initialTargetRoundScore: 600
   playDiceCount: 6
   abilityDiceMax: 5
   gambleDiceMax: 3
   gambleDiceSaveMax: 5
-  playMax: 3
-  rollMax: 3
+  playMax: 4
+  rollMax: 4
   startMoney: 0
   bonusMoney: 25
   roundClearReward: 5

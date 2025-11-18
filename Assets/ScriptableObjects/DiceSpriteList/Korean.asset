@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c842608a124e64a47b4f51fb6a6afa10, type: 3}
+  m_Name: Korean
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: 7956275348167627595, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}
+  - {fileID: 501397629299601781, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}
+  - {fileID: 3154466431522478062, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}
+  - {fileID: 138833429651533061, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}
+  - {fileID: 1712903963606824352, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}
+  - {fileID: 4756833253671609227, guid: 99a0a92ec1d42894ea90c4a707a3b978, type: 3}

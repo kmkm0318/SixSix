@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: 3_DotDice_Yellow
+  m_Name: 5_Alphabet
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
-  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: 2c365a3831f170346a2e2bba5715fb74, type: 2}
+  diceSpriteListSO: {fileID: 11400000, guid: e7bdba57402da71478488095431a6947, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
   playerStatName:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 616175616008192
+      m_KeyId: 616247749648384
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -27,21 +27,21 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 616210508423168
+      m_KeyId: 616248861138944
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  id: 3
+  id: 5
   price: 6
   initialTargetRoundScore: 600
   playDiceCount: 5
-  abilityDiceMax: 5
-  gambleDiceMax: 3
-  gambleDiceSaveMax: 5
+  abilityDiceMax: 6
+  gambleDiceMax: 4
+  gambleDiceSaveMax: 6
   playMax: 3
   rollMax: 3
-  startMoney: 10
+  startMoney: 0
   bonusMoney: 25
   roundClearReward: 5
   playRemainReward: 2

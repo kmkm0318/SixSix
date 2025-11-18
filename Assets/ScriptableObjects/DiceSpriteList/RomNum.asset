@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c842608a124e64a47b4f51fb6a6afa10, type: 3}
+  m_Name: RomNum
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: -1007746787, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}
+  - {fileID: -164995332, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}
+  - {fileID: -583703665, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}
+  - {fileID: -2084044260, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}
+  - {fileID: -109014830, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}
+  - {fileID: 1711025608, guid: b91a1751b95e26e4888ec3470a1a63b9, type: 3}

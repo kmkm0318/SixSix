@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a2299539c6d4c4887c9e8a195a39cd, type: 3}
-  m_Name: 2_DotDice_Blue
+  m_Name: 3_ChineseCharacter
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatSO
-  diceSpriteListSO: {fileID: 11400000, guid: 4fb21c9423608584eaabbade1fc83ff2, type: 2}
-  shaderDataSO: {fileID: 11400000, guid: 7d728fbbc5e021a44b8551b1b22099d8, type: 2}
+  diceSpriteListSO: {fileID: 11400000, guid: 8dfd8a25a7f469347b807c34099a73fb, type: 2}
+  shaderDataSO: {fileID: 11400000, guid: 803c894f7917447408605ecab499f8b8, type: 2}
   playerStatName:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 316778356736
+      m_KeyId: 616175616008192
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -27,21 +27,21 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4abf1a6224d77ee4da6603de38e30713
     m_TableEntryReference:
-      m_KeyId: 319252996096
+      m_KeyId: 616210508423168
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  id: 2
+  id: 3
   price: 6
   initialTargetRoundScore: 600
   playDiceCount: 5
   abilityDiceMax: 5
   gambleDiceMax: 3
   gambleDiceSaveMax: 5
-  playMax: 4
+  playMax: 3
   rollMax: 3
-  startMoney: 0
+  startMoney: 10
   bonusMoney: 25
   roundClearReward: 5
   playRemainReward: 2

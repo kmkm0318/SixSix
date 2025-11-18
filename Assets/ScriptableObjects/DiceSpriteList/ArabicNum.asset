@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c842608a124e64a47b4f51fb6a6afa10, type: 3}
+  m_Name: ArabicNum
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: -8964493463971605288, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}
+  - {fileID: -279891136948364572, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}
+  - {fileID: -7503443688672609373, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}
+  - {fileID: -1746160001278710735, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}
+  - {fileID: -8931867103700511246, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}
+  - {fileID: 1551156044192356878, guid: 1f720bf9fa44712418aee362d34c4cee, type: 3}

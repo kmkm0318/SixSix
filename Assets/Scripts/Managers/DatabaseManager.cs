@@ -128,7 +128,7 @@ public class DatabaseManager : Singleton<DatabaseManager>
             FROM GameRuns AS A
             JOIN
                 (
-                SELECT RunID, GROUP_CONCAT(AbilityDiceID, ',') AS DiceCombination
+                SELECT RunID, GROUP_CONCAT(AbilityDiceID ORDER BY AbilityDiceID ASC, ',') AS DiceCombination
                 FROM RunDice
                 GROUP BY RunID
                 ) AS B

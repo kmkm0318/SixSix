@@ -43,7 +43,7 @@ public class PlayerStatSelectUI : UIFocusHandler
         _chipText.gameObject.SetActive(!_isAchieved);
 
         Image.color = new Color(1, 1, 1, _isAchieved ? 1 : 0.5f);
-        Image.sprite = _playerStatSO.diceSpriteListSO.spriteList.First();
+        Image.sprite = _playerStatSO.diceSpriteListSO.spriteList.Last();
         Image.material = new(Image.material);
         _playerStatSO.shaderDataSO.SetMaterialProperties(Image.material);
     }

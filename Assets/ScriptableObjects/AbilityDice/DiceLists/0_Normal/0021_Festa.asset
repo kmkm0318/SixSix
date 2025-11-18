@@ -29,7 +29,7 @@ MonoBehaviour:
   maxDiceValue: 5
   abilityTrigger: {fileID: 11400000, guid: 7b4b1d65f69ee3a4590644d70c9aa060, type: 2}
   abilityEffect: {fileID: 11400000, guid: b6a5562b7a236c64fb90ca275e668709, type: 2}
-  abilityUnlock: {fileID: 11400000, guid: 7cbf30c3ab066e54e80cf2cebafda26c, type: 2}
+  abilityUnlock: {fileID: 11400000, guid: e215815d6a0402646837bce94a5948fd, type: 2}
   references:
     version: 2
     RefIds: []

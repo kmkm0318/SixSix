@@ -456,7 +456,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 50810566724689920
-    m_Localized: Get {0} score or more
+    m_Localized: 'Get {0} score or more
+
+      In One Round'
     m_Metadata:
       m_Items: []
   references:

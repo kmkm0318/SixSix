@@ -1,30 +1,27 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
-public class HandScoreSingleUI : UIFocusHandler
+public class HandScoreSingleUI : MonoBehaviour
 {
     [SerializeField] private LocalizeStringEvent nameLocalizedText;
     [SerializeField] private TMP_Text enhanceLevelText;
     [SerializeField] private TMP_Text baseScoreText;
     [SerializeField] private TMP_Text multiplierText;
-    [SerializeField] private Color focusedColor;
-    [SerializeField] private Color unfocusedColor;
+    [SerializeField] private Button _button;
 
     private HandSO _handSO;
     private Action<HandSO> _onClick;
 
     private void Awake()
     {
-        OnPointerEntered += OnFocused;
-        OnPointerExited += OnUnfocused;
-        OnPointerClicked += () =>
+        _button.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlaySFX(SFXType.ButtonDown);
             _onClick?.Invoke(_handSO);
-        };
+        });
     }
 
     public void Init(HandSO handSO, Action<HandSO> onClick)
@@ -35,7 +32,6 @@ public class HandScoreSingleUI : UIFocusHandler
         _onClick = onClick;
 
         ResetScoreText();
-        OnUnfocused();
     }
 
     public void UpdateScoreText(ScorePair scorePair)
@@ -47,18 +43,6 @@ public class HandScoreSingleUI : UIFocusHandler
     public void ResetScoreText()
     {
         UpdateScoreText(new(0, 0));
-    }
-
-    private void OnFocused()
-    {
-        baseScoreText.color = focusedColor;
-        multiplierText.color = focusedColor;
-    }
-
-    private void OnUnfocused()
-    {
-        baseScoreText.color = unfocusedColor;
-        multiplierText.color = unfocusedColor;
     }
 
     public void PlayTriggerAnimation(int enhanceLevel, ScorePair scorePair)
