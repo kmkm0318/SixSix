@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class BaseUI : MonoBehaviour
+public abstract class BaseUI : MonoBehaviour
 {
     [SerializeField] protected RectTransform _panel;
     [SerializeField] protected FadeCanvasGroup _background;
