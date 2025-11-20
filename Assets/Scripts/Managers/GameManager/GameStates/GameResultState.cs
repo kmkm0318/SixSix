@@ -10,7 +10,7 @@ public class GameResultState : BaseGameState
 
         PlayerRecordManager.Instance.UpdatePlayerRecord();
 
-        float highestRoundScore = GameResultManager.Instance.GetResultValue(GameResultValueType.HighestRoundScore);
+        double highestRoundScore = ScoreManager.Instance.HighestRoundScore;
         AddScoreToLeaderboard(highestRoundScore);
     }
 
