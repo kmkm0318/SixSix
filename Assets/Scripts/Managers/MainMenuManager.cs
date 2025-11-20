@@ -1,3 +1,4 @@
+using Firebase.Extensions;
 using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
@@ -25,17 +26,33 @@ public class MainMenuManager : MonoBehaviour
 
     private async void ShowMyBestScore()
     {
-        double bestScore = await FirebaseManager.Instance.GetMyBestScore();
-        Debug.Log("My Best Score: " + bestScore);
+        await FirebaseManager.Instance.GetMyBestScore().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                double bestScore = task.Result;
+                LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(bestScore);
+            }
+            else
+            {
+                Debug.LogError("Show My Best Score Failed: " + task.Exception);
+            }
+        });
     }
 
     private async void ShowLeaderboard()
     {
-        var leaderboard = await FirebaseManager.Instance.GetTopScores();
-        Debug.Log("Leaderboard:");
-        foreach (var entry in leaderboard)
+        await FirebaseManager.Instance.GetTopScores().ContinueWithOnMainThread(task =>
         {
-            Debug.Log($"Player: {entry.playerName}, Score: {entry.score}");
-        }
+            if (task.IsCompleted)
+            {
+                var leaderboard = task.Result;
+                LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboard);
+            }
+            else
+            {
+                Debug.LogError("Show Lederboard Failed: " + task.Exception);
+            }
+        });
     }
 }

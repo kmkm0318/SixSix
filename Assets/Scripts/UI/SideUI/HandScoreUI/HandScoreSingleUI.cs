@@ -38,6 +38,9 @@ public class HandScoreSingleUI : MonoBehaviour
     {
         baseScoreText.text = UtilityFunctions.FormatNumber(scorePair.baseScore);
         multiplierText.text = UtilityFunctions.FormatNumber(scorePair.multiplier);
+
+        baseScoreText.color = scorePair.baseScore > 0 ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
+        multiplierText.color = scorePair.multiplier > 0 ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
     }
 
     public void ResetScoreText()
