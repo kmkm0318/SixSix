@@ -31,7 +31,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  chipReward: 3
+  chipReward: 6
   targetRound: 12
   targetCount: 1
   references:

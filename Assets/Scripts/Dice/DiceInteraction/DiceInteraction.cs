@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 /// 다이스의 상호작용을 처리하는 클래스
 /// </summary>
 [RequireComponent(typeof(Dice))]
-public class DiceInteraction : MonoBehaviour, IFocusable, IPointerClickHandler//, IPointerEnterHandler, IPointerExitHandler
+public class DiceInteraction : MonoBehaviour, IFocusable, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private DiceHighlight _diceHighlight;
     [SerializeField] private DiceInteractionTypeDataList _dataList;
 
     private Dice _dice;
-    private bool _isPointerOver = false;
+    private bool _isFocusing = false;
     private DiceInteractionType _interactionType;
     public DiceInteractionType InteractionType
     {
@@ -53,34 +53,22 @@ public class DiceInteraction : MonoBehaviour, IFocusable, IPointerClickHandler//
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _isPointerOver = true;
-
-        _dice.ShowToolTip();
-
-        UpdateHighlightAndInteractionInfo();
+        if (FocusManager.Instance) FocusManager.Instance.SetFocus(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _isPointerOver = false;
-
-        ToolTipUIEvents.TriggerOnToolTipHideRequested(_dice.transform);
-
-        UpdateHighlightAndInteractionInfo();
+        if (FocusManager.Instance) FocusManager.Instance.UnsetFocus(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (FocusManager.Instance) FocusManager.Instance.OnClick(this);
-
-        // if (!IsInteractable) return;
-        // _dice.HandleMouseClick();
-        // DiceInteractionEvents.TriggerOnDiceClicked(_dice);
     }
 
     private void UpdateHighlightAndInteractionInfo()
     {
-        if (!_isPointerOver || !IsInteractable)
+        if (!_isFocusing || !IsInteractable)
         {
             _diceHighlight.StopHighlightCoroutine();
             InteractionInfoUIEvents.TriggerOnHideInteractionInfoUI(_dice.transform);
@@ -97,12 +85,20 @@ public class DiceInteraction : MonoBehaviour, IFocusable, IPointerClickHandler//
 
     public void OnFocus()
     {
-        OnPointerEnter(null);
+        _isFocusing = true;
+
+        _dice.ShowToolTip();
+
+        UpdateHighlightAndInteractionInfo();
     }
 
     public void OnUnfocus()
     {
-        OnPointerExit(null);
+        _isFocusing = false;
+
+        ToolTipUIEvents.TriggerOnToolTipHideRequested(_dice.transform);
+
+        UpdateHighlightAndInteractionInfo();
     }
 
     public void OnInteract()

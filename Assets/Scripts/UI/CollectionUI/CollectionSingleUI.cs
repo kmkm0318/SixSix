@@ -9,7 +9,7 @@ public class CollectionSingleUI : UIFocusHandler
         string descriptionText = abilityDiceSO.IsUnlcoked() ? abilityDiceSO.GetDescriptionText() : abilityDiceSO.abilityUnlock.GetDescriptionText();
         Color color = abilityDiceSO.IsUnlcoked() ? Color.white : new Color(1f, 1f, 1f, 0.5f);
 
-        OnPointerEntered += () =>
+        OnFocused += () =>
         {
             ToolTipUIEvents.TriggerOnToolTipShowRequested(
                 RectTransform,
@@ -21,7 +21,7 @@ public class CollectionSingleUI : UIFocusHandler
             );
         };
 
-        OnPointerExited += () =>
+        OnUnfocused += () =>
         {
             ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
         };

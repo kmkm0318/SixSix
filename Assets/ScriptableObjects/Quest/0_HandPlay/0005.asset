@@ -31,7 +31,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  chipReward: 3
+  chipReward: 5
   targetHandSO: {fileID: 11400000, guid: 6a36a68ed6a0a1644bddfc7813a6eba9, type: 2}
   targetCount: 3
   references:

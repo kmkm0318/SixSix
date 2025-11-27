@@ -10,7 +10,7 @@ public class LoadingManager : MonoBehaviour
 
     private IEnumerator LoadingCoroutine()
     {
-        yield return new WaitUntil(() => FirebaseManager.Instance != null && FirebaseManager.Instance._isFinished);
+        yield return new WaitUntil(() => FirebaseManager.Instance != null && FirebaseManager.Instance._isInitialized);
         SceneTransitionManager.Instance.ChangeScene(SceneType.MainMenu);
     }
 }

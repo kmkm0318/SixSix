@@ -9,16 +9,16 @@ using UnityEngine.UI;
 /// </summary>
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Image))]
-public class UIFocusHandler : MonoBehaviour, IFocusable, IPointerClickHandler//, IPointerEnterHandler, IPointerExitHandler
+public class UIFocusHandler : MonoBehaviour, IFocusable, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     protected RectTransform RectTransform { get; private set; }
     protected Image Image { get; private set; }
 
-    protected bool IsPointerOver { get; private set; } = false;
+    protected bool IsFocusing { get; private set; } = false;
 
-    public event Action OnPointerExited;
-    public event Action OnPointerEntered;
-    public event Action OnPointerClicked;
+    public event Action OnFocused;
+    public event Action OnUnfocused;
+    public event Action OnInteracted;
 
     private void Awake()
     {
@@ -28,14 +28,12 @@ public class UIFocusHandler : MonoBehaviour, IFocusable, IPointerClickHandler//,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        IsPointerOver = true;
-        OnPointerEntered?.Invoke();
+        if (FocusManager.Instance) FocusManager.Instance.SetFocus(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        IsPointerOver = false;
-        OnPointerExited?.Invoke();
+        if (FocusManager.Instance) FocusManager.Instance.UnsetFocus(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -45,16 +43,18 @@ public class UIFocusHandler : MonoBehaviour, IFocusable, IPointerClickHandler//,
 
     public void OnFocus()
     {
-        OnPointerEnter(null);
+        IsFocusing = true;
+        OnFocused?.Invoke();
     }
 
     public void OnUnfocus()
     {
-        OnPointerExit(null);
+        IsFocusing = false;
+        OnUnfocused?.Invoke();
     }
 
     public void OnInteract()
     {
-        OnPointerClicked?.Invoke();
+        OnInteracted?.Invoke();
     }
 }

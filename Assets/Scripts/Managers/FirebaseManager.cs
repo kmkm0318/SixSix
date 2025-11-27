@@ -16,9 +16,16 @@ public class FirebaseManager : Singleton<FirebaseManager>
     private FirebaseFirestore _firestore;
     private FirebaseAuth _auth;
     private FirebaseUser _user;
-    public bool _isFinished { get; private set; } = false;
+    //파이어베이스 초기화 완료 여부
+    //로그인까지 완료하거나 실패로 끝난 경우에 true
+    public bool _isInitialized { get; private set; } = false;
 
     private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
@@ -34,15 +41,26 @@ public class FirebaseManager : Singleton<FirebaseManager>
             else
             {
                 Debug.LogError("Firebase initialization failed: " + task.Exception);
+                _isInitialized = true;
             }
-
-            _isFinished = true;
         });
     }
 
     //로그인은 익명으로 진행. 플레이어를 ID를 통해 구분하기 위해 필요.
     private void SignInAnonymously()
     {
+        //로그인 되어있는 경우에는 진행하지 않음
+        if (_auth.CurrentUser != null)
+        {
+            Debug.Log("User already signed in.");
+            _user = _auth.CurrentUser;
+
+            _isInitialized = true;
+
+            return;
+        }
+
+        //익명으로 로그인
         _auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCompleted)
@@ -53,6 +71,8 @@ public class FirebaseManager : Singleton<FirebaseManager>
             {
                 Debug.LogError("Anonymous sign-in failed: " + task.Exception);
             }
+
+            _isInitialized = true;
         });
     }
 

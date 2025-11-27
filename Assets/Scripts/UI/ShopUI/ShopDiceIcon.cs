@@ -7,8 +7,8 @@ public class ShopDiceIcon : UIFocusHandler
 
     private void Start()
     {
-        OnPointerEntered += ShowToolTip;
-        OnPointerExited += HideToolTip;
+        OnFocused += ShowToolTip;
+        OnUnfocused += HideToolTip;
     }
 
     public void Init(AbilityDiceSO abilityDiceSO)

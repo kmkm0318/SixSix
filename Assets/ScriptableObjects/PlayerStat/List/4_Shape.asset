@@ -33,14 +33,14 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   id: 4
-  price: 6
+  price: 12
   initialTargetRoundScore: 600
-  playDiceCount: 6
+  playDiceCount: 5
   abilityDiceMax: 5
   gambleDiceMax: 3
   gambleDiceSaveMax: 5
-  playMax: 3
-  rollMax: 3
+  playMax: 4
+  rollMax: 4
   startMoney: 0
   bonusMoney: 25
   roundClearReward: 5

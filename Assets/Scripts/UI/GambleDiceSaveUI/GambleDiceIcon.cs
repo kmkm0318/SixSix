@@ -28,7 +28,7 @@ public class GambleDiceIcon : UIFocusHandler
 
     private void Start()
     {
-        OnPointerEntered += () =>
+        OnFocused += () =>
         {
             if (_gambleDiceSO != null)
             {
@@ -37,12 +37,12 @@ public class GambleDiceIcon : UIFocusHandler
 
             UpdateHighlightAndInfo();
         };
-        OnPointerExited += () =>
+        OnUnfocused += () =>
         {
             ToolTipUIEvents.TriggerOnToolTipHideRequested(RectTransform);
             UpdateHighlightAndInfo();
         };
-        OnPointerClicked += () => _onClicked?.Invoke(this);
+        OnInteracted += () => _onClicked?.Invoke(this);
     }
 
     private void OnEnable()
@@ -147,7 +147,7 @@ public class GambleDiceIcon : UIFocusHandler
 
     private void UpdateHighlightAndInfo()
     {
-        if (!IsPointerOver || InteractionType == DiceInteractionType.None)
+        if (!IsFocusing || InteractionType == DiceInteractionType.None)
         {
             _highlight.StopHighlightCoroutine();
             InteractionInfoUIEvents.TriggerOnHideInteractionInfoUI(RectTransform);

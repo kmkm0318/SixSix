@@ -19,9 +19,9 @@ public class PlayerStatSelectUI : UIFocusHandler
 
     private void Start()
     {
-        OnPointerClicked += () => OnSelected.Invoke(this);
-        OnPointerEntered += ShowToolTip;
-        OnPointerExited += HideToolTip;
+        OnInteracted += () => OnSelected.Invoke(this);
+        OnFocused += ShowToolTip;
+        OnUnfocused += HideToolTip;
     }
 
     public void Init(PlayerStatSO playerStatSO, bool isAchieved)
@@ -53,10 +53,17 @@ public class PlayerStatSelectUI : UIFocusHandler
         var name = _playerStatSO.playerStatName.GetLocalizedString();
         var description = _playerStatSO.playerStatDescription.GetLocalizedString();
         ToolTipUIEvents.TriggerOnToolTipShowRequested(transform, Vector2.left, name, description);
+
+        if (_isAchieved)
+        {
+            InteractionInfoUIEvents.TriggerOnShowInteractionInfoUI(transform, DiceInteractionType.Use);
+        }
     }
 
     private void HideToolTip()
     {
         ToolTipUIEvents.TriggerOnToolTipHideRequested(transform);
+
+        InteractionInfoUIEvents.TriggerOnHideInteractionInfoUI(transform);
     }
 }

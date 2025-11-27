@@ -22,8 +22,8 @@ public class GambleDiceSaveUI : BaseUI
 
     private void Init()
     {
-        _panelMouseHandler.OnPointerEntered += OnPointerEntered;
-        _panelMouseHandler.OnPointerExited += OnPointerExited;
+        _panelMouseHandler.OnFocused += OnFocused;
+        _panelMouseHandler.OnUnfocused += OnUnfocused;
 
         for (int i = 0; i < DataContainer.Instance.CurrentPlayerStat.gambleDiceSaveMax; i++)
         {
@@ -31,12 +31,12 @@ public class GambleDiceSaveUI : BaseUI
         }
     }
 
-    private void OnPointerEntered()
+    private void OnFocused()
     {
         Show();
     }
 
-    private void OnPointerExited()
+    private void OnUnfocused()
     {
         if (_isAlwaysShow) return;
         Hide();
