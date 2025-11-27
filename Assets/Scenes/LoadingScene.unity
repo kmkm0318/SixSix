@@ -1350,6 +1350,8 @@ MonoBehaviour:
       value: {fileID: 8300000, guid: 65b1d4deaa039a145b899263fc22d234, type: 3}
     - key: 12
       value: {fileID: 8300000, guid: d01c0f20cf29a6540b06e387c629bf59, type: 3}
+    - key: 13
+      value: {fileID: 8300000, guid: 5e6413d3a9691864a9c674dddeb1fb2e, type: 3}
   _maxSameSFXCount: 1
 --- !u!4 &2077021265
 Transform:

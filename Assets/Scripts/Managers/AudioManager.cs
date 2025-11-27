@@ -202,5 +202,6 @@ public enum SFXType
     DiceTrigger,
     Money,
     DiceGenerate,
-    DiceRemove
+    DiceRemove,
+    HandSuccess,
 }

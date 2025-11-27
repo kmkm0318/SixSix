@@ -34,7 +34,7 @@ MonoBehaviour:
     m_LocalVariables: []
   id: 0
   price: 0
-  initialTargetRoundScore: 600
+  initialTargetRoundScore: 300
   playDiceCount: 5
   abilityDiceMax: 5
   gambleDiceMax: 3

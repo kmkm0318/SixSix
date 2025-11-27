@@ -127,6 +127,7 @@ public class HandManager : Singleton<HandManager>
         }
 
         HandScoreUIEvents.TriggerOnHandScoreUIUpdateRequested(handScoreDict);
+        HandSuccessUIEvents.TriggerOnHandSuccessed(handScoreDict);
     }
 
     public void HandleSelectHand(HandSO handSO)
