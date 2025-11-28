@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 핸드 성공 UI 클래스
+/// </summary>
 public class HandSuccessUI : MonoBehaviour
 {
+    [Header("UI Elements")]
     [SerializeField] private AnimatedText _successText;
     [SerializeField] private float _displayDuration = 2f;
     [SerializeField] private SFXType _successSFX = SFXType.HandSuccess;
+    [SerializeField] private Transform _effectPos;
 
     private void Awake()
     {
@@ -70,6 +75,7 @@ public class HandSuccessUI : MonoBehaviour
     private IEnumerator ShowSuccessTextCoroutine(string message)
     {
         _successText.ShowText(message);
+        ParticleEvents.TriggerOnHandSuccess(_effectPos.position);
 
         if (AudioManager.Instance)
         {

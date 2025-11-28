@@ -337,6 +337,7 @@ MonoBehaviour:
   diceGenerateTransform: {fileID: 7737669603667701967}
   randomGenerateRange: 2
   forceTransform: {fileID: 7637713890866101417}
+  _minSqrMagnitude: 1
 --- !u!114 &7140823859282999804
 MonoBehaviour:
   m_ObjectHideFlags: 0

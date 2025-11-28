@@ -254,7 +254,10 @@ public abstract class Dice : MonoBehaviour
         if (IsRolling)
         {
             AudioManager.Instance.PlaySFX(SFXType.DiceCollide);
-            if (!IsKeeped) ChangeFace(1);
+            if (!IsKeeped)
+            {
+                ChangeFace(1);
+            }
         }
     }
     #endregion

@@ -81,6 +81,7 @@ MonoBehaviour:
   diceMovement: {fileID: 3181382390687125352}
   diceInteraction: {fileID: 2223054772521473096}
   diceVisual: {fileID: 2514399028580361127}
+  diceFaceChangeEffect: {fileID: 5810302954237815095}
 --- !u!114 &2223054772521473096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -1558305301515133675, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
@@ -114,3 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005568398b6df764b888b7744b40e100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &5810302954237815095 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2604345970490302570, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
+  m_PrefabInstance: {fileID: 8396443756386322781}
+  m_PrefabAsset: {fileID: 0}

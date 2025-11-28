@@ -131,3 +131,9 @@ MonoBehaviour:
   diceMovement: {fileID: 1226285127584898628}
   diceInteraction: {fileID: 2592887251310282084}
   diceVisual: {fileID: 2289756218039906955}
+  diceFaceChangeEffect: {fileID: 7890445629403658267}
+--- !u!198 &7890445629403658267 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2604345970490302570, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
+  m_PrefabInstance: {fileID: 5306366956858251377}
+  m_PrefabAsset: {fileID: 0}

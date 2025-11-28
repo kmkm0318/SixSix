@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41025c2479bb7b54383f084d92de19fd, type: 3}
-  m_Name: RollCount_100
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockRollCountSO
+  m_Script: {fileID: 11500000, guid: 5739753a3d303944f832f6a9f05d7bfb, type: 3}
+  m_Name: MaxScore_1e5
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityDiceUnlockMaxScoreSO
   unlockDescription:
     m_TableReference:
       m_TableCollectionName: GUID:b20a225e51e76ad48ab00b9ad829b69d
     m_TableEntryReference:
-      m_KeyId: 50810550920552448
+      m_KeyId: 50810566724689920
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  value: 100
+  value: 100000
   references:
     version: 2
     RefIds: []

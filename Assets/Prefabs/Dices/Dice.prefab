@@ -389,6 +389,7 @@ Transform:
   m_Children:
   - {fileID: 2049436560521407670}
   - {fileID: 913672955282215222}
+  - {fileID: 616693748361838298}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5604132475623056141
@@ -479,6 +480,7 @@ MonoBehaviour:
   diceMovement: {fileID: 6386283979626169909}
   diceInteraction: {fileID: -1558305301515133675}
   diceVisual: {fileID: 6224776796104731386}
+  diceFaceChangeEffect: {fileID: 2604345970490302570}
 --- !u!114 &6386283979626169909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,3 +510,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diceHighlight: {fileID: 3095694830387162080}
   _dataList: {fileID: 11400000, guid: fcaaf42545cab6f4f93707f8b6aa005f, type: 2}
+--- !u!1001 &2029774092860366737
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2543161663320012343}
+    m_Modifications:
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526181648808801539, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+      propertyPath: m_Name
+      value: DiceFaceChangeEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+--- !u!4 &616693748361838298 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+  m_PrefabInstance: {fileID: 2029774092860366737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2604345970490302570 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4039528840944484347, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
+  m_PrefabInstance: {fileID: 2029774092860366737}
+  m_PrefabAsset: {fileID: 0}

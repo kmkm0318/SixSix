@@ -73,6 +73,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6426967729856184230}
   m_SourcePrefab: {fileID: 100100000, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
+--- !u!198 &483505424064824422 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2604345970490302570, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
+  m_PrefabInstance: {fileID: 2490982365595214860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4862671555210406773 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7055470765296504697, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
@@ -93,6 +98,7 @@ MonoBehaviour:
   diceMovement: {fileID: 8804849747752018489}
   diceInteraction: {fileID: 5246261277973920025}
   diceVisual: {fileID: 8427192334956498678}
+  diceFaceChangeEffect: {fileID: 483505424064824422}
 --- !u!114 &5246261277973920025 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -1558305301515133675, guid: 24649300d41a0ed48bc9c449b3d01612, type: 3}
