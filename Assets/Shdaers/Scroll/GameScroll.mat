@@ -53,8 +53,8 @@ Material:
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
     m_Colors:
-    - _BackgroundColor: {r: 0.8673333, g: 0.801, b: 1, a: 1}
-    - _CircleColor: {r: 0.7808667, g: 0.7208, b: 0.90099996, a: 1}
+    - _BackgroundColor: {r: 0.8, g: 1, b: 0.8, a: 1}
+    - _CircleColor: {r: 0.72156864, g: 0.9019608, b: 0.72156864, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Ratio: {r: 18, g: 10, b: 0, a: 0}
     - _Size: {r: -1.5, g: 3, b: 0, a: 0}
