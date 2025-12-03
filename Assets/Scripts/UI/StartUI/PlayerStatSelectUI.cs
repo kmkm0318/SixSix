@@ -19,7 +19,7 @@ public class PlayerStatSelectUI : UIFocusHandler
 
     private void Start()
     {
-        OnInteracted += () => OnSelected.Invoke(this);
+        OnInteracted += Select;
         OnFocused += ShowToolTip;
         OnUnfocused += HideToolTip;
     }
@@ -46,6 +46,13 @@ public class PlayerStatSelectUI : UIFocusHandler
         Image.sprite = _playerStatSO.diceSpriteListSO.spriteList.Last();
         Image.material = new(Image.material);
         _playerStatSO.shaderDataSO.SetMaterialProperties(Image.material);
+    }
+
+    private void Select()
+    {
+        OnSelected?.Invoke(this);
+        StartCoroutine(AnimationFunction.ShakeAnimation(transform));
+        AudioManager.Instance.PlaySFX(SFXType.DiceClick);
     }
 
     public void ShowToolTip()

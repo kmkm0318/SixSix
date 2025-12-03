@@ -42,6 +42,7 @@ public class RoundUI : MonoBehaviour
         string newText = $"{currentRound}/{RoundManager.Instance.ClearRound}";
 
         SequenceManager.Instance.AddCoroutine(UpdateTextAndPlayAnimation(currentRoundText, newText), true);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.DiceTrigger), true);
     }
 
     private void OnTargetRoundScoreChanged(double score)
@@ -52,6 +53,7 @@ public class RoundUI : MonoBehaviour
     private void OnCurrentRoundScoreChanged(double score)
     {
         UpdateScoreText(currentRoundScoreText, score);
+        SequenceManager.Instance.AddCoroutine(() => AudioManager.Instance.PlaySFX(SFXType.DiceTrigger), true);
     }
 
     private void OnPlayScoreChanged(double score)
@@ -64,7 +66,6 @@ public class RoundUI : MonoBehaviour
     {
         UpdateScoreText(baseScoreText, pair.baseScore);
         UpdateScoreText(multiplierText, pair.multiplier);
-        SequenceManager.Instance.ApplyParallelCoroutine();
     }
 
     private void OnBaseScoreChanged(double score)

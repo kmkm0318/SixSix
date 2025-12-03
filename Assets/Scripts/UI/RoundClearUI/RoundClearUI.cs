@@ -58,7 +58,7 @@ public class RoundClearUI : BaseUI
         {
             RoundManager.Instance.CurrentRound,
             UtilityFunctions.FormatNumber(ScoreManager.Instance.TargetRoundScore),
-            UtilityFunctions.FormatNumber(ScoreManager.Instance.PreviousRoundScore),
+            UtilityFunctions.FormatNumber(ScoreManager.Instance.CurrentRoundScore),
         };
         resultString.RefreshString();
         _resultTextValue = resultString.GetLocalizedString();

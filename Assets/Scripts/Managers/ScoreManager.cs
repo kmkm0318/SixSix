@@ -90,11 +90,11 @@ public class ScoreManager : Singleton<ScoreManager>
     #region RegisterEvents
     private void RegisterEvents()
     {
-        GameManager.Instance.RegisterEvent(GameState.Round, null, OnRoundCleared);
+        GameManager.Instance.RegisterEvent(GameState.Round, OnRoundStarted, null);
         HandManager.Instance.OnHandScoreApplied += OnHandScoreApplied;
     }
 
-    private void OnRoundCleared()
+    private void OnRoundStarted()
     {
         previousRoundScore = CurrentRoundScore;
         CurrentRoundScore = 0;
