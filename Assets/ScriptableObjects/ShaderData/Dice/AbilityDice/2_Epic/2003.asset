@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d12da502c4d7d41aa4cedb07f5d157, type: 3}
   m_Name: 2003
   m_EditorClassIdentifier: 
+  spriteRendererMaterial: {fileID: 2100000, guid: 6d95f9599e921a34a94fa3993ec74fd1, type: 2}
+  imageMaterial: {fileID: 2100000, guid: d4f0b641548c33f4ca2ffe1772a98fcc, type: 2}
   FADE_ON: 1
   COLORRAMP_ON: 0
   colorRampGradient:

@@ -11,12 +11,12 @@ public class DiceVisual : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.material = new(spriteRenderer.material);
     }
 
     public void Initialize(ShaderDataSO shaderDataSO)
     {
         diceRenderer.Initialize(shaderDataSO, spriteRenderer.material);
+        spriteRenderer.material = new(shaderDataSO.spriteRendererMaterial);
     }
 
     public void SetSprite(Sprite sprite)

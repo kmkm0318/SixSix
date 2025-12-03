@@ -139,8 +139,7 @@ public class GambleDiceIcon : UIFocusHandler
         {
             var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
 
-            Image.material = new(Image.material);
-            _gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
+            Image.material = _gambleDiceSO.shaderDataSO.imageMaterial;
             Image.sprite = diceSpriteListSO.spriteList[_gambleDiceSO.MaxDiceValue - 1];
         }
     }

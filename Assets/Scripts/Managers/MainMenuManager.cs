@@ -1,4 +1,4 @@
-using Firebase.Extensions;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -12,9 +12,7 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlayBGM(BGMType.MainMenuScene);
         StartUIEvents.OnPlayerStatSelected += OnPlayerStatSelected;
 
-        ShowMyBestScore();
-        ShowLeaderboard();
-        ShowLeaderboardUI();
+        // TryShowLeaderboardUI();
     }
 
     private void OnDestroy()
@@ -32,48 +30,24 @@ public class MainMenuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 내 최고 점수를 파이어베이스에서 가져와 리더보드 UI에 표시 요청
+    /// 리더보드 UI 표시 시도
+    /// FireBaseManager로부터 나의 최고 기록과 리더보드를 가져옴
     /// </summary>
-    private async void ShowMyBestScore()
+    private async void TryShowLeaderboardUI()
     {
-        await FirebaseManager.Instance.GetMyBestScore().ContinueWithOnMainThread(task =>
+        try
         {
-            if (task.IsCompleted)
-            {
-                double bestScore = task.Result;
-                LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(bestScore);
-            }
-            else
-            {
-                Debug.LogError("Show My Best Score Failed: " + task.Exception);
-            }
-        });
-    }
+            var myBestScore = await FirebaseManager.Instance.GetMyBestScore();
+            var leaderboardData = await FirebaseManager.Instance.GetTopScores();
 
-    /// <summary>
-    /// 리더보드 데이터를 파이어베이스에서 가져와 리더보드 UI에 표시 요청
-    /// </summary>
-    private async void ShowLeaderboard()
-    {
-        await FirebaseManager.Instance.GetTopScores().ContinueWithOnMainThread(task =>
+            LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(myBestScore);
+            LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboardData);
+
+            LeaderboardUIEvents.TriggerOnShowRequested();
+        }
+        catch (Exception e)
         {
-            if (task.IsCompleted)
-            {
-                var leaderboard = task.Result;
-                LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboard);
-            }
-            else
-            {
-                Debug.LogError("Show Lederboard Failed: " + task.Exception);
-            }
-        });
-    }
-
-    /// <summary>
-    /// 리더보드 UI 표시 요청
-    /// </summary>
-    private void ShowLeaderboardUI()
-    {
-        LeaderboardUIEvents.TriggerOnShowRequested();
+            Debug.LogError($"Failed To Load Leaderboard: {e.Message}");
+        }
     }
 }

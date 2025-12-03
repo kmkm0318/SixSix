@@ -3,6 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ShaderDataSO", menuName = "Scriptable Objects/ShaderDataSO")]
 public class ShaderDataSO : ScriptableObject
 {
+    [Header("Materials")]
+    public Material spriteRendererMaterial;
+    public Material imageMaterial;
+
     [Header("Fade")]
     public bool FADE_ON = false;
 
@@ -133,6 +137,8 @@ public class ShaderDataSO : ScriptableObject
             material.DisableKeyword(ShaderConstants.OVERLAY_ON);
             material.DisableKeyword(ShaderConstants.OVERLAYMULT_ON);
         }
+
+        Debug.Log($"Is Material Has ColorRamp: {material.IsKeywordEnabled(ShaderConstants.COLORRAMP_ON)}");
     }
 
     public void SetRandomFade(Material material)

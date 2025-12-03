@@ -29,14 +29,12 @@ public class ShopDiceIcon : UIFocusHandler
 
         if (abilityDiceSO != null)
         {
-            Image.material = new(Image.material);
-            abilityDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
+            Image.material = abilityDiceSO.shaderDataSO.imageMaterial;
             Image.sprite = diceSpriteListSO.spriteList[abilityDiceSO.MaxDiceValue - 1];
         }
         else if (gambleDiceSO != null)
         {
-            Image.material = new(Image.material);
-            gambleDiceSO.shaderDataSO.SetMaterialProperties(Image.material);
+            Image.material = gambleDiceSO.shaderDataSO.imageMaterial;
             Image.sprite = diceSpriteListSO.spriteList[gambleDiceSO.MaxDiceValue - 1];
         }
     }

@@ -165,7 +165,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d3ee07faa2774cc41b54d394b0a1c0ef, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,7 +259,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d3ee07faa2774cc41b54d394b0a1c0ef, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -480,7 +480,6 @@ MonoBehaviour:
   diceMovement: {fileID: 6386283979626169909}
   diceInteraction: {fileID: -1558305301515133675}
   diceVisual: {fileID: 6224776796104731386}
-  diceFaceChangeEffect: {fileID: 2604345970490302570}
 --- !u!114 &6386283979626169909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,10 +569,5 @@ PrefabInstance:
 --- !u!4 &616693748361838298 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1487836572663685451, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
-  m_PrefabInstance: {fileID: 2029774092860366737}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2604345970490302570 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4039528840944484347, guid: 77ad97eb444001041874dbd0017cab53, type: 3}
   m_PrefabInstance: {fileID: 2029774092860366737}
   m_PrefabAsset: {fileID: 0}

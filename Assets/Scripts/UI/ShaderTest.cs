@@ -7,11 +7,6 @@ public class ShaderTest : MonoBehaviour
     [SerializeField] private Image diceImage;
     [SerializeField] private AnimatedText diceNameText;
 
-    private void Awake()
-    {
-        diceImage.material = new(diceImage.material);
-    }
-
     public void SetShader(AbilityDiceSO so)
     {
         if (so == null) return;
@@ -19,7 +14,7 @@ public class ShaderTest : MonoBehaviour
         var diceSpriteListSO = DataContainer.Instance.CurrentPlayerStat.diceSpriteListSO;
 
         diceImage.sprite = diceSpriteListSO.spriteList[^1];
-        so.shaderDataSO.SetMaterialProperties(diceImage.material);
+        diceImage.material = so.shaderDataSO.imageMaterial;
         diceNameText.SetText(so.DiceName);
     }
 }

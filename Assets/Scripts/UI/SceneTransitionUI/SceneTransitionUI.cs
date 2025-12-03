@@ -5,6 +5,11 @@ public class SceneTransitionUI : Singleton<SceneTransitionUI>
 {
     [SerializeField] private TransitionUI transitionUI;
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void Show(float duration, Action onComplete = null)
     {
         gameObject.SetActive(true);

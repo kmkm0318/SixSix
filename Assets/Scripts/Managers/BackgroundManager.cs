@@ -70,9 +70,6 @@ public class BackgroundManager : MonoBehaviour
         _background.material.DOComplete();
         _background.material.DOColor(backgroundColor, _backgroundColorPropertyID, _duration);
         _background.material.DOColor(circleColor, _circleColorPropertyID, _duration);
-
-        //디버깅
-        Debug.Log($"Background Color Changed to Hue: {randomHue}");
     }
 
     //색상에서 Hue 값만 추출하는 함수

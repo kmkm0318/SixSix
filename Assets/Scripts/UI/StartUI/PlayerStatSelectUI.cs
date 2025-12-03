@@ -44,8 +44,7 @@ public class PlayerStatSelectUI : UIFocusHandler
 
         Image.color = new Color(1, 1, 1, _isAchieved ? 1 : 0.5f);
         Image.sprite = _playerStatSO.diceSpriteListSO.spriteList.Last();
-        Image.material = new(Image.material);
-        _playerStatSO.shaderDataSO.SetMaterialProperties(Image.material);
+        Image.material = _playerStatSO.shaderDataSO.imageMaterial;
     }
 
     private void Select()

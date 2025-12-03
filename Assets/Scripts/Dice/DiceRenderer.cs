@@ -10,7 +10,7 @@ public class DiceRenderer : MonoBehaviour
         this.shaderDataSO = shaderDataSO;
         this.target = target;
 
-        SetMaterialProperties();
+        // SetMaterialProperties();
     }
 
     private void SetMaterialProperties()

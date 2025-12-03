@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d12da502c4d7d41aa4cedb07f5d157, type: 3}
   m_Name: 0009_Tres
   m_EditorClassIdentifier: 
+  spriteRendererMaterial: {fileID: 2100000, guid: 410df1ec8aa872e4a8670151f85fa936, type: 2}
+  imageMaterial: {fileID: 2100000, guid: bdc5e3c5539f14340a1301cd17674cae, type: 2}
   FADE_ON: 1
   COLORRAMP_ON: 1
   colorRampGradient:
@@ -45,3 +47,9 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   NEGATIVE_ON: 0
+  HOLOGRAM_ON: 0
+  HologramStripeColor: {r: 1, g: 1, b: 1, a: 1}
+  CHROMABERR_ON: 0
+  OVERLAY_ON: 0
+  OVERLAYMULT_ON: 0
+  _OverlayTex: {fileID: 0}
