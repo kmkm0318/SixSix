@@ -40,19 +40,8 @@ public class MainMenuManager : MonoBehaviour
             var myBestScore = await FirebaseManager.Instance.GetMyBestScore();
             var leaderboardData = await FirebaseManager.Instance.GetTopScores();
 
-            Debug.Log("myBest: " + myBestScore);
-            Debug.Log("leaderboard count: " + leaderboardData?.Count);
-
-            if (myBestScore > 0)
-            {
-                LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(myBestScore);
-            }
-
-            if (leaderboardData != null)
-            {
-                LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboardData);
-            }
-
+            LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(myBestScore);
+            LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboardData);
             LeaderboardUIEvents.TriggerOnShowRequested();
         }
         catch (Exception e)

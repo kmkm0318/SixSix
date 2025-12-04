@@ -843,7 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e0fb55325040e4aa36acdfd0ee3e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearRound: 1
+  clearRound: 36
   bossRoundInterval: 6
 --- !u!1 &144455909
 GameObject:
