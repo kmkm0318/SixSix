@@ -29,7 +29,5 @@ public class CollectionSingleUI : UIFocusHandler
         Image.sprite = defaultDiceSpriteList[abilityDiceSO.MaxDiceValue - 1];
         Image.material = abilityDiceSO.shaderDataSO.imageMaterial;
         Image.color = color;
-
-        Debug.Log($"Shader Name: {Image.material.shader.name}");
     }
 }

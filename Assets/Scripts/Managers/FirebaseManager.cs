@@ -49,16 +49,16 @@ public class FirebaseManager : Singleton<FirebaseManager>
     //로그인은 익명으로 진행. 플레이어를 ID를 통해 구분하기 위해 필요.
     private void SignInAnonymously()
     {
-        //로그인 되어있는 경우에는 진행하지 않음
-        if (_auth.CurrentUser != null)
-        {
-            Debug.Log("User already signed in.");
-            _user = _auth.CurrentUser;
+        // //로그인 되어있는 경우에는 진행하지 않음
+        // if (_auth.CurrentUser != null)
+        // {
+        //     Debug.Log("User already signed in.");
+        //     _user = _auth.CurrentUser;
 
-            IsInitialized = true;
+        //     IsInitialized = true;
 
-            return;
-        }
+        //     return;
+        // }
 
         //익명으로 로그인
         _auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
