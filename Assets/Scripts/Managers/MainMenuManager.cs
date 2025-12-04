@@ -12,7 +12,7 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlayBGM(BGMType.MainMenuScene);
         StartUIEvents.OnPlayerStatSelected += OnPlayerStatSelected;
 
-        // TryShowLeaderboardUI();
+        TryShowLeaderboardUI();
     }
 
     private void OnDestroy()
@@ -40,8 +40,15 @@ public class MainMenuManager : MonoBehaviour
             var myBestScore = await FirebaseManager.Instance.GetMyBestScore();
             var leaderboardData = await FirebaseManager.Instance.GetTopScores();
 
-            LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(myBestScore);
-            LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboardData);
+            if (myBestScore > 0)
+            {
+                LeaderboardUIEvents.TriggerOnMyBestScoreUpdated(myBestScore);
+            }
+
+            if (leaderboardData != null)
+            {
+                LeaderboardUIEvents.TriggerOnLeaderboardUpdated(leaderboardData);
+            }
 
             LeaderboardUIEvents.TriggerOnShowRequested();
         }

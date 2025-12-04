@@ -18,7 +18,7 @@ public class FirebaseManager : Singleton<FirebaseManager>
     private FirebaseUser _user;
     //파이어베이스 초기화 완료 여부
     //로그인까지 완료하거나 실패로 끝난 경우에 true
-    public bool _isInitialized { get; private set; } = false;
+    public bool IsInitialized { get; private set; } = false;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class FirebaseManager : Singleton<FirebaseManager>
             else
             {
                 Debug.LogError("Firebase initialization failed: " + task.Exception);
-                _isInitialized = true;
+                IsInitialized = true;
             }
         });
     }
@@ -55,7 +55,7 @@ public class FirebaseManager : Singleton<FirebaseManager>
             Debug.Log("User already signed in.");
             _user = _auth.CurrentUser;
 
-            _isInitialized = true;
+            IsInitialized = true;
 
             return;
         }
@@ -72,7 +72,7 @@ public class FirebaseManager : Singleton<FirebaseManager>
                 Debug.LogError("Anonymous sign-in failed: " + task.Exception);
             }
 
-            _isInitialized = true;
+            IsInitialized = true;
         });
     }
 
