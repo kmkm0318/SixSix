@@ -26,8 +26,6 @@ Balatro
 
 [이미지 출처](https://blog.naver.com/doek11/222079755012)
 
----
-
 ## 게임 진행 순서
 
 ![image.png](Assets/Sprites/images/7.png)
@@ -49,3 +47,6 @@ Balatro
 ![image.png](Assets/Sprites/images/11.png)
 
 6라운드마다 보스 라운드가 되어 플레이어는 하나의 디버프를 받고 라운드를 진행하게 됩니다. 예시에서는 각 플레이 당 최대 한 번의 롤만 가능한 디버프가 적용된 모습입니다.
+
+## 플레이 영상
+[![Video Label](http://img.youtube.com/vi/MpYB58EnZWI/0.jpg)](https://youtu.be/MpYB58EnZWI?t=0s)
