@@ -12,20 +12,6 @@ SixSix는 주사위를 사용한 포커 룰을 통해 점수와 재화를 획득
 
 ![image.png](Assets/Sprites/images/4.png)
 
-SixSix는 인기 인디 게임인 Balatro와 주사위 보드 게임인 Yacht Dice에 영감을 받아 제작하게 되었습니다.
-
-![53626_146016_4419.png](Assets/Sprites/images/5.png)
-
-Balatro
-
-[이미지 출처](https://www.ilovepc.co.kr/news/articleView.html?idxno=53626)
-
-![2020090317313132.mp4_20200904_010534.531.png](Assets/Sprites/images/6.png)
-
-닌텐도 세계 게임전집 51의 Yacht Dice
-
-[이미지 출처](https://blog.naver.com/doek11/222079755012)
-
 ## 게임 진행 순서
 
 ![image.png](Assets/Sprites/images/7.png)
