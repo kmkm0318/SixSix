@@ -1,11 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class HandCalculator
 {
+    public static Dictionary<Hand, bool> HandCheckResultsCache { get; private set; } = new();
+    public static Dictionary<int, int> CountMapCache { get; private set; } = new();
+
     #region GetHandCheckResults
+    public static void GetHandCheckResultsNonAlloc(List<int> diceValues)
+    {
+        foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
+        {
+            HandCheckResultsCache[hand.hand] = false;
+        }
+
+        if (diceValues == null || diceValues.Count == 0) return;
+
+        GetCountMapNonAlloc(diceValues);
+
+        HandCheckResultsCache[Hand.Choice] = IsChoiceHand(CountMapCache);
+        HandCheckResultsCache[Hand.FourOfAKind] = IsFourOfAKindHand(CountMapCache);
+        HandCheckResultsCache[Hand.FullHouse] = IsFullHouseHand(CountMapCache);
+        HandCheckResultsCache[Hand.DoubleThreeOfAKind] = IsDoubleThreeOfAKindHand(CountMapCache);
+        HandCheckResultsCache[Hand.SmallStraight] = IsSmallStraightHand(CountMapCache);
+        HandCheckResultsCache[Hand.LargeStraight] = IsLargeStraightHand(CountMapCache);
+        HandCheckResultsCache[Hand.FullStraight] = IsFullStraightHand(CountMapCache);
+        HandCheckResultsCache[Hand.Yacht] = IsYachtHand(CountMapCache);
+        HandCheckResultsCache[Hand.SixSix] = IsSixSixHand(CountMapCache);
+    }
+
     public static Dictionary<Hand, bool> GetHandCheckResults(List<int> diceValues)
     {
         Dictionary<Hand, bool> res = new();
@@ -29,6 +53,22 @@ public static class HandCalculator
         res[Hand.SixSix] = IsSixSixHand(countMap);
 
         return res;
+    }
+
+    private static void GetCountMapNonAlloc(List<int> diceValues)
+    {
+        CountMapCache.Clear();
+        foreach (var diceValue in diceValues)
+        {
+            if (CountMapCache.ContainsKey(diceValue))
+            {
+                CountMapCache[diceValue]++;
+            }
+            else
+            {
+                CountMapCache[diceValue] = 1;
+            }
+        }
     }
 
     private static Dictionary<int, int> GetCountMap(List<int> diceValues)
@@ -55,19 +95,49 @@ public static class HandCalculator
 
     private static bool IsFourOfAKindHand(Dictionary<int, int> countMap)
     {
-        return countMap.Any(x => x.Value >= 4);
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 4)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static bool IsFullHouseHand(Dictionary<int, int> countMap)
     {
-        bool hasThreeOrMore = countMap.Any(x => x.Value >= 3);
-        bool hasAnotherTwoOrMore = countMap.Count(x => x.Value >= 2) >= 2;
-        return hasThreeOrMore && hasAnotherTwoOrMore;
+        bool hasThreeOrMore = false;
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 3)
+            {
+                hasThreeOrMore = true;
+                break;
+            }
+        }
+
+        int hasAnotherTwoOrMoreCount = 0;
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 2)
+            {
+                hasAnotherTwoOrMoreCount++;
+            }
+        }
+        return hasThreeOrMore && hasAnotherTwoOrMoreCount >= 2;
     }
 
     private static bool IsDoubleThreeOfAKindHand(Dictionary<int, int> countMap)
     {
-        int threeOrMoreCount = countMap.Count(x => x.Value >= 3);
+        int threeOrMoreCount = 0;
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 3)
+            {
+                threeOrMoreCount++;
+            }
+        }
         return threeOrMoreCount >= 2;
     }
 
@@ -107,12 +177,26 @@ public static class HandCalculator
 
     private static bool IsYachtHand(Dictionary<int, int> countMap)
     {
-        return countMap.Any(x => x.Value >= 5);
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 5)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static bool IsSixSixHand(Dictionary<int, int> countMap)
     {
-        return countMap.Any(x => x.Value >= 6);
+        foreach (var pair in countMap)
+        {
+            if (pair.Value >= 2)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     #endregion
@@ -169,7 +253,8 @@ public static class HandCalculator
         {
             Dictionary<Hand, float> tmp = new();
 
-            var (handCounts, totalCount) = GetHandSuccessCounts(diceValues, i);
+            var handCounts = GetHandSuccessCounts(diceValues, i);
+            int totalCount = (int)Mathf.Pow(6, i);
 
             foreach (var hand in handCounts.Keys)
             {
@@ -192,9 +277,9 @@ public static class HandCalculator
         return res;
     }
 
-    private static (Dictionary<Hand, int>, int) GetHandSuccessCounts(List<int> diceValues, int rollNum)
+    private static Dictionary<Hand, int> GetHandSuccessCounts(List<int> diceValues, int rollNum)
     {
-        Dictionary<Hand, int> res = new();
+        Dictionary<Hand, int> successCounts = new();
 
         if (rollNum == 0)
         {
@@ -203,56 +288,68 @@ public static class HandCalculator
             {
                 if (result[hand])
                 {
-                    res[hand] = 1;
+                    successCounts[hand] = 1;
                 }
                 else
                 {
-                    res[hand] = 0;
+                    successCounts[hand] = 0;
                 }
             }
-            return (res, 1);
+            return successCounts;
         }
 
-        var allIndexCombination = GetAllIndexCombinations(diceValues.Count, rollNum);
-        var allDiceCombinations = GetAllDiceCombinations(rollNum);
+        DFS(new List<int>(diceValues), rollNum, 0, successCounts);
 
-        foreach (var indexCombination in allIndexCombination)
+        return successCounts;
+    }
+
+    private static void DFS(List<int> currentValues, int pickCount, int idx, Dictionary<Hand, int> successCounts)
+    {
+        // 인덱스 초과, 고를 수 있는 수가 0 이하이면 중지
+        if (idx >= currentValues.Count || pickCount <= 0)
         {
-            Dictionary<Hand, int> tmp = new();
+            // 고를 수 있는 수가 0이 아니면 패스
+            if (pickCount != 0) return;
 
-            foreach (var diceCombination in allDiceCombinations)
+            // 핸드 체크
+            GetHandCheckResultsNonAlloc(currentValues);
+
+            // 성공 핸드 카운트 증가
+            foreach (var hand in HandCheckResultsCache.Keys)
             {
-                var tempDiceValues = new List<int>(diceValues);
-                for (int i = 0; i < indexCombination.Count; i++)
+                if (HandCheckResultsCache[hand])
                 {
-                    tempDiceValues[indexCombination[i]] = diceCombination[i];
-                }
-
-                var result = GetHandCheckResults(tempDiceValues);
-                foreach (var hand in result.Keys)
-                {
-                    if (result[hand])
+                    if (!successCounts.ContainsKey(hand))
                     {
-                        if (!tmp.ContainsKey(hand))
-                        {
-                            tmp[hand] = 0;
-                        }
-                        tmp[hand]++;
+                        successCounts[hand] = 0;
                     }
+                    successCounts[hand]++;
                 }
             }
 
-            foreach (var hand in tmp.Keys)
-            {
-                if (!res.ContainsKey(hand))
-                {
-                    res[hand] = tmp[hand];
-                }
-                res[hand] = Mathf.Max(res[hand], tmp[hand]);
-            }
+            return;
         }
 
-        return (res, allDiceCombinations.Count);
+        // 고를 수 있는 수가 남은 주사위보다 많으면 종료
+        if (pickCount > currentValues.Count - idx) return;
+
+        // 현재 인덱스의 주사위를 고르는 경우 탐색
+
+        // 값 저장
+        var originalValue = currentValues[idx];
+
+        // 1~6까지 값으로 변경 후 DFS 호출
+        for (int i = 1; i <= 6; i++)
+        {
+            currentValues[idx] = i;
+            DFS(currentValues, pickCount - 1, idx + 1, successCounts);
+        }
+
+        // 값 복구
+        currentValues[idx] = originalValue;
+
+        // 현재 인덱스의 주사위를 고르지 않는 경우 탐색
+        DFS(currentValues, pickCount, idx + 1, successCounts);
     }
 
     private static List<List<int>> GetAllIndexCombinations(int totalCount, int pickCount)
