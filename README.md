@@ -391,169 +391,69 @@ IsUnlocked를 통해 해금된 상태인지를 확인할 수 있습니다. 해�
 
 ### 핸드 추천 기능
 
-SixSix는 Yacht Dice처럼 주사위를 포커 핸드처럼 계산하는 방식을 사용합니다. Yacht Dice 경험이 있거나, 포커 룰을 알고 있거나, 게임을 계속 해본다면 익숙해질 수 있겠지만, 처음 게임을 진행하는 플레이어는 어려움을 느낄 수 있습니다. 그런 플레이어를 위해서 핸드 추천 기능을 추가했습니다.
+주사위를 사용하는 포커 룰에 익숙하지 않은 플레이어들을 위해 핸드 추천 기능을 만들었습니다. 현재 플레이어의 주사위 조합에서 달성할 수 있는 더 좋은 핸드들을 확률과 함께 알려주는 기능입니다.
 
-핸드 추천 기능은 현재 보드에 있는 주사위 조합에서 플레이어가 다음 롤을 통해 달성할 수 있는 핸드를 확률과 함께 알려주는 기능입니다.
+확률을 계산하기 위해 현재 주사위 중에서 일부 주사위를  굴렸을 때의 결과를 재귀적으로 탐색했습니다. 각 주사위 조합이 핸드를 달성했는지 여부를 확인하고 달성 횟수를 저장합니다.
 
-예를 들어 현재 주사위가 (1, 1, 2, 2, 3)으로 되어 있다면 3 하나만 돌리는 것으로 1/3 확률로 풀 하우스를 노리거나 1과 2를 하나씩만 돌리는 것으로 11/36 확률로 스몰 스트레이트를 노릴 수 있습니다.
-
-이와 같은 확률 계산을 위해서 현재 핸드에서 주사위를 일부만 돌리는 것으로 달성 가능한 모든 핸드를 구해야 하며, 이때 구해야 하는 것들은 아래와 같습니다.
-
-1. n개의 주사위 중 m개를 돌릴 때, 돌릴 m개의 주사위를 뽑는 조합
-2. m개의 주사위를 돌렸을 때 나올 수 있는 주사위들의 조합
-
-1번에 해당하는 조합을 얻기 위해 GetAllIndexCombinations 함수를 작성하였습니다. 총 n개 중에서 m개의 인덱스 조합을 모두 가져오는 함수입니다.
-
-- GetAllIndexCombinations
+- DFS
     
     ```csharp
-        private static List<List<int>> GetAllIndexCombinations(int totalCount, int pickCount)
+    private static void DFS(List<int> currentValues, int pickCount, int idx, Dictionary<Hand, int> successCounts)
         {
-            List<List<int>> res = new();
-            GetIndexCombinations(0, totalCount, pickCount, new(), res);
-            return res;
-        }
-    
-        private static void GetIndexCombinations(int start, int totalCount, int pickCount, List<int> current, List<List<int>> res)
-        {
-            if (pickCount == 0)
+            // 인덱스 초과, 고를 수 있는 수가 0 이하이면 중지
+            if (idx >= currentValues.Count || pickCount <= 0)
             {
-                res.Add(new List<int>(current));
+                // 고를 수 있는 수가 0이 아니면 패스
+                if (pickCount != 0) return;
+    
+                // 핸드 체크
+                GetHandCheckResultsNonAlloc(currentValues);
+    
+                // 성공 핸드 카운트 증가
+                foreach (var hand in HandCheckResultsCache.Keys)
+                {
+                    if (HandCheckResultsCache[hand])
+                    {
+                        if (!successCounts.ContainsKey(hand))
+                        {
+                            successCounts[hand] = 0;
+                        }
+                        successCounts[hand]++;
+                    }
+                }
+    
                 return;
             }
     
-            for (int i = start; i <= totalCount - pickCount; i++)
-            {
-                current.Add(i);
-                GetIndexCombinations(i + 1, totalCount, pickCount - 1, current, res);
-                current.RemoveAt(current.Count - 1);
-            }
-        }
-    ```
+            // 고를 수 있는 수가 남은 주사위보다 많으면 종료
+            if (pickCount > currentValues.Count - idx) return;
     
-
-그리고 2번에 해당하는 조합을 얻기 위해 GetAllDiceCombinations 함수를 작성하였습니다. 총 m개의 다이스를 돌렸을 때 얻을 수 있는 모든 주사위 조합을 가져오는 함수입니다.
-
-- GetAllDiceCombinations
+            // 현재 인덱스의 주사위를 고르는 경우 탐색
     
-    ```csharp
-        private static List<List<int>> GetAllDiceCombinations(int count)
-        {
-            List<List<int>> res = new();
-            GetDiceCombination(count, new(), res);
-            return res;
-        }
+            // 값 저장
+            var originalValue = currentValues[idx];
     
-        private static List<int> GetDiceCombination(int remain, List<int> current, List<List<int>> res)
-        {
-            if (remain == 0)
-            {
-                res.Add(new List<int>(current));
-                return current;
-            }
-    
+            // 1~6까지 값으로 변경 후 DFS 호출
             for (int i = 1; i <= 6; i++)
             {
-                current.Add(i);
-                GetDiceCombination(remain - 1, current, res);
-                current.RemoveAt(current.Count - 1);
+                currentValues[idx] = i;
+                DFS(currentValues, pickCount - 1, idx + 1, successCounts);
             }
     
-            return current;
+            // 값 복구
+            currentValues[idx] = originalValue;
+    
+            // 현재 인덱스의 주사위를 고르지 않는 경우 탐색
+            DFS(currentValues, pickCount, idx + 1, successCounts);
         }
     ```
     
 
-위의 두 조합을 통해서 총 n개의 주사위 중에서 m개를 돌렸을 때 각 핸드의 달성 경우의 수와 모든 경우의 수를 반환하는 GetHandSuccessCounts 함수를 작성했습니다. 이때 각 핸드의 달성 경우의 수는 모든 인덱스 조합에 대해서 최대값을 지정하도록 했습니다.
+각각의 핸드에 대해서 달성 가능한 최대 확률을 얻어 플레이어에게 조언을 제공합니다. 확률 계산은 (달성 횟수)/(주사위 조합의 경우의 수)가 됩니다.
 
-- GetHandSuccessCounts
+- CalculateHandProbabilities
     
     ```csharp
-    private static (Dictionary<Hand, int>, int) GetHandSuccessCounts(List<int> diceValues, int rollNum)
-        {
-            Dictionary<Hand, int> res = new();
-    
-            if (rollNum == 0)
-            {
-                var result = GetHandCheckResults(diceValues);
-                foreach (var hand in result.Keys)
-                {
-                    if (result[hand])
-                    {
-                        res[hand] = 1;
-                    }
-                    else
-                    {
-                        res[hand] = 0;
-                    }
-                }
-                return (res, 1);
-            }
-    
-            var allIndexCombination = GetAllIndexCombinations(diceValues.Count, rollNum);
-            var allDiceCombinations = GetAllDiceCombinations(rollNum);
-    
-            foreach (var indexCombination in allIndexCombination)
-            {
-                Dictionary<Hand, int> tmp = new();
-    
-                foreach (var diceCombination in allDiceCombinations)
-                {
-                    var tempDiceValues = new List<int>(diceValues);
-                    for (int i = 0; i < indexCombination.Count; i++)
-                    {
-                        tempDiceValues[indexCombination[i]] = diceCombination[i];
-                    }
-    
-                    var result = GetHandCheckResults(tempDiceValues);
-                    foreach (var hand in result.Keys)
-                    {
-                        if (result[hand])
-                        {
-                            if (!tmp.ContainsKey(hand))
-                            {
-                                tmp[hand] = 0;
-                            }
-                            tmp[hand]++;
-                        }
-                    }
-                }
-    
-                foreach (var hand in tmp.Keys)
-                {
-                    if (!res.ContainsKey(hand))
-                    {
-                        res[hand] = tmp[hand];
-                    }
-                    res[hand] = Mathf.Max(res[hand], tmp[hand]);
-                }
-            }
-    
-            return (res, allDiceCombinations.Count);
-        }
-    ```
-    
-
-그리고 n개 중 m개를 선택할 때의 m은, 최대값을 정해두고 1~최대값까지 모든 경우를 확인했습니다. 각 m값에 대해서 모든 핸드에 달성 가능 확률의 최대값을 넣도록 했습니다.
-
-- GetHandProbabilities
-    
-    ```csharp
-    public static Dictionary<Hand, float> GetHandProbabilities(List<int> diceValues)
-        {
-            Dictionary<Hand, float> res = new();
-            foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
-            {
-                res[hand.hand] = 0;
-            }
-    
-            if (diceValues == null || diceValues.Count == 0) return res;
-    
-            int maxRollDiceNum = Mathf.CeilToInt(diceValues.Count / 2f);
-    
-            return CalculateHandProbabilities(diceValues, maxRollDiceNum);
-        }
-    
         private static Dictionary<Hand, float> CalculateHandProbabilities(List<int> diceValues, int maxRollDiceNum)
         {
             Dictionary<Hand, float> res = new();
@@ -567,7 +467,8 @@ SixSix는 Yacht Dice처럼 주사위를 포커 핸드처럼 계산하는 방식�
             {
                 Dictionary<Hand, float> tmp = new();
     
-                var (handCounts, totalCount) = GetHandSuccessCounts(diceValues, i);
+                var handCounts = GetHandSuccessCounts(diceValues, i);
+                int totalCount = (int)Mathf.Pow(6, i);
     
                 foreach (var hand in handCounts.Keys)
                 {
@@ -588,84 +489,5 @@ SixSix는 Yacht Dice처럼 주사위를 포커 핸드처럼 계산하는 방식�
             }
     
             return res;
-        }
-    ```
-    
-
-이렇게 구한 각 확률을 통해 각 핸드를 확률이 높은 순, 기초 점수가 높은 순서대로 정렬하고 확률이 기준치 이상인 핸드들만 보여주도록 설정했습니다.
-
-- ShowAdvise
-    
-    ```csharp
-    private void ShowAdvise()
-        {
-            var handList = GetHandList();
-    
-            var sortedHandList = handList
-            .OrderByDescending(x => x.Item2)
-            .ThenByDescending(x => x.Item3.baseScore)
-            .ToList();
-    
-            var adviseString = GetAdviseString(sortedHandList);
-            if (adviseString == string.Empty) return;
-    
-            advisePanel.SetValue(adviseString);
-            Show(() => DelayHide(showTime));
-        }
-    
-        private static List<(Hand, float, ScorePair)> GetHandList()
-        {
-            var diceValues = DiceManager.Instance.PlayDiceList.Select(dice => dice.DiceValue).ToList();
-            var handProbabilities = HandCalculator.GetHandProbabilities(diceValues);
-            var handScorePairs = HandManager.Instance.HandScores;
-    
-            List<(Hand, float, ScorePair)> res = new();
-    
-            foreach (var hand in handProbabilities.Keys)
-            {
-                if (handScorePairs.ContainsKey(hand))
-                {
-                    var scorePair = handScorePairs[hand];
-                    var probability = handProbabilities[hand];
-                    res.Add((hand, probability, scorePair));
-                }
-            }
-    
-            return res;
-        }
-    
-        private string GetAdviseString(List<(Hand, float, ScorePair)> sortedHandList)
-        {
-            string res = string.Empty;
-            if (sortedHandList.Count == 0) return res;
-    
-            for (int i = 0; i < sortedHandList.Count; i++)
-            {
-                var hand = sortedHandList[i];
-                var probability = hand.Item2;
-    
-                if (probability == 1f) continue;
-                if (probability < adviseMinProbability) continue;
-    
-                var scorePair = hand.Item3;
-                if (scorePair.baseScore > sortedHandList.First().Item3.baseScore)
-                {
-                    if (res.Length != 0) res += "\n";
-                    string handName = DataContainer.Instance.GetHandSO(hand.Item1).HandName;
-                    res += $"{handName} : {probability:P2}";
-                }
-            }
-    
-            return res;
-        }
-    
-        private void DelayHide(float delayTime)
-        {
-            _currentTween?.Kill();
-    
-            _currentTween = DOVirtual.DelayedCall(delayTime, () =>
-            {
-                Hide();
-            });
         }
     ```
