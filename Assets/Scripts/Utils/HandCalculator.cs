@@ -8,14 +8,14 @@ public static class HandCalculator
     public static Dictionary<int, int> CountMapCache { get; private set; } = new();
 
     #region GetHandCheckResults
-    public static void GetHandCheckResultsNonAlloc(List<int> diceValues)
+    public static Dictionary<Hand, bool> GetHandCheckResultsNonAlloc(List<int> diceValues)
     {
         foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
         {
             HandCheckResultsCache[hand.hand] = false;
         }
 
-        if (diceValues == null || diceValues.Count == 0) return;
+        if (diceValues == null || diceValues.Count == 0) return HandCheckResultsCache;
 
         GetCountMapNonAlloc(diceValues);
 
@@ -28,6 +28,8 @@ public static class HandCalculator
         HandCheckResultsCache[Hand.FullStraight] = IsFullStraightHand(CountMapCache);
         HandCheckResultsCache[Hand.Yacht] = IsYachtHand(CountMapCache);
         HandCheckResultsCache[Hand.SixSix] = IsSixSixHand(CountMapCache);
+
+        return HandCheckResultsCache;
     }
 
     public static Dictionary<Hand, bool> GetHandCheckResults(List<int> diceValues)
@@ -58,6 +60,7 @@ public static class HandCalculator
     private static void GetCountMapNonAlloc(List<int> diceValues)
     {
         CountMapCache.Clear();
+
         foreach (var diceValue in diceValues)
         {
             if (CountMapCache.ContainsKey(diceValue))
@@ -117,15 +120,15 @@ public static class HandCalculator
             }
         }
 
-        int hasAnotherTwoOrMoreCount = 0;
+        int twoOrMoreCount = 0;
         foreach (var pair in countMap)
         {
             if (pair.Value >= 2)
             {
-                hasAnotherTwoOrMoreCount++;
+                twoOrMoreCount++;
             }
         }
-        return hasThreeOrMore && hasAnotherTwoOrMoreCount >= 2;
+        return hasThreeOrMore && twoOrMoreCount >= 2;
     }
 
     private static bool IsDoubleThreeOfAKindHand(Dictionary<int, int> countMap)
@@ -251,25 +254,18 @@ public static class HandCalculator
 
         for (int i = 0; i <= maxRollDiceNum; i++)
         {
-            Dictionary<Hand, float> tmp = new();
-
             var handCounts = GetHandSuccessCounts(diceValues, i);
             int totalCount = (int)Mathf.Pow(6, i);
 
-            foreach (var hand in handCounts.Keys)
-            {
-                tmp[hand] = handCounts[hand] / (float)totalCount;
-            }
-
-            foreach (var pair in tmp)
+            foreach (var pair in handCounts)
             {
                 if (!res.ContainsKey(pair.Key))
                 {
-                    res[pair.Key] = pair.Value;
+                    res[pair.Key] = pair.Value / (float)totalCount;
                 }
                 else
                 {
-                    res[pair.Key] = Mathf.Max(res[pair.Key], pair.Value);
+                    res[pair.Key] = Mathf.Max(res[pair.Key], pair.Value / (float)totalCount);
                 }
             }
         }
@@ -279,45 +275,61 @@ public static class HandCalculator
 
     private static Dictionary<Hand, int> GetHandSuccessCounts(List<int> diceValues, int rollNum)
     {
+        // 각 핸드의 최대 성공 횟수
         Dictionary<Hand, int> successCounts = new();
 
-        if (rollNum == 0)
+        // 현재 고르는 주사위 조합에서의 각 핸드 성공 횟수
+        Dictionary<Hand, int> tmpCounts = new();
+
+        // pickMap을 통해 고르는 주사위 조합 표현, 1이면 고름, 0이면 안고름
+        for (int pickMap = 0; pickMap < (1 << diceValues.Count); pickMap++)
         {
-            var result = GetHandCheckResults(diceValues);
-            foreach (var hand in result.Keys)
+            // pickMap에서 고르는 주사위 수를 세기
+            int pickCount = 0;
+            for (int i = 0; i < diceValues.Count; i++)
             {
-                if (result[hand])
+                pickCount += (pickMap & (1 << i)) != 0 ? 1 : 0;
+            }
+
+            // pickCount가 굴리는 주사위 수와 다르면 패스
+            if (pickCount != rollNum) continue;
+
+            // 임시 횟수 초기화
+            tmpCounts.Clear();
+
+            // 탐색
+            DFS(diceValues, pickMap, 0, tmpCounts);
+
+            // 최대 성공 횟수 갱신
+            foreach (var hand in tmpCounts.Keys)
+            {
+                if (!successCounts.ContainsKey(hand))
                 {
-                    successCounts[hand] = 1;
+                    successCounts[hand] = tmpCounts[hand];
                 }
                 else
                 {
-                    successCounts[hand] = 0;
+                    successCounts[hand] = Mathf.Max(successCounts[hand], tmpCounts[hand]);
                 }
             }
-            return successCounts;
         }
 
-        DFS(new List<int>(diceValues), rollNum, 0, successCounts);
-
+        // 최대 성공 횟수 반환
         return successCounts;
     }
 
-    private static void DFS(List<int> currentValues, int pickCount, int idx, Dictionary<Hand, int> successCounts)
+    private static void DFS(List<int> diceValues, int pickMap, int idx, Dictionary<Hand, int> successCounts)
     {
-        // 인덱스 초과, 고를 수 있는 수가 0 이하이면 중지
-        if (idx >= currentValues.Count || pickCount <= 0)
+        // 인덱스 초과 시 중지
+        if (idx >= diceValues.Count)
         {
-            // 고를 수 있는 수가 0이 아니면 패스
-            if (pickCount != 0) return;
-
             // 핸드 체크
-            GetHandCheckResultsNonAlloc(currentValues);
+            var handCheckResults = GetHandCheckResultsNonAlloc(diceValues);
 
             // 성공 핸드 카운트 증가
-            foreach (var hand in HandCheckResultsCache.Keys)
+            foreach (var hand in handCheckResults.Keys)
             {
-                if (HandCheckResultsCache[hand])
+                if (handCheckResults[hand])
                 {
                     if (!successCounts.ContainsKey(hand))
                     {
@@ -327,29 +339,31 @@ public static class HandCalculator
                 }
             }
 
+            // 탐색 종료
             return;
         }
 
-        // 고를 수 있는 수가 남은 주사위보다 많으면 종료
-        if (pickCount > currentValues.Count - idx) return;
+        // 현재 인덱스의 주사위를 고르지 않는 경우 탐색
+        if ((pickMap & (1 << idx)) == 0)
+        {
+            DFS(diceValues, pickMap, idx + 1, successCounts);
+            return;
+        }
 
         // 현재 인덱스의 주사위를 고르는 경우 탐색
 
         // 값 저장
-        var originalValue = currentValues[idx];
+        var originalValue = diceValues[idx];
 
         // 1~6까지 값으로 변경 후 DFS 호출
         for (int i = 1; i <= 6; i++)
         {
-            currentValues[idx] = i;
-            DFS(currentValues, pickCount - 1, idx + 1, successCounts);
+            diceValues[idx] = i;
+            DFS(diceValues, pickMap, idx + 1, successCounts);
         }
 
         // 값 복구
-        currentValues[idx] = originalValue;
-
-        // 현재 인덱스의 주사위를 고르지 않는 경우 탐색
-        DFS(currentValues, pickCount, idx + 1, successCounts);
+        diceValues[idx] = originalValue;
     }
 
     private static List<List<int>> GetAllIndexCombinations(int totalCount, int pickCount)
