@@ -191,7 +191,7 @@ public static class HandCalculator
     {
         foreach (var pair in countMap)
         {
-            if (pair.Value >= 2)
+            if (pair.Value >= 6)
             {
                 return true;
             }
