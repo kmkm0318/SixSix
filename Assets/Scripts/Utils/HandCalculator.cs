@@ -204,29 +204,6 @@ public static class HandCalculator
 
     #endregion
 
-    public static Dictionary<Hand, ScorePair> GetHandScorePairs(List<int> diceValues)
-    {
-        if (diceValues == null || diceValues.Count == 0) return new();
-
-        var handScoreDictionary = new Dictionary<Hand, ScorePair>();
-        foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
-        {
-            handScoreDictionary[hand.hand] = new(0, 0);
-        }
-
-        var handCheckResults = GetHandCheckResults(diceValues);
-
-        foreach (var hand in DataContainer.Instance.TotalHandListSO.handList)
-        {
-            if (handCheckResults[hand.hand])
-            {
-                handScoreDictionary[hand.hand] = DataContainer.Instance.GetHandSO(hand.hand).scorePair;
-            }
-        }
-
-        return handScoreDictionary;
-    }
-
     #region GetHandProbabilities
     public static Dictionary<Hand, float> GetHandProbabilities(List<int> diceValues)
     {
